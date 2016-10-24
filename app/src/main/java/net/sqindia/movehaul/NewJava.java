@@ -5,4 +5,8 @@ package net.sqindia.movehaul;
  */
 
 public class NewJava {
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }
