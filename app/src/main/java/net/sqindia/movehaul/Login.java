@@ -18,7 +18,7 @@ import com.sloop.fonts.FontsManager;
  */
 
 public class Login extends Activity {
-    Button button_submit_salman;
+    Button button_submit;
     TextView txt_forgot_no;
     LinearLayout btn_back;
     String str_mobile;
@@ -32,7 +32,7 @@ public class Login extends Activity {
         FontsManager.changeFonts(this);
 
 
-        button_submit_salman = (Button) findViewById(R.id.btn_submit);
+        button_submit = (Button) findViewById(R.id.btn_submit);
         btn_back = (LinearLayout) findViewById(R.id.layout_back);
         txt_forgot_no = (TextView) findViewById(R.id.text_forgot_no);
         edtxt_mobile = (EditText) findViewById(R.id.editTextMobileNo);
@@ -57,7 +57,7 @@ public class Login extends Activity {
                 finish();
             }
         });
-        button_submit_salman.setOnClickListener(new View.OnClickListener() {
+        button_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 str_mobile = edtxt_mobile.getText().toString().trim();
