@@ -2,7 +2,9 @@ package net.sqindia.movehaul;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.widget.EditText;
 
@@ -18,6 +20,7 @@ public class Forgot_Mobile extends Activity {
     LinearLayout btn_back;
     EditText edtxt_email;
     String str_email;
+    TextInputLayout flt_email;
     Button btn_submit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,10 +29,14 @@ public class Forgot_Mobile extends Activity {
         FontsManager.initFormAssets(this, "fonts/CATAMARAN-REGULAR.TTF");       //initialization
         FontsManager.changeFonts(this);
 
-
+        flt_email = (TextInputLayout) findViewById(R.id.float_email);
         btn_back = (LinearLayout) findViewById(R.id.layout_back);
         edtxt_email = (EditText) findViewById(R.id.editTextEmail);
         btn_submit = (Button) findViewById(R.id.btn_submit);
+
+        Typeface type = Typeface.createFromAsset(getAssets(),"fonts/CATAMARAN-REGULAR.TTF");
+        flt_email.setTypeface(type);
+
 
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override

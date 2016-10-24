@@ -42,6 +42,7 @@
             </include>
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -54,6 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_3sdp"
             android:textColorHint="@color/colorAccent"
+            android:id="@+id/float_email"
             android:layout_marginBottom="@dimen/_8sdp">
             <EditText
                 android:id="@+id/editTextEmail"
@@ -73,6 +75,7 @@
             android:background="#E1E1E1"
             android:layout_marginBottom="@dimen/_5sdp"/>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -89,7 +92,7 @@
             android:gravity="center"
             android:paddingBottom="@dimen/_5sdp"
             android:paddingRight="@dimen/_3sdp"
-            android:textSize="@dimen/_16sdp"
+            android:textSize="@dimen/_18sdp"
             android:textAllCaps="false"
             android:id="@+id/btn_submit" />
     </LinearLayout>

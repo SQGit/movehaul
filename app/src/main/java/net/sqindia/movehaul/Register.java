@@ -2,6 +2,7 @@ package net.sqindia.movehaul;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.view.View;
@@ -39,6 +40,14 @@ public class Register extends Activity {
         flt_email = (TextInputLayout) findViewById(R.id.float_email);
         flt_mobile = (TextInputLayout) findViewById(R.id.float_mobile);
         flt_name = (TextInputLayout) findViewById(R.id.float_name);
+
+
+        Typeface type = Typeface.createFromAsset(getAssets(),"fonts/CATAMARAN-REGULAR.TTF");
+        flt_email.setTypeface(type);
+        flt_mobile.setTypeface(type);
+        flt_name.setTypeface(type);
+
+
 
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override

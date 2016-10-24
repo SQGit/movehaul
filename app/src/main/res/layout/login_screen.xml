@@ -55,6 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_3sdp"
             android:textColorHint="@color/colorAccent"
+            android:id="@+id/float_mobile"
             android:layout_marginBottom="@dimen/_8sdp">
             <EditText
                 android:id="@+id/editTextMobileNo"

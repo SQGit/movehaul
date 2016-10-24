@@ -2,7 +2,9 @@ package net.sqindia.movehaul;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -22,6 +24,7 @@ public class Login extends Activity {
     LinearLayout btn_back;
     String str_mobile;
     EditText edtxt_mobile;
+    TextInputLayout flt_mobile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +37,10 @@ public class Login extends Activity {
         btn_back = (LinearLayout) findViewById(R.id.layout_back);
         txt_forgot_no = (TextView) findViewById(R.id.text_forgot_no);
         edtxt_mobile = (EditText) findViewById(R.id.editTextMobileNo);
+        flt_mobile = (TextInputLayout) findViewById(R.id.float_mobile);
+
+        Typeface type = Typeface.createFromAsset(getAssets(),"fonts/CATAMARAN-REGULAR.TTF");
+        flt_mobile.setTypeface(type);
 
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override

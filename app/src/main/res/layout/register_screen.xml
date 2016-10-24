@@ -115,7 +115,7 @@
                 android:maxLength="12"
                 android:paddingTop="@dimen/_10sdp"
                 android:textSize="@dimen/_15sdp"
-                android:hint="5662"
+                android:hint="Mobile"
                 android:textColor="#000000"
                 android:background="@null"/>
         </android.support.design.widget.TextInputLayout>
@@ -141,7 +141,7 @@
             android:gravity="center"
             android:paddingBottom="@dimen/_5sdp"
             android:paddingRight="@dimen/_3sdp"
-            android:textSize="@dimen/_16sdp"
+            android:textSize="@dimen/_18sdp"
             android:textAllCaps="false"
             android:id="@+id/btn_submit" />
     </LinearLayout>
