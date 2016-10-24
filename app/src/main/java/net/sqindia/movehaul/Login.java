@@ -22,6 +22,7 @@ public class Login extends Activity {
     TextView txt_forgot_no;
     LinearLayout btn_back;
     String str_mobiles_no;
+    String salman;
     EditText edtxt_mobile;
     TextInputLayout flt_mobile_no;
     @Override
