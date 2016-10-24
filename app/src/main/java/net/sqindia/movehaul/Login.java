@@ -25,6 +25,7 @@ public class Login extends Activity {
     String salmanss;
     String tulasi;
     EditText edtxt_mobile;
+    String stringgsdg,sdflgj;
     TextInputLayout flt_mobile_no;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
