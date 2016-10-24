@@ -21,7 +21,7 @@ public class Login extends Activity {
     Button button_submit;
     TextView txt_forgot_no;
     LinearLayout btn_back;
-    String str_mobiles_update;
+    String str_mobiles_no;
     EditText edtxt_mobile;
     TextInputLayout flt_mobile_no;
     @Override
@@ -60,9 +60,9 @@ public class Login extends Activity {
         button_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                str_mobiles_update = edtxt_mobile.getText().toString().trim();
+                str_mobiles_no = edtxt_mobile.getText().toString().trim();
 
-                if (!(str_mobiles_update.isEmpty() || str_mobiles_update.length() < 9)) {
+                if (!(str_mobiles_no.isEmpty() || str_mobiles_no.length() < 9)) {
                     Intent i = new Intent(Login.this,Login_Otp.class);
                     startActivity(i);
                     finish();
