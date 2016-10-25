@@ -16,6 +16,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCmazMFvYuwHw6Y6UrUGbp5F0SDJF7y9cw" />
+
         <activity android:name=".Splash_screen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
