@@ -17,58 +17,60 @@ import com.sloop.fonts.FontsManager;
  * Created by sqindia on 21-10-2016.
  */
 
-public class Login extends Activity {
-    Button button_submit;
-    TextView txt_forgot_no;
+public class LoginActivity extends Activity {
+    Button btn_submit;
+    TextView tv_forgot_mobile;
     LinearLayout btn_back;
-    String str_mobiles_no;
-    EditText edtxt_mobile;
+    String str_mobile_no;
+    EditText et_mobile_no;
     TextInputLayout flt_mobile_no;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_screen);
+        setContentView(R.layout.activity_login);
         FontsManager.initFormAssets(this, "fonts/CATAMARAN-REGULAR.TTF");       //initialization
         FontsManager.changeFonts(this);
 
 
-        button_submit = (Button) findViewById(R.id.btn_submit);
+        btn_submit = (Button) findViewById(R.id.btn_submit);
         btn_back = (LinearLayout) findViewById(R.id.layout_back);
-        txt_forgot_no = (TextView) findViewById(R.id.text_forgot_no);
-        edtxt_mobile = (EditText) findViewById(R.id.editTextMobileNo);
+        tv_forgot_mobile = (TextView) findViewById(R.id.text_forgot_no);
+        et_mobile_no = (EditText) findViewById(R.id.editTextMobileNo);
         flt_mobile_no = (TextInputLayout) findViewById(R.id.float_mobile);
 
-        Typeface type = Typeface.createFromAsset(getAssets(),"fonts/CATAMARAN-REGULAR.TTF");
+        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/CATAMARAN-REGULAR.TTF");
         flt_mobile_no.setTypeface(type);
 
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Login.this,Splash_screen.class);
+                Intent i = new Intent(LoginActivity.this, Splash_screen.class);
                 startActivity(i);
                 finish();
             }
         });
-        txt_forgot_no.setOnClickListener(new View.OnClickListener() {
+        tv_forgot_mobile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Login.this,Forgot_Mobile.class);
+                Intent i = new Intent(LoginActivity.this, Forgot_Mobile.class);
                 startActivity(i);
                 finish();
             }
         });
-        button_submit.setOnClickListener(new View.OnClickListener() {
+        btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                str_mobiles_no = edtxt_mobile.getText().toString().trim();
+                str_mobile_no = et_mobile_no.getText().toString().trim();
 
-                if (!(str_mobiles_no.isEmpty() || str_mobiles_no.length() < 9)) {
-                    Intent i = new Intent(Login.this,Login_Otp.class);
+                if (!(str_mobile_no.isEmpty() || str_mobile_no.length() < 9)) {
+                    Intent i = new Intent(LoginActivity.this, LoginOtpActivity.class);
+                    i.putExtra("phone",str_mobile_no);
                     startActivity(i);
                     finish();
                 } else {
-                    edtxt_mobile.setError("Enter valid phone number");
-                    edtxt_mobile.requestFocus();
+                    et_mobile_no.setError("Enter valid phone number");
+                    et_mobile_no.requestFocus();
                 }
 
             }

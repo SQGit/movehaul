@@ -1,11 +1,9 @@
 package net.sqindia.movehaul;
 
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
@@ -16,13 +14,9 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.rey.material.widget.Button;
-import com.rey.material.widget.LinearLayout;
 import com.sloop.fonts.FontsManager;
-
-import static android.R.attr.data;
 
 /**
  * Created by sqindia on 21-10-2016.
@@ -70,7 +64,7 @@ public class Splash_screen extends Activity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Splash_screen.this,Login.class);
+                Intent i = new Intent(Splash_screen.this,LoginActivity.class);
                 startActivity(i);
                 finish();
             }
