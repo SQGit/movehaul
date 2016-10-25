@@ -56,7 +56,7 @@ public class Register extends Activity {
                 str_mobile = edtxt_mobile.getText().toString().trim();
                 str_name = edtxt_name.getText().toString().trim();
 
-                    if (!(str_name.isEmpty())) {
+                   /* if (!(str_name.isEmpty())) {
                         if (!(str_email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(str_email).matches())) {
                             if (!(str_mobile.isEmpty() || str_mobile.length() < 9)) {
                                 Intent i = new Intent(Register.this,Login.class);
@@ -73,7 +73,14 @@ public class Register extends Activity {
                     } else {
                         edtxt_name.setError("Enter a Name!");
                         edtxt_name.requestFocus();
-                    }
+                    }*/
+
+
+
+                /*Creating for testing screen*/
+                Intent i = new Intent(Register.this,Dashboard.class);
+                startActivity(i);
+                finish();
 
             }
         });

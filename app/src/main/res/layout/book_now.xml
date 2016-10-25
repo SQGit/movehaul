@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:gravity="top">
+
+        <include
+            layout="@layout/action_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></include>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_15sdp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_book_now"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Book Now"
+                android:textColor="#F65F52"
+                android:textSize="@dimen/_19sdp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <include
+                layout="@layout/red_underline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></include>
+        </LinearLayout>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_20sdp"
+
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/float_deliveryaddress"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_3sdp"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:textColorHint="@color/colorAccent">
+
+                <EditText
+                    android:id="@+id/editTextDelieveryAddress"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:drawableLeft="@drawable/delivery_address"
+                    android:hint="Delivery Address"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/_15sdp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:background="#E1E1E1" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/float_goodstype"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_3sdp"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:textColorHint="@color/colorAccent">
+
+                <EditText
+                    android:id="@+id/editTextGoodsType"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:drawableLeft="@drawable/goods_type"
+                    android:drawableRight="@drawable/goods_type"
+                    android:hint="Goods Type"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/_15sdp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:background="#E1E1E1" />
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/float_trucktype"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_3sdp"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:textColorHint="@color/colorAccent">
+
+                <EditText
+                    android:id="@+id/editTextTruck_type"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:drawableLeft="@drawable/truck_type"
+                    android:drawableRight="@drawable/truck_type"
+                    android:hint="Select Truck"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/_15sdp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:background="#E1E1E1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:text="@string/underline"
+                android:textColor="#F65F52"
+                android:textSize="@dimen/_12sdp" />
+
+            <HorizontalScrollView
+                android:id="@+id/hori_scroll_view"
+                android:layout_width="@dimen/_200sdp"
+                android:layout_height="wrap_content"
+                android:fillViewport="false"
+                android:foregroundGravity="left"
+                android:paddingLeft="@dimen/_10sdp">
+
+                <LinearLayout
+                    android:id="@+id/selected_photos_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+
+                    <TextView
+                        android:id="@+id/msg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_30sdp"
+                        android:layout_marginTop="@dimen/_35sdp"
+                        android:text="no images selected" />
+
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/float_description"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_3sdp"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:textColorHint="@color/colorAccent">
+
+                <EditText
+                    android:id="@+id/editTextDescription"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:drawableLeft="@drawable/description"
+                    android:hint="Description"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/_15sdp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:background="#E1E1E1" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="center|bottom"
+        android:padding="@dimen/_3sdp">
+
+        <com.rey.material.widget.Button
+            android:id="@+id/btn_post"
+            style="@style/Material.Drawable.Ripple.Touch"
+            android:layout_width="@dimen/_140sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:background="@drawable/submit"
+            android:gravity="center"
+            android:paddingBottom="@dimen/_5sdp"
+            android:paddingRight="@dimen/_3sdp"
+            android:text="Post"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/_18sdp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        android:gravity="bottom">
+
+        <include
+            layout="@layout/down_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></include>
+
+    </LinearLayout>
+</LinearLayout>

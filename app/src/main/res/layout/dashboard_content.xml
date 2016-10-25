@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/top_design_small" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/ll1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:paddingBottom="@dimen/_10sdp">
+
+        <ImageView
+            android:id="@+id/img_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_vertical"
+            android:layout_marginLeft="@dimen/_2sdp"
+            android:paddingLeft="@dimen/_3sdp"
+            android:paddingRight="@dimen/_30sdp"
+            android:src="@drawable/menu" />
+
+
+        <ImageView
+            android:id="@+id/tv_hd_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center|center_vertical"
+            android:gravity="center"
+            android:src="@drawable/logo" />
+
+        <ImageView
+            android:id="@+id/right_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end|center_vertical"
+            android:paddingLeft="@dimen/_3sdp"
+            android:paddingRight="@dimen/_5sdp"
+            android:src="@drawable/menu_right" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent">
+
+        <fragment
+            android:id="@+id/map"
+            class="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+       <LinearLayout
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:background="#FFFFFF"
+           android:layout_marginTop="@dimen/_20sdp"
+           android:paddingTop="@dimen/_5sdp"
+           android:paddingBottom="@dimen/_5sdp"
+           android:layout_gravity="top|center_vertical">
+           <LinearLayout
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:background="#FFFFFF"
+               android:layout_gravity="center"
+               android:gravity="center"
+               android:orientation="vertical">
+
+               <ImageView
+                   android:layout_width="@dimen/_23sdp"
+                   android:layout_height="@dimen/_23sdp"
+                   android:background="@drawable/green_pickup"
+                   android:layout_marginTop="@dimen/_10sdp"
+                   android:layout_marginLeft="@dimen/_5sdp"/>
+
+               <ImageView
+                   android:layout_width="@dimen/_20sdp"
+                   android:layout_height="@dimen/_20sdp"
+                   android:background="@mipmap/map_point"
+                   />
+
+               <ImageView
+                   android:layout_width="@dimen/_23sdp"
+                   android:layout_height="@dimen/_23sdp"
+                   android:background="@drawable/red_drop"
+                   android:layout_marginLeft="@dimen/_5sdp"
+                   />
+
+           </LinearLayout>
+
+           <LinearLayout
+               android:layout_width="fill_parent"
+               android:layout_height="wrap_content"
+               android:layout_gravity="center"
+               android:gravity="center"
+               android:layout_marginLeft="@dimen/_5sdp"
+               android:orientation="vertical">
+
+               <android.support.design.widget.TextInputLayout
+                   android:id="@+id/float_pickup"
+                   android:layout_width="fill_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginBottom="@dimen/_2sdp"
+                   android:layout_marginTop="@dimen/_3sdp"
+                   android:textColorHint="@color/colorAccent">
+
+                   <EditText
+                       android:id="@+id/editTextMobile"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:background="@null"
+                       android:hint="Pickup Location"
+                       android:maxLines="1"
+                       android:paddingTop="@dimen/_10sdp"
+                       android:textColor="#000000"
+                       android:textSize="@dimen/_13sdp" />
+               </android.support.design.widget.TextInputLayout>
+
+               <View
+                   android:layout_width="match_parent"
+                   android:layout_height="@dimen/_1sdp"
+                   android:layout_marginBottom="@dimen/_5sdp"
+                   android:background="#E1E1E1" />
+
+               <android.support.design.widget.TextInputLayout
+                   android:id="@+id/float_drop"
+                   android:layout_width="fill_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginBottom="@dimen/_2sdp"
+                   android:layout_marginTop="@dimen/_3sdp"
+                   android:textColorHint="@color/colorAccent">
+
+                   <EditText
+                       android:id="@+id/editTextDrop"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:background="@null"
+                       android:hint="Drop Location"
+                       android:maxLines="1"
+                       android:paddingTop="@dimen/_10sdp"
+                       android:textColor="#000000"
+                       android:textSize="@dimen/_13sdp" />
+               </android.support.design.widget.TextInputLayout>
+
+               <View
+                   android:layout_width="match_parent"
+                   android:layout_height="@dimen/_1sdp"
+                   android:layout_marginBottom="@dimen/_5sdp"
+                   android:background="#E1E1E1" />
+           </LinearLayout>
+
+
+       </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="#382F2F"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <com.rey.material.widget.Button
+                android:id="@+id/btn_book_now"
+                style="@style/Material.Drawable.Ripple.Touch"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center"
+                android:text="Book Now"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/_16sdp" />
+
+            <View
+                android:layout_width="@dimen/_1sdp"
+                android:layout_height="@dimen/_18sdp"
+                android:layout_gravity="center"
+                android:background="#FFFFFF" />
+
+            <com.rey.material.widget.Button
+                android:id="@+id/btn_book_later"
+                style="@style/Material.Drawable.Ripple.Touch"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center"
+                android:text="Book Later"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/_16sdp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="bottom">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@drawable/down_design" />
+        </LinearLayout>
+
+    </FrameLayout>
+
+
+</LinearLayout>
