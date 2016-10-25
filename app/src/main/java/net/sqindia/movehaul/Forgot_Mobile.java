@@ -45,7 +45,7 @@ public class Forgot_Mobile extends Activity {
 
                 if (!(str_email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(str_email).matches()))
                 {
-                    Intent i = new Intent(Forgot_Mobile.this,Login_Otp.class);
+                    Intent i = new Intent(Forgot_Mobile.this,LoginOtpActivity.class);
                     startActivity(i);
                     finish();
                 } else {
@@ -57,7 +57,7 @@ public class Forgot_Mobile extends Activity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Forgot_Mobile.this,Login.class);
+                Intent i = new Intent(Forgot_Mobile.this,LoginActivity.class);
                 startActivity(i);
                 finish();
             }

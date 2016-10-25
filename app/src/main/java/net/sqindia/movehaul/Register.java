@@ -59,7 +59,7 @@ public class Register extends Activity {
                    /* if (!(str_name.isEmpty())) {
                         if (!(str_email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(str_email).matches())) {
                             if (!(str_mobile.isEmpty() || str_mobile.length() < 9)) {
-                                Intent i = new Intent(Register.this,Login.class);
+                                Intent i = new Intent(Register.this,LoginActivity.class);
                                 startActivity(i);
                                 finish();
                             } else {

@@ -2,139 +2,151 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:background="@drawable/bg">
+    android:background="@drawable/bg"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="top"
-        android:layout_gravity="top">
+        android:layout_gravity="top"
+        android:gravity="top">
+
         <include
             layout="@layout/action_bar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </include>
+            android:layout_height="wrap_content"></include>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="@dimen/_15sdp">
+        android:layout_margin="@dimen/_15sdp"
+        android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="@dimen/_15sdp">
+            android:layout_marginTop="@dimen/_15sdp"
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Login"
-                android:textSize="@dimen/_19sdp"
-                android:textColor="#F65F52"/>
+                android:textColor="#F65F52"
+                android:textSize="@dimen/_19sdp" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
+
             <include
                 layout="@layout/red_underline"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </include>
+                android:layout_height="wrap_content"></include>
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginLeft="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_20sdp">
+        android:layout_marginTop="@dimen/_20sdp"
+        android:orientation="vertical">
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/float_mobile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_3sdp"
-            android:textColorHint="@color/colorAccent"
-            android:id="@+id/float_mobile"
-            android:layout_marginBottom="@dimen/_8sdp">
+            android:textColorHint="@color/colorAccent">
+
             <EditText
                 android:id="@+id/editTextMobileNo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="phone"
+                android:background="@null"
                 android:hint="Mobile No"
-                android:paddingTop="@dimen/_10sdp"
-                android:textSize="@dimen/_15sdp"
-                android:textColor="#000000"
+                android:inputType="phone"
                 android:maxLength="12"
                 android:maxLines="1"
-                android:background="@null"/>
+                android:paddingTop="@dimen/_10sdp"
+                android:textColor="#000000"
+                android:textSize="@dimen/_15sdp" />
         </android.support.design.widget.TextInputLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
-            android:background="#E1E1E1"
-            android:layout_marginBottom="@dimen/_5sdp"/>
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:background="#E1E1E1" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="@dimen/_3sdp"
         android:layout_marginTop="@dimen/_20sdp"
-        android:orientation="vertical">
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/_3sdp">
+
         <TextView
+            android:id="@+id/text_forgot_no"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp"
             android:text="Forgot Mobile No?"
-            android:id="@+id/text_forgot_no"
-            android:textColor="#F65F52"/>
+            android:textColor="#F65F52" />
+
         <com.rey.material.widget.Button
+            android:id="@+id/btn_submit"
+            style="@style/Material.Drawable.Ripple.Touch"
             android:layout_width="@dimen/_140sdp"
             android:layout_height="@dimen/_40sdp"
-            style="@style/Material.Drawable.Ripple.Touch"
-            android:background="@drawable/submit"
-            android:text="Submit"
-            android:textColor="#FFFFFF"
             android:layout_marginTop="@dimen/_20sdp"
+            android:background="@drawable/submit"
             android:gravity="center"
             android:paddingBottom="@dimen/_5sdp"
             android:paddingRight="@dimen/_3sdp"
-            android:textSize="@dimen/_16sdp"
+            android:text="Submit"
             android:textAllCaps="false"
-            android:id="@+id/btn_submit" />
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/_16sdp" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:gravity="bottom"
         android:layout_gravity="bottom"
+        android:gravity="bottom"
         android:orientation="horizontal">
+
         <include
             layout="@layout/down_icon"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </include>
+            android:layout_height="wrap_content"></include>
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="@dimen/_5sdp">
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="@dimen/_10sdp"
-                android:text="By signing up you agree to the terms &amp; conditions"/>
+                android:text="By signing up you agree to the terms &amp; conditions"
+                android:textSize="@dimen/_10sdp" />
+
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="@dimen/_10sdp"
-                android:text="and privacy policy of Movehaul"/>
+                android:text="and privacy policy of Movehaul"
+                android:textSize="@dimen/_10sdp" />
         </LinearLayout>
     </LinearLayout>
 
