@@ -43,7 +43,10 @@
             android:name=".Dashboard"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
-        <activity android:name=".Book_now"
+        <activity
+            android:name=".Book_now"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
 
         <receiver android:name=".ReceiveSmsBroadcastReceiver">
             <intent-filter>
