@@ -139,7 +139,6 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
                                 Log.e("tag","pin:"+str_otppin);
                             }
                         }
-
                     }
                 }
             }

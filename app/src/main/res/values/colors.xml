@@ -4,6 +4,10 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#383838</color>
     <color name="colorControlNormal">#FF78909C</color>
-    <color name="icon">#696969</color>
+    <color name="icon">#324d5b</color>
+    <color name="greyIcon">#6b6b6b</color>
     <color name="ColorStatus">#FFFFFF</color>
+    <color name="textColor">#313131</color>
+    <color name="viewColor">#E1E1E1</color>
+
 </resources>

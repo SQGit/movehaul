@@ -78,7 +78,7 @@ public class Register extends Activity {
 
 
                 /*Creating for testing screen*/
-                Intent i = new Intent(Register.this,Dashboard.class);
+                Intent i = new Intent(Register.this,DashboardNavigation.class);
                 startActivity(i);
                 finish();
 

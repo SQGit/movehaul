@@ -41,7 +41,7 @@
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity
-            android:name=".Dashboard"
+            android:name=".DashboardNavigation"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity
