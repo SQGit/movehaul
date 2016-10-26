@@ -204,7 +204,7 @@
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_20sdp"
                             android:layout_marginRight="@dimen/_15sdp"
-                            android:src="@drawable/camera_icon"
+                            android:background="@drawable/camera_icon"
                              />
                     </LinearLayout>
 

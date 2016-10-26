@@ -77,8 +77,8 @@ public class Book_now extends Activity {
         final AlertDialog alertD = new AlertDialog.Builder(Book_now.this).create();
         alertD.setCancelable(true);
         Window window = alertD.getWindow();
-        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        alertD.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.parseColor("#00000000")));
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        alertD.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.parseColor("#00FFFFFF")));
 
 
         final RadioGroup radioGroup = (RadioGroup) promptView.findViewById(R.id.radioGroup2);
