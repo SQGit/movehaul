@@ -21,16 +21,17 @@
         android:layout_gravity="center_horizontal"
         android:paddingTop="@dimen/_10sdp" />
 
-    <TextView
+    <com.rey.material.widget.TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/textView_name"
         android:paddingTop="@dimen/_10sdp"
         android:layout_gravity="center_horizontal"
         android:textColor="@color/textColor"
         android:text="Hi Emika" />
 
-    <TextView
-        android:id="@+id/textView"
+    <com.rey.material.widget.TextView
+        android:id="@+id/textView_email"
         android:layout_width="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content"

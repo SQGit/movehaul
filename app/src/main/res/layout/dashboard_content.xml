@@ -31,7 +31,7 @@
             android:layout_marginLeft="@dimen/_2sdp"
             android:paddingLeft="@dimen/_3sdp"
             android:paddingRight="@dimen/_30sdp"
-            android:src="@drawable/menu" />
+            android:src="@drawable/left_nav_button" />
 
 
         <ImageView
@@ -49,7 +49,7 @@
             android:layout_gravity="bottom|end|center_vertical"
             android:paddingLeft="@dimen/_3sdp"
             android:paddingRight="@dimen/_5sdp"
-            android:src="@drawable/menu_right" />
+            android:src="@drawable/right_nav_menu" />
 
     </FrameLayout>
 
@@ -119,7 +119,7 @@
                    android:textColorHint="@color/colorAccent">
 
                    <EditText
-                       android:id="@+id/editTextMobile"
+                       android:id="@+id/editText_pickUp"
                        android:layout_width="match_parent"
                        android:layout_height="wrap_content"
                        android:background="@null"
@@ -145,7 +145,7 @@
                    android:textColorHint="@color/colorAccent">
 
                    <EditText
-                       android:id="@+id/editTextDrop"
+                       android:id="@+id/editText_dropLocation"
                        android:layout_width="match_parent"
                        android:layout_height="wrap_content"
                        android:background="@null"
@@ -184,7 +184,7 @@
                 android:gravity="center"
                 android:text="Book Now"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF"
+                android:textColor="@drawable/btn_color_chg"
                 android:textSize="@dimen/_16sdp" />
 
             <View

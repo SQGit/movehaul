@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.TextInputLayout;
@@ -15,14 +16,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.sloop.fonts.FontsManager;
-
-import static java.security.AccessController.getContext;
 
 /**
  * Created by sqindia on 25-10-2016.
@@ -30,7 +28,7 @@ import static java.security.AccessController.getContext;
 
 public class Book_now extends Activity {
     String truck;
-    EditText edtxt_delivery_address, edtxt_goodstype, edtxt_trucktype;
+    EditText et_delivery_address, et_goodstype, et_trucktype;
     TextInputLayout flt_delivery_address, flt_goodstype, flt_trucktype;
     TextView edtxt_trucktyp;
 
@@ -41,24 +39,31 @@ public class Book_now extends Activity {
         FontsManager.initFormAssets(this, "fonts/CATAMARAN-REGULAR.TTF");       //initialization
         FontsManager.changeFonts(this);
 
-        edtxt_delivery_address = (EditText) findViewById(R.id.editTextDelieveryAddress);
-        edtxt_goodstype = (EditText) findViewById(R.id.editTextGoodsType);
-        edtxt_trucktype = (EditText) findViewById(R.id.editTextTruck_type);
+        et_delivery_address = (EditText) findViewById(R.id.editTextDelieveryAddress);
+        et_goodstype = (EditText) findViewById(R.id.editTextGoodsType);
+        et_trucktype = (EditText) findViewById(R.id.editTextTruck_type);
         flt_delivery_address = (TextInputLayout) findViewById(R.id.float_deliveryaddress);
         flt_goodstype = (TextInputLayout) findViewById(R.id.float_goodstype);
         flt_trucktype = (TextInputLayout) findViewById(R.id.float_trucktype);
 
-        edtxt_trucktype.setOnClickListener(new View.OnClickListener() {
+
+        et_trucktype.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Check if no view has focus:
                //  view = this.getCurrentFocus();
-                if (view != null) {
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+           /*     if (view != null) {
 
                     InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                    truck_type();
-                }
+
+                }*/
+               // et_trucktype.setInputType(InputType.TYPE_NULL);
+                truck_type();
 
             }
         });
@@ -73,6 +78,7 @@ public class Book_now extends Activity {
         alertD.setCancelable(true);
         Window window = alertD.getWindow();
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        alertD.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.parseColor("#00000000")));
 
 
         final RadioGroup radioGroup = (RadioGroup) promptView.findViewById(R.id.radioGroup2);
@@ -126,7 +132,7 @@ public class Book_now extends Activity {
                 Log.e("TAG", "asd" + truck);
                 //alertD.dismiss();
                 handler.postDelayed(runnable, 700);
-                edtxt_trucktype.setText(truck);
+                et_trucktype.setText(truck);
             }
 
         });

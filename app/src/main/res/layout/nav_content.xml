@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true">
+
         <include layout="@layout/nav_header_main" />
     </LinearLayout>
 
@@ -22,17 +23,18 @@
 
 
         <com.rey.material.widget.TextView
-            android:id="@+id/txt6"
+            android:id="@+id/textView_mytrips"
             style="@style/Material.Drawable.Ripple.Wave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_5sdp"
-            android:drawableLeft="@drawable/delivery_address"
+            android:drawableLeft="@drawable/left_my_trips"
             android:drawablePadding="@dimen/_6sdp"
             android:gravity="center_vertical"
             android:paddingBottom="@dimen/_5sdp"
             android:paddingTop="@dimen/_5sdp"
             android:text="My Trips"
+            android:textColor="#313131"
             android:textSize="@dimen/_16sdp" />
 
         <View
@@ -43,17 +45,18 @@
             android:background="@color/viewColor" />
 
         <com.rey.material.widget.TextView
-            android:id="@+id/txt6d"
+            android:id="@+id/textView_jobreview"
             style="@style/Material.Drawable.Ripple.Touch.Light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_5sdp"
-            android:drawableLeft="@drawable/delivery_address"
+            android:drawableLeft="@drawable/left_job_review"
             android:drawablePadding="@dimen/_6sdp"
             android:gravity="center_vertical"
             android:paddingBottom="@dimen/_5sdp"
             android:paddingTop="@dimen/_5sdp"
             android:text="Job Review"
+            android:textColor="#313131"
             android:textSize="@dimen/_16sdp" />
 
         <View
@@ -64,17 +67,18 @@
             android:background="@color/viewColor" />
 
         <com.rey.material.widget.TextView
-            android:id="@+id/txt63"
+            android:id="@+id/textView_payments"
             style="@style/Material.Drawable.Ripple.Touch.Light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_5sdp"
-            android:drawableLeft="@drawable/delivery_address"
+            android:drawableLeft="@drawable/left_payments_icon"
             android:drawablePadding="@dimen/_6sdp"
             android:gravity="center_vertical"
             android:paddingBottom="@dimen/_5sdp"
             android:paddingTop="@dimen/_5sdp"
             android:text="Payments"
+            android:textColor="#313131"
             android:textSize="@dimen/_16sdp" />
 
         <View
@@ -85,17 +89,18 @@
             android:background="@color/viewColor" />
 
         <com.rey.material.widget.TextView
-            android:id="@+id/txt6da"
+            android:id="@+id/textView_tracking"
             style="@style/Material.Drawable.Ripple.Touch.MatchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_5sdp"
-            android:drawableLeft="@drawable/delivery_address"
+            android:drawableLeft="@drawable/left_tracking_icon"
             android:drawablePadding="@dimen/_6sdp"
             android:gravity="center_vertical"
             android:paddingBottom="@dimen/_5sdp"
             android:paddingTop="@dimen/_5sdp"
             android:text="Tracking"
+            android:textColor="#313131"
             android:textSize="@dimen/_16sdp" />
 
         <View
@@ -107,17 +112,18 @@
 
 
         <com.rey.material.widget.TextView
-            android:id="@+id/txt6dw"
+            android:id="@+id/textView_offers"
             style="@style/Material.Drawable.Ripple.Touch.MatchView.Light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_5sdp"
-            android:drawableLeft="@drawable/delivery_address"
+            android:drawableLeft="@drawable/left_offers_icon"
             android:drawablePadding="@dimen/_6sdp"
             android:gravity="center_vertical"
             android:paddingBottom="@dimen/_5sdp"
             android:paddingTop="@dimen/_5sdp"
             android:text="Offers"
+            android:textColor="#313131"
             android:textSize="@dimen/_16sdp" />
 
         <View
@@ -128,17 +134,18 @@
             android:background="@color/viewColor" />
 
         <com.rey.material.widget.TextView
-            android:id="@+id/txt6dd"
+            android:id="@+id/textView_emergencycontacts"
             style="@style/Material.Drawable.Ripple.Wave.Light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_5sdp"
-            android:drawableLeft="@drawable/delivery_address"
+            android:drawableLeft="@drawable/left_emergency_contct_icon"
             android:drawablePadding="@dimen/_6sdp"
             android:gravity="center_vertical"
             android:paddingBottom="@dimen/_5sdp"
             android:paddingTop="@dimen/_5sdp"
             android:text="Emergency Contacts"
+            android:textColor="#313131"
             android:textSize="@dimen/_16sdp" />
 
     </LinearLayout>
