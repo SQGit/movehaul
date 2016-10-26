@@ -22,6 +22,7 @@ public class Forgot_Mobile extends Activity {
     String str_email;
     TextInputLayout flt_email;
     Button btn_submit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +35,7 @@ public class Forgot_Mobile extends Activity {
         edtxt_email = (EditText) findViewById(R.id.editTextEmail);
         btn_submit = (Button) findViewById(R.id.btn_submit);
 
-        Typeface type = Typeface.createFromAsset(getAssets(),"fonts/CATAMARAN-REGULAR.TTF");
+        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/CATAMARAN-REGULAR.TTF");
         flt_email.setTypeface(type);
 
 
@@ -43,9 +44,8 @@ public class Forgot_Mobile extends Activity {
             public void onClick(View view) {
                 str_email = edtxt_email.getText().toString().trim();
 
-                if (!(str_email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(str_email).matches()))
-                {
-                    Intent i = new Intent(Forgot_Mobile.this,LoginOtpActivity.class);
+                if (!(str_email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(str_email).matches())) {
+                    Intent i = new Intent(Forgot_Mobile.this, LoginOtpActivity.class);
                     startActivity(i);
                     finish();
                 } else {
@@ -57,7 +57,7 @@ public class Forgot_Mobile extends Activity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Forgot_Mobile.this,LoginActivity.class);
+                Intent i = new Intent(Forgot_Mobile.this, LoginActivity.class);
                 startActivity(i);
                 finish();
             }

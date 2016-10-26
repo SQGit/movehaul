@@ -51,10 +51,10 @@ public class Book_now extends Activity {
             @Override
             public void onClick(View view) {
                 // Check if no view has focus:
-               //  view = this.getCurrentFocus();
+                //  view = this.getCurrentFocus();
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
            /*     if (view != null) {
 
@@ -62,7 +62,7 @@ public class Book_now extends Activity {
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
                 }*/
-               // et_trucktype.setInputType(InputType.TYPE_NULL);
+                // et_trucktype.setInputType(InputType.TYPE_NULL);
                 truck_type();
 
             }

@@ -30,10 +30,10 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/text_book_now"
+                android:id="@+id/text_book_later"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Book Now"
+                android:text="Book Later"
                 android:textColor="#F65F52"
                 android:textSize="@dimen/_19sdp" />
         </LinearLayout>
@@ -63,6 +63,89 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_20sdp"
                 android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/float_deliveryaddess"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_3sdp"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:textColorHint="@color/colorAccent">
+
+                            <EditText
+                                android:id="@+id/editTextDelievryAddress"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:drawableRight="@drawable/time_icon"
+                                android:hint="Time"
+                                android:inputType="text"
+                                android:maxLines="1"
+                                android:paddingTop="@dimen/_10sdp"
+                                android:textColor="#000000"
+                                android:textSize="@dimen/_15sdp" />
+                        </android.support.design.widget.TextInputLayout>
+
+                        <View
+                            android:layout_width="fill_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:background="#E1E1E1" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/float_deliveryadress"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_3sdp"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:textColorHint="@color/colorAccent">
+
+                            <EditText
+                                android:id="@+id/editTextDeliveryAddress"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:drawableRight="@drawable/date_icon"
+                                android:hint="Date"
+                                android:inputType="text"
+                                android:maxLines="1"
+                                android:paddingTop="@dimen/_10sdp"
+                                android:textColor="#000000"
+                                android:textSize="@dimen/_15sdp" />
+                        </android.support.design.widget.TextInputLayout>
+
+                        <View
+                            android:layout_width="fill_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:background="#E1E1E1" />
+
+                    </LinearLayout>
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="fill_parent"

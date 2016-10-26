@@ -48,7 +48,10 @@
             android:name=".Book_now"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
-
+        <activity
+            android:name=".Book_later"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity
             android:name=".MyTrips"
             android:screenOrientation="sensorPortrait"

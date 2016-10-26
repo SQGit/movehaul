@@ -74,6 +74,13 @@ public class DashboardNavigation extends AppCompatActivity implements Navigation
             }
         });
 
+        btn_book_later.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(DashboardNavigation.this, Book_later.class);
+                startActivity(i);
+            }
+        });
 
         final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.app_name, R.string.app_name);
