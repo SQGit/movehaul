@@ -9,5 +9,6 @@
     <color name="ColorStatus">#FFFFFF</color>
     <color name="textColor">#313131</color>
     <color name="viewColor">#E1E1E1</color>
+    <color name="redColor">#F65F52</color>
 
 </resources>

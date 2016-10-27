@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bg"
     android:orientation="vertical">
 
@@ -29,9 +30,12 @@
             android:id="@+id/tab_indicator"
             android:layout_height="48dp"
             android:layout_width="match_parent"
-            android:paddingLeft="10dp"
             android:clipToPadding="false"
-            style="@style/Material.Widget.TabPageIndicator"/>
+            app:tpi_tabSingleLine="true"
+            app:tpi_indicatorHeight="2dp"
+            app:tpi_tabPadding="@dimen/_25sdp"
+            app:tpi_indicatorColor="@color/redColor"
+            style="@style/tab"/>
 
 
     </LinearLayout>
@@ -40,7 +44,9 @@
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_below="@+id/header"
-        android:layout_height="wrap_content" />
+        android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_height="wrap_content"
+       />
 
 
     <LinearLayout

@@ -16,4 +16,17 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="tab" parent="Material.Widget.TabPageIndicator">
+        <item name="tpi_tabPadding">12dp</item>
+        <item name="tpi_tabRipple">@style/Material.Drawable.Ripple.Wave</item>
+        <item name="tpi_indicatorHeight">2dp</item>
+        <item name="tpi_indicatorAtTop">false</item>
+        <item name="tpi_tabSingleLine">true</item>
+        <item name="tpi_centerCurrentTab">false</item>
+        <item name="android:textColor">@drawable/color_state</item>
+
+        <item name="tpi_mode">scroll</item>
+    </style>
+
+
 </resources>
