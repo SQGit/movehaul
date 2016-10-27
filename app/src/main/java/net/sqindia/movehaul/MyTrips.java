@@ -22,8 +22,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.ramotion.foldingcell.FoldingCell;
 import com.rey.material.widget.ListView;
 import com.rey.material.widget.TabIndicatorView;
 import com.rey.material.widget.TextView;
@@ -42,7 +44,8 @@ public class MyTrips extends AppCompatActivity {
     private MyViewPagerAdapter myViewPagerAdapter;
     TabIndicatorView tiv;
     ListView ht_lview;
-    ArrayList<String> ht_arlist;
+    android.widget.ListView up_lview;
+    ArrayList<String> ht_arlist, up_arlist;
 
 
     @Override
@@ -60,8 +63,7 @@ public class MyTrips extends AppCompatActivity {
                 R.layout.upcoming_trips,};
 
         viewPager = (ViewPager) findViewById(R.id.view_pager);
-        tiv = (TabIndicatorView)findViewById(R.id.tab_indicator);
-
+        tiv = (TabIndicatorView) findViewById(R.id.tab_indicator);
 
 
         myViewPagerAdapter = new MyViewPagerAdapter();
@@ -71,14 +73,7 @@ public class MyTrips extends AppCompatActivity {
         tiv.setTabIndicatorFactory(new TabIndicatorView.ViewPagerIndicatorFactory(viewPager));
 
 
-
-
-
-
-
     }
-
-
 
 
     public class MyViewPagerAdapter extends PagerAdapter {
@@ -95,23 +90,39 @@ public class MyTrips extends AppCompatActivity {
             container.addView(view);
 
 
-
             if (position == 0) {
-
 
 
             } else if (position == 1) {
                 ht_lview = (ListView) view.findViewById(R.id.lview);
                 ht_arlist = new ArrayList<>();
 
-                HistoryAdapter adapter = new HistoryAdapter(MyTrips.this,ht_arlist);
+                HistoryAdapter adapter = new HistoryAdapter(MyTrips.this, ht_arlist);
 
                 ht_lview.setAdapter(adapter);
 
 
-            } else
+            } else {
 
-            {
+                up_lview = (android.widget.ListView) view.findViewById(R.id.lview);
+                up_arlist = new ArrayList<>();
+
+                final UpcomingAdapter up_adapter = new UpcomingAdapter(MyTrips.this, up_arlist);
+                up_lview.setAdapter(up_adapter);
+
+                up_lview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
+                        // toggle clicked cell state
+                        ((FoldingCell) view).toggle(false);
+                        // register in adapter that state for selected cell is toggled
+                        up_adapter.registerToggle(pos);
+                        Log.e("tag","clicked"+pos);
+
+
+                    }
+                });
+
 
             }
 
@@ -141,13 +152,11 @@ public class MyTrips extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             String title;
 
-            if(position == 0){
+            if (position == 0) {
                 title = "Current";
-            }
-            else if(position ==1){
+            } else if (position == 1) {
                 title = "History";
-            }
-            else{
+            } else {
                 title = "Upcoming";
             }
 
@@ -157,14 +166,10 @@ public class MyTrips extends AppCompatActivity {
     }
 
 
-
-
-
     ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
 
         @Override
         public void onPageSelected(int position) {
-
 
 
             if (position == 0) {
@@ -174,7 +179,6 @@ public class MyTrips extends AppCompatActivity {
 
 
             } else {
-
 
 
             }
@@ -191,13 +195,7 @@ public class MyTrips extends AppCompatActivity {
         }
 
 
-
-
-
-
     };
-
-
 
 
 }

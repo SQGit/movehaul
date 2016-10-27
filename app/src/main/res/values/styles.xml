@@ -24,7 +24,7 @@
         <item name="tpi_tabSingleLine">true</item>
         <item name="tpi_centerCurrentTab">false</item>
         <item name="android:textColor">@drawable/color_state</item>
-
+        <item name="android:textStyle">bold</item>
         <item name="tpi_mode">scroll</item>
     </style>
 
