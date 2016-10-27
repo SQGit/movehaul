@@ -28,7 +28,7 @@
         android:paddingTop="@dimen/_10sdp"
         android:layout_gravity="center_horizontal"
         android:textColor="@color/textColor"
-        android:text="Hi Emika" />
+        android:text="Hi Emeka" />
 
     <com.rey.material.widget.TextView
         android:id="@+id/textView_email"
@@ -36,6 +36,6 @@
         android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content"
         android:textColor="@color/textColor"
-        android:text="emika@ifund.com" />
+        android:text="emeka@ifund.com" />
 
 </LinearLayout>

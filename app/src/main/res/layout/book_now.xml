@@ -97,62 +97,92 @@
                         android:layout_marginBottom="@dimen/_5sdp"
                         android:background="#E1E1E1" />
 
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/float_goodstype"
+                    <FrameLayout
+                        android:id="@+id/frame_goodstype"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_3sdp"
-                        android:layout_marginTop="@dimen/_3sdp"
-                        android:textColorHint="@color/colorAccent">
+                        android:clickable="true">
 
-                        <EditText
-                            android:id="@+id/editTextGoodsType"
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/float_goodstype"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:drawableLeft="@drawable/goods_type"
-                            android:hint="Goods Type"
-                            android:inputType="text"
-                            android:maxLines="1"
-                            android:paddingTop="@dimen/_10sdp"
-                            android:textColor="#000000"
-                            android:textSize="@dimen/_15sdp" />
-                    </android.support.design.widget.TextInputLayout>
+                            android:layout_marginBottom="@dimen/_3sdp"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:textColorHint="@color/colorAccent">
 
-                    <View
-                        android:layout_width="fill_parent"
-                        android:layout_height="@dimen/_1sdp"
-                        android:layout_marginBottom="@dimen/_5sdp"
-                        android:background="#E1E1E1" />
+                            <EditText
+                                android:id="@+id/editTextGoodsType"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:clickable="false"
+                                android:drawableLeft="@drawable/goods_type"
+                                android:enabled="false"
+                                android:hint="Goods Type"
+                                android:inputType="text"
+                                android:maxLines="1"
+                                android:paddingTop="@dimen/_10sdp"
+                                android:textColor="#000000"
+                                android:textSize="@dimen/_15sdp" />
+                        </android.support.design.widget.TextInputLayout>
+
+                        <View
+                            android:layout_width="fill_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_gravity="bottom"
+                            android:background="#E1E1E1" />
+
+                        <LinearLayout
+                            android:id="@+id/layout_goodstype"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                        </LinearLayout>
+                    </FrameLayout>
 
 
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/float_trucktype"
+                    <FrameLayout
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_3sdp"
-                        android:layout_marginTop="@dimen/_3sdp"
-                        android:textColorHint="@color/colorAccent">
+                        android:clickable="true">
 
-                        <EditText
-                            android:id="@+id/editTextTruck_type"
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/float_trucktype"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:drawableLeft="@drawable/select_truck_type"
-                            android:hint="Select Truck"
-                            android:inputType="none"
-                            android:maxLines="1"
-                            android:paddingTop="@dimen/_10sdp"
-                            android:textColor="#000000"
-                            android:textSize="@dimen/_15sdp" />
-                    </android.support.design.widget.TextInputLayout>
+                            android:layout_marginBottom="@dimen/_3sdp"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:textColorHint="@color/colorAccent">
 
-                    <View
-                        android:layout_width="fill_parent"
-                        android:layout_height="@dimen/_1sdp"
-                        android:layout_marginBottom="@dimen/_5sdp"
-                        android:background="#E1E1E1" />
+                            <EditText
+                                android:id="@+id/editTextTruck_type"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:clickable="false"
+                                android:drawableLeft="@drawable/select_truck_type"
+                                android:enabled="false"
+                                android:hint="Select Truck"
+                                android:maxLines="1"
+                                android:paddingTop="@dimen/_10sdp"
+                                android:textColor="#000000"
+                                android:textSize="@dimen/_15sdp" />
+                        </android.support.design.widget.TextInputLayout>
+
+                        <View
+                            android:layout_width="fill_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_gravity="bottom"
+                            android:background="#E1E1E1" />
+
+                        <LinearLayout
+                            android:id="@+id/layout_truckType"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"></LinearLayout>
+                    </FrameLayout>
 
                     <TextView
                         android:layout_width="wrap_content"

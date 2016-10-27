@@ -63,108 +63,108 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-       <LinearLayout
-           android:layout_width="fill_parent"
-           android:layout_height="wrap_content"
-           android:orientation="horizontal"
-           android:background="#FFFFFF"
-           android:layout_marginTop="@dimen/_20sdp"
-           android:paddingTop="@dimen/_5sdp"
-           android:paddingBottom="@dimen/_5sdp"
-           android:layout_gravity="top|center_vertical">
-           <LinearLayout
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:background="#FFFFFF"
-               android:layout_gravity="center"
-               android:gravity="center"
-               android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center_vertical"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:background="#FFFFFF"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/_5sdp"
+            android:paddingTop="@dimen/_5sdp">
 
-               <ImageView
-                   android:layout_width="@dimen/_23sdp"
-                   android:layout_height="@dimen/_23sdp"
-                   android:background="@drawable/green_pickup"
-                   android:layout_marginTop="@dimen/_10sdp"
-                   android:layout_marginLeft="@dimen/_5sdp"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:orientation="vertical">
 
-               <ImageView
-                   android:layout_width="@dimen/_20sdp"
-                   android:layout_height="@dimen/_20sdp"
-                   android:background="@mipmap/map_point"
-                   />
+                <ImageView
+                    android:layout_width="@dimen/_23sdp"
+                    android:layout_height="@dimen/_23sdp"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@drawable/green_pickup" />
 
-               <ImageView
-                   android:layout_width="@dimen/_23sdp"
-                   android:layout_height="@dimen/_23sdp"
-                   android:background="@drawable/red_drop"
-                   android:layout_marginLeft="@dimen/_5sdp"
-                   />
+                <ImageView
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:background="@mipmap/map_point" />
 
-           </LinearLayout>
+                <ImageView
+                    android:layout_width="@dimen/_23sdp"
+                    android:layout_height="@dimen/_23sdp"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:background="@drawable/red_drop" />
 
-           <LinearLayout
-               android:layout_width="fill_parent"
-               android:layout_height="wrap_content"
-               android:layout_gravity="center"
-               android:gravity="center"
-               android:layout_marginLeft="@dimen/_5sdp"
-               android:orientation="vertical">
+            </LinearLayout>
 
-               <android.support.design.widget.TextInputLayout
-                   android:id="@+id/float_pickup"
-                   android:layout_width="fill_parent"
-                   android:layout_height="wrap_content"
-                   android:layout_marginBottom="@dimen/_2sdp"
-                   android:layout_marginTop="@dimen/_3sdp"
-                   android:textColorHint="@color/colorAccent">
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:gravity="center"
+                android:orientation="vertical">
 
-                   <EditText
-                       android:id="@+id/editText_pickUp"
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"
-                       android:background="@null"
-                       android:hint="Pickup Location"
-                       android:maxLines="1"
-                       android:paddingTop="@dimen/_10sdp"
-                       android:textColor="#000000"
-                       android:textSize="@dimen/_13sdp" />
-               </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/float_pickup"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_2sdp"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:textColorHint="@color/colorAccent">
 
-               <View
-                   android:layout_width="match_parent"
-                   android:layout_height="@dimen/_1sdp"
-                   android:layout_marginBottom="@dimen/_5sdp"
-                   android:background="#E1E1E1" />
+                    <EditText
+                        android:id="@+id/editText_pickUp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:hint="Pickup Location"
+                        android:maxLines="1"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/_13sdp" />
+                </android.support.design.widget.TextInputLayout>
 
-               <android.support.design.widget.TextInputLayout
-                   android:id="@+id/float_drop"
-                   android:layout_width="fill_parent"
-                   android:layout_height="wrap_content"
-                   android:layout_marginBottom="@dimen/_2sdp"
-                   android:layout_marginTop="@dimen/_3sdp"
-                   android:textColorHint="@color/colorAccent">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:background="#E1E1E1" />
 
-                   <EditText
-                       android:id="@+id/editText_dropLocation"
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"
-                       android:background="@null"
-                       android:hint="Drop Location"
-                       android:maxLines="1"
-                       android:paddingTop="@dimen/_10sdp"
-                       android:textColor="#000000"
-                       android:textSize="@dimen/_13sdp" />
-               </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/float_drop"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_2sdp"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:textColorHint="@color/colorAccent">
 
-               <View
-                   android:layout_width="match_parent"
-                   android:layout_height="@dimen/_1sdp"
-                   android:layout_marginBottom="@dimen/_5sdp"
-                   android:background="#E1E1E1" />
-           </LinearLayout>
+                    <EditText
+                        android:id="@+id/editText_dropLocation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:hint="Drop Location"
+                        android:maxLines="1"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/_13sdp" />
+                </android.support.design.widget.TextInputLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:background="#E1E1E1" />
+            </LinearLayout>
 
 
-       </LinearLayout>
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -203,7 +203,7 @@
                 android:gravity="center"
                 android:text="Book Later"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF"
+                android:textColor="@drawable/btn_color_chg"
                 android:textSize="@dimen/_16sdp" />
 
         </LinearLayout>
