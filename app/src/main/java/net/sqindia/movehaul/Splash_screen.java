@@ -72,7 +72,7 @@ public class Splash_screen extends Activity {
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Splash_screen.this, Register.class);
+                Intent i = new Intent(Splash_screen.this, Job_review.class);
                 startActivity(i);
                 finish();
             }
