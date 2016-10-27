@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.rey.material.widget.ListView;
 import com.rey.material.widget.TabIndicatorView;
 import com.rey.material.widget.TextView;
+import com.sloop.fonts.FontsManager;
 
 import java.util.ArrayList;
 
@@ -48,6 +49,10 @@ public class MyTrips extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mytrips);
+
+
+        FontsManager.initFormAssets(this, "fonts/CATAMARAN-REGULAR.TTF");       //initialization
+        FontsManager.changeFonts(this);
 
         layouts = new int[]{
                 R.layout.current_trips,

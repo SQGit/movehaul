@@ -61,8 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/_10sdp"
-                android:paddingTop="@dimen/_5sdp">
+                android:paddingLeft="@dimen/_10sdp">
 
 
                 <com.rey.material.widget.TextView
@@ -76,7 +75,6 @@
                 <com.rey.material.widget.TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/_5sdp"
                     android:id="@+id/textview_book_id"
                     android:text="MOV34563IX"
                     android:textColor="@color/textColor"
@@ -102,7 +100,7 @@
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_5sdp">
+>
 
 
                     <com.rey.material.widget.TextView
@@ -116,7 +114,7 @@
                     <com.rey.material.widget.TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingTop="@dimen/_1sdp"
                         android:id="@+id/textview_book_from"
                         android:singleLine="true"
                         android:maxLines="1"
@@ -149,7 +147,7 @@
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_5sdp">
+              >
 
 
                     <com.rey.material.widget.TextView
@@ -163,7 +161,7 @@
                     <com.rey.material.widget.TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingTop="@dimen/_1sdp"
                         android:id="@+id/textview_book_to"
                         android:maxLines="1"
                         android:text="#977, West Boage, Dekina, Nigeria"
@@ -179,7 +177,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_3sdp"
                 android:paddingBottom="@dimen/_5sdp"
                 android:orientation="horizontal">
 
@@ -193,16 +191,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:padding="@dimen/_4sdp"
+                        android:padding="@dimen/_2sdp"
                         android:src="@drawable/date_icon" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:orientation="vertical"
-                        android:paddingLeft="@dimen/_10sdp"
-                        android:paddingTop="@dimen/_5sdp">
+                        android:paddingLeft="@dimen/_10sdp">
 
 
                         <com.rey.material.widget.TextView
@@ -216,7 +212,7 @@
                         <com.rey.material.widget.TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingTop="@dimen/_5sdp"
+                            android:paddingTop="@dimen/_1sdp"
                             android:text="05-10-2016"
                             android:id="@+id/textview_date"
                             android:textColor="@color/textColor"
@@ -238,16 +234,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:padding="@dimen/_4sdp"
+                        android:padding="@dimen/_2sdp"
                         android:src="@drawable/time_icon" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:orientation="vertical"
                         android:paddingLeft="@dimen/_10sdp"
-                        android:paddingTop="@dimen/_5sdp">
+                    >
 
 
                         <com.rey.material.widget.TextView
@@ -261,7 +256,7 @@
                         <com.rey.material.widget.TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingTop="@dimen/_5sdp"
+                            android:paddingTop="@dimen/_1sdp"
                             android:id="@+id/textview_time"
                             android:text="12.30 PM"
                             android:textColor="@color/textColor"

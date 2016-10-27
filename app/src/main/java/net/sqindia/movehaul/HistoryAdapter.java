@@ -10,6 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.sloop.fonts.FontsManager;
+
 import java.util.ArrayList;
 
 /**
@@ -22,6 +24,7 @@ public class HistoryAdapter extends BaseAdapter {
     Context context;
     Typeface tf;
     ArrayList<String> myList;
+    Activity act;
 
 
 
@@ -30,6 +33,7 @@ public class HistoryAdapter extends BaseAdapter {
         this.context = activity.getApplicationContext();
         this.myList = array_list;
         inflater = LayoutInflater.from(this.context);
+        act =activity;
 
     }
 
@@ -53,6 +57,8 @@ public class HistoryAdapter extends BaseAdapter {
         final MyViewHolder mViewHolder;
         final TextView tv_vin_no, tv_vin_make, tv_add;
 
+        FontsManager.initFormAssets(act, "fonts/CATAMARAN-REGULAR.TTF");       //initialization
+        FontsManager.changeFonts(act);
 
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.history_adapter, viewGroup, false);
