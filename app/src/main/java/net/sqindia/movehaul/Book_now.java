@@ -22,6 +22,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.rey.material.widget.Button;
 import com.sloop.fonts.FontsManager;
 
 /**
@@ -34,6 +35,7 @@ public class Book_now extends Activity {
     EditText et_delivery_address, et_goodstype, et_trucktype, et_description;
     TextInputLayout flt_delivery_address, flt_goodstype, flt_trucktype, flt_description;
     com.rey.material.widget.LinearLayout btn_back;
+    Button btn_post;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,7 @@ public class Book_now extends Activity {
         lt_truckType = (LinearLayout) findViewById(R.id.layout_truckType);
 
         btn_back = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_back);
+        btn_post = (Button) findViewById(R.id.btn_post);
 
 
         lt_goodsType.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +79,14 @@ public class Book_now extends Activity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(Book_now.this,DashboardNavigation.class);
+                startActivity(i);
+                finish();
+            }
+        });
+        btn_post.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Book_now.this,Job_review.class);
                 startActivity(i);
                 finish();
             }
