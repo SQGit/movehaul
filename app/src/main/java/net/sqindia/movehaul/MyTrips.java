@@ -44,7 +44,7 @@ public class MyTrips extends AppCompatActivity {
     private MyViewPagerAdapter myViewPagerAdapter;
     TabIndicatorView tiv;
     ListView ht_lview;
-    android.widget.ListView up_lview;
+
     ArrayList<String> ht_arlist, up_arlist;
 
 
@@ -104,11 +104,14 @@ public class MyTrips extends AppCompatActivity {
 
             } else {
 
+                android.widget.ListView up_lview;
                 up_lview = (android.widget.ListView) view.findViewById(R.id.lview);
-                up_arlist = new ArrayList<>();
+                final ArrayList<String> up_arlist = new ArrayList<>();
 
-                final UpcomingAdapter up_adapter = new UpcomingAdapter(MyTrips.this, up_arlist);
+                final UpcomingAdapter up_adapter = new UpcomingAdapter(MyTrips.this,MyTrips.this, up_arlist);
                 up_lview.setAdapter(up_adapter);
+
+                up_lview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
                 up_lview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override

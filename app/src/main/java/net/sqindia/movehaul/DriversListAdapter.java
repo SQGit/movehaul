@@ -20,7 +20,7 @@ import java.util.List;
  * Simple example of ListAdapter for using with Folding Cell
  * Adapter holds indexes of unfolded elements for correct work with default reusable views behavior
  */
-public class UpcomingAdapter extends ArrayAdapter<String> {
+public class DriversListAdapter extends ArrayAdapter<String> {
 
     private HashSet<Integer> unfoldedIndexes = new HashSet<>();
     private View.OnClickListener defaultRequestBtnClickListener;
@@ -30,7 +30,7 @@ public class UpcomingAdapter extends ArrayAdapter<String> {
     FoldingCell cell;
 
 
-    public UpcomingAdapter(Context context,Activity acti, List<String> objects) {
+    public DriversListAdapter(Context context, Activity acti, List<String> objects) {
         super(context, 0, objects);
         this.act = acti;
 
@@ -55,9 +55,8 @@ public class UpcomingAdapter extends ArrayAdapter<String> {
         if (cell == null) {
             viewHolder = new ViewHolder();
             LayoutInflater vi = LayoutInflater.from(getContext());
-            cell = (FoldingCell) vi.inflate(R.layout.upcoming_trip_adapter, parent, false);
+            cell = (FoldingCell) vi.inflate(R.layout.drivers_list_adapter, parent, false);
 
-            viewHolder.btn_cancel = (Button) cell.findViewById(R.id.button_cancel);
 
             cell.setTag(viewHolder);
         } else {
@@ -78,13 +77,7 @@ public class UpcomingAdapter extends ArrayAdapter<String> {
 
 
 
-        viewHolder.btn_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.e("tag","buttonclick");
-                cell.unfold((true));
-            }
-        });
+
 
 
 

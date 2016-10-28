@@ -47,4 +47,8 @@ dependencies {
 
     compile 'com.ramotion.foldingcell:folding-cell:1.0.1'
 
+    compile 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
+
+
+
 }

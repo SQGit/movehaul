@@ -3,13 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/transparent"
-    android:orientation="vertical"
     android:baselineAligned="false"
-    android:paddingTop="@dimen/_15sdp">
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/_5sdp"
+    android:paddingTop="@dimen/_5sdp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_180sdp"
+        android:layout_height="@dimen/_190sdp"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -59,23 +60,23 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:layout_gravity="left"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/_10sdp">
 
 
                 <com.rey.material.widget.TextView
+                    android:id="@+id/textview_book_id_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Booking ID : "
-                    android:id="@+id/textview_book_id_txt"
                     android:textColor="@color/redColor"
                     android:textSize="@dimen/_10sdp" />
 
                 <com.rey.material.widget.TextView
+                    android:id="@+id/textview_book_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textview_book_id"
                     android:text="MOV34563IX"
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/_14sdp" />
@@ -91,7 +92,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:padding="@dimen/_4sdp"
+                    android:padding="@dimen/_2sdp"
                     android:src="@drawable/delivery_addr" />
 
                 <LinearLayout
@@ -99,25 +100,24 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:paddingLeft="@dimen/_10sdp"
-                    >
+                    android:paddingLeft="@dimen/_10sdp">
 
 
                     <com.rey.material.widget.TextView
+                        android:id="@+id/textview_book_from_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="From"
-                        android:id="@+id/textview_book_from_txt"
                         android:textColor="@color/redColor"
                         android:textSize="@dimen/_10sdp" />
 
                     <com.rey.material.widget.TextView
+                        android:id="@+id/textview_book_from"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/_1sdp"
-                        android:id="@+id/textview_book_from"
-                        android:singleLine="true"
                         android:maxLines="1"
+                        android:paddingTop="@dimen/_1sdp"
+                        android:singleLine="true"
                         android:text="#6, North Avenue, Abuja, Nigeria"
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/_14sdp" />
@@ -138,7 +138,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:padding="@dimen/_4sdp"
+                    android:padding="@dimen/_2sdp"
                     android:src="@drawable/goods_type" />
 
                 <LinearLayout
@@ -146,24 +146,23 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:paddingLeft="@dimen/_10sdp"
-                    >
+                    android:paddingLeft="@dimen/_10sdp">
 
 
                     <com.rey.material.widget.TextView
+                        android:id="@+id/textview_book_to_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="To"
-                        android:id="@+id/textview_book_to_txt"
                         android:textColor="@color/redColor"
                         android:textSize="@dimen/_10sdp" />
 
                     <com.rey.material.widget.TextView
+                        android:id="@+id/textview_book_to"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/_1sdp"
-                        android:id="@+id/textview_book_to"
                         android:maxLines="1"
+                        android:paddingTop="@dimen/_1sdp"
                         android:text="#977, West Boage, Dekina, Nigeria"
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/_14sdp" />
@@ -178,8 +177,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_3sdp"
-                android:paddingBottom="@dimen/_5sdp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/_5sdp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -202,19 +201,19 @@
 
 
                         <com.rey.material.widget.TextView
+                            android:id="@+id/textview_book_date_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Date"
-                            android:id="@+id/textview_book_date_txt"
                             android:textColor="@color/redColor"
                             android:textSize="@dimen/_10sdp" />
 
                         <com.rey.material.widget.TextView
+                            android:id="@+id/textview_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingTop="@dimen/_1sdp"
                             android:text="05-10-2016"
-                            android:id="@+id/textview_date"
                             android:textColor="@color/textColor"
                             android:textSize="@dimen/_14sdp" />
 
@@ -241,23 +240,22 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:paddingLeft="@dimen/_10sdp"
-                        >
+                        android:paddingLeft="@dimen/_10sdp">
 
 
                         <com.rey.material.widget.TextView
+                            android:id="@+id/textview_time_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Time"
-                            android:id="@+id/textview_time_txt"
                             android:textColor="@color/redColor"
                             android:textSize="@dimen/_10sdp" />
 
                         <com.rey.material.widget.TextView
+                            android:id="@+id/textview_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingTop="@dimen/_1sdp"
-                            android:id="@+id/textview_time"
                             android:text="12.30 PM"
                             android:textColor="@color/textColor"
                             android:textSize="@dimen/_14sdp" />
@@ -273,8 +271,9 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:rotation="-90"
-                android:background="@mipmap/back" />
+
+                android:src="@mipmap/back"
+                android:rotation="-90" />
 
 
         </LinearLayout>

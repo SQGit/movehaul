@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/_10sdp"
+    android:paddingBottom="@dimen/_10sdp"
+    android:visibility="gone"
+    android:background="@android:color/transparent"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="-2dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/white_bg"
+            android:weightSum="4">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.2"
+                android:background="@color/redColor"
+                android:orientation="vertical">
+
+                <com.rey.material.widget.TextView
+                    android:id="@+id/textview_cost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="@dimen/_20sdp"
+                    android:focusable="false"
+                    android:gravity="right"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:text="$ 150"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_20sdp" />
+
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1.4"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/_10sdp">
+
+
+                <com.rey.material.widget.TextView
+                    android:id="@+id/textview_book_from_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Truck"
+                    android:textColor="@color/redColor"
+                    android:textSize="@dimen/_15sdp" />
+
+                <com.rey.material.widget.TextView
+                    android:id="@+id/textview_book_from"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:paddingTop="@dimen/_1sdp"
+                    android:singleLine="true"
+                    android:text="Heavy Load"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/_18sdp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1.4"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/_10sdp">
+
+
+                <com.rey.material.widget.TextView
+                    android:id="@+id/textview_book_from_ddtxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Driver"
+                    android:textColor="@color/redColor"
+                    android:textSize="@dimen/_15sdp" />
+
+                <com.rey.material.widget.TextView
+                    android:id="@+id/textview_bookdd_from"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:paddingTop="@dimen/_1sdp"
+                    android:text="Samson"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/_18sdp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/white_bg"
+            android:layout_marginTop="@dimen/_10sdp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1.5dp"
+                android:background="@color/redColor" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/_10sdp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.rey.material.widget.TextView
+                        android:id="@+id/textview_cosst"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:focusable="false"
+                        android:gravity="center"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:text="$ 150"
+                        android:textColor="@color/redColor"
+                        android:textSize="@dimen/_20sdp" />
+
+                    <ImageView
+                        android:id="@+id/imagsdesdView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:focusable="false"
+                        android:padding="@dimen/_2sdp"
+                        android:src="@drawable/profile_img" />
+
+                    <RatingBar
+                        android:id="@+id/ratingBsdar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_height="wrap_content">
+
+                    <com.rey.material.widget.TextView
+                        android:id="@+id/textview_bxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Name"
+                        android:textColor="@color/redColor"
+                        android:textSize="@dimen/_15sdp" />
+
+                    <com.rey.material.widget.TextView
+                        android:id="@+id/textvk_from"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:paddingTop="@dimen/_1sdp"
+                        android:singleLine="true"
+                        android:text="Samson"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/_18sdp" />
+
+                    <com.rey.material.widget.TextView
+                        android:id="@+id/textview_bootxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Damage Control"
+                        android:textColor="@color/redColor"
+                        android:textSize="@dimen/_15sdp" />
+
+                    <com.rey.material.widget.TextView
+                        android:id="@+id/textview_bom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:paddingTop="@dimen/_1sdp"
+                        android:singleLine="true"
+                        android:text="No Damage, 2014 model"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/_18sdp" />
+
+                    <com.rey.material.widget.TextView
+                        android:id="@+id/textview_book_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Truck"
+                        android:textColor="@color/redColor"
+                        android:textSize="@dimen/_15sdp" />
+
+                    <com.rey.material.widget.TextView
+                        android:id="@+id/textview_bo_from"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:paddingTop="@dimen/_1sdp"
+                        android:singleLine="true"
+                        android:text="Heavy Load"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/_18sdp" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <ImageView
+                android:id="@+id/im"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|bottom"
+                android:focusable="false"
+                android:padding="@dimen/_2sdp"
+                android:src="@mipmap/ic_tick_ico" />
+
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -7,10 +7,14 @@
 
 
     <com.rey.material.widget.ListView
-        android:layout_width="match_parent"
         android:id="@+id/lview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@null"
+        style="@style/Widget.AppCompat.ListView"
+        android:divider="@null"
         android:paddingBottom="@dimen/_20sdp"
-        android:layout_height="match_parent">
+        android:paddingTop="@dimen/_10sdp">
 
     </com.rey.material.widget.ListView>
 

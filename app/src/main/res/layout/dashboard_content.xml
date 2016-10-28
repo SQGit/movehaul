@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg"
@@ -164,6 +165,15 @@
 
 
         </LinearLayout>
+
+        <com.rey.material.widget.FloatingActionButton
+            android:id="@+id/float_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="@dimen/_40sdp"
+            app:fab_backgroundColor="@android:color/transparent"
+            app:fab_iconSrc="@drawable/arc_menu_ico" />
 
         <LinearLayout
             android:layout_width="fill_parent"

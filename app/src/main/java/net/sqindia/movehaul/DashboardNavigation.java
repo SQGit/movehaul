@@ -1,7 +1,7 @@
 package net.sqindia.movehaul;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,10 +15,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ProgressBar;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
-
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
+import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 import com.rey.material.widget.Button;
+import com.rey.material.widget.FloatingActionButton;
 import com.rey.material.widget.TextView;
 import com.sloop.fonts.FontsManager;
 
@@ -35,6 +38,7 @@ public class DashboardNavigation extends AppCompatActivity implements Navigation
     TextView tv_name, tv_email, tv_myTrips, tv_jobReview, tv_payments, tv_tracking, tv_offers, tv_emergencyContacts;
     EditText et_pickup, et_droplocation;
     TextInputLayout flt_pickup, flt_droplocation;
+    FloatingActionButton flt_icon;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,6 +64,9 @@ public class DashboardNavigation extends AppCompatActivity implements Navigation
         et_droplocation = (EditText) findViewById(R.id.editText_dropLocation);
         flt_pickup = (TextInputLayout) findViewById(R.id.float_pickup);
         flt_droplocation = (TextInputLayout) findViewById(R.id.float_drop);
+
+        flt_icon = (FloatingActionButton) findViewById(R.id.float_icon);
+
 
         Typeface type = Typeface.createFromAsset(getAssets(), "fonts/CATAMARAN-REGULAR.TTF");
         flt_pickup.setTypeface(type);
@@ -87,6 +94,35 @@ public class DashboardNavigation extends AppCompatActivity implements Navigation
         drawer.setDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        SubActionButton.Builder rLSubBuilder = new SubActionButton.Builder(this);
+        ImageView rlIcon1 = new ImageView(this);
+        ImageView rlIcon2 = new ImageView(this);
+        ImageView rlIcon3 = new ImageView(this);
+        ImageView rlIcon4 = new ImageView(this);
+        ImageView rlIcon5 = new ImageView(this);
+        ImageView rlIcon6 = new ImageView(this);
+
+        rlIcon1.setImageDrawable(getResources().getDrawable(R.drawable.truck_icon));
+        rlIcon2.setImageDrawable(getResources().getDrawable(R.drawable.truck_icon));
+        rlIcon3.setImageDrawable(getResources().getDrawable(R.drawable.truck_icon));
+        rlIcon4.setImageDrawable(getResources().getDrawable(R.drawable.truck_icon));
+        rlIcon5.setImageDrawable(getResources().getDrawable(R.drawable.truck_icon));
+        rlIcon6.setImageDrawable(getResources().getDrawable(R.drawable.truck_icon));
+
+
+        // Build the menu with default options: light theme, 90 degrees, 72dp radius.
+        // Set 4 default SubActionButtons
+        final FloatingActionMenu rightLowerMenu = new FloatingActionMenu.Builder(this)
+                .addSubActionView(rLSubBuilder.setContentView(rlIcon1).build())
+                .addSubActionView(rLSubBuilder.setContentView(rlIcon2).build())
+                .addSubActionView(rLSubBuilder.setContentView(rlIcon3).build())
+                .addSubActionView(rLSubBuilder.setContentView(rlIcon4).build())
+                .addSubActionView(rLSubBuilder.setContentView(rlIcon5).build())
+                .addSubActionView(rLSubBuilder.setContentView(rlIcon6).build())
+                .attachTo(flt_icon)
+                .build();
 
 
     }
