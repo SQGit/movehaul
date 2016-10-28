@@ -227,6 +227,7 @@
                         android:layout_height="@dimen/_23sdp"
                         android:layout_gravity="center"
                         android:src="@drawable/date_icon"
+                        android:layout_marginRight="@dimen/_12sdp"
                         android:id="@+id/imageView3" />
                 </LinearLayout>
 
@@ -268,6 +269,7 @@
                         android:layout_width="@dimen/_23sdp"
                         android:layout_height="@dimen/_23sdp"
                         android:layout_gravity="center"
+                        android:layout_marginRight="@dimen/_12sdp"
                         android:src="@drawable/time_icon" />
                 </LinearLayout>
 
