@@ -11,7 +11,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_270sdp"
         android:layout_marginRight="-2dp"
         android:orientation="vertical">
 
@@ -45,6 +45,7 @@
                 <RatingBar
                     android:id="@+id/ratingBar"
                     android:layout_width="match_parent"
+                    style = "?android:attr/ratingBarStyleSmall"
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
@@ -160,6 +161,7 @@
                     <RatingBar
                         android:id="@+id/ratingBsdar"
                         android:layout_width="match_parent"
+                        style = "?android:attr/ratingBarStyleSmall"
                         android:layout_height="wrap_content" />
 
                 </LinearLayout>
