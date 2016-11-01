@@ -8,6 +8,7 @@
     <color name="greyIcon">#6b6b6b</color>
     <color name="ColorStatus">#FFFFFF</color>
     <color name="textColor">#313131</color>
+    <color name="hintColor">#5e5e5e</color>
     <color name="viewColor">#E1E1E1</color>
     <color name="redColor">#F65F52</color>
     <color name="shadowColor">#e6bdbdbd</color>
