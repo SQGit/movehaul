@@ -72,6 +72,14 @@ public class DashboardNavigation extends AppCompatActivity implements Navigation
         flt_pickup.setTypeface(type);
         flt_droplocation.setTypeface(type);
 
+        tv_payments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(DashboardNavigation.this,Payment.class);
+                startActivity(i);
+                finish();
+            }
+        });
         btn_book_now.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

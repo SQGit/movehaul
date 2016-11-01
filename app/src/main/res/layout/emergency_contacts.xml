@@ -2,9 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/bg"
-    android:orientation="vertical">
-
+    android:orientation="vertical"
+    android:background="@drawable/bg">
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -30,10 +29,10 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/text_payment"
+                android:id="@+id/text_register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Paytment"
+                android:text="Emergency Contacts"
                 android:textColor="#F65F52"
                 android:textSize="@dimen/_19sdp" />
         </LinearLayout>
@@ -50,38 +49,5 @@
             </include>
         </LinearLayout>
     </LinearLayout>
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="bottom"
-        android:gravity="bottom">
-
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:gravity="bottom">
-
-            <include
-                layout="@layout/down_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"></include>
-        </LinearLayout>
-
-        <com.rey.material.widget.ListView
-            android:layout_width="match_parent"
-            android:id="@+id/listview_payment"
-            style="@style/Widget.AppCompat.ListView"
-            android:divider="@null"
-            android:layout_marginLeft="@dimen/_20sdp"
-            android:paddingBottom="@dimen/_10sdp"
-            android:paddingTop="@dimen/_5sdp"
-            android:layout_height="match_parent">
-
-        </com.rey.material.widget.ListView>
-
-
-    </FrameLayout>
 
 </LinearLayout>

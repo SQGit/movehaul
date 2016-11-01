@@ -60,9 +60,12 @@
             android:name=".Job_review"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
-
         <activity
             android:name=".DriversList"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
+        <activity
+            android:name=".Payment"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
 
