@@ -68,6 +68,10 @@
             android:name=".Payment"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
+        <activity
+            android:name=".EmergencyContacts"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
 
         <receiver android:name=".ReceiveSmsBroadcastReceiver">
             <intent-filter>

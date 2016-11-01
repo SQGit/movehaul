@@ -59,12 +59,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+
             android:src="@mipmap/ic_refresh_ico" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:id="@+id/imgview_filter"
             android:src="@mipmap/ic_filter_ico" />
 
     </LinearLayout>

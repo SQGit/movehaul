@@ -2,112 +2,120 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:background="@drawable/bg">
+    android:background="@drawable/bg"
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="top"
-        android:layout_gravity="top">
+        android:layout_gravity="top"
+        android:gravity="top">
+
         <include
             layout="@layout/action_bar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </include>
+            android:layout_height="wrap_content"></include>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="@dimen/_15sdp">
+        android:layout_margin="@dimen/_15sdp"
+        android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="@dimen/_15sdp">
+            android:layout_marginTop="@dimen/_15sdp"
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Forgot Ph. No"
-                android:textSize="@dimen/_19sdp"
-                android:textColor="#F65F52"/>
+                android:textColor="#F65F52"
+                android:textSize="@dimen/_19sdp" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
+
             <include
                 layout="@layout/red_underline"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </include>
+                android:layout_height="wrap_content"></include>
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginLeft="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_15sdp">
+        android:layout_marginTop="@dimen/_15sdp"
+        android:orientation="vertical">
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/float_email"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_3sdp"
-            android:textColorHint="@color/colorAccent"
-            android:id="@+id/float_email"
-            android:layout_marginBottom="@dimen/_8sdp">
+            android:textColorHint="@color/colorAccent">
+
             <EditText
                 android:id="@+id/editTextEmail"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:background="@null"
                 android:hint="Type Email"
-                android:maxLines="1"
                 android:inputType="textWebEmailAddress"
+                android:maxLines="1"
                 android:paddingTop="@dimen/_10sdp"
-                android:textSize="@dimen/_15sdp"
                 android:textColor="#000000"
-                android:background="@null"/>
+                android:textSize="@dimen/_15sdp" />
         </android.support.design.widget.TextInputLayout>
+
         <View
             android:layout_width="fill_parent"
             android:layout_height="@dimen/_1sdp"
-            android:background="#E1E1E1"
-            android:layout_marginBottom="@dimen/_5sdp"/>
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:background="#E1E1E1" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
         android:gravity="center"
-        android:padding="@dimen/_3sdp"
-        android:layout_marginTop="@dimen/_20sdp">
+        android:padding="@dimen/_3sdp">
+
         <com.rey.material.widget.Button
+            android:id="@+id/btn_submit"
+            style="@style/Material.Drawable.Ripple.Touch"
             android:layout_width="@dimen/_140sdp"
             android:layout_height="@dimen/_40sdp"
-            style="@style/Material.Drawable.Ripple.Touch"
             android:background="@drawable/submit"
-            android:text="Submit"
-            android:textColor="#FFFFFF"
             android:gravity="center"
             android:paddingBottom="@dimen/_5sdp"
             android:paddingRight="@dimen/_3sdp"
-            android:textSize="@dimen/_18sdp"
+            android:text="Submit"
             android:textAllCaps="false"
-            android:id="@+id/btn_submit" />
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/_18sdp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:gravity="bottom"
         android:layout_gravity="bottom"
+        android:gravity="bottom"
         android:orientation="horizontal">
+
         <include
             layout="@layout/down_icon"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </include>
+            android:layout_height="wrap_content"></include>
     </LinearLayout>
 
 </LinearLayout>

@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.widget.DrawerLayout;
@@ -21,7 +22,7 @@ import android.widget.ImageView;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 import com.rey.material.widget.Button;
-import com.rey.material.widget.FloatingActionButton;
+
 import com.rey.material.widget.TextView;
 import com.sloop.fonts.FontsManager;
 
@@ -39,6 +40,7 @@ public class DashboardNavigation extends AppCompatActivity implements Navigation
     EditText et_pickup, et_droplocation;
     TextInputLayout flt_pickup, flt_droplocation;
     FloatingActionButton flt_icon;
+    com.rey.material.widget.ImageView img_ico;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,10 +69,58 @@ public class DashboardNavigation extends AppCompatActivity implements Navigation
 
         flt_icon = (FloatingActionButton) findViewById(R.id.float_icon);
 
+        img_ico = (com.rey.material.widget.ImageView) findViewById(R.id.img_ico);
+
 
         Typeface type = Typeface.createFromAsset(getAssets(), "fonts/CATAMARAN-REGULAR.TTF");
         flt_pickup.setTypeface(type);
         flt_droplocation.setTypeface(type);
+
+
+
+        final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.app_name, R.string.app_name);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+        navigationView.setNavigationItemSelectedListener(this);
+
+
+        SubActionButton.Builder rLSubBuilder = new SubActionButton.Builder(DashboardNavigation.this);
+        ImageView rlIcon1 = new ImageView(DashboardNavigation.this);
+        ImageView rlIcon2 = new ImageView(DashboardNavigation.this);
+        ImageView rlIcon3 = new ImageView(DashboardNavigation.this);
+        ImageView rlIcon4 = new ImageView(DashboardNavigation.this);
+        ImageView rlIcon5 = new ImageView(DashboardNavigation.this);
+        ImageView rlIcon6 = new ImageView(DashboardNavigation.this);
+
+        rlIcon1.setImageDrawable(getResources().getDrawable(R.drawable.truck_1));
+        rlIcon2.setImageDrawable(getResources().getDrawable(R.drawable.truck_icon));
+        rlIcon3.setImageDrawable(getResources().getDrawable(R.drawable.truck_icon));
+        rlIcon4.setImageDrawable(getResources().getDrawable(R.drawable.truck_icon));
+        rlIcon5.setImageDrawable(getResources().getDrawable(R.drawable.truck_icon));
+        rlIcon6.setImageDrawable(getResources().getDrawable(R.drawable.truck_icon));
+
+
+        // Build the menu with default options: light theme, 90 degrees, 72dp radius.
+        // Set 4 default SubActionButtons
+        final FloatingActionMenu rightLowerMenu = new FloatingActionMenu.Builder(DashboardNavigation.this)
+                .addSubActionView(rLSubBuilder.setContentView(rlIcon1).build())
+                .addSubActionView(rLSubBuilder.setContentView(rlIcon2).build())
+                .addSubActionView(rLSubBuilder.setContentView(rlIcon3).build())
+                .addSubActionView(rLSubBuilder.setContentView(rlIcon4).build())
+                .addSubActionView(rLSubBuilder.setContentView(rlIcon5).build())
+                .addSubActionView(rLSubBuilder.setContentView(rlIcon6).build())
+                .attachTo(img_ico)
+                .build();
+
+
+
+
+
+
+
+
+
 
         tv_payments.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,40 +147,15 @@ public class DashboardNavigation extends AppCompatActivity implements Navigation
             }
         });
 
-        final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.app_name, R.string.app_name);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-        navigationView.setNavigationItemSelectedListener(this);
 
+        tv_emergencyContacts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent goIntsd = new Intent(getApplicationContext(),EmergencyContacts.class);
+                startActivity(goIntsd);
+            }
+        });
 
-        SubActionButton.Builder rLSubBuilder = new SubActionButton.Builder(this);
-        ImageView rlIcon1 = new ImageView(this);
-        ImageView rlIcon2 = new ImageView(this);
-        ImageView rlIcon3 = new ImageView(this);
-        ImageView rlIcon4 = new ImageView(this);
-        ImageView rlIcon5 = new ImageView(this);
-        ImageView rlIcon6 = new ImageView(this);
-
-        rlIcon1.setImageDrawable(getResources().getDrawable(R.drawable.truck_icon));
-        rlIcon2.setImageDrawable(getResources().getDrawable(R.drawable.truck_icon));
-        rlIcon3.setImageDrawable(getResources().getDrawable(R.drawable.truck_icon));
-        rlIcon4.setImageDrawable(getResources().getDrawable(R.drawable.truck_icon));
-        rlIcon5.setImageDrawable(getResources().getDrawable(R.drawable.truck_icon));
-        rlIcon6.setImageDrawable(getResources().getDrawable(R.drawable.truck_icon));
-
-
-        // Build the menu with default options: light theme, 90 degrees, 72dp radius.
-        // Set 4 default SubActionButtons
-        final FloatingActionMenu rightLowerMenu = new FloatingActionMenu.Builder(this)
-                .addSubActionView(rLSubBuilder.setContentView(rlIcon1).build())
-                .addSubActionView(rLSubBuilder.setContentView(rlIcon2).build())
-                .addSubActionView(rLSubBuilder.setContentView(rlIcon3).build())
-                .addSubActionView(rLSubBuilder.setContentView(rlIcon4).build())
-                .addSubActionView(rLSubBuilder.setContentView(rlIcon5).build())
-                .addSubActionView(rLSubBuilder.setContentView(rlIcon6).build())
-                .attachTo(flt_icon)
-                .build();
 
 
     }

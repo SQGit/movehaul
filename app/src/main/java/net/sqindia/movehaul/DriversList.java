@@ -1,14 +1,19 @@
 package net.sqindia.movehaul;
 
+import android.app.Dialog;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 
 import com.ramotion.foldingcell.FoldingCell;
 import com.rey.material.widget.ListView;
+import com.sloop.fonts.FontsManager;
 
 import java.util.ArrayList;
 
@@ -18,6 +23,8 @@ import java.util.ArrayList;
 
 public class DriversList extends AppCompatActivity {
     ListView lv_drv_list;
+    ImageView iv_filter;
+    Dialog dialog_filter;
 
 
     @Override
@@ -26,6 +33,10 @@ public class DriversList extends AppCompatActivity {
         setContentView(R.layout.drivers_list);
 
         lv_drv_list = (ListView) findViewById(R.id.listview_driver);
+        iv_filter = (ImageView) findViewById(R.id.imgview_filter);
+
+        FontsManager.initFormAssets(DriversList.this, "fonts/CATAMARAN-REGULAR.TTF");       //initialization
+        FontsManager.changeFonts(DriversList.this);
 
         final ArrayList<String> drv_arlist = new ArrayList<>();
 
@@ -46,6 +57,23 @@ public class DriversList extends AppCompatActivity {
 
             }
         });
+
+
+        iv_filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog_filter.show();
+            }
+        });
+
+
+        dialog_filter = new Dialog(DriversList.this);
+        dialog_filter.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog_filter.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog_filter.setCancelable(true);
+        dialog_filter.setContentView(R.layout.dialog_filter_driver);
+
+
 
     }
 }
