@@ -116,10 +116,14 @@ public class DashboardNavigation extends AppCompatActivity implements Navigation
 
 
 
-
-
-
-
+        tv_tracking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(DashboardNavigation.this,Tracking.class);
+                startActivity(i);
+                finish();
+            }
+        });
 
 
         tv_payments.setOnClickListener(new View.OnClickListener() {
