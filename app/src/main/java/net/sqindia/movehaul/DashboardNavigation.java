@@ -92,23 +92,23 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         final FrameLayout.LayoutParams tvParams = new FrameLayout.LayoutParams(90,90);
 
         final ImageView rlIcon1 = new ImageView(DashboardNavigation.this);
-        ImageView rlIcon2 = new ImageView(DashboardNavigation.this);
-        ImageView rlIcon3 = new ImageView(DashboardNavigation.this);
-        ImageView rlIcon4 = new ImageView(DashboardNavigation.this);
-        ImageView rlIcon5 = new ImageView(DashboardNavigation.this);
-        ImageView rlIcon6 = new ImageView(DashboardNavigation.this);
+        final ImageView rlIcon2 = new ImageView(DashboardNavigation.this);
+        final ImageView rlIcon3 = new ImageView(DashboardNavigation.this);
+        final ImageView rlIcon4 = new ImageView(DashboardNavigation.this);
+        final ImageView rlIcon5 = new ImageView(DashboardNavigation.this);
+        final ImageView rlIcon6 = new ImageView(DashboardNavigation.this);
 
         rlIcon1.setBackground(getResources().getDrawable(R.drawable.truck_1));
         rlIcon1.setLayoutParams(tvParams);
-        rlIcon2.setImageDrawable(getResources().getDrawable(R.drawable.truck_1));
+        rlIcon2.setBackground(getResources().getDrawable(R.drawable.truck_1));
         rlIcon2.setLayoutParams(tvParams);
-        rlIcon3.setImageDrawable(getResources().getDrawable(R.drawable.truck_1));
+        rlIcon3.setBackground(getResources().getDrawable(R.drawable.truck_1));
         rlIcon3.setLayoutParams(tvParams);
-        rlIcon4.setImageDrawable(getResources().getDrawable(R.drawable.truck_1));
+        rlIcon4.setBackground(getResources().getDrawable(R.drawable.truck_1));
         rlIcon4.setLayoutParams(tvParams);
-        rlIcon5.setImageDrawable(getResources().getDrawable(R.drawable.truck_1));
+        rlIcon5.setBackground(getResources().getDrawable(R.drawable.truck_1));
         rlIcon5.setLayoutParams(tvParams);
-        rlIcon6.setImageDrawable(getResources().getDrawable(R.drawable.truck_1));
+        rlIcon6.setBackground(getResources().getDrawable(R.drawable.truck_1));
         rlIcon6.setLayoutParams(tvParams);
 
 
@@ -131,8 +131,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
 
         final FloatingActionMenu fam_truck_choose = new FloatingActionMenu.Builder(DashboardNavigation.this)
-                .setRadius(150)
-                .setStartAngle(150)
+                //.setRadius(150)
+                //.setStartAngle(150)
                 .addSubActionView(rlIcon1)
                 .addSubActionView(rlIcon2)
                 .addSubActionView(rlIcon3)
@@ -166,6 +166,81 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 serviceWillBeDismissed = true; // the order is important
               //  fam_truck_choose.close(true);
                 rlIcon1.setBackground(getResources().getDrawable(R.drawable.truck_1_hover));
+                rlIcon2.setBackground(getResources().getDrawable(R.drawable.truck_1));
+                rlIcon3.setBackground(getResources().getDrawable(R.drawable.truck_1));
+                rlIcon4.setBackground(getResources().getDrawable(R.drawable.truck_1));
+                rlIcon5.setBackground(getResources().getDrawable(R.drawable.truck_1));
+                rlIcon6.setBackground(getResources().getDrawable(R.drawable.truck_1));
+            }
+        });
+
+        rlIcon2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                serviceWillBeDismissed = true; // the order is important
+                //  fam_truck_choose.close(true);
+                rlIcon2.setBackground(getResources().getDrawable(R.drawable.truck_1_hover));
+                rlIcon1.setBackground(getResources().getDrawable(R.drawable.truck_1));
+                rlIcon3.setBackground(getResources().getDrawable(R.drawable.truck_1));
+                rlIcon4.setBackground(getResources().getDrawable(R.drawable.truck_1));
+                rlIcon5.setBackground(getResources().getDrawable(R.drawable.truck_1));
+                rlIcon6.setBackground(getResources().getDrawable(R.drawable.truck_1));
+            }
+        });
+
+        rlIcon3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                serviceWillBeDismissed = true; // the order is important
+                //  fam_truck_choose.close(true);
+                rlIcon3.setBackground(getResources().getDrawable(R.drawable.truck_1_hover));
+                rlIcon2.setBackground(getResources().getDrawable(R.drawable.truck_1));
+                rlIcon1.setBackground(getResources().getDrawable(R.drawable.truck_1));
+                rlIcon4.setBackground(getResources().getDrawable(R.drawable.truck_1));
+                rlIcon5.setBackground(getResources().getDrawable(R.drawable.truck_1));
+                rlIcon6.setBackground(getResources().getDrawable(R.drawable.truck_1));
+            }
+        });
+
+        rlIcon4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                serviceWillBeDismissed = true; // the order is important
+                //  fam_truck_choose.close(true);
+                rlIcon4.setBackground(getResources().getDrawable(R.drawable.truck_1_hover));
+                rlIcon2.setBackground(getResources().getDrawable(R.drawable.truck_1));
+                rlIcon3.setBackground(getResources().getDrawable(R.drawable.truck_1));
+                rlIcon1.setBackground(getResources().getDrawable(R.drawable.truck_1));
+                rlIcon5.setBackground(getResources().getDrawable(R.drawable.truck_1));
+                rlIcon6.setBackground(getResources().getDrawable(R.drawable.truck_1));
+            }
+        });
+
+        rlIcon5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                serviceWillBeDismissed = true; // the order is important
+                //  fam_truck_choose.close(true);
+                rlIcon5.setBackground(getResources().getDrawable(R.drawable.truck_1_hover));
+                rlIcon2.setBackground(getResources().getDrawable(R.drawable.truck_1));
+                rlIcon3.setBackground(getResources().getDrawable(R.drawable.truck_1));
+                rlIcon4.setBackground(getResources().getDrawable(R.drawable.truck_1));
+                rlIcon1.setBackground(getResources().getDrawable(R.drawable.truck_1));
+                rlIcon6.setBackground(getResources().getDrawable(R.drawable.truck_1));
+            }
+        });
+
+        rlIcon6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                serviceWillBeDismissed = true; // the order is important
+                //  fam_truck_choose.close(true);
+                rlIcon6.setBackground(getResources().getDrawable(R.drawable.truck_1_hover));
+                rlIcon2.setBackground(getResources().getDrawable(R.drawable.truck_1));
+                rlIcon3.setBackground(getResources().getDrawable(R.drawable.truck_1));
+                rlIcon4.setBackground(getResources().getDrawable(R.drawable.truck_1));
+                rlIcon5.setBackground(getResources().getDrawable(R.drawable.truck_1));
+                rlIcon1.setBackground(getResources().getDrawable(R.drawable.truck_1));
             }
         });
 
