@@ -68,12 +68,13 @@
             android:textColorHint="@color/hintColor"
             android:textSize="@dimen/_15sdp" />
 
-        <ImageView
+        <com.rey.material.widget.ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:paddingLeft="@dimen/_20sdp"
             android:paddingRight="@dimen/_7sdp"
+            android:id="@+id/btn_search"
             android:paddingTop="@dimen/_4sdp"
             android:src="@drawable/tracking_search_icon" />
 
@@ -106,6 +107,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:id="@+id/textView_hint"
             android:layout_marginBottom="@dimen/_40sdp"
             android:text="Type your Booking Id / Vehicle No"
             android:textColor="#373737"
@@ -113,12 +115,17 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="fill_parent"
+            android:id="@+id/scrollView_tracking">
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="@drawable/white_bg"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_10sdp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -271,7 +278,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:drawableLeft="@drawable/goods_tracking"
+                            android:drawableLeft="@drawable/driver_tracking"
                             android:drawablePadding="@dimen/_10sdp"
                             android:gravity="center"
                             android:text="Stephen"
@@ -336,6 +343,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:weightSum="2">
 
                     <LinearLayout
@@ -344,24 +352,29 @@
                         android:layout_marginLeft="@dimen/_15sdp"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:paddingBottom="@dimen/_10sdp"
                         android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
+                            android:layout_gravity="center|center_vertical"
                             android:orientation="horizontal">
 
                             <ImageView
                                 android:layout_width="@dimen/_20sdp"
                                 android:layout_height="@dimen/_20sdp"
-                                android:background="@drawable/ring_bg" />
+                                android:layout_gravity="bottom"
+                                android:background="@drawable/ring_bg"
+                                android:id="@+id/imageView4" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/_10sdp"
                                 android:text="Initiating"
+                                android:gravity="top"
+                                android:layout_gravity="top"
                                 android:textColor="@color/textColor"
                                 android:textSize="@dimen/_15sdp" />
                         </LinearLayout>
@@ -369,22 +382,23 @@
                         <View
                             android:layout_width="2dp"
                             android:layout_height="@dimen/_40sdp"
-                            android:layout_gravity="start"
+                            android:layout_gravity="start|center"
                             android:layout_marginBottom="@dimen/_5sdp"
                             android:layout_marginLeft="@dimen/_10sdp"
-                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
                             android:background="#f04334" />
 
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
+                            android:layout_gravity="center|center_vertical"
                             android:orientation="horizontal">
 
                             <ImageView
                                 android:layout_width="@dimen/_20sdp"
                                 android:layout_height="@dimen/_20sdp"
+                                android:layout_gravity="center"
                                 android:background="@drawable/ring_bg" />
 
                             <TextView
@@ -392,6 +406,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/_10sdp"
                                 android:text="Processing"
+                                android:gravity="top"
+                                android:layout_gravity="top"
                                 android:textColor="@color/textColor"
                                 android:textSize="@dimen/_15sdp" />
                         </LinearLayout>
@@ -400,8 +416,8 @@
                         <View
                             android:layout_width="2dp"
                             android:layout_height="@dimen/_40sdp"
-                            android:layout_gravity="start"
-                            android:layout_marginBottom="@dimen/_10sdp"
+                            android:layout_gravity="start|center"
+                            android:layout_marginBottom="@dimen/_5sdp"
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_5sdp"
                             android:background="#f04334" />
@@ -409,12 +425,14 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
+                            android:layout_gravity="center|center_vertical"
+                            android:gravity="start"
                             android:orientation="horizontal">
 
                             <ImageView
                                 android:layout_width="@dimen/_20sdp"
                                 android:layout_height="@dimen/_20sdp"
+                                android:layout_gravity="center"
                                 android:background="@drawable/ring_bg" />
 
                             <TextView
@@ -422,6 +440,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/_10sdp"
                                 android:text="Delivered"
+                                android:gravity="top"
+                                android:layout_gravity="top"
                                 android:textColor="@color/textColor"
                                 android:textSize="@dimen/_15sdp" />
                         </LinearLayout>
@@ -429,19 +449,28 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/tracking_map"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
                         android:layout_weight="1"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:layout_margin="@dimen/_20sdp">
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_20sdp"
+                        android:layout_marginRight="@dimen/_5sdp">
 
-                        <fragment
-                            android:id="@+id/map"
-                            class="com.google.android.gms.maps.SupportMapFragment"
+                        <FrameLayout
+                            android:id="@+id/map_container"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
+                            android:layout_height="match_parent"
+                            android:background="@drawable/track_map">
+
+                            <fragment
+                                android:id="@+id/map"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:name="com.google.android.gms.maps.SupportMapFragment"/>
+
+
+                        </FrameLayout>
+
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
