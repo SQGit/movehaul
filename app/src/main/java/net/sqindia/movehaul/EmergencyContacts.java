@@ -1,6 +1,7 @@
 package net.sqindia.movehaul;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -78,9 +79,12 @@ public class EmergencyContacts extends Activity {
 
             }
         });
-
-
-
-
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(EmergencyContacts.this,DashboardNavigation.class);
+        startActivity(i);
+        finish();
     }
 }

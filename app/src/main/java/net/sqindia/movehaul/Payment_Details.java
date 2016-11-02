@@ -33,4 +33,11 @@ public class Payment_Details extends Activity {
         });
 
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(Payment_Details.this,DashboardNavigation.class);
+        startActivity(i);
+        finish();
+    }
 }

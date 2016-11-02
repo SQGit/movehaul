@@ -44,4 +44,11 @@ public class Payment extends Activity {
             }
         });
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(Payment.this,DashboardNavigation.class);
+        startActivity(i);
+        finish();
+    }
 }

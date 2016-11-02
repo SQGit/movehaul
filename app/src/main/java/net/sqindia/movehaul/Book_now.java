@@ -230,4 +230,11 @@ public class Book_now extends Activity {
         alertD.setView(promptView);
         alertD.show();
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(Book_now.this,DashboardNavigation.class);
+        startActivity(i);
+        finish();
+    }
 }

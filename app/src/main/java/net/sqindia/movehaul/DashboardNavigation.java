@@ -256,6 +256,30 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
 
 
+        tv_jobReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(DashboardNavigation.this,Job_review.class);
+                startActivity(i);
+                finish();
+            }
+        });
+        tv_myTrips.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(DashboardNavigation.this,MyTrips.class);
+                startActivity(i);
+                finish();
+            }
+        });
+        tv_offers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(DashboardNavigation.this,Payment_Details.class);
+                startActivity(i);
+                finish();
+            }
+        });
 
         tv_tracking.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -32,4 +32,11 @@ public class Job_review extends Activity {
             }
         });
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(Job_review.this,DashboardNavigation.class);
+        startActivity(i);
+        finish();
+    }
 }

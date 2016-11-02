@@ -258,4 +258,11 @@ public class Book_later extends Activity {
         alertD.setView(promptView);
         alertD.show();
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(Book_later.this,DashboardNavigation.class);
+        startActivity(i);
+        finish();
+    }
 }
