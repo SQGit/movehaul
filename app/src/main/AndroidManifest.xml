@@ -80,6 +80,10 @@
             android:name=".Payment_Details"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
+        <activity
+            android:name=".Payment_Card_Details"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
 
         <receiver android:name=".ReceiveSmsBroadcastReceiver">
             <intent-filter>
