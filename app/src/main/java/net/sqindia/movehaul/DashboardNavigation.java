@@ -69,7 +69,7 @@ public class DashboardNavigation extends AppCompatActivity implements Navigation
 
         flt_icon = (FloatingActionButton) findViewById(R.id.float_icon);
 
-        img_ico = (com.rey.material.widget.ImageView) findViewById(R.id.img_ico);
+     //   img_ico = (com.rey.material.widget.ImageView) findViewById(R.id.img_ico);
 
 
         Typeface type = Typeface.createFromAsset(getAssets(), "fonts/CATAMARAN-REGULAR.TTF");
@@ -110,7 +110,7 @@ public class DashboardNavigation extends AppCompatActivity implements Navigation
                 .addSubActionView(rLSubBuilder.setContentView(rlIcon4).build())
                 .addSubActionView(rLSubBuilder.setContentView(rlIcon5).build())
                 .addSubActionView(rLSubBuilder.setContentView(rlIcon6).build())
-                .attachTo(img_ico)
+                .attachTo(flt_icon)
                 .build();
 
 
