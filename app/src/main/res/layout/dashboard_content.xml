@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg"
@@ -57,11 +58,25 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent">
 
-        <fragment
+       <!-- <fragment
             android:id="@+id/map"
             class="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent" />-->
+
+        <!--<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />-->
+
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/map"
+            tools:context=".DasboardNavigation"
+            android:name="com.google.android.gms.maps.SupportMapFragment" />
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -165,24 +180,23 @@
 
         </LinearLayout>
 
+
+
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/float_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
             android:layout_marginBottom="@dimen/_40sdp"
-            android:src="@drawable/arc_menu_ico" />
+            android:layout_marginRight="@dimen/_5sdp"
+            android:src="@drawable/lor"
+            app:backgroundTint="@color/redColor"
+            app:elevation="4dp" />
 
 
-        <com.rey.material.widget.ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:id="@+id/img_ico"
-            android:layout_marginRight="@dimen/_50sdp"
-            android:layout_marginBottom="@dimen/_40sdp"
-            android:padding="@dimen/_20sdp"
-            android:background="@drawable/arc_menu_ico"/>
+
+
+
 
         <LinearLayout
             android:layout_width="fill_parent"
