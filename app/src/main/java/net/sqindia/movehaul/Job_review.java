@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.rey.material.widget.Button;
 import com.rey.material.widget.LinearLayout;
 import com.sloop.fonts.FontsManager;
 
@@ -14,6 +15,7 @@ import com.sloop.fonts.FontsManager;
 
 public class Job_review extends Activity {
     LinearLayout btn_back;
+    Button btn_review;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +24,16 @@ public class Job_review extends Activity {
         FontsManager.changeFonts(this);
 
         btn_back = (LinearLayout) findViewById(R.id.layout_back);
+        btn_review = (Button) findViewById(R.id.btn_review);
+
+        btn_review.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Job_review.this,DriversList.class);
+                startActivity(i);
+                finish();
+            }
+        });
 
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
