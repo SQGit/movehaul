@@ -95,7 +95,7 @@ public class Book_now extends Activity {
         dialog1 = new Dialog(Book_now.this);
         dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        dialog1.setCancelable(false);
+        dialog1.setCancelable(true);
         dialog1.setContentView(R.layout.dialogue_job_posting);
     }
 
