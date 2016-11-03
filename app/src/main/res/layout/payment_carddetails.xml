@@ -97,7 +97,7 @@
             android:maxLength="4"
             android:maxLines="1"
             android:nextFocusDown="@+id/edt_otp2"
-            android:textSize="@dimen/_21sdp" />
+            android:textSize="@dimen/_15sdp" />
 
         <View
             android:layout_width="@dimen/_7sdp"
@@ -117,7 +117,7 @@
             android:maxLength="4"
             android:maxLines="1"
             android:nextFocusDown="@+id/edt_otp3"
-            android:textSize="@dimen/_21sdp" />
+            android:textSize="@dimen/_15sdp" />
 
         <View
             android:layout_width="@dimen/_7sdp"
