@@ -2,7 +2,7 @@ package net.sqindia.movehaul;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
@@ -14,13 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import com.rey.material.widget.Button;
 import com.sloop.fonts.FontsManager;
@@ -36,6 +33,7 @@ public class Book_now extends Activity {
     TextInputLayout flt_delivery_address, flt_goodstype, flt_trucktype, flt_description;
     com.rey.material.widget.LinearLayout btn_back;
     Button btn_post;
+    Dialog dialog1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,13 +84,20 @@ public class Book_now extends Activity {
         btn_post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Book_now.this,Job_review.class);
+                dialog1.show();
+                /*Intent i = new Intent(Book_now.this,Job_review.class);
                 startActivity(i);
-                finish();
+                finish();*/
             }
         });
-    }
 
+
+        dialog1 = new Dialog(Book_now.this);
+        dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog1.setCancelable(false);
+        dialog1.setContentView(R.layout.dialogue_job_posting);
+    }
 
     private void truck_type() {
 

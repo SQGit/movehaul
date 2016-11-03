@@ -8,15 +8,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_27sdp"
         android:gravity="center"
         android:background="#FFFFFF"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/_27sdp"
+        android:layout_marginRight="@dimen/_27sdp"
+        android:layout_marginTop="31dp"
+        android:padding="@dimen/_15sdp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/truckbg_ico" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Please Wait for a Moment!!"
-            android:layout_marginTop="@dimen/_35sdp"
+            android:text="Your Job Posted"
+            android:layout_marginTop="@dimen/_10sdp"
             android:id="@+id/txt_alert"
             android:textSize="@dimen/_16sdp" />
 
@@ -25,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:id="@+id/txt_alert1"
-            android:text="Your Details are Checking"
+            android:text="Successfully!!"
             android:textSize="@dimen/_14sdp" />
         <TextView
             android:layout_width="wrap_content"
@@ -33,13 +45,13 @@
             android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/_10sdp"
             android:id="@+id/txt_alert2"
-            android:text="Once Validation is over,You can login"
+            android:text="Wait for some time to"
             android:textSize="@dimen/_13sdp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="in Movehaul"
+            android:text="select your Driver"
             android:id="@+id/txt_alert3"
             android:textSize="@dimen/_13sdp" />
        <!-- <ImageView
@@ -67,14 +79,16 @@
 
     </LinearLayout>
 
-<!--
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/aler_truck" />
--->
+
+    <!--
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/truckbg_ico" />
+    -->
+
 
 
 </RelativeLayout>
