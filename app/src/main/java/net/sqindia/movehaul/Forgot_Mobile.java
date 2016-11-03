@@ -63,4 +63,11 @@ public class Forgot_Mobile extends Activity {
             }
         });
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(Forgot_Mobile.this, LoginActivity.class);
+        startActivity(i);
+        finish();
+    }
 }

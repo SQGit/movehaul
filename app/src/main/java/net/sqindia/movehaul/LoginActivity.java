@@ -63,17 +63,25 @@ public class LoginActivity extends Activity {
             public void onClick(View view) {
                 str_mobile_no = et_mobile_no.getText().toString().trim();
 
-                if (!(str_mobile_no.isEmpty() || str_mobile_no.length() < 9)) {
+               // if (!(str_mobile_no.isEmpty() || str_mobile_no.length() < 9)) {
                     Intent i = new Intent(LoginActivity.this, LoginOtpActivity.class);
-                    i.putExtra("phone",str_mobile_no);
+                 //   i.putExtra("phone",str_mobile_no);
                     startActivity(i);
                     finish();
-                } else {
-                    et_mobile_no.setError("Enter valid phone number");
-                    et_mobile_no.requestFocus();
-                }
+             //   } else {
+              //      et_mobile_no.setError("Enter valid phone number");
+             //       et_mobile_no.requestFocus();
+             //   }
 
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(LoginActivity.this,Splash_screen.class);
+        startActivity(i);
+        finish();
     }
 }

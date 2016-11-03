@@ -32,7 +32,7 @@ public class Book_now extends Activity {
     EditText et_delivery_address, et_goodstype, et_trucktype, et_description;
     TextInputLayout flt_delivery_address, flt_goodstype, flt_trucktype, flt_description;
     com.rey.material.widget.LinearLayout btn_back;
-    Button btn_post;
+    Button btn_post, btn_ok;
     Dialog dialog1;
 
     @Override
@@ -58,7 +58,6 @@ public class Book_now extends Activity {
         btn_back = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_back);
         btn_post = (Button) findViewById(R.id.btn_post);
 
-
         lt_goodsType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,7 +75,7 @@ public class Book_now extends Activity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Book_now.this,DashboardNavigation.class);
+                Intent i = new Intent(Book_now.this, DashboardNavigation.class);
                 startActivity(i);
                 finish();
             }
@@ -85,9 +84,6 @@ public class Book_now extends Activity {
             @Override
             public void onClick(View view) {
                 dialog1.show();
-                /*Intent i = new Intent(Book_now.this,Job_review.class);
-                startActivity(i);
-                finish();*/
             }
         });
 
@@ -97,6 +93,18 @@ public class Book_now extends Activity {
         dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog1.setCancelable(true);
         dialog1.setContentView(R.layout.dialogue_job_posting);
+        btn_ok = (Button) dialog1.findViewById(R.id.button_ok);
+
+        btn_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog1.dismiss();
+                Intent i = new Intent(Book_now.this, Job_review.class);
+                startActivity(i);
+                finish();
+            }
+        });
+
     }
 
     private void truck_type() {
@@ -165,6 +173,7 @@ public class Book_now extends Activity {
         alertD.setView(promptView);
         alertD.show();
     }
+
     private void goods_type() {
 
         LayoutInflater layoutInflater = LayoutInflater.from(Book_now.this);
@@ -220,7 +229,7 @@ public class Book_now extends Activity {
                     goods = "Computers systems";
                 } else if (checkedId == R.id.radio5) {
                     goods = "House Furniture";
-                }else if (checkedId == R.id.radio6) {
+                } else if (checkedId == R.id.radio6) {
                     goods = "Company items";
                 }
 
@@ -235,10 +244,11 @@ public class Book_now extends Activity {
         alertD.setView(promptView);
         alertD.show();
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(Book_now.this,DashboardNavigation.class);
+        Intent i = new Intent(Book_now.this, DashboardNavigation.class);
         startActivity(i);
         finish();
     }

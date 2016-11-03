@@ -63,7 +63,7 @@
             android:layerType="software"
             android:layout_marginTop="@dimen/_10sdp"/>
         <com.rey.material.widget.Button
-            android:id="@+id/button_submit"
+            android:id="@+id/button_ok"
             style="@style/Material.Drawable.Ripple.Touch"
             android:layout_width="@dimen/_100sdp"
             android:layout_height="@dimen/_30sdp"

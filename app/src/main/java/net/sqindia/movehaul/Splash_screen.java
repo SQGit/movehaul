@@ -64,7 +64,7 @@ public class Splash_screen extends Activity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Splash_screen.this,DriversList.class);
+                Intent i = new Intent(Splash_screen.this,LoginActivity.class);
                 startActivity(i);
                 finish();
             }

@@ -123,6 +123,12 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Intent i = new Intent(LoginOtpActivity.this,DashboardNavigation.class);
+                startActivity(i);
+                finish();
+
+
                 if (et_otp1.getText().toString().isEmpty()) {
                     et_otp1.requestFocus();
                 } else {
@@ -254,5 +260,11 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
         return super.dispatchTouchEvent(ev);
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(LoginOtpActivity.this,LoginActivity.class);
+        startActivity(i);
+        finish();
+    }
 }
