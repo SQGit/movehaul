@@ -55,6 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/_20sdp"
+        android:gravity="start|center"
         android:orientation="horizontal">
 
         <TextView
@@ -66,7 +67,14 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="@drawable/mastercard_icon" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/visa_icon" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -74,16 +82,15 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginRight="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_10sdp"
         android:gravity="center"
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/editext_otp1"
-            android:layout_width="@dimen/_55sdp"
+            android:id="@+id/editext_card1"
+            android:layout_width="@dimen/_51sdp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/_13sdp"
+            android:layout_margin="@dimen/_11sdp"
             android:gravity="center"
             android:imeOptions="actionNext"
             android:inputType="number"
@@ -99,11 +106,11 @@
             android:background="#000000" />
 
         <EditText
-            android:id="@+id/editext_otp2"
-            android:layout_width="@dimen/_55sdp"
+            android:id="@+id/editext_card2"
+            android:layout_width="@dimen/_51sdp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/_13sdp"
+            android:layout_margin="@dimen/_11sdp"
             android:gravity="center"
             android:imeOptions="actionNext"
             android:inputType="number"
@@ -119,11 +126,11 @@
             android:background="#000000" />
 
         <EditText
-            android:id="@+id/editext_otp3"
-            android:layout_width="@dimen/_55sdp"
+            android:id="@+id/editext_card3"
+            android:layout_width="@dimen/_51sdp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/_13sdp"
+            android:layout_margin="@dimen/_11sdp"
             android:gravity="center"
             android:imeOptions="actionNext"
             android:inputType="number"
@@ -139,11 +146,11 @@
             android:background="#000000" />
 
         <EditText
-            android:id="@+id/editext_otp4"
-            android:layout_width="@dimen/_55sdp"
+            android:id="@+id/editext_card4"
+            android:layout_width="@dimen/_51sdp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/_13sdp"
+            android:layout_margin="@dimen/_11sdp"
             android:gravity="center"
             android:imeOptions="actionDone"
             android:inputType="number"
@@ -243,9 +250,9 @@
             android:id="@+id/editTextName"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_20sdp"
             android:background="@null"
             android:hint="Name on the Card"
-            android:layout_marginLeft="@dimen/_20sdp"
             android:inputType="text"
             android:maxLines="1"
             android:paddingTop="@dimen/_10sdp"
