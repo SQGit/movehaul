@@ -25,8 +25,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_margin="@dimen/_15sdp"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <LinearLayout
@@ -63,10 +63,10 @@
             android:src="@mipmap/ic_refresh_ico" />
 
         <ImageView
+            android:id="@+id/imgview_filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:id="@+id/imgview_filter"
             android:src="@mipmap/ic_filter_ico" />
 
     </LinearLayout>
@@ -91,17 +91,36 @@
                 android:layout_height="wrap_content"></include>
         </LinearLayout>
 
-        <com.rey.material.widget.ListView
+        <FrameLayout
             android:layout_width="match_parent"
-            android:id="@+id/listview_driver"
-            style="@style/Widget.AppCompat.ListView"
-            android:divider="@null"
-            android:layout_marginLeft="@dimen/_20sdp"
-            android:paddingBottom="@dimen/_10sdp"
-            android:paddingTop="@dimen/_5sdp"
             android:layout_height="match_parent">
 
-        </com.rey.material.widget.ListView>
+            <com.rey.material.widget.ListView
+                android:id="@+id/listview_driver"
+                style="@style/Widget.AppCompat.ListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:divider="@null"
+                android:paddingBottom="@dimen/_10sdp"
+                android:paddingTop="@dimen/_5sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:paddingTop="@dimen/_20sdp"
+                android:visibility="gone"
+                android:background="#edffffff"
+                android:id="@+id/filter_dialog"
+                android:layout_height="match_parent">
+
+                <include
+
+                    layout="@layout/dialog_filter_driver" />
+
+            </LinearLayout>
+
+
+        </FrameLayout>
 
 
     </FrameLayout>

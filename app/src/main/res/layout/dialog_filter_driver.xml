@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/choose"
-    android:padding="@dimen/_5sdp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/white_bg"
+    android:paddingTop="@dimen/_15sdp"
+    android:paddingBottom="15dp"
+    android:layout_marginLeft="@dimen/_15sdp"
+    android:paddingLeft="@dimen/_10sdp"
+    android:paddingRight="@dimen/_5sdp"
     android:orientation="vertical">
 
 
@@ -18,13 +22,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left|center_vertical"
             android:focusable="false"
-            android:ems="3"
-
             android:gravity="left"
             android:paddingTop="@dimen/_10sdp"
             android:text="Truck"
             android:textColor="@color/textColor"
-            android:textSize="@dimen/_16sdp" />
+            android:textSize="@dimen/_15sdp" />
 
 
         <LinearLayout
@@ -160,7 +162,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/truck_1" />
+                            android:background="@drawable/filter_truck_1" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -173,7 +175,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/truck_1" />
+                            android:background="@drawable/filter_truck_2" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -186,7 +188,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/truck_1" />
+                            android:background="@drawable/filter_truck_3" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -198,7 +200,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/truck_1" />
+                            android:background="@drawable/filter_truck_4" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -211,7 +213,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/truck_1" />
+                            android:background="@drawable/filter_truck_5" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -224,7 +226,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/truck_1" />
+                            android:background="@drawable/filter_truck_6" />
                     </LinearLayout>
 
 
@@ -394,15 +396,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center_vertical"
-
             android:focusable="false"
             android:gravity="left"
-            android:ems="3"
-
             android:paddingTop="@dimen/_10sdp"
             android:text="Cost"
             android:textColor="@color/textColor"
-            android:textSize="@dimen/_16sdp" />
+            android:textSize="@dimen/_15sdp" />
 
 
         <LinearLayout
@@ -587,13 +586,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left|center_vertical"
             android:focusable="false"
-            android:ems="3"
-
             android:gravity="left"
             android:paddingTop="@dimen/_10sdp"
             android:text="Rating"
             android:textColor="@color/textColor"
-            android:textSize="@dimen/_16sdp" />
+            android:textSize="@dimen/_15sdp" />
 
 
         <LinearLayout
@@ -769,7 +766,7 @@
 
     </LinearLayout>
 
-   <LinearLayout
+    <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"

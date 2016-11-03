@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.ramotion.foldingcell.FoldingCell;
 import com.rey.material.widget.ListView;
@@ -25,6 +26,7 @@ public class DriversList extends AppCompatActivity {
     ListView lv_drv_list;
     ImageView iv_filter;
     Dialog dialog_filter;
+    LinearLayout lt_filter_dialog;
 
 
     @Override
@@ -34,6 +36,9 @@ public class DriversList extends AppCompatActivity {
 
         lv_drv_list = (ListView) findViewById(R.id.listview_driver);
         iv_filter = (ImageView) findViewById(R.id.imgview_filter);
+        lt_filter_dialog = (LinearLayout) findViewById(R.id.filter_dialog);
+
+        lt_filter_dialog.setVisibility(View.GONE);
 
         FontsManager.initFormAssets(DriversList.this, "fonts/CATAMARAN-REGULAR.TTF");       //initialization
         FontsManager.changeFonts(DriversList.this);
@@ -62,16 +67,19 @@ public class DriversList extends AppCompatActivity {
         iv_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog_filter.show();
+                //dialog_filter.show();
+
+                lt_filter_dialog.setVisibility(View.VISIBLE);
+                lv_drv_list.setEnabled(false);
             }
         });
 
 
-        dialog_filter = new Dialog(DriversList.this);
+       /* dialog_filter = new Dialog(DriversList.this);
         dialog_filter.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog_filter.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog_filter.setCancelable(true);
-        dialog_filter.setContentView(R.layout.dialog_filter_driver);
+        dialog_filter.setContentView(R.layout.dialog_filter_driver);*/
 
 
 

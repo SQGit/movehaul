@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:descendantFocusability="blocksDescendants"
     android:background="@android:color/transparent"
-    android:paddingTop="@dimen/_10sdp"
-    android:paddingBottom="@dimen/_10sdp"
     android:orientation="vertical">
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_80sdp"
+        android:layout_height="@dimen/_75sdp"
         android:orientation="horizontal"
         android:background="@drawable/white_bg"
         android:weightSum="4">
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1.2"
             android:layout_gravity="center"
             android:gravity="center"
+            android:padding="@dimen/_2sdp"
             android:background="@color/redColor"
             android:orientation="vertical">
 
@@ -44,6 +43,7 @@
                 style = "?android:attr/ratingBarStyleSmall"
                 android:numStars ="5"
                 android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:rating = "3"
                 android:stepSize="1"
                 android:layout_marginLeft="@dimen/_10sdp"
@@ -80,7 +80,7 @@
                 android:singleLine="true"
                 android:text="Heavy Load"
                 android:textColor="@color/textColor"
-                android:textSize="@dimen/_18sdp" />
+                android:textSize="@dimen/_16sdp" />
 
         </LinearLayout>
 
@@ -111,7 +111,7 @@
                 android:maxLines="1"
                 android:text="Samson"
                 android:textColor="@color/textColor"
-                android:textSize="@dimen/_18sdp" />
+                android:textSize="@dimen/_16sdp" />
 
         </LinearLayout>
 
