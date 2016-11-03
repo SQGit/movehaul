@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.rey.material.widget.Button;
+import com.rey.material.widget.LinearLayout;
 import com.sloop.fonts.FontsManager;
 
 /**
@@ -14,6 +15,7 @@ import com.sloop.fonts.FontsManager;
 
 public class Payment_Details extends Activity {
     Button btn_continue;
+    LinearLayout btn_back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +24,16 @@ public class Payment_Details extends Activity {
         FontsManager.changeFonts(this);
 
         btn_continue = (Button) findViewById(R.id.btn_continue);
+        btn_back = (LinearLayout) findViewById(R.id.layout_back);
+
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Payment_Details.this, DashboardNavigation.class);
+                startActivity(i);
+                finish();
+            }
+        });
 
         btn_continue.setOnClickListener(new View.OnClickListener() {
             @Override

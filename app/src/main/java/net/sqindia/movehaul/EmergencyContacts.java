@@ -22,6 +22,7 @@ public class EmergencyContacts extends Activity {
     Button btn_submit;
     TextView tv_hint;
     LinearLayout lt_edit,lt_show;
+    com.rey.material.widget.LinearLayout btn_back;
     TextInputLayout til_name,til_phone,til_relation;
 
     @Override
@@ -42,6 +43,8 @@ public class EmergencyContacts extends Activity {
         lt_edit = (LinearLayout) findViewById(R.id.linear_edit);
         lt_show = (LinearLayout) findViewById(R.id.linear_show);
 
+        btn_back = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_back);
+
         til_name = (TextInputLayout) findViewById(R.id.til_name);
         til_phone = (TextInputLayout) findViewById(R.id.til_phone);
         til_relation = (TextInputLayout) findViewById(R.id.til_relation);
@@ -53,6 +56,15 @@ public class EmergencyContacts extends Activity {
         tv_hint.setVisibility(View.VISIBLE);
         lt_edit.setVisibility(View.GONE);
         lt_show.setVisibility(View.GONE);
+
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(EmergencyContacts.this, DashboardNavigation.class);
+                startActivity(i);
+                finish();
+            }
+        });
 
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override

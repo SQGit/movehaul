@@ -3,6 +3,7 @@ package net.sqindia.movehaul;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -26,6 +27,7 @@ import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.ramotion.foldingcell.FoldingCell;
+import com.rey.material.widget.LinearLayout;
 import com.rey.material.widget.ListView;
 import com.rey.material.widget.TabIndicatorView;
 import com.rey.material.widget.TextView;
@@ -44,6 +46,7 @@ public class MyTrips extends AppCompatActivity {
     private MyViewPagerAdapter myViewPagerAdapter;
     TabIndicatorView tiv;
     ListView ht_lview;
+    LinearLayout btn_back;
 
     ArrayList<String> ht_arlist, up_arlist;
 
@@ -56,6 +59,16 @@ public class MyTrips extends AppCompatActivity {
 
         FontsManager.initFormAssets(this, "fonts/CATAMARAN-REGULAR.TTF");       //initialization
         FontsManager.changeFonts(this);
+
+        btn_back = (LinearLayout) findViewById(R.id.layout_back);
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MyTrips.this, DashboardNavigation.class);
+                startActivity(i);
+                finish();
+            }
+        });
 
         layouts = new int[]{
                 R.layout.current_trips,
@@ -200,5 +213,11 @@ public class MyTrips extends AppCompatActivity {
 
     };
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(MyTrips.this,DashboardNavigation.class);
+        startActivity(i);
+        finish();
+    }
 }

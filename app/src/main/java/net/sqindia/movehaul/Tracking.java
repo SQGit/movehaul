@@ -9,6 +9,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.rey.material.widget.ImageView;
+import com.rey.material.widget.LinearLayout;
 import com.sloop.fonts.FontsManager;
 
 /**
@@ -19,6 +20,7 @@ public class Tracking extends FragmentActivity {
     ImageView btn_search;
     TextView tv_hint;
     ScrollView sv_tracking;
+    LinearLayout btn_back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,9 +31,19 @@ public class Tracking extends FragmentActivity {
         btn_search = (ImageView) findViewById(R.id.btn_search);
         tv_hint = (TextView) findViewById(R.id.textView_hint);
         sv_tracking = (ScrollView) findViewById(R.id.scrollView_tracking);
+        btn_back = (LinearLayout) findViewById(R.id.layout_back);
 
         tv_hint.setVisibility(View.VISIBLE);
         sv_tracking.setVisibility(View.GONE);
+
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Tracking.this, DashboardNavigation.class);
+                startActivity(i);
+                finish();
+            }
+        });
 
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
