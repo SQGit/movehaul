@@ -88,7 +88,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         navigationView.setNavigationItemSelectedListener(this);
 
         SubActionButton.Builder rLSubBuilder = new SubActionButton.Builder(DashboardNavigation.this);
-        rLSubBuilder.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+      //  rLSubBuilder.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         final FrameLayout.LayoutParams tvParams = new FrameLayout.LayoutParams(90,90);
 
         final ImageView rlIcon1 = new ImageView(DashboardNavigation.this);
@@ -98,18 +98,18 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         final ImageView rlIcon5 = new ImageView(DashboardNavigation.this);
         final ImageView rlIcon6 = new ImageView(DashboardNavigation.this);
 
-        rlIcon1.setBackground(getResources().getDrawable(R.drawable.truck_1));
-        rlIcon1.setLayoutParams(tvParams);
-        rlIcon2.setBackground(getResources().getDrawable(R.drawable.truck_1));
-        rlIcon2.setLayoutParams(tvParams);
-        rlIcon3.setBackground(getResources().getDrawable(R.drawable.truck_1));
-        rlIcon3.setLayoutParams(tvParams);
-        rlIcon4.setBackground(getResources().getDrawable(R.drawable.truck_1));
-        rlIcon4.setLayoutParams(tvParams);
-        rlIcon5.setBackground(getResources().getDrawable(R.drawable.truck_1));
-        rlIcon5.setLayoutParams(tvParams);
-        rlIcon6.setBackground(getResources().getDrawable(R.drawable.truck_1));
-        rlIcon6.setLayoutParams(tvParams);
+        rlIcon1.setBackground(getResources().getDrawable(R.drawable.filter_truck_1));
+      //  rlIcon1.setLayoutParams(tvParams);
+        rlIcon2.setBackground(getResources().getDrawable(R.drawable.filter_truck_2));
+       // rlIcon2.setLayoutParams(tvParams);
+        rlIcon3.setBackground(getResources().getDrawable(R.drawable.filter_truck_3));
+       // rlIcon3.setLayoutParams(tvParams);
+        rlIcon4.setBackground(getResources().getDrawable(R.drawable.filter_truck_4));
+       // rlIcon4.setLayoutParams(tvParams);
+        rlIcon5.setBackground(getResources().getDrawable(R.drawable.filter_truck_5));
+       // rlIcon5.setLayoutParams(tvParams);
+        rlIcon6.setBackground(getResources().getDrawable(R.drawable.filter_truck_6));
+      //  rlIcon6.setLayoutParams(tvParams);
 
 
         SubActionButton.Builder tCSubBuilder = new SubActionButton.Builder(this);
@@ -132,14 +132,14 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
         final FloatingActionMenu fam_truck_choose = new FloatingActionMenu.Builder(DashboardNavigation.this)
                 //.setRadius(150)
-                //.setStartAngle(150)
-                .addSubActionView(rlIcon1)
-                .addSubActionView(rlIcon2)
-                .addSubActionView(rlIcon3)
+                .setStartAngle(150)
+                .addSubActionView(rLSubBuilder.setContentView(rlIcon1).build())
+                .addSubActionView(rLSubBuilder.setContentView(rlIcon2).build())
+                .addSubActionView(rLSubBuilder.setContentView(rlIcon3).build())
                 //.addSubActionView(tcSub1, tcSub1.getLayoutParams().width, tcSub1.getLayoutParams().height)
-                .addSubActionView(rlIcon4)
-                .addSubActionView(rlIcon5)
-                .addSubActionView(rlIcon6)
+                .addSubActionView(rLSubBuilder.setContentView(rlIcon4).build())
+                .addSubActionView(rLSubBuilder.setContentView(rlIcon5).build())
+                .addSubActionView(rLSubBuilder.setContentView(rlIcon6).build())
                 .attachTo(fab_truck)
                 .build();
 
@@ -160,7 +160,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         });
 
         // make the red button terminate the service
-        rlIcon1.setOnClickListener(new View.OnClickListener() {
+       /* rlIcon1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 serviceWillBeDismissed = true; // the order is important
@@ -243,7 +243,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 rlIcon1.setBackground(getResources().getDrawable(R.drawable.truck_1));
             }
         });
-
+*/
        /* rlIcon1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

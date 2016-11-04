@@ -55,25 +55,25 @@
                     android:id="@+id/truck_icon"
                     android:layout_gravity="bottom|center" />
             </FrameLayout>
-<!--
+
             <com.wang.avi.AVLoadingIndicatorView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:indicatorName="BallSpinFadeLoaderIndicator"
+                app:indicatorName="LineScalePulseOutIndicator"
                 android:layout_gravity="center"
                 app:indicatorColor="#F65F52"
                 style="@style/AVLoadingIndicatorView"
                 android:layout_marginTop="@dimen/_40sdp"/>
--->
+
             <!--//or AVLoadingIndicatorView.Large or AVLoadingIndicatorView.Small-->
 
-            <ImageView
+          <!--  <ImageView
                 android:layout_width="@dimen/_36sdp"
                 android:layout_height="@dimen/_36sdp"
                 android:background="@drawable/str_loading"
                 android:layout_gravity="center"
                 android:id="@+id/imageview"
-                android:layout_marginTop="@dimen/_40sdp"/>
+                android:layout_marginTop="@dimen/_40sdp"/>-->
         </LinearLayout>
 </LinearLayout>
     <LinearLayout

@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Register"
+            android:name=".RegisterActivity"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity

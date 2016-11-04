@@ -1,6 +1,5 @@
 package net.sqindia.movehaul;
 
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -10,9 +9,6 @@ import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
 import com.rey.material.widget.Button;
@@ -44,7 +40,7 @@ public class Splash_screen extends Activity {
         btn_login = (Button) findViewById(R.id.btn_login);
         truck_icon = (ImageView) findViewById(R.id.truck_icon);
 
-        img_loading = (ImageView) findViewById(R.id.imageview);
+       /* img_loading = (ImageView) findViewById(R.id.imageview);
 
         RotateAnimation rotate = new RotateAnimation(-90, 90, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotate.setDuration(1000);
@@ -57,7 +53,7 @@ public class Splash_screen extends Activity {
         scaleAnim.setDuration(3000);
         //scaleAnim.setRepeatCount(ValueAnimator.INFINITE);
         //scaleAnim.setRepeatMode(ValueAnimator.REVERSE);
-        scaleAnim.start();
+        scaleAnim.start();*/
 
 
 
@@ -72,7 +68,7 @@ public class Splash_screen extends Activity {
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Splash_screen.this, Register.class);
+                Intent i = new Intent(Splash_screen.this, RegisterActivity.class);
                 startActivity(i);
                 finish();
             }

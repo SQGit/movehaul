@@ -21,6 +21,7 @@ public class ReceiveSmsBroadcastReceiver extends BroadcastReceiver {
 
     public void onReceive(Context context, Intent intent) {
 
+
         // Retrieves a map of extended data from the intent.
         final Bundle bundle = intent.getExtras();
 
@@ -34,9 +35,26 @@ public class ReceiveSmsBroadcastReceiver extends BroadcastReceiver {
 
             String messageBody = smsMessage.getMessageBody();
 
+           // Log.e("tag","mmm"+messageBody);
+
             //Pass on the text to our listener.
-            if (messageBody!=null){
+         /*   if (messageBody!=null){
                 mListener.messageReceived(messageBody);
+            }*/
+
+
+           /* LoginOtpActivity inst = LoginOtpActivity.instance();
+            inst.updateList(messageBody);*/
+
+
+
+            try
+            {
+                LoginOtpActivity Sms = new LoginOtpActivity();
+                Sms.recivedSms(messageBody);
+            }
+            catch(Exception e){
+
             }
 
         }

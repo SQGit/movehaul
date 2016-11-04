@@ -126,7 +126,7 @@
                 android:background="@null"
                 android:hint="Mobile"
                 android:inputType="phone"
-                android:maxLength="12"
+                android:maxLength="10"
                 android:maxLines="1"
                 android:paddingTop="@dimen/_10sdp"
                 android:textColor="#000000"

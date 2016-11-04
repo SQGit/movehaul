@@ -5,5 +5,6 @@ package net.sqindia.movehaul;
  */
 
 public interface SmsListener {
+
     public void messageReceived(String messageText);
 }

@@ -3,15 +3,21 @@ package net.sqindia.movehaul;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rey.material.widget.Button;
 import com.rey.material.widget.LinearLayout;
 import com.sloop.fonts.FontsManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by sqindia on 21-10-2016.
@@ -21,7 +27,7 @@ public class LoginActivity extends Activity {
     Button btn_submit;
     TextView tv_forgot_mobile;
     LinearLayout btn_back;
-    String str_mobile_no;
+    String str_mobile;
     EditText et_mobile_no;
     TextInputLayout flt_mobile_no;
 
@@ -61,27 +67,109 @@ public class LoginActivity extends Activity {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                str_mobile_no = et_mobile_no.getText().toString().trim();
+                str_mobile = et_mobile_no.getText().toString().trim();
 
-               // if (!(str_mobile_no.isEmpty() || str_mobile_no.length() < 9)) {
-                    Intent i = new Intent(LoginActivity.this, LoginOtpActivity.class);
-                 //   i.putExtra("phone",str_mobile_no);
+                if (!(str_mobile.isEmpty() || str_mobile.length() < 9)) {
+
+
+                    new login_customer().execute();
+
+                   /* Intent i = new Intent(LoginActivity.this, LoginOtpActivity.class);
+                    i.putExtra("phone",str_mobile);
                     startActivity(i);
-                    finish();
-             //   } else {
-              //      et_mobile_no.setError("Enter valid phone number");
-             //       et_mobile_no.requestFocus();
-             //   }
+                    finish();*/
+
+
+
+                } else {
+                    et_mobile_no.setError("Enter valid phone number");
+                    et_mobile_no.requestFocus();
+                }
 
             }
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent i = new Intent(LoginActivity.this,Splash_screen.class);
-        startActivity(i);
-        finish();
+
+
+
+    public class login_customer extends AsyncTask<String, Void, String> {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Log.e("tag","reg_preexe");
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            String json = "", jsonStr = "";
+
+            try {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.accumulate("customer_mobile", "+91"+str_mobile);
+                json = jsonObject.toString();
+                return jsonStr = HttpUtils.makeRequest(Config.WEB_URL + "customermobileotp", json);
+
+            } catch (Exception e) {
+                Log.e("InputStream", e.getLocalizedMessage());
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("tag","tag"+s);
+
+
+            if (s != null) {
+                try {
+                    JSONObject jo = new JSONObject(s);
+                    String status = jo.getString("status");
+                    String msg = jo.getString("message");
+                    Log.d("tag", "<-----Status----->" + status);
+                    if (status.equals("true")) {
+
+
+                       // String sus_txt = "Thank you for Signing Up MoveHaul.";
+
+                        //Toast.makeText(getApplicationContext(),sus_txt,Toast.LENGTH_LONG).show();
+
+                        Intent i = new Intent(LoginActivity.this, LoginOtpActivity.class);
+                        startActivity(i);
+                        finish();
+
+
+                    } else if (status.equals("false")) {
+
+
+                        if (msg.contains("Register with Movehaul first to Generate OTP")) {
+
+                            Toast.makeText(getApplicationContext(),"Mobile Number Not Registered",Toast.LENGTH_LONG).show();
+
+                        } else  {
+
+                            Toast.makeText(getApplicationContext(),"Please Try Again Later",Toast.LENGTH_LONG).show();
+                        }
+
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.e("tag","nt"+e.toString());
+                    Toast.makeText(getApplicationContext(),"Network Errror0",Toast.LENGTH_LONG).show();
+                }
+            } else {
+                Toast.makeText(getApplicationContext(),"Network Errror1",Toast.LENGTH_LONG).show();
+            }
+
+        }
+
     }
+
+
 }
