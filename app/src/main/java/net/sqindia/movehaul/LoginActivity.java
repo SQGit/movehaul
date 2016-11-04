@@ -72,12 +72,12 @@ public class LoginActivity extends Activity {
                 if (!(str_mobile.isEmpty() || str_mobile.length() < 9)) {
 
 
-                   // new login_customer().execute();
+                   new login_customer().execute();
 
-                   Intent i = new Intent(LoginActivity.this, DashboardNavigation.class);
-                   // i.putExtra("phone",str_mobile);
+                  /* Intent i = new Intent(LoginActivity.this, DashboardNavigation.class);
+                    //i.putExtra("phone",str_mobile);
                     startActivity(i);
-                    finish();
+                    finish();*/
 
 
 

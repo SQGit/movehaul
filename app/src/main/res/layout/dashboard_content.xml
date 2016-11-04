@@ -31,7 +31,9 @@
             android:layout_gravity="bottom|center_vertical"
             android:layout_marginLeft="@dimen/_2sdp"
             android:paddingLeft="@dimen/_3sdp"
+            android:paddingTop="@dimen/_5sdp"
             android:paddingRight="@dimen/_30sdp"
+            android:paddingBottom="@dimen/_2sdp"
             android:src="@drawable/left_nav_button" />
 
 
@@ -224,7 +226,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
-            android:layout_marginBottom="@dimen/_70sdp"
+            android:layout_marginBottom="@dimen/_60sdp"
             android:layout_marginRight="@dimen/_5sdp"
             android:src="@drawable/lor"
             app:backgroundTint="@color/redColor"

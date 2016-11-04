@@ -29,6 +29,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
@@ -101,7 +102,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     FloatingActionButton fab_truck;
     private boolean serviceWillBeDismissed;
     protected GoogleApiClient mGoogleApiClient;
-    ImageView pickup_close, drop_close;
+    ImageView pickup_close, drop_close,btn_menu;
     android.widget.LinearLayout droplv,pickuplv;
 
     @Override
@@ -132,6 +133,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         fab_truck = (FloatingActionButton) findViewById(R.id.float_icon);
         droplv=(android.widget.LinearLayout) findViewById(R.id.layout_drop);
         pickuplv=(android.widget.LinearLayout) findViewById(R.id.layout_pickuptype);
+        btn_menu = (ImageView) findViewById(R.id.img_menu);
 
 
         Typeface type = Typeface.createFromAsset(getAssets(), "fonts/CATAMARAN-REGULAR.TTF");
@@ -197,8 +199,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        SubActionButton.Builder rLSubBuilder = new SubActionButton.Builder(DashboardNavigation.this);
-        rLSubBuilder.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        final SubActionButton.Builder rLSubBuilder = new SubActionButton.Builder(DashboardNavigation.this);
+        rLSubBuilder.setBackgroundDrawable(getResources().getDrawable(R.drawable.round_dr));
         final FrameLayout.LayoutParams tvParams = new FrameLayout.LayoutParams(90, 90);
       //  rLSubBuilder.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
 
@@ -268,18 +270,20 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             }
         });
 
-        /*// make the red button terminate the service
+        // make the red button terminate the service
         rlIcon1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 serviceWillBeDismissed = true; // the order is important
                 //  fam_truck_choose.close(true);
-                rlIcon1.setBackground(getResources().getDrawable(R.drawable.truck_1_hover));
-                rlIcon2.setBackground(getResources().getDrawable(R.drawable.truck_1));
-                rlIcon3.setBackground(getResources().getDrawable(R.drawable.truck_1));
-                rlIcon4.setBackground(getResources().getDrawable(R.drawable.truck_1));
-                rlIcon5.setBackground(getResources().getDrawable(R.drawable.truck_1));
-                rlIcon6.setBackground(getResources().getDrawable(R.drawable.truck_1));
+                rlIcon1.setBackground(getResources().getDrawable(R.drawable.filter_truck_1));
+                rLSubBuilder.setBackgroundDrawable(getResources().getDrawable(R.drawable.round_dr_red));
+                Log.e("tag","clicke1");
+                rlIcon2.setBackground(getResources().getDrawable(R.drawable.filter_truck_2));
+                rlIcon3.setBackground(getResources().getDrawable(R.drawable.filter_truck_3));
+                rlIcon4.setBackground(getResources().getDrawable(R.drawable.filter_truck_4));
+                rlIcon5.setBackground(getResources().getDrawable(R.drawable.filter_truck_5));
+                rlIcon6.setBackground(getResources().getDrawable(R.drawable.filter_truck_6));
             }
         });
 
@@ -288,12 +292,12 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             public void onClick(View v) {
                 serviceWillBeDismissed = true; // the order is important
                 //  fam_truck_choose.close(true);
-                rlIcon2.setBackground(getResources().getDrawable(R.drawable.truck_1_hover));
-                rlIcon1.setBackground(getResources().getDrawable(R.drawable.truck_1));
-                rlIcon3.setBackground(getResources().getDrawable(R.drawable.truck_1));
-                rlIcon4.setBackground(getResources().getDrawable(R.drawable.truck_1));
-                rlIcon5.setBackground(getResources().getDrawable(R.drawable.truck_1));
-                rlIcon6.setBackground(getResources().getDrawable(R.drawable.truck_1));
+                rlIcon1.setBackground(getResources().getDrawable(R.drawable.filter_truck_1));
+                rlIcon2.setBackground(getResources().getDrawable(R.drawable.filter_truck_2));
+                rlIcon3.setBackground(getResources().getDrawable(R.drawable.filter_truck_3));
+                rlIcon4.setBackground(getResources().getDrawable(R.drawable.filter_truck_4));
+                rlIcon5.setBackground(getResources().getDrawable(R.drawable.filter_truck_5));
+                rlIcon6.setBackground(getResources().getDrawable(R.drawable.filter_truck_6));
             }
         });
 
@@ -302,12 +306,12 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             public void onClick(View v) {
                 serviceWillBeDismissed = true; // the order is important
                 //  fam_truck_choose.close(true);
-                rlIcon3.setBackground(getResources().getDrawable(R.drawable.truck_1_hover));
-                rlIcon2.setBackground(getResources().getDrawable(R.drawable.truck_1));
-                rlIcon1.setBackground(getResources().getDrawable(R.drawable.truck_1));
-                rlIcon4.setBackground(getResources().getDrawable(R.drawable.truck_1));
-                rlIcon5.setBackground(getResources().getDrawable(R.drawable.truck_1));
-                rlIcon6.setBackground(getResources().getDrawable(R.drawable.truck_1));
+                rlIcon1.setBackground(getResources().getDrawable(R.drawable.filter_truck_1));
+                rlIcon2.setBackground(getResources().getDrawable(R.drawable.filter_truck_2));
+                rlIcon3.setBackground(getResources().getDrawable(R.drawable.filter_truck_3));
+                rlIcon4.setBackground(getResources().getDrawable(R.drawable.filter_truck_4));
+                rlIcon5.setBackground(getResources().getDrawable(R.drawable.filter_truck_5));
+                rlIcon6.setBackground(getResources().getDrawable(R.drawable.filter_truck_6));
             }
         });
 
@@ -316,12 +320,12 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             public void onClick(View v) {
                 serviceWillBeDismissed = true; // the order is important
                 //  fam_truck_choose.close(true);
-                rlIcon4.setBackground(getResources().getDrawable(R.drawable.truck_1_hover));
-                rlIcon2.setBackground(getResources().getDrawable(R.drawable.truck_1));
-                rlIcon3.setBackground(getResources().getDrawable(R.drawable.truck_1));
-                rlIcon1.setBackground(getResources().getDrawable(R.drawable.truck_1));
-                rlIcon5.setBackground(getResources().getDrawable(R.drawable.truck_1));
-                rlIcon6.setBackground(getResources().getDrawable(R.drawable.truck_1));
+                rlIcon1.setBackground(getResources().getDrawable(R.drawable.filter_truck_1));
+                rlIcon2.setBackground(getResources().getDrawable(R.drawable.filter_truck_2));
+                rlIcon3.setBackground(getResources().getDrawable(R.drawable.filter_truck_3));
+                rlIcon4.setBackground(getResources().getDrawable(R.drawable.filter_truck_4));
+                rlIcon5.setBackground(getResources().getDrawable(R.drawable.filter_truck_5));
+                rlIcon6.setBackground(getResources().getDrawable(R.drawable.filter_truck_6));
             }
         });
 
@@ -330,12 +334,12 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             public void onClick(View v) {
                 serviceWillBeDismissed = true; // the order is important
                 //  fam_truck_choose.close(true);
-                rlIcon5.setBackground(getResources().getDrawable(R.drawable.truck_1_hover));
-                rlIcon2.setBackground(getResources().getDrawable(R.drawable.truck_1));
-                rlIcon3.setBackground(getResources().getDrawable(R.drawable.truck_1));
-                rlIcon4.setBackground(getResources().getDrawable(R.drawable.truck_1));
-                rlIcon1.setBackground(getResources().getDrawable(R.drawable.truck_1));
-                rlIcon6.setBackground(getResources().getDrawable(R.drawable.truck_1));
+                rlIcon1.setBackground(getResources().getDrawable(R.drawable.filter_truck_1));
+                rlIcon2.setBackground(getResources().getDrawable(R.drawable.filter_truck_2));
+                rlIcon3.setBackground(getResources().getDrawable(R.drawable.filter_truck_3));
+                rlIcon4.setBackground(getResources().getDrawable(R.drawable.filter_truck_4));
+                rlIcon5.setBackground(getResources().getDrawable(R.drawable.filter_truck_5));
+                rlIcon6.setBackground(getResources().getDrawable(R.drawable.filter_truck_6));
             }
         });
 
@@ -344,14 +348,23 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             public void onClick(View v) {
                 serviceWillBeDismissed = true; // the order is important
                 //  fam_truck_choose.close(true);
-                rlIcon6.setBackground(getResources().getDrawable(R.drawable.truck_1_hover));
-                rlIcon2.setBackground(getResources().getDrawable(R.drawable.truck_1));
-                rlIcon3.setBackground(getResources().getDrawable(R.drawable.truck_1));
-                rlIcon4.setBackground(getResources().getDrawable(R.drawable.truck_1));
-                rlIcon5.setBackground(getResources().getDrawable(R.drawable.truck_1));
-                rlIcon1.setBackground(getResources().getDrawable(R.drawable.truck_1));
+                rlIcon1.setBackground(getResources().getDrawable(R.drawable.filter_truck_1));
+                rlIcon2.setBackground(getResources().getDrawable(R.drawable.filter_truck_2));
+                rlIcon3.setBackground(getResources().getDrawable(R.drawable.filter_truck_3));
+                rlIcon4.setBackground(getResources().getDrawable(R.drawable.filter_truck_4));
+                rlIcon5.setBackground(getResources().getDrawable(R.drawable.filter_truck_5));
+                rlIcon6.setBackground(getResources().getDrawable(R.drawable.filter_truck_6));
             }
-        });*/
+        });
+
+
+        btn_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.openDrawer(Gravity.LEFT);
+            }
+        });
+
 
 
         tv_jobReview.setOnClickListener(new View.OnClickListener() {

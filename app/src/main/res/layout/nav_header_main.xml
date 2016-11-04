@@ -1,41 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
     android:background="#e1fdf5e9"
     android:gravity="bottom"
     android:orientation="vertical"
-    android:layout_gravity="center_horizontal"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/_30sdp"
+
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/profile_img"
-        android:layout_gravity="center_horizontal"
-        android:paddingTop="@dimen/_10sdp" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <com.rey.material.widget.TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView_name"
-        android:paddingTop="@dimen/_10sdp"
-        android:layout_gravity="center_horizontal"
-        android:textColor="@color/textColor"
-        android:text="Hi Emeka" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="top|left">
 
-    <com.rey.material.widget.TextView
-        android:id="@+id/textView_email"
-        android:layout_width="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_height="wrap_content"
-        android:textColor="@color/textColor"
-        android:text="emeka@ifund.com" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:background="@drawable/down_design" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/profile_img"
+                    android:paddingTop="@dimen/_10sdp" />
+
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center"
+                    android:layout_marginLeft="@dimen/_50sdp"
+                    android:background="@drawable/edit_icon_left_nav"
+                    android:paddingTop="@dimen/_10sdp" />
+
+
+            </FrameLayout>
+
+
+            <com.rey.material.widget.TextView
+                android:id="@+id/textView_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:paddingTop="@dimen/_10sdp"
+                android:text="Hi Emeka"
+                android:textSize="@dimen/_13sdp"
+                android:textColor="@color/textColor" />
+
+            <com.rey.material.widget.TextView
+                android:id="@+id/textView_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="emeka@ifund.com"
+                android:textSize="@dimen/_15sdp"
+                android:textColor="@color/textColor" />
+
+        </LinearLayout>
+    </FrameLayout>
 
 </LinearLayout>
