@@ -136,7 +136,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/_2sdp"
                     android:layout_marginTop="@dimen/_3sdp"
-
                     android:textColorHint="@color/colorAccent">
 
                     <AutoCompleteTextView

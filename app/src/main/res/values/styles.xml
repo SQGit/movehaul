@@ -33,4 +33,11 @@
         <item name="colorControlActivated">@color/gold</item>
     </style>
 
+    <style name="RatingBar1" parent="@android:style/Widget.RatingBar">
+        <item name="colorControlNormal">@color/gold</item>
+        <item name="colorControlActivated">@color/white</item>
+        <item name="android:minHeight">10dip</item>
+        <item name="android:maxHeight">10dip</item>
+    </style>
+
 </resources>
