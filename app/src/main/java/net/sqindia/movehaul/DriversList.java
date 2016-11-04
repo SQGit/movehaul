@@ -1,6 +1,7 @@
 package net.sqindia.movehaul;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -29,21 +30,25 @@ public class DriversList extends AppCompatActivity {
     Dialog dialog_filter;
     LinearLayout lt_filter_dialog;
     Button btn_filter;
+    com.rey.material.widget.LinearLayout btn_back;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drivers_list);
+        FontsManager.initFormAssets(DriversList.this, "fonts/CATAMARAN-REGULAR.TTF");       //initialization
+        FontsManager.changeFonts(DriversList.this);
 
         lv_drv_list = (ListView) findViewById(R.id.listview_driver);
         iv_filter = (ImageView) findViewById(R.id.imgview_filter);
         lt_filter_dialog = (LinearLayout) findViewById(R.id.filter_dialog);
         btn_filter = (Button) findViewById(R.id.btn_filter);
 
+        btn_back = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_back);
+
         lt_filter_dialog.setVisibility(View.GONE);
 
-        FontsManager.initFormAssets(DriversList.this, "fonts/CATAMARAN-REGULAR.TTF");       //initialization
-        FontsManager.changeFonts(DriversList.this);
+
 
         final ArrayList<String> drv_arlist = new ArrayList<>();
 
@@ -64,6 +69,15 @@ public class DriversList extends AppCompatActivity {
 
             }
         });
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(DriversList.this, DashboardNavigation.class);
+                startActivity(i);
+                finish();
+            }
+        });
+
 
 ////*******Showing Filter Options *********/////
         iv_filter.setOnClickListener(new View.OnClickListener() {

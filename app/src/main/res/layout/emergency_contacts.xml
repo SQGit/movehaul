@@ -257,18 +257,16 @@
                                 android:textSize="@dimen/_18sdp" />
                         </LinearLayout>
 
-                        <com.rey.material.widget.Button
-                            android:id="@+id/button_submddit"
+                        <com.rey.material.widget.ImageView
+                            android:id="@+id/button_editContact1"
                             style="@style/Material.Drawable.Ripple.Touch"
-                            android:layout_width="@dimen/_45sdp"
-                            android:layout_height="@dimen/_30sdp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:background="@color/redColor"
+                            android:src="@drawable/edit_icon_emergency"
                             android:gravity="center"
-                            android:text="Edit"
-                            android:textAllCaps="false"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/_13sdp" />
+                            android:paddingLeft="@dimen/_15sdp"
+                            android:paddingRight="@dimen/_5sdp"/>
 
 
                     </LinearLayout>
@@ -325,18 +323,16 @@
 
                         </LinearLayout>
 
-                        <com.rey.material.widget.Button
-                            android:id="@+id/button_submdditd"
+                        <com.rey.material.widget.ImageView
+                            android:id="@+id/button_editContact2"
                             style="@style/Material.Drawable.Ripple.Touch"
-                            android:layout_width="@dimen/_45sdp"
-                            android:layout_height="@dimen/_30sdp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:background="@color/redColor"
+                            android:src="@drawable/edit_icon_emergency"
                             android:gravity="center"
-                            android:text="Edit"
-                            android:textAllCaps="false"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/_13sdp" />
+                            android:paddingLeft="@dimen/_15sdp"
+                            android:paddingRight="@dimen/_5sdp"/>
 
 
                     </LinearLayout>

@@ -8,9 +8,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.rey.material.widget.Button;
-import com.rey.material.widget.TextView;
+
 import com.sloop.fonts.FontsManager;
 
 /**
@@ -33,7 +34,7 @@ public class Payment_Card_Details extends Activity {
         btn_paynow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                dialog1.show();
             }
         });
 
@@ -45,6 +46,14 @@ public class Payment_Card_Details extends Activity {
         dialog1.setContentView(R.layout.dialogue_job_posting);
         btn_ok = (Button) dialog1.findViewById(R.id.button_ok);
         btn_close = (ImageView) dialog1.findViewById(R.id.button_close);
+        tv_dialog1 = (TextView) dialog1.findViewById(R.id.textView_1);
+        tv_dialog2 = (TextView) dialog1.findViewById(R.id.textView_2);
+        tv_dialog3 = (TextView) dialog1.findViewById(R.id.textView_3);
+        tv_dialog4 = (TextView) dialog1.findViewById(R.id.textView_4);
+        tv_dialog1.setText("Your Trip has Been");
+        tv_dialog2.setText("Confirmed!!");
+        tv_dialog3.setText("Our Driver will");
+        tv_dialog4.setText("Contact you soon..");
 
         btn_close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +65,7 @@ public class Payment_Card_Details extends Activity {
             @Override
             public void onClick(View view) {
                 dialog1.dismiss();
-                Intent i = new Intent(Payment_Card_Details.this, DashboardNavigation.class);
+                Intent i = new Intent(Payment_Card_Details.this, MyTrips.class);
                 startActivity(i);
                 finish();
             }
