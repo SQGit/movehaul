@@ -33,7 +33,7 @@
                 android:id="@+id/text_payment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Paytment"
+                android:text="Payment"
                 android:textColor="#F65F52"
                 android:textSize="@dimen/_19sdp" />
         </LinearLayout>

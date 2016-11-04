@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.ramotion.foldingcell.FoldingCell;
+import com.rey.material.widget.Button;
 import com.rey.material.widget.ListView;
 import com.sloop.fonts.FontsManager;
 
@@ -27,7 +28,7 @@ public class DriversList extends AppCompatActivity {
     ImageView iv_filter;
     Dialog dialog_filter;
     LinearLayout lt_filter_dialog;
-
+    Button btn_filter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class DriversList extends AppCompatActivity {
         lv_drv_list = (ListView) findViewById(R.id.listview_driver);
         iv_filter = (ImageView) findViewById(R.id.imgview_filter);
         lt_filter_dialog = (LinearLayout) findViewById(R.id.filter_dialog);
+        btn_filter = (Button) findViewById(R.id.btn_filter);
 
         lt_filter_dialog.setVisibility(View.GONE);
 
@@ -63,7 +65,7 @@ public class DriversList extends AppCompatActivity {
             }
         });
 
-
+////*******Showing Filter Options *********/////
         iv_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,6 +76,14 @@ public class DriversList extends AppCompatActivity {
             }
         });
 
+        //********* Filtering Truck, Price& Rating  *********/////////
+        btn_filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lt_filter_dialog.setVisibility(View.GONE);
+                lv_drv_list.setEnabled(true);
+            }
+        });
 
        /* dialog_filter = new Dialog(DriversList.this);
         dialog_filter.requestWindowFeature(Window.FEATURE_NO_TITLE);

@@ -13,7 +13,7 @@
         android:orientation="vertical"
         android:layout_marginLeft="@dimen/_27sdp"
         android:layout_marginRight="@dimen/_27sdp"
-        android:layout_marginTop="31dp"
+        android:layout_marginTop="@dimen/_30sdp"
         android:paddingTop="@dimen/_15sdp"
         android:paddingBottom="@dimen/_15sdp"
         android:layout_alignParentTop="true"
@@ -30,14 +30,14 @@
             android:layout_height="wrap_content"
             android:text="Your Job Posted"
             android:layout_marginTop="@dimen/_10sdp"
-            android:id="@+id/txt_alert"
+            android:id="@+id/textView_1"
             android:textSize="@dimen/_16sdp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:id="@+id/txt_alert1"
+            android:id="@+id/textView_2"
             android:text="Successfully!!"
             android:textSize="@dimen/_14sdp" />
         <TextView
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/_10sdp"
-            android:id="@+id/txt_alert2"
+            android:id="@+id/textView_3"
             android:text="Wait for some time to"
             android:textSize="@dimen/_13sdp" />
         <TextView
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="select your Driver"
-            android:id="@+id/txt_alert3"
+            android:id="@+id/textView_4"
             android:textSize="@dimen/_13sdp" />
         <ImageView
             android:layout_width="match_parent"
@@ -67,7 +67,7 @@
             style="@style/Material.Drawable.Ripple.Touch"
             android:layout_width="@dimen/_100sdp"
             android:layout_height="@dimen/_30sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_13sdp"
             android:background="@drawable/submit"
             android:gravity="center"
             android:paddingBottom="@dimen/_5sdp"
@@ -81,15 +81,17 @@
     </LinearLayout>
 
 
-    <!--
+
         <ImageView
             android:layout_width="wrap_content"
+            android:id="@+id/button_close"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_alignParentTop="true"
-            android:background="@drawable/truckbg_ico" />
-    -->
-
+            android:layout_centerInParent="false"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/_13sdp"
+            android:paddingRight="@dimen/_12sdp"
+            android:paddingLeft="@dimen/_5sdp"
+            android:src="@drawable/close_btn" />
 
 
 </RelativeLayout>

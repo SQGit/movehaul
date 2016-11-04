@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -34,6 +35,7 @@ public class Book_now extends Activity {
     com.rey.material.widget.LinearLayout btn_back;
     Button btn_post, btn_ok;
     Dialog dialog1;
+    ImageView btn_close;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,10 +93,17 @@ public class Book_now extends Activity {
         dialog1 = new Dialog(Book_now.this);
         dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        dialog1.setCancelable(true);
+        dialog1.setCancelable(false);
         dialog1.setContentView(R.layout.dialogue_job_posting);
         btn_ok = (Button) dialog1.findViewById(R.id.button_ok);
+        btn_close = (ImageView) dialog1.findViewById(R.id.button_close);
 
+        btn_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog1.dismiss();
+            }
+        });
         btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

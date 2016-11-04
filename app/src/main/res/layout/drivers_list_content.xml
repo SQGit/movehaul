@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_150sdp"
+        android:layout_height="@dimen/_155sdp"
         android:background="@drawable/white_bg"
         android:layout_marginRight="-2dp"
         android:orientation="vertical">
@@ -127,7 +127,7 @@
 
 
             <ImageView
-                android:id="@+id/im"
+                android:id="@+id/imageView_doubletick"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|bottom"
