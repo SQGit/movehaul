@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.ramotion.foldingcell.FoldingCell;
 import com.rey.material.widget.Button;
@@ -37,6 +38,7 @@ public class DriversListAdapter extends ArrayAdapter<String> {
     Dialog dialog1;
     ImageView btn_close;
     Button btn_ok;
+    TextView tv_dialog1,tv_dialog2,tv_dialog3,tv_dialog4;
 
     public DriversListAdapter(Context context, Activity acti, List<String> objects) {
         super(context, 0, objects);
@@ -104,6 +106,14 @@ public class DriversListAdapter extends ArrayAdapter<String> {
         dialog1.setContentView(R.layout.dialogue_job_posting);
         btn_ok = (Button) dialog1.findViewById(R.id.button_ok);
         btn_close = (ImageView) dialog1.findViewById(R.id.button_close);
+        tv_dialog1 = (TextView) dialog1.findViewById(R.id.textView_1);
+        tv_dialog2 = (TextView) dialog1.findViewById(R.id.textView_2);
+        tv_dialog3 = (TextView) dialog1.findViewById(R.id.textView_3);
+        tv_dialog4 = (TextView) dialog1.findViewById(R.id.textView_4);
+        tv_dialog1.setText("Selected Driver");
+        tv_dialog2.setText("Successfully!!");
+        tv_dialog3.setText("Are you sure that");
+        tv_dialog4.setText("this driver is suitable for your job?");
 
         btn_close.setOnClickListener(new View.OnClickListener() {
             @Override

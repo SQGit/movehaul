@@ -132,7 +132,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|bottom"
                 android:focusable="false"
-                android:padding="@dimen/_2sdp"
+                android:paddingLeft="@dimen/_9sdp"
+                android:paddingRight="@dimen/_2sdp"
+                android:paddingTop="@dimen/_2sdp"
+                android:paddingBottom="@dimen/_2sdp"
                 android:src="@mipmap/ic_tick_ico" />
 
 

@@ -1,5 +1,6 @@
 package net.sqindia.movehaul;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -40,20 +41,20 @@ public class Splash_screen extends Activity {
         btn_login = (Button) findViewById(R.id.btn_login);
         truck_icon = (ImageView) findViewById(R.id.truck_icon);
 
-       /* img_loading = (ImageView) findViewById(R.id.imageview);
+        //img_loading = (ImageView) findViewById(R.id.imageview);
 
-        RotateAnimation rotate = new RotateAnimation(-90, 90, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        /*RotateAnimation rotate = new RotateAnimation(-90, 90, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotate.setDuration(1000);
         rotate.setInterpolator(new LinearInterpolator());
         rotate.setRepeatCount(Animation.INFINITE);
         rotate.setRepeatMode(Animation.REVERSE);
-        img_loading.startAnimation(rotate);
+        img_loading.startAnimation(rotate);*/
 
         ObjectAnimator scaleAnim = ObjectAnimator.ofFloat(truck_icon, "X", width);
         scaleAnim.setDuration(3000);
         //scaleAnim.setRepeatCount(ValueAnimator.INFINITE);
         //scaleAnim.setRepeatMode(ValueAnimator.REVERSE);
-        scaleAnim.start();*/
+        scaleAnim.start();
 
 
 

@@ -74,7 +74,6 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_3sdp"
-                        android:layout_marginTop="@dimen/_3sdp"
                         android:textColorHint="@color/colorAccent">
 
                         <EditText
@@ -189,6 +188,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
                         android:text="@string/underline"
                         android:textColor="#F65F52"
                         android:textSize="@dimen/_12sdp" />
@@ -297,19 +297,19 @@
             android:padding="@dimen/_3sdp">
 
             <com.rey.material.widget.Button
-            android:id="@+id/btn_post"
-            style="@style/Material.Drawable.Ripple.Touch"
-            android:layout_width="@dimen/_140sdp"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:background="@drawable/submit"
-            android:gravity="center"
-            android:paddingBottom="@dimen/_5sdp"
-            android:paddingRight="@dimen/_3sdp"
-            android:text="Post"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="@dimen/_18sdp" />
+                android:id="@+id/btn_post"
+                style="@style/Material.Drawable.Ripple.Touch"
+                android:layout_width="@dimen/_140sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@drawable/submit"
+                android:gravity="center"
+                android:paddingBottom="@dimen/_5sdp"
+                android:paddingRight="@dimen/_3sdp"
+                android:text="Post"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/_18sdp" />
         </LinearLayout>
 
     </LinearLayout>

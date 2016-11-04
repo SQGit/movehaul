@@ -1,13 +1,16 @@
 package net.sqindia.movehaul;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -72,12 +75,12 @@ public class LoginActivity extends Activity {
                 if (!(str_mobile.isEmpty() || str_mobile.length() < 9)) {
 
 
-                   new login_customer().execute();
+                   //new login_customer().execute();
 
-                  /* Intent i = new Intent(LoginActivity.this, DashboardNavigation.class);
+                  Intent i = new Intent(LoginActivity.this, DashboardNavigation.class);
                     //i.putExtra("phone",str_mobile);
                     startActivity(i);
-                    finish();*/
+                    finish();
 
 
 
@@ -170,6 +173,13 @@ public class LoginActivity extends Activity {
         }
 
     }
-
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (getCurrentFocus() != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+        return super.dispatchTouchEvent(ev);
+    }
 
 }

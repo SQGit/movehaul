@@ -52,6 +52,7 @@
             android:layout_gravity="bottom|end|center_vertical"
             android:paddingLeft="@dimen/_3sdp"
             android:paddingRight="@dimen/_5sdp"
+            android:visibility="gone"
             android:src="@drawable/right_nav_menu" />
 
     </FrameLayout>

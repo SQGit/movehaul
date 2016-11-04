@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
@@ -28,8 +29,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
@@ -102,7 +107,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     FloatingActionButton fab_truck;
     private boolean serviceWillBeDismissed;
     protected GoogleApiClient mGoogleApiClient;
-    ImageView pickup_close, drop_close,btn_menu;
+    ImageView pickup_close, drop_close,btn_menu,rightmenu;
     android.widget.LinearLayout droplv,pickuplv;
 
     @Override
@@ -134,7 +139,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         droplv=(android.widget.LinearLayout) findViewById(R.id.layout_drop);
         pickuplv=(android.widget.LinearLayout) findViewById(R.id.layout_pickuptype);
         btn_menu = (ImageView) findViewById(R.id.img_menu);
-
+        rightmenu = (ImageView) findViewById(R.id.right_menu);
 
         Typeface type = Typeface.createFromAsset(getAssets(), "fonts/CATAMARAN-REGULAR.TTF");
         flt_pickup.setTypeface(type);
@@ -438,6 +443,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
 
     }
+
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -883,4 +890,14 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         }
 
     }
+
+
+    private void applyFontToMenuItem(MenuItem mi)
+    {
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/CATAMARAN-REGULAR.TTF");
+        SpannableString mNewTitle = new SpannableString(mi.getTitle());
+        mNewTitle.setSpan(new CustomTypefaceSpan("" , font), 0 , mNewTitle.length(),  Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        mi.setTitle(mNewTitle);
+    }
+
 }
