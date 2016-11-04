@@ -736,7 +736,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 Log.e("tag", "output" + mAddressOutput);
             starting.setText("");
 
-            starting.append(mAddressOutput);
+            starting.setText(mAddressOutput);
             //starting.setText(mAreaOutput);
             Log.e("tag", "output" + mAreaOutput);
 
