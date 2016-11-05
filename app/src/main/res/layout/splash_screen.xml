@@ -63,7 +63,7 @@
                 android:layout_gravity="center"
                 app:indicatorColor="#F65F52"
                 style="@style/AVLoadingIndicatorView"
-                android:layout_marginTop="@dimen/_40sdp"/>
+                android:layout_marginTop="@dimen/_60sdp"/>
 
             <!--//or AVLoadingIndicatorView.Large or AVLoadingIndicatorView.Small-->
 
