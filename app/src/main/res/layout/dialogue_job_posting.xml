@@ -82,12 +82,11 @@
 
 
     <ImageView
-        android:layout_width="@dimen/_40sdp"
+        android:layout_width="wrap_content"
         android:id="@+id/button_close"
-        android:layout_height="@dimen/_40sdp"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="false"
         android:layout_marginTop="@dimen/_13sdp"
-        android:paddingRight="@dimen/_12sdp"
         android:paddingLeft="@dimen/_5sdp"
         android:src="@drawable/close_btn"
         android:layout_alignParentTop="true"
