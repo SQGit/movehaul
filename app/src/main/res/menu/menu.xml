@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+
+    <item
+        android:id="@+id/algo"
+        android:title=""
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/settings"
+                android:title="Support" />
+
+            <item
+                android:id="@+id/infmn"
+                android:title="Feedback" />
+
+            <item
+                android:id="@+id/privacy"
+                android:title="Privacy Policy" />
+
+            <item
+                android:id="@+id/term_cndtn"
+                android:title="Terms and Conditions" />
+            <item
+                android:id="@+id/logout"
+                android:title="Logout" />
+
+
+        </menu>
+    </item>
+</menu>

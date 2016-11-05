@@ -388,14 +388,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 finish();
             }
         });
-        tv_offers.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(DashboardNavigation.this, Payment_Details.class);
-                startActivity(i);
-                finish();
-            }
-        });
 
         tv_tracking.setOnClickListener(new View.OnClickListener() {
             @Override
