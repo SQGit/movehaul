@@ -6,10 +6,9 @@
         <shape>
             <!-- set the shadow color here -->
             <stroke
-                android:width="2dp"
-                android:color="#b9ebebeb" />
+                android:width="0.5dp"
+                android:color="#E6A1A1A1" />
 
-            <!-- setting the thickness of shadow (positive value will give shadow on that side) -->
 
             <padding
                 android:bottom="1.5dp"

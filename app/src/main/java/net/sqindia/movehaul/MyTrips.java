@@ -56,7 +56,6 @@ public class MyTrips extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mytrips);
 
-
         FontsManager.initFormAssets(this, "fonts/CATAMARAN-REGULAR.TTF");       //initialization
         FontsManager.changeFonts(this);
 
@@ -103,29 +102,25 @@ public class MyTrips extends AppCompatActivity {
             container.addView(view);
 
 
-            if (position == 0) {
+            if (position == 0)
+            {
 
 
-            } else if (position == 1) {
+            }
+            else if (position == 1) {
                 ht_lview = (ListView) view.findViewById(R.id.lview);
                 ht_arlist = new ArrayList<>();
-
                 HistoryAdapter adapter = new HistoryAdapter(MyTrips.this, ht_arlist);
-
                 ht_lview.setAdapter(adapter);
-
-
-            } else {
-
+            }
+            else
+            {
                 android.widget.ListView up_lview;
                 up_lview = (android.widget.ListView) view.findViewById(R.id.lview);
                 final ArrayList<String> up_arlist = new ArrayList<>();
-
                 final UpcomingAdapter up_adapter = new UpcomingAdapter(MyTrips.this,MyTrips.this, up_arlist);
                 up_lview.setAdapter(up_adapter);
-
                 up_lview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-
                 up_lview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {

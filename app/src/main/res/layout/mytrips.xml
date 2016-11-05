@@ -19,22 +19,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"></include>
 
-      <!--  <com.rey.material.widget.TabPageIndicator
-            style="@style/Material.Widget.TabPageIndicator"
-            android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:id="@+id/tab_indicator"
-            android:layout_height="48dp"/>-->
 
         <com.rey.material.widget.TabIndicatorView
             android:id="@+id/tab_indicator"
             android:layout_height="48dp"
             android:layout_width="match_parent"
             android:clipToPadding="false"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             app:tpi_tabSingleLine="true"
             app:tpi_indicatorHeight="2dp"
             app:tpi_tabPadding="@dimen/_25sdp"
             app:tpi_indicatorColor="@color/redColor"
+
             style="@style/tab"/>
 
 

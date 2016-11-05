@@ -26,7 +26,6 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_15sdp"
             android:orientation="vertical">
 
             <TextView
@@ -34,6 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Book Now"
+                android:textStyle="bold"
                 android:textColor="#F65F52"
                 android:textSize="@dimen/_19sdp" />
         </LinearLayout>
@@ -56,7 +56,8 @@
 
         <ScrollView
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:fadeScrollbars="false">
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -107,7 +108,7 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/_3sdp"
-                            android:layout_marginTop="@dimen/_3sdp"
+                            android:layout_marginTop="@dimen/_1sdp"
                             android:textColorHint="@color/colorAccent">
 
                             <EditText
@@ -152,7 +153,7 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/_3sdp"
-                            android:layout_marginTop="@dimen/_3sdp"
+                            android:layout_marginTop="@dimen/_1sdp"
                             android:textColorHint="@color/colorAccent">
 
                             <EditText
@@ -188,20 +189,20 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:layout_marginRight="@dimen/_10sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
                         android:text="@string/underline"
                         android:textColor="#F65F52"
                         android:textSize="@dimen/_12sdp" />
 
                     <LinearLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="@dimen/_100sdp"
+                        android:layout_height="@dimen/_70sdp"
                         android:orientation="horizontal">
 
                         <HorizontalScrollView
                             android:id="@+id/hori_scroll_view"
                             android:layout_width="@dimen/_200sdp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:fillViewport="false"
                             android:foregroundGravity="left"
                             android:paddingLeft="@dimen/_10sdp">
@@ -209,9 +210,10 @@
                             <LinearLayout
                                 android:id="@+id/selected_photos_container"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:layout_gravity="left"
                                 android:orientation="horizontal"
+                                android:gravity="center"
                                 android:visibility="visible">
 
 
@@ -220,7 +222,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/_30sdp"
-                                    android:layout_marginTop="@dimen/_35sdp"
+                                    android:layout_gravity="center"
                                     android:text="no images selected" />
 
 
@@ -233,7 +235,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:layout_marginRight="@dimen/_15sdp"
-                            android:layout_marginTop="@dimen/_20sdp"
+                            android:layout_gravity="center"
                             android:background="@drawable/camera_icon" />
                     </LinearLayout>
 
@@ -242,7 +244,6 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_3sdp"
-                        android:layout_marginTop="@dimen/_3sdp"
                         android:textColorHint="@color/colorAccent">
 
                         <EditText
@@ -309,7 +310,7 @@
                 android:text="Post"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
-                android:textSize="@dimen/_18sdp" />
+                android:textSize="@dimen/_19sdp" />
         </LinearLayout>
 
     </LinearLayout>

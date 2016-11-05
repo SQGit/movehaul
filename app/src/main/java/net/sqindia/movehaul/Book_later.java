@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.rey.material.widget.Button;
@@ -50,13 +51,15 @@ public class Book_later extends Activity {
     int month;
     int day;
     ImageView btn_close;
-
+    TextView jobtv1,jobtv2,jobtv3,jobtv4;
+    Typeface type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_later);
         FontsManager.initFormAssets(this, "fonts/CATAMARAN-REGULAR.TTF");       //initialization
         FontsManager.changeFonts(this);
+        type = Typeface.createFromAsset(getAssets(), "fonts/CATAMARAN-REGULAR.TTF");
 
         btn_time = (ImageView) findViewById(R.id.iv_btn_time);
         btn_date = (ImageView) findViewById(R.id.iv_btn_date);
@@ -169,14 +172,20 @@ public class Book_later extends Activity {
         dialog1.setContentView(R.layout.dialogue_job_posting);
         btn_ok = (Button) dialog1.findViewById(R.id.button_ok);
         btn_close = (ImageView) dialog1.findViewById(R.id.button_close);
-
+        jobtv1 = (TextView) dialog1.findViewById(R.id.textView_1);
+        jobtv2 = (TextView) dialog1.findViewById(R.id.textView_2);
+        jobtv3 = (TextView) dialog1.findViewById(R.id.textView_3);
+        jobtv4 = (TextView) dialog1.findViewById(R.id.textView_4);
         btn_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog1.dismiss();
             }
         });
-
+        jobtv1.setTypeface(type);
+        jobtv2.setTypeface(type);
+        jobtv3.setTypeface(type);
+        jobtv4.setTypeface(type);
         btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

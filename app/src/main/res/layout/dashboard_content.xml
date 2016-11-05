@@ -74,7 +74,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top|center_vertical"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:background="#FFFFFF"
             android:orientation="horizontal"
             android:paddingBottom="@dimen/_5sdp"
@@ -242,7 +242,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:background="#382F2F"
-            android:gravity="bottom"
+            android:gravity="center"
             android:orientation="horizontal"
             android:weightSum="2">
 
@@ -255,14 +255,17 @@
                 android:background="@null"
                 android:gravity="center"
                 android:text="Book Now"
+                android:textStyle="bold"
+
                 android:textAllCaps="false"
                 android:textColor="@drawable/btn_color_chg"
-                android:textSize="@dimen/_16sdp" />
+                android:textSize="@dimen/_18sdp" />
 
             <View
-                android:layout_width="@dimen/_1sdp"
-                android:layout_height="@dimen/_18sdp"
-                android:layout_gravity="center"
+                android:layout_width="@dimen/_2sdp"
+                android:layout_height="@dimen/_19sdp"
+                android:gravity="center"
+android:layout_marginTop="@dimen/_2sdp"
                 android:background="#FFFFFF" />
 
             <com.rey.material.widget.Button
@@ -272,11 +275,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@null"
+                android:textStyle="bold"
+
                 android:gravity="center"
                 android:text="Book Later"
                 android:textAllCaps="false"
                 android:textColor="@drawable/btn_color_chg"
-                android:textSize="@dimen/_16sdp" />
+                android:textSize="@dimen/_18sdp" />
 
         </LinearLayout>
 

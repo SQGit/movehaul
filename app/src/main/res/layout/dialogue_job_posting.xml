@@ -11,8 +11,8 @@
         android:gravity="center"
         android:background="@drawable/white"
         android:orientation="vertical"
-        android:layout_marginLeft="@dimen/_27sdp"
-        android:layout_marginRight="@dimen/_27sdp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_30sdp"
         android:paddingTop="@dimen/_15sdp"
         android:paddingBottom="@dimen/_15sdp"
@@ -31,7 +31,7 @@
             android:text="Your Job Posted"
             android:layout_marginTop="@dimen/_10sdp"
             android:id="@+id/textView_1"
-            android:textSize="@dimen/_16sdp" />
+            android:textSize="@dimen/_17sdp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -47,14 +47,14 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:id="@+id/textView_3"
             android:text="Wait for some time to"
-            android:textSize="@dimen/_13sdp" />
+            android:textSize="@dimen/_14sdp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="select your Driver"
+            android:text="Select your Driver"
             android:id="@+id/textView_4"
-            android:textSize="@dimen/_13sdp" />
+            android:textSize="@dimen/_14sdp" />
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="@dimen/_2sdp"
@@ -72,26 +72,26 @@
             android:gravity="center"
             android:paddingBottom="@dimen/_5sdp"
             android:paddingRight="@dimen/_3sdp"
-            android:text="ok"
+            android:text="Ok"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
-            android:textSize="@dimen/_13sdp" />
+            android:textSize="@dimen/_16sdp" />
 
 
     </LinearLayout>
 
 
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:id="@+id/button_close"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="false"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="@dimen/_13sdp"
-            android:paddingRight="@dimen/_12sdp"
-            android:paddingLeft="@dimen/_5sdp"
-            android:src="@drawable/close_btn" />
+    <ImageView
+        android:layout_width="@dimen/_40sdp"
+        android:id="@+id/button_close"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_centerInParent="false"
+        android:layout_marginTop="@dimen/_13sdp"
+        android:paddingRight="@dimen/_12sdp"
+        android:paddingLeft="@dimen/_5sdp"
+        android:src="@drawable/close_btn"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
 
 
 </RelativeLayout>

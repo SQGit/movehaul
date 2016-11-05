@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.rey.material.widget.Button;
 import com.sloop.fonts.FontsManager;
@@ -39,7 +40,8 @@ public class Book_now extends Activity {
     Button btn_post, btn_ok;
     Dialog dialog1;
     ImageView btn_close;
-
+    TextView jobtv1,jobtv2,jobtv3,jobtv4;
+    Typeface type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +49,7 @@ public class Book_now extends Activity {
         FontsManager.initFormAssets(this, "fonts/CATAMARAN-REGULAR.TTF");       //initialization
         FontsManager.changeFonts(this);
 
+         type = Typeface.createFromAsset(getAssets(), "fonts/CATAMARAN-REGULAR.TTF");
         et_delivery_address = (EditText) findViewById(R.id.editTextDelieveryAddress);
         et_goodstype = (EditText) findViewById(R.id.editTextGoodsType);
         et_trucktype = (EditText) findViewById(R.id.editTextTruck_type);
@@ -62,6 +65,10 @@ public class Book_now extends Activity {
 
         btn_back = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_back);
         btn_post = (Button) findViewById(R.id.btn_post);
+        flt_delivery_address.setTypeface(type);
+        flt_goodstype.setTypeface(type);
+        flt_trucktype.setTypeface(type);
+        flt_description.setTypeface(type);
 
         lt_goodsType.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,7 +106,16 @@ public class Book_now extends Activity {
         dialog1.setCancelable(false);
         dialog1.setContentView(R.layout.dialogue_job_posting);
         btn_ok = (Button) dialog1.findViewById(R.id.button_ok);
+        jobtv1 = (TextView) dialog1.findViewById(R.id.textView_1);
+        jobtv2 = (TextView) dialog1.findViewById(R.id.textView_2);
+        jobtv3 = (TextView) dialog1.findViewById(R.id.textView_3);
+        jobtv4 = (TextView) dialog1.findViewById(R.id.textView_4);
         btn_close = (ImageView) dialog1.findViewById(R.id.button_close);
+
+        jobtv1.setTypeface(type);
+        jobtv2.setTypeface(type);
+        jobtv3.setTypeface(type);
+        jobtv4.setTypeface(type);
 
         btn_close.setOnClickListener(new View.OnClickListener() {
             @Override

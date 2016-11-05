@@ -35,6 +35,7 @@
             android:paddingBottom="@dimen/_10sdp"
             android:paddingTop="@dimen/_5sdp"
             android:text="My Trips"
+            android:layout_marginTop="@dimen/_20sdp"
             android:textColor="#313131"
             android:textSize="@dimen/_16sdp" />
 
