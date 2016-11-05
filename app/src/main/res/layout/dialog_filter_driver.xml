@@ -6,7 +6,7 @@
     android:paddingTop="@dimen/_15sdp"
     android:paddingBottom="15dp"
     android:layout_marginLeft="@dimen/_15sdp"
-    android:paddingLeft="@dimen/_10sdp"
+    android:paddingLeft="@dimen/_8sdp"
     android:paddingRight="@dimen/_5sdp"
     android:orientation="vertical">
 
@@ -18,7 +18,7 @@
 
         <com.rey.material.widget.TextView
             android:id="@+id/textview_cost"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/_40sdp"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center_vertical"
             android:focusable="false"
@@ -26,13 +26,12 @@
             android:paddingTop="@dimen/_10sdp"
             android:text="Truck"
             android:textColor="@color/textColor"
-            android:textSize="@dimen/_15sdp" />
+            android:textSize="@dimen/_14sdp" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:orientation="vertical">
 
             <FrameLayout
@@ -148,8 +147,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:layout_marginRight="@dimen/_7sdp"
+                    android:layout_marginLeft="@dimen/_4sdp"
+                    android:layout_marginRight="@dimen/_4sdp"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -246,7 +245,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/_5sdp"
-                    android:layout_marginRight="@dimen/_7sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -388,12 +387,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:orientation="horizontal">
 
         <com.rey.material.widget.TextView
             android:id="@+id/textview_cdost"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/_40sdp"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center_vertical"
             android:focusable="false"
@@ -401,13 +400,12 @@
             android:paddingTop="@dimen/_10sdp"
             android:text="Cost"
             android:textColor="@color/textColor"
-            android:textSize="@dimen/_15sdp" />
+            android:textSize="@dimen/_14sdp" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:orientation="vertical">
 
             <FrameLayout
@@ -462,7 +460,6 @@
                         <View
                             android:layout_width="6dp"
                             android:layout_height="6dp"
-                            android:layout_marginRight="@dimen/_10sdp"
                             android:background="@drawable/thumb_select" />
                     </LinearLayout>
 
@@ -475,8 +472,6 @@
                     android:layout_height="wrap_content"
                     android:indeterminate="false"
                     android:max="70"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
                     android:progressDrawable="@drawable/progress_drawable"
                     android:thumb="@drawable/filter_ico_thumb" />
             </FrameLayout>
@@ -490,8 +485,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:layout_marginRight="@dimen/_7sdp"
+                    android:layout_marginLeft="@dimen/_4sdp"
+                    android:layout_marginRight="@dimen/_4sdp"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -577,12 +572,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:orientation="horizontal">
 
         <com.rey.material.widget.TextView
             android:id="@+id/textview_ceost"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/_40sdp"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center_vertical"
             android:focusable="false"
@@ -590,7 +585,7 @@
             android:paddingTop="@dimen/_10sdp"
             android:text="Rating"
             android:textColor="@color/textColor"
-            android:textSize="@dimen/_15sdp" />
+            android:textSize="@dimen/_14sdp" />
 
 
         <LinearLayout
@@ -653,7 +648,6 @@
                         <View
                             android:layout_width="6dp"
                             android:layout_height="6dp"
-                            android:layout_marginRight="@dimen/_10sdp"
                             android:background="@drawable/thumb_select" />
                     </LinearLayout>
 
@@ -666,8 +660,6 @@
                     android:layout_height="wrap_content"
                     android:indeterminate="false"
                     android:max="70"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
                     android:progressDrawable="@drawable/progress_drawable"
                     android:thumb="@drawable/filter_ico_thumb" />
             </FrameLayout>
@@ -684,8 +676,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:layout_marginRight="@dimen/_7sdp"
+                    android:layout_marginLeft="@dimen/_4sdp"
+                    android:layout_marginRight="@dimen/_4sdp"
                     android:orientation="horizontal">
 
 
@@ -702,13 +694,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
-
                             android:focusable="false"
                             android:gravity="center"
-
                             android:text="Low Rating"
                             android:textColor="@color/textColor"
-                            android:textSize="@dimen/_8sdp" />
+                            android:textSize="@dimen/_8sdp"
+                            android:id="@+id/textView3" />
                     </LinearLayout>
 
 

@@ -32,16 +32,20 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -206,6 +210,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
         final SubActionButton.Builder rLSubBuilder = new SubActionButton.Builder(DashboardNavigation.this);
         rLSubBuilder.setBackgroundDrawable(getResources().getDrawable(R.drawable.round_dr));
+
+
         final FrameLayout.LayoutParams tvParams = new FrameLayout.LayoutParams(90, 90);
       //  rLSubBuilder.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
 
@@ -370,6 +376,81 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             }
         });
 
+        rightmenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openContextMenu(view);
+
+
+
+                PopupMenu popup = new PopupMenu(DashboardNavigation.this, rightmenu);
+
+                popup.getMenuInflater().inflate(R.menu.menu, popup.getMenu());
+
+
+
+
+                Menu m = popup.getMenu();
+                for (int i=0;i<m.size();i++) {
+                    MenuItem mi = m.getItem(i);
+
+                    //for aapplying a font to subMenu ...
+                    SubMenu subMenu = mi.getSubMenu();
+                    if (subMenu != null && subMenu.size() > 0) {
+                        for (int j = 0; j < subMenu.size(); j++) {
+                            MenuItem subMenuItem = subMenu.getItem(j);
+                            applyFontToMenuItem(subMenuItem);
+                        }
+                    }
+
+
+                    //the method we have create in activity
+                    applyFontToMenuItem(mi);
+
+                }
+
+
+
+
+
+
+
+
+
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+
+                        switch (item.getItemId()) {
+
+                            case R.id.item1: {
+
+                                return true;
+                            }
+                            case R.id.item2: {
+
+                                return true;
+                            }
+
+                            default: {
+                                return true;
+                            }
+
+                        }
+
+
+                    }
+                });
+
+                popup.show();
+
+
+
+
+
+
+            }
+        });
+
 
 
         tv_jobReview.setOnClickListener(new View.OnClickListener() {
@@ -434,6 +515,32 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         });
 
 
+    }
+
+
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+
+
+
+
+
+    }
+
+
+
+
+    private void applyFontToMenuItem(MenuItem mi)
+    {
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/CATAMARAN-REGULAR.TTF");
+        SpannableString mNewTitle = new SpannableString(mi.getTitle());
+        mNewTitle.setSpan(new CustomTypefaceSpan("" , font), 0 , mNewTitle.length(),  Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        mi.setTitle(mNewTitle);
     }
 
 
@@ -884,12 +991,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     }
 
 
-    private void applyFontToMenuItem(MenuItem mi)
-    {
-        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/CATAMARAN-REGULAR.TTF");
-        SpannableString mNewTitle = new SpannableString(mi.getTitle());
-        mNewTitle.setSpan(new CustomTypefaceSpan("" , font), 0 , mNewTitle.length(),  Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-        mi.setTitle(mNewTitle);
-    }
+
 
 }

@@ -49,6 +49,7 @@
         <activity
             android:name=".DashboardNavigation"
             android:screenOrientation="sensorPortrait"
+            android:theme="@style/AppThemes"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity
             android:name=".Book_now"

@@ -31,6 +31,7 @@ public class DriversList extends AppCompatActivity {
     LinearLayout lt_filter_dialog;
     Button btn_filter;
     com.rey.material.widget.LinearLayout btn_back;
+    ImageView iv_close;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public class DriversList extends AppCompatActivity {
         iv_filter = (ImageView) findViewById(R.id.imgview_filter);
         lt_filter_dialog = (LinearLayout) findViewById(R.id.filter_dialog);
         btn_filter = (Button) findViewById(R.id.btn_filter);
+        iv_close = (ImageView) findViewById(R.id.button_close);
 
         btn_back = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_back);
 
@@ -92,6 +94,14 @@ public class DriversList extends AppCompatActivity {
 
         //********* Filtering Truck, Price& Rating  *********/////////
         btn_filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lt_filter_dialog.setVisibility(View.GONE);
+                lv_drv_list.setEnabled(true);
+            }
+        });
+
+        iv_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 lt_filter_dialog.setVisibility(View.GONE);
