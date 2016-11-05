@@ -4,7 +4,11 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.LayerDrawable;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.ramotion.foldingcell.FoldingCell;
@@ -43,6 +48,7 @@ public class DriversListAdapter extends ArrayAdapter<String> {
     public DriversListAdapter(Context context, Activity acti, List<String> objects) {
         super(context, 0, objects);
         this.act = acti;
+        this.context=context;
 
     }
 
@@ -87,7 +93,27 @@ public class DriversListAdapter extends ArrayAdapter<String> {
             cell.fold(true);
         }
 
+        RatingBar ratingBar = (RatingBar) cell.findViewById(R.id.ratingBsdar);
+        RatingBar ratingBar1 = (RatingBar) cell.findViewById(R.id.ratingbar);
+      /*  LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
+        stars.getDrawable(2).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
+*/
+        LayerDrawable layerDrawable = (LayerDrawable) ratingBar.getProgressDrawable();
+        LayerDrawable layerDrawable1 = (LayerDrawable) ratingBar1.getProgressDrawable();
+        DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable1.getDrawable(0)),
+                context.getResources().getColor(R.color.light_grey));  // Empty star
+        DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable1.getDrawable(1)),
+                context.getResources().getColor(R.color.gold)); // Partial star
+        DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable1.getDrawable(2)),
+                context.getResources().getColor(R.color.gold));
 
+
+        DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable.getDrawable(0)),
+                context.getResources().getColor(R.color.shadowColor));  // Empty star
+        DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable.getDrawable(1)),
+                context.getResources().getColor(R.color.gold)); // Partial star
+        DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable.getDrawable(2)),
+                context.getResources().getColor(R.color.gold));
 
         btn_confirm = (ImageView) cell.findViewById(R.id.imageView_doubletick);
 

@@ -9,9 +9,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.ramotion.foldingcell.FoldingCell;
 import com.rey.material.widget.Button;
@@ -30,8 +34,9 @@ public class DriversList extends AppCompatActivity {
     Dialog dialog_filter;
     LinearLayout lt_filter_dialog;
     Button btn_filter;
-    com.rey.material.widget.LinearLayout btn_back;
-    ImageView iv_close;
+    com.rey.material.widget.LinearLayout btn_back,btn_refresh;
+    ImageView iv_close,iv_refresh;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,12 +50,16 @@ public class DriversList extends AppCompatActivity {
         lt_filter_dialog = (LinearLayout) findViewById(R.id.filter_dialog);
         btn_filter = (Button) findViewById(R.id.btn_filter);
         iv_close = (ImageView) findViewById(R.id.button_close);
+        iv_refresh = (ImageView) findViewById(R.id.refresh);
 
         btn_back = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_back);
+        btn_refresh = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_refresh);
 
         lt_filter_dialog.setVisibility(View.GONE);
 
-
+        final RotateAnimation rotate = new RotateAnimation(0, 180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        rotate.setDuration(1000);
+        rotate.setInterpolator(new LinearInterpolator());
 
         final ArrayList<String> drv_arlist = new ArrayList<>();
 
@@ -77,6 +86,13 @@ public class DriversList extends AppCompatActivity {
                 Intent i = new Intent(DriversList.this, DashboardNavigation.class);
                 startActivity(i);
                 finish();
+            }
+        });
+        btn_refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(DriversList.this, "Refresh", Toast.LENGTH_SHORT).show();
+                iv_refresh.startAnimation(rotate);
             }
         });
 

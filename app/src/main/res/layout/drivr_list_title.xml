@@ -17,9 +17,9 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.2"
+            android:layout_weight="1.3"
             android:layout_gravity="center"
-            android:gravity="center"
+            android:gravity="top"
             android:padding="@dimen/_2sdp"
             android:background="@color/redColor"
             android:orientation="vertical">
@@ -33,17 +33,17 @@
                 android:focusable="false"
                 android:gravity="right"
                 android:text="$ 150"
-                android:paddingTop="@dimen/_10sdp"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_20sdp" />
 
             <RatingBar
-                android:id="@+id/ratingBar"
-                android:layout_width="match_parent"
+                android:id="@+id/ratingbar"
+                android:layout_width="wrap_content"
                 style = "?android:attr/ratingBarStyleSmall"
                 android:numStars ="5"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_3sdp"
                 android:rating = "3"
                 android:stepSize="1"
                 android:layout_marginLeft="@dimen/_10sdp"
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:text="Truck"
                 android:textColor="@color/redColor"
-                android:textSize="@dimen/_15sdp" />
+                android:textSize="@dimen/_13sdp" />
 
             <com.rey.material.widget.TextView
                 android:id="@+id/textview_book_from"
@@ -80,7 +80,7 @@
                 android:singleLine="true"
                 android:text="Heavy Load"
                 android:textColor="@color/textColor"
-                android:textSize="@dimen/_16sdp" />
+                android:textSize="@dimen/_15sdp" />
 
         </LinearLayout>
 
@@ -101,7 +101,7 @@
                 android:text="Driver"
                 android:id="@+id/textview_book_from_ddtxt"
                 android:textColor="@color/redColor"
-                android:textSize="@dimen/_15sdp" />
+                android:textSize="@dimen/_13sdp" />
 
             <com.rey.material.widget.TextView
                 android:layout_width="wrap_content"
@@ -111,7 +111,7 @@
                 android:maxLines="1"
                 android:text="Samson"
                 android:textColor="@color/textColor"
-                android:textSize="@dimen/_16sdp" />
+                android:textSize="@dimen/_15sdp" />
 
         </LinearLayout>
 
