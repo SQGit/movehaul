@@ -86,7 +86,7 @@
         android:id="@+id/button_close"
         android:layout_height="wrap_content"
         android:layout_centerInParent="false"
-        android:layout_marginTop="@dimen/_13sdp"
+        android:layout_marginTop="@dimen/_15sdp"
         android:paddingLeft="@dimen/_5sdp"
         android:src="@drawable/close_btn"
         android:layout_alignParentTop="true"
