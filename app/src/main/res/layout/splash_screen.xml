@@ -1,118 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical"
-        android:background="@drawable/bg">
+        android:background="@drawable/bg"
+        android:orientation="vertical">
+
         <View
             android:layout_width="fill_parent"
             android:layout_height="@dimen/_1sdp"
             android:background="#F3F3F3" />
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="end">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/top_design" />
-    </LinearLayout>
-<LinearLayout
-    android:layout_width="fill_parent"
-    android:layout_height="match_parent"
-    android:layout_weight="1">
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="@dimen/_15sdp">
+            android:layout_gravity="left"
+            android:gravity="left">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/logo"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/_30sdp"/>
-            <FrameLayout
+                android:layout_gravity="left"
+                android:background="@drawable/top_design" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/center_img_splash"
-                android:layout_gravity="center" />
+                android:layout_marginTop="@dimen/_15sdp"
+                android:orientation="vertical">
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/truck_icon"
-                    android:id="@+id/truck_icon"
-                    android:layout_gravity="bottom|center" />
-            </FrameLayout>
+                    android:layout_gravity="center"
+                    android:id="@+id/logo_ico"
+                    android:layout_margin="@dimen/_30sdp"
+                    android:background="@drawable/logo" />
 
-            <com.wang.avi.AVLoadingIndicatorView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:indicatorName="LineScalePulseOutIndicator"
-                android:layout_gravity="center"
-                app:indicatorColor="#F65F52"
-                style="@style/AVLoadingIndicatorView"
-                android:layout_marginTop="@dimen/_60sdp"/>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp">
 
-            <!--//or AVLoadingIndicatorView.Large or AVLoadingIndicatorView.Small-->
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:id="@+id/bg_icon"
+                        android:background="@drawable/center_img_splash" />
 
-          <!--  <ImageView
-                android:layout_width="@dimen/_36sdp"
-                android:layout_height="@dimen/_36sdp"
-                android:background="@drawable/str_loading"
-                android:layout_gravity="center"
-                android:id="@+id/imageview"
-                android:layout_marginTop="@dimen/_40sdp"/>-->
+                    <ImageView
+                        android:id="@+id/truck_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="-110dp"
+                        android:layout_gravity="bottom|left"
+                        android:background="@drawable/truck_icon" />
+                </FrameLayout>
+
+                <com.wang.avi.AVLoadingIndicatorView
+                    style="@style/AVLoadingIndicatorView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_60sdp"
+                    app:indicatorColor="#F65F52"
+                    app:indicatorName="LineScalePulseOutIndicator" />
+
+                <!--//or AVLoadingIndicatorView.Large or AVLoadingIndicatorView.Small-->
+
+                <!--  <ImageView
+                      android:layout_width="@dimen/_36sdp"
+                      android:layout_height="@dimen/_36sdp"
+                      android:background="@drawable/str_loading"
+                      android:layout_gravity="center"
+                      android:id="@+id/imageview"
+                      android:layout_marginTop="@dimen/_40sdp"/>-->
+            </LinearLayout>
         </LinearLayout>
-</LinearLayout>
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        android:gravity="bottom">
 
-        <com.rey.material.widget.Button
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/btn"
-            style="@style/Material.Drawable.Ripple.Touch"
-            android:text="Login"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"
-            android:layout_weight="1"
-            android:padding="@dimen/_7sdp"
-            android:textAllCaps="false"
-            android:layout_marginRight="@dimen/_1sdp"
-            android:gravity="center"
-            android:textSize="@dimen/_19sdp"
-            android:id="@+id/btn_login" />
-        <com.rey.material.widget.Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/yellow"
-            style="@style/Material.Drawable.Ripple.Touch"
-            android:text="Register"
-            android:textColor="#FFFFFF"
-            android:layout_weight="1"
-            android:textAllCaps="false"
-            android:padding="@dimen/_7sdp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:textSize="@dimen/_19sdp"
-            android:id="@+id/btn_register" />
+            android:gravity="bottom"
+            android:id="@+id/layout_bottom"
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-    </LinearLayout>
+            <com.rey.material.widget.Button
+                android:id="@+id/btn_login"
+                style="@style/Material.Drawable.Ripple.Touch"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/_1sdp"
+                android:layout_weight="1"
+                android:background="@drawable/btn"
+                android:gravity="center"
+                android:padding="@dimen/_7sdp"
+                android:text="Login"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/_19sdp"
+                android:textStyle="bold" />
+
+            <com.rey.material.widget.Button
+                android:id="@+id/btn_register"
+                style="@style/Material.Drawable.Ripple.Touch"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/yellow"
+                android:gravity="center"
+                android:padding="@dimen/_7sdp"
+                android:text="Register"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/_19sdp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

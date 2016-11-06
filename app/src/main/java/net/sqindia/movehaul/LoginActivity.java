@@ -35,6 +35,12 @@ public class LoginActivity extends Activity {
     TextInputLayout flt_mobile_no;
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+       // overridePendingTransition(R.anim.anim3, R.anim.anim4);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -54,11 +60,16 @@ public class LoginActivity extends Activity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(LoginActivity.this, Splash_screen.class);
+              /*  Intent i = new Intent(LoginActivity.this, Splash_screen.class);
                 startActivity(i);
+                finish();*/
+               // onBackPressed();
                 finish();
+                //overridePendingTransition(R.anim.anim3, R.anim.anim4);
+               // finish();
             }
         });
+
         tv_forgot_mobile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

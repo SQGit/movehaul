@@ -2,15 +2,23 @@ package net.sqindia.movehaul;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.rey.material.widget.Button;
 import com.sloop.fonts.FontsManager;
@@ -19,8 +27,13 @@ import com.sloop.fonts.FontsManager;
  * Created by sqindia on 21-10-2016.
  */
 public class Splash_screen extends Activity {
-    Button btn_register,btn_login;
-    ImageView truck_icon,img_loading;
+    Button btn_register, btn_login;
+    ImageView truck_icon, logo_icon, bg_icon;
+    LinearLayout lt_bottom;
+    boolean isBottom = true;
+    int is = 0;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,14 +45,18 @@ public class Splash_screen extends Activity {
 
 
         getDeviceWidth(this);
-        Log.e("tag","width"+getDeviceWidth(this));
-        float width = (float) (getDeviceWidth(this)/3.4);
-        Log.e("tag","width"+width);
+        Log.e("tag", "width0" + getDeviceWidth(this));
+        final float width = getDeviceWidth(this);
+        float widthby = (float) (getDeviceWidth(this) / 3.4);
+        Log.e("tag", "width1" + widthby);
 
 
         btn_register = (Button) findViewById(R.id.btn_register);
         btn_login = (Button) findViewById(R.id.btn_login);
         truck_icon = (ImageView) findViewById(R.id.truck_icon);
+        bg_icon = (ImageView) findViewById(R.id.bg_icon);
+        logo_icon = (ImageView) findViewById(R.id.logo_ico);
+        lt_bottom = (LinearLayout) findViewById(R.id.layout_bottom);
 
         //img_loading = (ImageView) findViewById(R.id.imageview);
 
@@ -50,20 +67,87 @@ public class Splash_screen extends Activity {
         rotate.setRepeatMode(Animation.REVERSE);
         img_loading.startAnimation(rotate);*/
 
-        ObjectAnimator scaleAnim = ObjectAnimator.ofFloat(truck_icon, "X", width);
-        scaleAnim.setDuration(3000);
+        //  ObjectAnimator scaleAnim = ObjectAnimator.ofFloat(truck_icon, "X", width);
+        //scaleAnim.setDuration(3000);
         //scaleAnim.setRepeatCount(ValueAnimator.INFINITE);
         //scaleAnim.setRepeatMode(ValueAnimator.REVERSE);
-        scaleAnim.start();
+        // scaleAnim.start();
 
+
+        //TranslateAnimation animation = new TranslateAnimation(0, 500, 0, 0);
+        // animation.setDuration(1500);
+        // animation.setFillAfter(false);
+
+        //  truck_icon.startAnimation(animation);
+
+        truck_icon.animate().translationX(width / (float) 1.65).setDuration(1700).withLayer();
+
+        Animation fadeIn = new AlphaAnimation(0, 1);
+        fadeIn.setDuration(1500);
+
+        final Animation fadeOut = new AlphaAnimation(1, 0);
+        //fadeOut.setStartOffset(1000);
+        fadeOut.setDuration(1700);
+
+        AnimationSet animation = new AnimationSet(true);
+        animation.addAnimation(fadeIn);
+        animation.addAnimation(fadeOut);
+        bg_icon.setAnimation(fadeIn);
+        logo_icon.setAnimation(fadeIn);
+        //lt_bottom.setAnimation(fadeIn);
+
+        final float height = getDeviceHeight(this);
+
+        final TranslateAnimation anim_btn_b2t = new TranslateAnimation(0, 0, height + lt_bottom.getHeight(), lt_bottom.getHeight());
+        anim_btn_b2t.setDuration(1400);
+        lt_bottom.setAnimation(anim_btn_b2t);
+
+
+        final TranslateAnimation anim_btn_t2b = new TranslateAnimation(0, 0, lt_bottom.getHeight(), height + lt_bottom.getHeight());
+        anim_btn_t2b.setDuration(1700);
+        anim_btn_t2b.setFillAfter(false);
+
+        final TranslateAnimation anim_truck_c2r = new TranslateAnimation(0, width, 0, 0);
+        anim_truck_c2r.setDuration(1700);
+        anim_truck_c2r.setFillAfter(false);
 
 
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Splash_screen.this,LoginActivity.class);
-                startActivity(i);
-                finish();
+
+
+                lt_bottom.startAnimation(anim_btn_t2b);
+                truck_icon.startAnimation(anim_truck_c2r);
+                bg_icon.setAnimation(fadeOut);
+
+                // truck_icon.animate().translationX(width+400).setDuration(1700).withLayer();
+                // bg_icon.animate().translationY(100).setDuration(1700);
+                // lt_bottom.animate().translationY(400).setDuration(1700).withLayer();
+
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+
+                        Intent isd = new Intent(Splash_screen.this, LoginActivity.class);
+
+                        Bundle bndlanimation =
+                                ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anim1, R.anim.anim2).toBundle();
+                        startActivity(isd, bndlanimation);
+
+
+
+                        /*Intent intent = new Intent(Splash_screen.this, LoginActivity.class);
+                        ActivityOptions options = ActivityOptions.makeScaleUpAnimation(bg_icon, 0,
+                                0, truck_icon.getWidth(), truck_icon.getHeight());
+                        startActivity(intent, options.toBundle());*/
+
+
+                    }
+                }, 1000);
+
             }
         });
         btn_register.setOnClickListener(new View.OnClickListener() {
@@ -71,14 +155,31 @@ public class Splash_screen extends Activity {
             public void onClick(View view) {
                 Intent i = new Intent(Splash_screen.this, RegisterActivity.class);
                 startActivity(i);
-                finish();
+                is = 1;
+
+                //finish();
             }
         });
     }
-    public static int getDeviceWidth(Context context){
+
+    public static int getDeviceWidth(Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
-        int width=display.getWidth();
+        int width = display.getWidth();
         return width;
+    }
+
+    public static int getDeviceHeight(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        int height = display.getHeight();
+        return height;
+    }
+
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.e("tag", "ds+" + is);
     }
 }
