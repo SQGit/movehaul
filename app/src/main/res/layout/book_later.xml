@@ -341,7 +341,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/_30sdp"
                                     android:layout_gravity="center"
-                                    android:text="no images selected" />
+                                    android:text="No images selected" />
 
 
                             </LinearLayout>

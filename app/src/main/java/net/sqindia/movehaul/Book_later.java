@@ -85,7 +85,7 @@ public class Book_later extends Activity {
         flt_description = (TextInputLayout) findViewById(R.id.float_description);
 
 
-        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/CATAMARAN-REGULAR.TTF");
+        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
         flt_date.setTypeface(type);
         flt_time.setTypeface(type);
         flt_deliveryAddress.setTypeface(type);
@@ -275,7 +275,7 @@ public class Book_later extends Activity {
         final RadioButton rb_truck5 = (RadioButton) promptView.findViewById(R.id.radio5);
 
 
-        Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/CATAMARAN-REGULAR.TTF");
+        Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/lato.ttf");
         rb_truck1.setTypeface(tf);
         rb_truck2.setTypeface(tf);
         rb_truck3.setTypeface(tf);
@@ -343,7 +343,7 @@ public class Book_later extends Activity {
         final RadioButton rb_goods6 = (RadioButton) promptView.findViewById(R.id.radio6);
 
 
-        Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/CATAMARAN-REGULAR.TTF");
+        Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/lato.ttf");
         rb_goods1.setTypeface(tf);
         rb_goods2.setTypeface(tf);
         rb_goods3.setTypeface(tf);
