@@ -46,10 +46,10 @@ public class Book_now extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_now);
-        FontsManager.initFormAssets(this, "fonts/CATAMARAN-REGULAR.TTF");       //initialization
+        FontsManager.initFormAssets(this, "fonts/lato.ttf");       //initialization
         FontsManager.changeFonts(this);
 
-         type = Typeface.createFromAsset(getAssets(), "fonts/CATAMARAN-REGULAR.TTF");
+         type = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
         et_delivery_address = (EditText) findViewById(R.id.editTextDelieveryAddress);
         et_goodstype = (EditText) findViewById(R.id.editTextGoodsType);
         et_trucktype = (EditText) findViewById(R.id.editTextTruck_type);

@@ -57,7 +57,7 @@ public class Payment_Adapter extends BaseAdapter {
         final MyViewHolder mViewHolder;
         final TextView tv_vin_no, tv_vin_make, tv_add;
 
-        FontsManager.initFormAssets(act, "fonts/CATAMARAN-REGULAR.TTF");       //initialization
+        FontsManager.initFormAssets(act, "fonts/lato.ttf");       //initialization
         FontsManager.changeFonts(act);
 
         if (convertView == null) {

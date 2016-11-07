@@ -35,14 +35,14 @@ public class Payment_Card_Details extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.payment_carddetails);
-        FontsManager.initFormAssets(this,"fonts/CATAMARAN-REGULAR.TTF");       //initialization
+        FontsManager.initFormAssets(this,"fonts/lato.ttf");       //initialization
         FontsManager.changeFonts(this);
         btn_paynow = (Button) findViewById(R.id.btn_paynow);
         btn_back = (LinearLayout) findViewById(R.id.layout_back);
         flt_exp_date = (TextInputLayout) findViewById(R.id.float_exp_date);
         flt_cvv = (TextInputLayout) findViewById(R.id.float_cvv);
         flt_name = (TextInputLayout) findViewById(R.id.float_name);
-        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/CATAMARAN-REGULAR.TTF");
+        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
         flt_cvv.setTypeface(type);
         flt_exp_date.setTypeface(type);
         flt_name.setTypeface(type);

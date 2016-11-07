@@ -57,9 +57,9 @@ public class HistoryAdapter extends BaseAdapter {
         final MyViewHolder mViewHolder;
         com.rey.material.widget.TextView date,id;
 
-        FontsManager.initFormAssets(act, "fonts/CATAMARAN-REGULAR.TTF");       //initialization
+        FontsManager.initFormAssets(act, "fonts/lato.ttf");       //initialization
         FontsManager.changeFonts(act);
-        Typeface tf = Typeface.createFromAsset(act.getAssets(), "fonts/mont.ttf");
+        Typeface tf = Typeface.createFromAsset(act.getAssets(), "fonts/lato.ttf");
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.history_adapter, viewGroup, false);
             mViewHolder = new MyViewHolder(convertView);

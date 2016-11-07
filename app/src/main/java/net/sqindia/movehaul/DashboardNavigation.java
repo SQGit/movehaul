@@ -10,10 +10,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
@@ -40,6 +42,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -115,7 +119,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-        FontsManager.initFormAssets(this, "fonts/CATAMARAN-REGULAR.TTF");
+        FontsManager.initFormAssets(this, "fonts/lato.ttf");
         FontsManager.changeFonts(this);
         mContext = this;
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -142,9 +146,24 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         btn_menu = (ImageView) findViewById(R.id.img_menu);
         rightmenu = (ImageView) findViewById(R.id.right_menu);
 
-        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/CATAMARAN-REGULAR.TTF");
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
         flt_pickup.setTypeface(type);
         flt_droplocation.setTypeface(type);
+
+/*
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            // Set paddingTop of toolbar to height of status bar.
+            // Fixes statusbar covers toolbar issue
+            Rect rectangle = new Rect();
+            Window window = getWindow();
+            window.getDecorView().getWindowVisibleDisplayFrame(rectangle);
+            int statusBarHeight = rectangle.top;
+            toolbar.setPadding(0,statusBarHeight, 0, 0);
+        }*/
 
         mapFragment.getMapAsync(this);
         mResultReceiver = new AddressResultReceiver(new Handler());

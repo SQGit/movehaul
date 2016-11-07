@@ -44,9 +44,9 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        FontsManager.initFormAssets(this, "fonts/CATAMARAN-REGULAR.TTF");       //initialization
+        FontsManager.initFormAssets(this, "fonts/lato.ttf");       //initialization
         FontsManager.changeFonts(this);
-        Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/mont.ttf");
+        Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/lato.ttf");
 
 
         btn_submit = (Button) findViewById(R.id.btn_submit);
@@ -55,7 +55,7 @@ public class LoginActivity extends Activity {
         et_mobile_no = (EditText) findViewById(R.id.editTextMobileNo);
         flt_mobile_no = (TextInputLayout) findViewById(R.id.float_mobile);
 
-        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/CATAMARAN-REGULAR.TTF");
+        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
         et_mobile_no.setTypeface(tf);
         flt_mobile_no.setTypeface(type);
 

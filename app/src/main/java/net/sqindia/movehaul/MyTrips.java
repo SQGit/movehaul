@@ -57,7 +57,7 @@ public class MyTrips extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mytrips);
 
-        FontsManager.initFormAssets(this, "fonts/CATAMARAN-REGULAR.TTF");       //initialization
+        FontsManager.initFormAssets(this, "fonts/lato.ttf");       //initialization
         FontsManager.changeFonts(this);
 
         btn_back = (LinearLayout) findViewById(R.id.layout_back);
@@ -101,8 +101,8 @@ public class MyTrips extends AppCompatActivity {
 
             View view = layoutInflater.inflate(layouts[position], container, false);
             container.addView(view);
-          //  FontsManager.initFormAssets(getApplicationContext(), "fonts/CATAMARAN-REGULAR.TTF");       //initialization
-           // FontsManager.changeFonts((Activity) getApplicationContext());
+           /*FontsManager.initFormAssets(getApplicationContext(), "fonts/lato.ttf");       //initialization
+            FontsManager.changeFonts((Activity) getApplicationContext());*/
 
             if (position == 0)
             {

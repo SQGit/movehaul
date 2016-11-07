@@ -30,10 +30,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_vertical"
             android:layout_marginLeft="@dimen/_2sdp"
-            android:paddingLeft="@dimen/_3sdp"
-            android:paddingTop="@dimen/_5sdp"
-            android:paddingRight="@dimen/_30sdp"
             android:paddingBottom="@dimen/_2sdp"
+            android:paddingLeft="@dimen/_3sdp"
+            android:paddingRight="@dimen/_30sdp"
+            android:paddingTop="@dimen/_5sdp"
             android:src="@drawable/left_nav_button" />
 
 
@@ -63,18 +63,96 @@
 
         <fragment xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/map"
-            tools:context=".DasboardNavigation"
-            android:name="com.google.android.gms.maps.SupportMapFragment" />
+            tools:context=".DasboardNavigation" />
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/float_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="@dimen/_60sdp"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:src="@drawable/lor"
+            app:backgroundTint="@color/redColor"
+            app:elevation="4dp" />
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="#382F2F"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <com.rey.material.widget.Button
+                android:id="@+id/btn_book_now"
+                style="@style/Material.Drawable.Ripple.Touch"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center"
+                android:text="Book Now"
+                android:textAllCaps="false"
+
+                android:textColor="@drawable/btn_color_chg"
+                android:textSize="@dimen/_18sdp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="@dimen/_2sdp"
+                android:layout_height="@dimen/_19sdp"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:background="#FFFFFF"
+                android:gravity="center" />
+
+            <com.rey.material.widget.Button
+                android:id="@+id/btn_book_later"
+                style="@style/Material.Drawable.Ripple.Touch"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center"
+
+                android:text="Book Later"
+                android:textAllCaps="false"
+                android:textColor="@drawable/btn_color_chg"
+                android:textSize="@dimen/_18sdp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="bottom">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@drawable/down_design" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top|center_vertical"
             android:layout_marginTop="@dimen/_10sdp"
-            android:background="#FFFFFF"
+            android:background="@drawable/white_bgg"
+            android:layout_marginLeft="-10dp"
+            android:paddingLeft="@dimen/_10sdp"
+            android:layout_marginRight="-10dp"
+            android:paddingRight="@dimen/_10sdp"
             android:orientation="horizontal"
             android:paddingBottom="@dimen/_5sdp"
             android:paddingTop="@dimen/_5sdp">
@@ -122,6 +200,7 @@
                     android:layout_marginRight="@dimen/_10sdp"
 
                     android:orientation="horizontal">
+
                     <FrameLayout
                         android:id="@+id/frame_goodstype"
                         android:layout_width="fill_parent"
@@ -129,29 +208,29 @@
                         android:clickable="true">
 
 
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/float_pickup"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:textColorHint="@color/colorAccent">
 
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/float_pickup"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_2sdp"
-                    android:layout_marginTop="@dimen/_3sdp"
-                    android:textColorHint="@color/colorAccent">
+                            <AutoCompleteTextView
+                                android:id="@+id/editText_pickUp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:cursorVisible="false"
+                                android:hint="Pickup Location"
+                                android:maxLines="1"
+                                android:paddingTop="@dimen/_10sdp"
+                                android:singleLine="true"
+                                android:textColor="#000000"
 
-                    <AutoCompleteTextView
-                        android:id="@+id/editText_pickUp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:hint="Pickup Location"
-                        android:maxLines="1"
-                        android:paddingTop="@dimen/_10sdp"
-                        android:textColor="#000000"
-                        android:singleLine="true"
-                        android:cursorVisible="false"
+                                android:textSize="@dimen/_13sdp" />
+                        </android.support.design.widget.TextInputLayout>
 
-                        android:textSize="@dimen/_13sdp" />
-                </android.support.design.widget.TextInputLayout>
                         <LinearLayout
                             android:id="@+id/layout_pickuptype"
                             android:layout_width="match_parent"
@@ -162,6 +241,61 @@
                     </FrameLayout>
 
 
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:background="#E1E1E1" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+
+                    android:orientation="horizontal">
+
+
+                    <FrameLayout
+                        android:id="@+id/frame_drop_type"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true">
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/float_drop"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:textColorHint="@color/colorAccent">
+
+                            <AutoCompleteTextView
+                                android:id="@+id/editText_dropLocation"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:enabled="false"
+                                android:hint="Drop Location"
+                                android:maxLines="1"
+                                android:paddingTop="@dimen/_10sdp"
+
+                                android:singleLine="true"
+                                android:textColor="#000000"
+                                android:textSize="@dimen/_13sdp" />
+                        </android.support.design.widget.TextInputLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layout_drop"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                        </LinearLayout>
+                    </FrameLayout>
+
 
                 </LinearLayout>
 
@@ -170,135 +304,11 @@
                     android:layout_height="@dimen/_1sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:background="#E1E1E1" />
-                <FrameLayout
-                    android:id="@+id/frame_drop_type"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true">
 
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/float_drop"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_2sdp"
-                    android:layout_marginTop="@dimen/_3sdp"
-                    android:textColorHint="@color/colorAccent">
 
-                    <AutoCompleteTextView
-                        android:id="@+id/editText_dropLocation"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:hint="Drop Location"
-                        android:maxLines="1"
-                        android:paddingTop="@dimen/_10sdp"
-                        android:enabled="false"
-
-                        android:textColor="#000000"
-                        android:singleLine="true"
-                        android:textSize="@dimen/_13sdp" />
-                </android.support.design.widget.TextInputLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_drop"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-        </LinearLayout>
-    </FrameLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:layout_marginBottom="@dimen/_5sdp"
-                    android:background="#E1E1E1" />
             </LinearLayout>
 
 
-        </LinearLayout>
-
-
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/float_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:layout_marginBottom="@dimen/_60sdp"
-            android:layout_marginRight="@dimen/_5sdp"
-            android:src="@drawable/lor"
-            app:backgroundTint="@color/redColor"
-            app:elevation="4dp" />
-
-
-
-
-
-
-
-
-
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="#382F2F"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <com.rey.material.widget.Button
-                android:id="@+id/btn_book_now"
-                style="@style/Material.Drawable.Ripple.Touch"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@null"
-                android:gravity="center"
-                android:text="Book Now"
-                android:textStyle="bold"
-
-                android:textAllCaps="false"
-                android:textColor="@drawable/btn_color_chg"
-                android:textSize="@dimen/_18sdp" />
-
-            <View
-                android:layout_width="@dimen/_2sdp"
-                android:layout_height="@dimen/_19sdp"
-                android:gravity="center"
-android:layout_marginTop="@dimen/_2sdp"
-                android:background="#FFFFFF" />
-
-            <com.rey.material.widget.Button
-                android:id="@+id/btn_book_later"
-                style="@style/Material.Drawable.Ripple.Touch"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@null"
-                android:textStyle="bold"
-
-                android:gravity="center"
-                android:text="Book Later"
-                android:textAllCaps="false"
-                android:textColor="@drawable/btn_color_chg"
-                android:textSize="@dimen/_18sdp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:gravity="bottom">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:background="@drawable/down_design" />
         </LinearLayout>
 
     </FrameLayout>

@@ -33,11 +33,11 @@ public class EmergencyContacts extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.emergency_contacts);
 
-        FontsManager.initFormAssets(EmergencyContacts.this, "fonts/CATAMARAN-REGULAR.TTF");       //initialization
+        FontsManager.initFormAssets(EmergencyContacts.this, "fonts/lato.ttf");       //initialization
         FontsManager.changeFonts(EmergencyContacts.this);
 
 
-        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/CATAMARAN-REGULAR.TTF");
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
 
 
 

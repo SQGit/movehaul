@@ -56,15 +56,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fadeScrollbars="false"
-        android:layout_weight="1">
+        >
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginBottom="@dimen/_10sdp"
-            android:paddingBottom="@dimen/_10sdp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -79,6 +77,7 @@
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5sdp"
                     android:paddingTop="@dimen/_5sdp">
 
 
@@ -94,7 +93,9 @@
                         android:layout_height="wrap_content"
                         android:text="#6, North Avenue, Abuja, Nigeria"
                         android:textColor="@color/textColor"
-                        android:textSize="@dimen/_15sdp" />
+                        android:maxLines="1"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:textSize="@dimen/_14sdp" />
                 </LinearLayout>
 
                 <ImageView
@@ -109,8 +110,9 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/white_bg"
+
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -119,6 +121,7 @@
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5sdp"
                     android:paddingTop="@dimen/_5sdp">
 
 
@@ -134,7 +137,10 @@
                         android:layout_height="wrap_content"
                         android:text="#977, West Boage, Dekina, Nigeria"
                         android:textColor="@color/textColor"
-                        android:textSize="@dimen/_15sdp"
+                        android:textSize="@dimen/_14sdp"
+                        android:maxLines="1"
+                        android:layout_marginTop="@dimen/_5sdp"
+
                         android:id="@+id/textView6" />
                 </LinearLayout>
 
@@ -149,7 +155,7 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/white_bg"
                 android:orientation="horizontal">
 
@@ -159,6 +165,7 @@
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5sdp"
                     android:paddingTop="@dimen/_5sdp">
 
 
@@ -173,9 +180,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="2"
+                        android:layout_marginTop="@dimen/_5sdp"
+
                         android:text="P.M.B.12537,Laafiaji Building,Dekina Nigeria,272101"
                         android:textColor="@color/textColor"
-                        android:textSize="@dimen/_15sdp" />
+                        android:textSize="@dimen/_14sdp" />
                 </LinearLayout>
 
                 <ImageView
@@ -189,7 +198,7 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
@@ -207,6 +216,7 @@
                         android:layout_weight="1"
                         android:orientation="vertical"
                         android:paddingLeft="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_5sdp"
                         android:paddingTop="@dimen/_5sdp">
 
 
@@ -222,8 +232,9 @@
                             android:layout_height="wrap_content"
                             android:maxLines="2"
                             android:text="07-10-2016"
+                            android:layout_marginTop="@dimen/_5sdp"
                             android:textColor="@color/textColor"
-                            android:textSize="@dimen/_15sdp" />
+                            android:textSize="@dimen/_14sdp" />
                     </LinearLayout>
 
                     <ImageView
@@ -249,6 +260,7 @@
                         android:layout_weight="1"
                         android:orientation="vertical"
                         android:paddingLeft="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_5sdp"
                         android:paddingTop="@dimen/_5sdp">
 
 
@@ -264,8 +276,10 @@
                             android:layout_height="wrap_content"
                             android:maxLines="2"
                             android:text="12:30 PM"
+                            android:layout_marginTop="@dimen/_5sdp"
+
                             android:textColor="@color/textColor"
-                            android:textSize="@dimen/_15sdp" />
+                            android:textSize="@dimen/_14sdp" />
                     </LinearLayout>
 
                     <ImageView
@@ -281,7 +295,7 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/white_bg"
                 android:orientation="horizontal">
 
@@ -290,6 +304,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical"
+                    android:paddingBottom="@dimen/_5sdp"
                     android:paddingLeft="@dimen/_10sdp"
                     android:paddingTop="@dimen/_5sdp">
 
@@ -305,9 +320,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="2"
+                        android:layout_marginTop="@dimen/_5sdp"
+
                         android:text="Heavy Load"
                         android:textColor="@color/textColor"
-                        android:textSize="@dimen/_15sdp" />
+                        android:textSize="@dimen/_14sdp" />
                 </LinearLayout>
 
                 <ImageView
@@ -318,40 +335,37 @@
                     android:src="@drawable/select_truck_type" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:orientation="horizontal"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:paddingRight="@dimen/_15sdp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Time Remaining : "
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/_15sdp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="45 min"
-                    android:textColor="@color/redColor"
-                    android:textSize="@dimen/_15sdp" />
-
-            </LinearLayout>
-
         </LinearLayout>
     </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:gravity="bottom"
+        android:gravity="end"
+        android:layout_marginTop="@dimen/_10sdp"
         android:orientation="horizontal"
-        android:paddingTop="@dimen/_15sdp">
+        android:paddingRight="@dimen/_14sdp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time Remaining : "
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/_14sdp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="45 min"
+            android:textColor="@color/redColor"
+            android:textSize="@dimen/_14sdp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -371,8 +385,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:gravity="center|bottom"
+            android:layout_gravity="top"
+            android:gravity="center|top"
             android:padding="@dimen/_3sdp">
 
             <com.rey.material.widget.Button
@@ -380,7 +394,7 @@
                 style="@style/Material.Drawable.Ripple.Touch"
                 android:layout_width="@dimen/_140sdp"
                 android:layout_height="@dimen/_40sdp"
-                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/submit"
                 android:gravity="center"
                 android:paddingBottom="@dimen/_5sdp"

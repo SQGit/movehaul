@@ -57,9 +57,9 @@ public class Book_later extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_later);
-        FontsManager.initFormAssets(this, "fonts/CATAMARAN-REGULAR.TTF");       //initialization
+        FontsManager.initFormAssets(this, "fonts/lato.ttf");       //initialization
         FontsManager.changeFonts(this);
-        type = Typeface.createFromAsset(getAssets(), "fonts/CATAMARAN-REGULAR.TTF");
+        type = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
 
         btn_time = (ImageView) findViewById(R.id.iv_btn_time);
         btn_date = (ImageView) findViewById(R.id.iv_btn_date);

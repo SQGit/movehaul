@@ -10,7 +10,7 @@
     <style name="AppTheme1" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/ColorStatus</item>
-        <item name="colorPrimaryDark">@color/ColorStatus</item>
+       <item name="colorPrimaryDark">@color/brown</item>
         <!--<item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowTranslucentNavigation">false</item>-->
         <item name="colorAccent">@color/colorAccent</item>

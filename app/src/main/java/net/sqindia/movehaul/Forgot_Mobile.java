@@ -30,7 +30,7 @@ public class Forgot_Mobile extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.forgot_phone);
-        FontsManager.initFormAssets(this, "fonts/CATAMARAN-REGULAR.TTF");       //initialization
+        FontsManager.initFormAssets(this, "fonts/lato.ttf");       //initialization
         FontsManager.changeFonts(this);
 
         flt_email = (TextInputLayout) findViewById(R.id.float_email);
@@ -38,7 +38,7 @@ public class Forgot_Mobile extends Activity {
         edtxt_email = (EditText) findViewById(R.id.editTextEmail);
         btn_submit = (Button) findViewById(R.id.btn_submit);
 
-        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/CATAMARAN-REGULAR.TTF");
+        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
         flt_email.setTypeface(type);
 
 

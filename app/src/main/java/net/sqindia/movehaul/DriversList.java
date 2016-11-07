@@ -42,7 +42,7 @@ public class DriversList extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drivers_list);
-        FontsManager.initFormAssets(DriversList.this, "fonts/CATAMARAN-REGULAR.TTF");       //initialization
+        FontsManager.initFormAssets(DriversList.this, "fonts/lato.ttf");       //initialization
         FontsManager.changeFonts(DriversList.this);
 
         lv_drv_list = (ListView) findViewById(R.id.listview_driver);

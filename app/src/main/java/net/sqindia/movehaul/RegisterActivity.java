@@ -50,7 +50,7 @@ public class RegisterActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_screen);
-        FontsManager.initFormAssets(this, "fonts/CATAMARAN-REGULAR.TTF");       //initialization
+        FontsManager.initFormAssets(this, "fonts/lato.ttf");       //initialization
         FontsManager.changeFonts(this);
 
         btn_back = (LinearLayout) findViewById(R.id.layout_back);
@@ -64,7 +64,7 @@ public class RegisterActivity extends Activity {
         til_name = (TextInputLayout) findViewById(R.id.float_name);
 
 
-        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/CATAMARAN-REGULAR.TTF");
+        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
         til_email.setTypeface(type);
         til_mobile.setTypeface(type);
         til_name.setTypeface(type);
