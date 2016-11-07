@@ -8,20 +8,13 @@ import android.net.NetworkInfo;
 public class Config {
 
 
-    // static final String REG_URL = "http://oonbux.sqindia.net/";
+
 
 
     public static final String WEB_URL = "http://104.197.7.143:3030/";
 
 
-    static final String REG_URL = "http://androidtesting.newlogics.in/";
 
-    static final String CSS_URL = "http://oonbux.sqindia.net/region";
-
-
-    public static final String GCM_PROJ_ID = "600977208793";
-    static final String PKG_NAME = "sqindia.net.oonbux";
-    static final String GCM_API_KEY = "AIzaSyA4QlRGMEdX-GPcFsC5VjzVxZqH5knJwFo";
 
 
     public static boolean isStringNullOrWhiteSpace(String value) {
@@ -44,6 +37,15 @@ public class Config {
                 = (ConnectivityManager) c1.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+
+    public static boolean isConnected(Context context) {
+        ConnectivityManager
+                cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null
+                && activeNetwork.isConnectedOrConnecting();
     }
 
 

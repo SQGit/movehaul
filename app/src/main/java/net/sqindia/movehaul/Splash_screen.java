@@ -1,10 +1,10 @@
 package net.sqindia.movehaul;
 
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -18,10 +18,14 @@ import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.rey.material.widget.Button;
 import com.sloop.fonts.FontsManager;
+import com.wang.avi.AVLoadingIndicatorView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by sqindia on 21-10-2016.
@@ -32,7 +36,22 @@ public class Splash_screen extends Activity {
     LinearLayout lt_bottom;
     boolean isBottom = true;
     int is = 0;
+    Config config;
+    AVLoadingIndicatorView av_loader;
 
+    public static int getDeviceWidth(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        int width = display.getWidth();
+        return width;
+    }
+
+    public static int getDeviceHeight(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        int height = display.getHeight();
+        return height;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +62,8 @@ public class Splash_screen extends Activity {
         FontsManager.initFormAssets(this, "fonts/CATAMARAN-REGULAR.TTF");       //initialization
         FontsManager.changeFonts(this);
 
+
+        config = new Config();
 
         getDeviceWidth(this);
         Log.e("tag", "width0" + getDeviceWidth(this));
@@ -57,6 +78,9 @@ public class Splash_screen extends Activity {
         bg_icon = (ImageView) findViewById(R.id.bg_icon);
         logo_icon = (ImageView) findViewById(R.id.logo_ico);
         lt_bottom = (LinearLayout) findViewById(R.id.layout_bottom);
+        av_loader = (AVLoadingIndicatorView) findViewById(R.id.loader);
+
+        av_loader.setVisibility(View.GONE);
 
         //img_loading = (ImageView) findViewById(R.id.imageview);
 
@@ -108,8 +132,20 @@ public class Splash_screen extends Activity {
         anim_btn_t2b.setFillAfter(false);
 
         final TranslateAnimation anim_truck_c2r = new TranslateAnimation(0, width, 0, 0);
-        anim_truck_c2r.setDuration(1700);
+        anim_truck_c2r.setDuration(2000);
         anim_truck_c2r.setFillAfter(false);
+
+
+
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                new check_internet().execute();
+            }
+        }, 1300);
+
+
 
 
         btn_login.setOnClickListener(new View.OnClickListener() {
@@ -130,20 +166,16 @@ public class Splash_screen extends Activity {
                     @Override
                     public void run() {
 
-
                         Intent isd = new Intent(Splash_screen.this, LoginActivity.class);
-
                         Bundle bndlanimation =
                                 ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anim1, R.anim.anim2).toBundle();
                         startActivity(isd, bndlanimation);
-
 
 
                         /*Intent intent = new Intent(Splash_screen.this, LoginActivity.class);
                         ActivityOptions options = ActivityOptions.makeScaleUpAnimation(bg_icon, 0,
                                 0, truck_icon.getWidth(), truck_icon.getHeight());
                         startActivity(intent, options.toBundle());*/
-
 
                     }
                 }, 1000);
@@ -153,33 +185,83 @@ public class Splash_screen extends Activity {
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Splash_screen.this, RegisterActivity.class);
-                startActivity(i);
-                is = 1;
 
-                //finish();
+                lt_bottom.startAnimation(anim_btn_t2b);
+                truck_icon.startAnimation(anim_truck_c2r);
+                bg_icon.setAnimation(fadeOut);
+
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        Intent isd = new Intent(Splash_screen.this, RegisterActivity.class);
+                        Bundle bndlanimation =
+                                ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anim1, R.anim.anim2).toBundle();
+                        startActivity(isd, bndlanimation);
+
+                    }
+                }, 1000);
+
             }
         });
     }
-
-    public static int getDeviceWidth(Context context) {
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        int width = display.getWidth();
-        return width;
-    }
-
-    public static int getDeviceHeight(Context context) {
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        int height = display.getHeight();
-        return height;
-    }
-
 
     @Override
     protected void onRestart() {
         super.onRestart();
         Log.e("tag", "ds+" + is);
     }
+
+
+    public class check_internet extends AsyncTask<String, Void, String> {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Log.e("tag","reg_preexe");
+            av_loader.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            try {
+
+                boolean isconnected = config.isConnected(Splash_screen.this);
+
+                if(isconnected){
+                    return "true";
+                }
+                else{
+                    return "false";
+                }
+
+            } catch (Exception e) {
+                Log.e("InputStream", e.getLocalizedMessage());
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("tag","net:"+s);
+
+            if(s.equals("true")){
+                av_loader.setVisibility(View.GONE);
+            }
+            else if(s.equals("false")){
+                av_loader.setVisibility(View.GONE);
+                Toast.makeText(getApplicationContext(),"splash",Toast.LENGTH_LONG).show();
+            }
+
+
+
+        }
+
+    }
+
 }

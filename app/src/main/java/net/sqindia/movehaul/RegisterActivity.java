@@ -41,6 +41,12 @@ public class RegisterActivity extends Activity {
 
 
     @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        finish();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_screen);
@@ -110,6 +116,7 @@ public class RegisterActivity extends Activity {
 
             }
         });
+
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -117,7 +124,7 @@ public class RegisterActivity extends Activity {
                 startActivity(i);
                 finish();*/
                 onBackPressed();
-                finish();
+               // finish();
             }
         });
     }

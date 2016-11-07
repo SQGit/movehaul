@@ -49,7 +49,7 @@ public class UpcomingAdapter extends ArrayAdapter<String> {
          cell = (FoldingCell) convertView;
         ViewHolder viewHolder;
 
-       FontsManager.initFormAssets(act, "fonts/CATAMARAN-REGULAR.TTF");       //initialization
+       FontsManager.initFormAssets(act, "fonts/lato.ttf");       //initialization
        FontsManager.changeFonts(act);
 
         if (cell == null) {
