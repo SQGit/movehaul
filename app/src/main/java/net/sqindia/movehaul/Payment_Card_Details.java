@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -28,6 +30,7 @@ public class Payment_Card_Details extends Activity {
     ImageView btn_close;
     TextView tv_dialog1,tv_dialog2,tv_dialog3,tv_dialog4;
     LinearLayout btn_back;
+    TextInputLayout flt_exp_date,flt_cvv,flt_name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +39,13 @@ public class Payment_Card_Details extends Activity {
         FontsManager.changeFonts(this);
         btn_paynow = (Button) findViewById(R.id.btn_paynow);
         btn_back = (LinearLayout) findViewById(R.id.layout_back);
+        flt_exp_date = (TextInputLayout) findViewById(R.id.float_exp_date);
+        flt_cvv = (TextInputLayout) findViewById(R.id.float_cvv);
+        flt_name = (TextInputLayout) findViewById(R.id.float_name);
+        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/CATAMARAN-REGULAR.TTF");
+        flt_cvv.setTypeface(type);
+        flt_exp_date.setTypeface(type);
+        flt_name.setTypeface(type);
 
         btn_paynow.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -13,6 +13,7 @@
         android:background="@null"
         style="@style/Widget.AppCompat.ListView"
         android:divider="@null"
+        android:fadeScrollbars="false"
         android:paddingBottom="@dimen/_20sdp"
         android:paddingTop="@dimen/_10sdp">
 

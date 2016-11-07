@@ -17,7 +17,9 @@
         <include
             layout="@layout/action_bar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></include>
+            android:layout_height="wrap_content">
+
+        </include>
 
 
         <com.rey.material.widget.TabIndicatorView

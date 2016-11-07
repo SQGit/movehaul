@@ -1,6 +1,7 @@
 package net.sqindia.movehaul;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -100,7 +101,8 @@ public class MyTrips extends AppCompatActivity {
 
             View view = layoutInflater.inflate(layouts[position], container, false);
             container.addView(view);
-
+          //  FontsManager.initFormAssets(getApplicationContext(), "fonts/CATAMARAN-REGULAR.TTF");       //initialization
+           // FontsManager.changeFonts((Activity) getApplicationContext());
 
             if (position == 0)
             {

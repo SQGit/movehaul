@@ -83,7 +83,7 @@ public class DriversList extends AppCompatActivity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(DriversList.this, DashboardNavigation.class);
+                Intent i = new Intent(DriversList.this, Job_review.class);
                 startActivity(i);
                 finish();
             }

@@ -20,7 +20,8 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_15sdp"
+        android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_15sdp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -137,7 +138,7 @@
             android:maxLength="4"
             android:maxLines="1"
             android:nextFocusDown="@+id/edt_otp4"
-            android:textSize="@dimen/_21sdp" />
+            android:textSize="@dimen/_15sdp" />
 
         <View
             android:layout_width="@dimen/_7sdp"
@@ -156,7 +157,7 @@
             android:inputType="number"
             android:maxLength="4"
             android:maxLines="1"
-            android:textSize="@dimen/_21sdp" />
+            android:textSize="@dimen/_15sdp" />
     </LinearLayout>
 
     <LinearLayout

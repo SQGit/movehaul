@@ -55,17 +55,19 @@ public class HistoryAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View convertView, ViewGroup viewGroup) {
         final MyViewHolder mViewHolder;
-        final TextView tv_vin_no, tv_vin_make, tv_add;
+        com.rey.material.widget.TextView date,id;
 
         FontsManager.initFormAssets(act, "fonts/CATAMARAN-REGULAR.TTF");       //initialization
         FontsManager.changeFonts(act);
-
+        Typeface tf = Typeface.createFromAsset(act.getAssets(), "fonts/mont.ttf");
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.history_adapter, viewGroup, false);
             mViewHolder = new MyViewHolder(convertView);
 
-           // tv_vin_no = (TextView) convertView.findViewById(R.id.textview_vin_no);
-           // tv_vin_make = (TextView) convertView.findViewById(R.id.textview_vin_make);
+           id = (com.rey.material.widget.TextView) convertView.findViewById(R.id.textview_book_id);
+           date = (com.rey.material.widget.TextView) convertView.findViewById(R.id.textview_date);
+            id.setTypeface(tf);
+            date.setTypeface(tf);
 
 
             convertView.setTag(mViewHolder);
@@ -73,8 +75,6 @@ public class HistoryAdapter extends BaseAdapter {
         } else {
             mViewHolder = (MyViewHolder) convertView.getTag();
 
-            tv_vin_no = mViewHolder.tv_vin_no;
-            tv_vin_make = mViewHolder.tv_vin_make;
 
         }
 

@@ -20,13 +20,16 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_15sdp"
+        android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+
+
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:orientation="vertical">
 
             <TextView
@@ -59,6 +62,9 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_10sdp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -86,8 +92,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/_5sdp"
-                        android:text="Abuja"
+                        android:text="#6, North Avenue, Abuja, Nigeria"
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/_15sdp" />
                 </LinearLayout>
@@ -127,10 +132,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/_5sdp"
-                        android:text="Dekina"
+                        android:text="#977, West Boage, Dekina, Nigeria"
                         android:textColor="@color/textColor"
-                        android:textSize="@dimen/_15sdp" />
+                        android:textSize="@dimen/_15sdp"
+                        android:id="@+id/textView6" />
                 </LinearLayout>
 
                 <ImageView
@@ -168,8 +173,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="2"
-                        android:paddingTop="@dimen/_5sdp"
-                        android:text="Dekina"
+                        android:text="P.M.B.12537,Laafiaji Building,Dekina Nigeria,272101"
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/_15sdp" />
                 </LinearLayout>
@@ -217,7 +221,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:maxLines="2"
-                            android:paddingTop="@dimen/_5sdp"
                             android:text="07-10-2016"
                             android:textColor="@color/textColor"
                             android:textSize="@dimen/_15sdp" />
@@ -260,7 +263,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:maxLines="2"
-                            android:paddingTop="@dimen/_5sdp"
                             android:text="12:30 PM"
                             android:textColor="@color/textColor"
                             android:textSize="@dimen/_15sdp" />
@@ -303,7 +305,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="2"
-                        android:paddingTop="@dimen/_5sdp"
                         android:text="Heavy Load"
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/_15sdp" />
@@ -322,7 +323,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:orientation="horizontal"
-                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:paddingRight="@dimen/_15sdp">
 
                 <TextView
@@ -361,7 +362,9 @@
             <include
                 layout="@layout/down_icon"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"></include>
+                android:layout_height="wrap_content">
+
+            </include>
 
         </LinearLayout>
 

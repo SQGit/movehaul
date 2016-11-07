@@ -40,6 +40,7 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.activity_login);
         FontsManager.initFormAssets(this, "fonts/CATAMARAN-REGULAR.TTF");       //initialization
         FontsManager.changeFonts(this);
+        Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/mont.ttf");
 
 
         btn_submit = (Button) findViewById(R.id.btn_submit);
@@ -49,6 +50,7 @@ public class LoginActivity extends Activity {
         flt_mobile_no = (TextInputLayout) findViewById(R.id.float_mobile);
 
         Typeface type = Typeface.createFromAsset(getAssets(), "fonts/CATAMARAN-REGULAR.TTF");
+        et_mobile_no.setTypeface(tf);
         flt_mobile_no.setTypeface(type);
 
         btn_back.setOnClickListener(new View.OnClickListener() {

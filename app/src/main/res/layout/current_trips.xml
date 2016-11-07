@@ -9,6 +9,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fadeScrollbars="false"
         android:layout_weight="1">
 
         <LinearLayout
@@ -19,7 +20,7 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/_10sdp"
                 android:weightSum="2">
@@ -30,7 +31,6 @@
                     android:layout_marginRight="@dimen/_3sdp"
                     android:layout_weight="1"
                     android:paddingLeft="@dimen/_5sdp"
-                    android:paddingTop="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_5sdp"
                     android:background="@drawable/white_bg"
                     android:orientation="horizontal">
@@ -41,7 +41,7 @@
                         android:layout_weight="1"
                         android:orientation="vertical"
                         android:paddingLeft="@dimen/_10sdp"
-                        android:paddingTop="@dimen/_5sdp">
+                       >
 
 
                         <TextView
@@ -55,15 +55,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:maxLines="1"
-                            android:paddingTop="@dimen/_5sdp"
                             android:text="07-10-2016"
                             android:textColor="@color/textColor"
-                            android:textSize="@dimen/_15sdp" />
+                            android:textSize="@dimen/_14sdp" />
                     </LinearLayout>
 
                     <ImageView
-                        android:layout_width="@dimen/_23sdp"
-                        android:layout_height="@dimen/_23sdp"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
                         android:layout_gravity="center"
                         android:src="@drawable/date_icon"
                         android:layout_marginRight="@dimen/_12sdp"
@@ -76,7 +75,6 @@
                     android:layout_marginLeft="@dimen/_3sdp"
                     android:layout_weight="1"
                     android:paddingLeft="@dimen/_5sdp"
-                    android:paddingTop="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_5sdp"
                     android:paddingRight="@dimen/_20sdp"
                     android:layout_marginRight="-15dp"
@@ -89,7 +87,7 @@
                         android:layout_weight="1"
                         android:orientation="vertical"
                         android:paddingLeft="@dimen/_10sdp"
-                        android:paddingTop="@dimen/_5sdp">
+                        >
 
 
                         <TextView
@@ -103,15 +101,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:maxLines="2"
-                            android:paddingTop="@dimen/_5sdp"
                             android:text="12:30 PM"
                             android:textColor="@color/textColor"
-                            android:textSize="@dimen/_15sdp" />
+                            android:textSize="@dimen/_14sdp" />
                     </LinearLayout>
 
                     <ImageView
-                        android:layout_width="@dimen/_23sdp"
-                        android:layout_height="@dimen/_23sdp"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
                         android:layout_gravity="center"
                         android:layout_marginRight="@dimen/_12sdp"
                         android:src="@drawable/time_icon" />
@@ -125,7 +122,6 @@
                 android:background="@drawable/white_bg"
                 android:paddingLeft="@dimen/_5sdp"
                 android:paddingTop="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5sdp"
                 android:paddingRight="@dimen/_20sdp"
                 android:layout_marginRight="-15dp"
                 android:orientation="horizontal">
@@ -136,7 +132,7 @@
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_5sdp">
+                    >
 
 
                     <TextView
@@ -149,10 +145,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/_5sdp"
-                        android:text="Abuja"
+                        android:text="#6, North Avenue, Abuja, Nigeria"
                         android:textColor="@color/textColor"
-                        android:textSize="@dimen/_15sdp" />
+                        android:textSize="@dimen/_14sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:id="@+id/textView5" />
                 </LinearLayout>
 
                 <ImageView
@@ -160,7 +157,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:padding="@dimen/_10sdp"
+                    android:padding="@dimen/_5sdp"
                     android:src="@drawable/delivery_addr" />
             </LinearLayout>
 
@@ -170,7 +167,6 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:paddingLeft="@dimen/_5sdp"
                 android:paddingTop="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5sdp"
                 android:paddingRight="@dimen/_20sdp"
                 android:layout_marginRight="-15dp"
                 android:background="@drawable/white_bg"
@@ -182,7 +178,7 @@
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_5sdp">
+                   >
 
 
                     <TextView
@@ -196,16 +192,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/_5sdp"
-                        android:text="Dekina"
+                        android:text="#977, West Boage, Dekina, Nigeria"
                         android:textColor="@color/textColor"
-                        android:textSize="@dimen/_15sdp" />
+                        android:textSize="@dimen/_14sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+
+                        android:id="@+id/textView4" />
                 </LinearLayout>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:padding="@dimen/_10sdp"
+                    android:padding="@dimen/_5sdp"
                     android:src="@drawable/goods_type" />
             </LinearLayout>
 
@@ -216,7 +215,6 @@
                 android:background="@drawable/white_bg"
                 android:paddingLeft="@dimen/_5sdp"
                 android:paddingTop="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5sdp"
                 android:paddingRight="@dimen/_20sdp"
                 android:layout_marginRight="-15dp"
                 android:orientation="horizontal">
@@ -227,7 +225,7 @@
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_5sdp">
+                   >
 
 
                     <TextView
@@ -241,18 +239,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="2"
-                        android:paddingTop="@dimen/_5sdp"
                         android:text="Heavy Load"
                         android:textColor="@color/textColor"
-                        android:textSize="@dimen/_15sdp" />
+                        android:layout_marginBottom="@dimen/_5sdp"
+
+                        android:textSize="@dimen/_14sdp" />
                 </LinearLayout>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:padding="@dimen/_10sdp"
-                    android:src="@drawable/select_truck_type" />
+                    android:padding="@dimen/_5sdp"
+                    android:src="@drawable/select_truck_type"
+                    android:id="@+id/imageView5" />
             </LinearLayout>
 
             <LinearLayout
@@ -262,7 +262,6 @@
                 android:background="@drawable/white_bg"
                 android:paddingLeft="@dimen/_5sdp"
                 android:paddingTop="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5sdp"
                 android:paddingRight="@dimen/_20sdp"
                 android:layout_marginRight="-15dp"
                 android:orientation="horizontal">
@@ -273,7 +272,7 @@
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_5sdp">
+                    >
 
 
                     <TextView
@@ -287,17 +286,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="2"
-                        android:paddingTop="@dimen/_5sdp"
-                        android:text="Tim"
+                        android:text="MJ.Tim harley"
                         android:textColor="@color/textColor"
-                        android:textSize="@dimen/_15sdp" />
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:textSize="@dimen/_14sdp" />
                 </LinearLayout>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:padding="@dimen/_10sdp"
+                    android:padding="@dimen/_5sdp"
                     android:src="@drawable/driver_name_icon" />
             </LinearLayout>
 
@@ -308,7 +307,6 @@
                 android:background="@drawable/white_bg"
                 android:paddingLeft="@dimen/_5sdp"
                 android:paddingTop="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5sdp"
                 android:paddingRight="@dimen/_20sdp"
                 android:layout_marginRight="-15dp"
                 android:orientation="horizontal">
@@ -333,17 +331,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="2"
-                        android:paddingTop="@dimen/_5sdp"
                         android:text="+140 555 8965"
+                        android:layout_marginBottom="@dimen/_5sdp"
                         android:textColor="@color/textColor"
-                        android:textSize="@dimen/_15sdp" />
+                        android:textSize="@dimen/_14sdp" />
                 </LinearLayout>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:padding="@dimen/_10sdp"
+                    android:padding="@dimen/_5sdp"
                     android:src="@drawable/driver_name_icon" />
             </LinearLayout>
 
@@ -352,7 +350,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:orientation="horizontal"
-                android:layout_marginTop="@dimen/_15sdp"
                 android:paddingRight="@dimen/_15sdp">
 
                 <TextView
@@ -379,6 +376,7 @@
 
         </LinearLayout>
     </ScrollView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

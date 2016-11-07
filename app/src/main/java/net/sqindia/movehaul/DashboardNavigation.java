@@ -86,14 +86,11 @@ import com.sloop.fonts.FontsManager;
 public class DashboardNavigation extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, com.google.android.gms.location.LocationListener, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
     private GoogleMap mMap;
-
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static String TAG = "MAP LOCATION";
     Context mContext;
     private LatLng mCenterLatLong;
-
     private AddressResultReceiver mResultReceiver;
-
     protected String mAddressOutput;
     protected String mAreaOutput;
     protected String mCityOutput;
@@ -111,7 +108,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     FloatingActionButton fab_truck;
     private boolean serviceWillBeDismissed;
     protected GoogleApiClient mGoogleApiClient;
-    ImageView pickup_close, drop_close,btn_menu,rightmenu;
+    ImageView pickup_close,btn_menu,rightmenu;
     android.widget.LinearLayout droplv,pickuplv;
 
     @Override
