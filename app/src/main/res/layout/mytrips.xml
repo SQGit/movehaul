@@ -32,8 +32,9 @@
             app:tpi_indicatorHeight="2dp"
             app:tpi_tabPadding="@dimen/_25sdp"
             app:tpi_indicatorColor="@color/redColor"
+            style="@style/Material.Widget.TabPageIndicator"
 
-            style="@style/tab"/>
+            />
 
 
     </LinearLayout>
