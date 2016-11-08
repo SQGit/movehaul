@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -44,6 +45,7 @@ public class DriversListAdapter extends ArrayAdapter<String> {
     ImageView btn_close;
     Button btn_ok;
     TextView tv_dialog1,tv_dialog2,tv_dialog3,tv_dialog4;
+    Typeface type;
 
     public DriversListAdapter(Context context, Activity acti, List<String> objects) {
         super(context, 0, objects);
@@ -140,6 +142,12 @@ public class DriversListAdapter extends ArrayAdapter<String> {
         tv_dialog2.setText("Successfully!!");
         tv_dialog3.setText("Are you sure that");
         tv_dialog4.setText("this driver is suitable for your job?");
+
+        tv_dialog1.setTypeface(type);
+        tv_dialog2.setTypeface(type);
+        tv_dialog3.setTypeface(type);
+        tv_dialog4.setTypeface(type);
+        btn_ok.setTypeface(type);
 
         btn_close.setOnClickListener(new View.OnClickListener() {
             @Override

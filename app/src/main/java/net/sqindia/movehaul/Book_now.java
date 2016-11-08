@@ -116,6 +116,7 @@ public class Book_now extends Activity {
         jobtv2.setTypeface(type);
         jobtv3.setTypeface(type);
         jobtv4.setTypeface(type);
+        btn_ok.setTypeface(type);
 
         btn_close.setOnClickListener(new View.OnClickListener() {
             @Override

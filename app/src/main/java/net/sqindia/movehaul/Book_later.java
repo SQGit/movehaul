@@ -186,6 +186,7 @@ public class Book_later extends Activity {
         jobtv2.setTypeface(type);
         jobtv3.setTypeface(type);
         jobtv4.setTypeface(type);
+        btn_ok.setTypeface(type);
         btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

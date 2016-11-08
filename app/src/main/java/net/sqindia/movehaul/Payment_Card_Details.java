@@ -31,6 +31,7 @@ public class Payment_Card_Details extends Activity {
     TextView tv_dialog1,tv_dialog2,tv_dialog3,tv_dialog4;
     LinearLayout btn_back;
     TextInputLayout flt_exp_date,flt_cvv,flt_name;
+    Typeface type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +79,12 @@ public class Payment_Card_Details extends Activity {
         tv_dialog2.setText("Confirmed!!");
         tv_dialog3.setText("Our Driver will");
         tv_dialog4.setText("Contact you soon..");
+
+        tv_dialog1.setTypeface(type);
+        tv_dialog2.setTypeface(type);
+        tv_dialog3.setTypeface(type);
+        tv_dialog4.setTypeface(type);
+        btn_ok.setTypeface(type);
 
         btn_close.setOnClickListener(new View.OnClickListener() {
             @Override
