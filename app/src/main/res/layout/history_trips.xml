@@ -13,9 +13,9 @@
         android:layout_height="match_parent"
         android:background="@null"
         android:divider="@null"
-        android:paddingBottom="@dimen/_20sdp"
-       android:fadeScrollbars="false"
-        android:paddingTop="@dimen/_10sdp">
+        android:paddingBottom="@dimen/_10sdp"
+        android:fadeScrollbars="false"
+        android:paddingTop="@dimen/_5sdp">
 
     </com.rey.material.widget.ListView>
 

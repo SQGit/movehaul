@@ -8,7 +8,6 @@
     android:layout_marginBottom="@dimen/_6sdp"
     android:layout_marginTop="@dimen/_6sdp"
     android:paddingTop="@dimen/_5sdp"
-    android:paddingBottom="@dimen/_5sdp"
     folding-cell:animationDuration="1500"
     folding-cell:backSideColor="@color/redColor">
 

@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_155sdp"
+        android:layout_height="@dimen/_140sdp"
         android:background="@drawable/white_bg"
         android:layout_marginRight="-2dp"
         android:orientation="vertical">
@@ -17,12 +17,12 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             >
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1.8dp"
+                android:layout_height="2.3dp"
                 android:background="@color/redColor" />
 
             <LinearLayout
@@ -35,6 +35,7 @@
                     android:gravity="center"
                     android:paddingLeft="@dimen/_3sdp"
                     android:paddingRight="@dimen/_3sdp"
+                    android:paddingTop="@dimen/_7sdp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical">
@@ -65,7 +66,9 @@
                         android:layout_height="wrap_content"
                         android:rating="3"
                         android:numStars="5"
-                        android:max="5"/>
+                        android:max="5"
+                        android:layout_gravity="center"
+                        android:paddingTop="@dimen/_5sdp"/>
                   <!--  android:progressTint="@color/gold"
                     android:progressBackgroundTint="@android:color/transparent"
                     android:secondaryProgressTint="@color/gold"-->
@@ -77,6 +80,7 @@
                     android:orientation="vertical"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_7sdp"
                     android:layout_weight="2"
                     android:layout_height="match_parent">
 
@@ -101,6 +105,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Damage Control"
+                        android:paddingTop="@dimen/_3sdp"
                         android:textColor="@color/redColor"
                         android:textSize="@dimen/_13sdp" />
 
@@ -118,6 +123,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Truck"
+                        android:paddingTop="@dimen/_3sdp"
                         android:textColor="@color/redColor"
                         android:textSize="@dimen/_13sdp" />
 
@@ -141,11 +147,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|bottom"
                 android:focusable="false"
-                android:paddingLeft="@dimen/_9sdp"
-                android:paddingRight="@dimen/_2sdp"
-                android:paddingTop="@dimen/_2sdp"
-                android:paddingBottom="@dimen/_2sdp"
-                android:src="@mipmap/ic_tick_ico" />
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingRight="@dimen/_10sdp"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:src="@drawable/bid_icon" />
 
 
         </FrameLayout>

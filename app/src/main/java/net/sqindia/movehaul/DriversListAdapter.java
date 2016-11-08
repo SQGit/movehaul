@@ -70,7 +70,7 @@ public class DriversListAdapter extends ArrayAdapter<String> {
        FontsManager.initFormAssets(act, "fonts/lato.ttf");       //initialization
        FontsManager.changeFonts(act);
 
-
+        type = Typeface.createFromAsset(getContext().getAssets(), "fonts/lato.ttf");
 
         if (cell == null) {
             viewHolder = new ViewHolder();

@@ -187,6 +187,9 @@ public class MyTrips extends AppCompatActivity {
 
             if (position == 0) {
 
+                FontsManager.initFormAssets(MyTrips.this, "fonts/lato.ttf");       //initialization
+                FontsManager.changeFonts(MyTrips.this);
+
 
             } else if (position == 1) {
 

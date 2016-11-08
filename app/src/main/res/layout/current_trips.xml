@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fadeScrollbars="false"
-        android:layout_weight="1">
+        android:paddingBottom="@dimen/_15sdp">
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:orientation="horizontal"
-                android:paddingBottom="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_5sdp"
                 android:weightSum="2">
 
                 <LinearLayout
@@ -32,6 +32,7 @@
                     android:layout_weight="1"
                     android:paddingLeft="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_5sdp"
+                    android:paddingTop="@dimen/_5sdp"
                     android:background="@drawable/white_bg"
                     android:orientation="horizontal">
 
@@ -75,6 +76,7 @@
                     android:layout_marginLeft="@dimen/_3sdp"
                     android:layout_weight="1"
                     android:paddingLeft="@dimen/_5sdp"
+                    android:paddingTop="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_5sdp"
                     android:paddingRight="@dimen/_20sdp"
                     android:layout_marginRight="-15dp"
@@ -131,8 +133,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:paddingLeft="@dimen/_10sdp"
-                    >
+                    android:paddingLeft="@dimen/_10sdp">
 
 
                     <TextView
@@ -164,7 +165,7 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:paddingLeft="@dimen/_5sdp"
                 android:paddingTop="@dimen/_5sdp"
                 android:paddingRight="@dimen/_20sdp"
@@ -211,7 +212,7 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/white_bg"
                 android:paddingLeft="@dimen/_5sdp"
                 android:paddingTop="@dimen/_5sdp"
@@ -258,7 +259,7 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/white_bg"
                 android:paddingLeft="@dimen/_5sdp"
                 android:paddingTop="@dimen/_5sdp"
@@ -303,7 +304,7 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/white_bg"
                 android:paddingLeft="@dimen/_5sdp"
                 android:paddingTop="@dimen/_5sdp"
@@ -342,7 +343,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:padding="@dimen/_5sdp"
-                    android:src="@drawable/driver_name_icon" />
+                    android:src="@drawable/driver_phone_icon" />
             </LinearLayout>
 
             <LinearLayout

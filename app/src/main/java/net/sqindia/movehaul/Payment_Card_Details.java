@@ -43,7 +43,9 @@ public class Payment_Card_Details extends Activity {
         flt_exp_date = (TextInputLayout) findViewById(R.id.float_exp_date);
         flt_cvv = (TextInputLayout) findViewById(R.id.float_cvv);
         flt_name = (TextInputLayout) findViewById(R.id.float_name);
-        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
+
+
+        type = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
         flt_cvv.setTypeface(type);
         flt_exp_date.setTypeface(type);
         flt_name.setTypeface(type);

@@ -342,7 +342,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="end"
-        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_5sdp"
         android:orientation="horizontal"
         android:paddingRight="@dimen/_14sdp">
 
@@ -386,17 +386,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
-            android:gravity="center|top"
-            android:padding="@dimen/_3sdp">
+            android:gravity="center"
+            >
 
             <com.rey.material.widget.Button
                 android:id="@+id/btn_review"
                 style="@style/Material.Drawable.Ripple.Touch"
                 android:layout_width="@dimen/_140sdp"
                 android:layout_height="@dimen/_40sdp"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/submit"
                 android:gravity="center"
+                android:layout_gravity="top"
                 android:paddingBottom="@dimen/_5sdp"
                 android:paddingRight="@dimen/_3sdp"
                 android:text="Continue"

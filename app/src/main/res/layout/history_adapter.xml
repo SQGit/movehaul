@@ -5,8 +5,8 @@
     android:layout_marginLeft="@dimen/_20sdp"
     android:background="@android:color/transparent"
     android:orientation="vertical"
-    android:paddingTop="@dimen/_5sdp"
-    android:paddingBottom="@dimen/_5sdp">
+    android:paddingTop="@dimen/_2sdp"
+    android:paddingBottom="@dimen/_2sdp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,21 +22,21 @@
 
             <View
                 android:layout_width="2dp"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_height="@dimen/_35sdp"
                 android:layout_marginBottom="@dimen/_6sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@color/redColor" />
 
 
             <ImageView
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
                 android:background="@drawable/ring_bg" />
 
 
             <View
                 android:layout_width="2dp"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_height="@dimen/_35sdp"
                 android:layout_marginBottom="@dimen/_7sdp"
                 android:layout_marginTop="@dimen/_7sdp"
                 android:background="@color/redColor" />
@@ -47,10 +47,11 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginRight="-15dp"
             android:background="@drawable/white_bg"
             android:gravity="center"
+            android:layout_gravity="center"
             android:orientation="vertical"
             android:paddingLeft="@dimen/_5sdp"
             android:paddingRight="@dimen/_20sdp">
@@ -60,19 +61,18 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:paddingTop="@dimen/_5sdp"
                 android:paddingLeft="@dimen/_10sdp">
+
                 <com.rey.material.widget.TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/_1sdp"
                     android:text="05-10-2016"
                     android:id="@+id/textview_date"
                     android:gravity="left"
                     android:layout_weight="1"
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/_14sdp" />
-
-
 
                 <com.rey.material.widget.TextView
                     android:layout_width="wrap_content"
@@ -83,14 +83,14 @@
                     android:textColor="@color/redColor"
                     android:layout_weight="1"
                     android:textStyle="bold"
-
                     android:textSize="@dimen/_14sdp" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/_5sdp">
 
                 <ImageView
                     android:id="@+id/imageView2"
@@ -137,8 +137,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                >
+                android:layout_marginTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp">
 
                 <ImageView
                     android:id="@+id/imageViesw2"
