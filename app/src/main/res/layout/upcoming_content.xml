@@ -85,7 +85,7 @@
                     android:gravity="right"
                     android:text="$ 150"
                     android:textColor="@color/redColor"
-                    android:textSize="@dimen/_14sdp" />
+                    android:textSize="@dimen/_15sdp" />
 
             </LinearLayout>
 
@@ -261,10 +261,11 @@
 
                     <ImageView
                         android:id="@+id/imagsdeView2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
                         android:layout_gravity="center"
-                        android:padding="@dimen/_2sdp"
+                        android:focusable="false"
+                        android:layout_margin="@dimen/_4sdp"
                         android:src="@drawable/date_icon" />
 
                     <LinearLayout
@@ -304,10 +305,10 @@
 
                     <ImageView
                         android:id="@+id/imageViasdesw2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
                         android:layout_gravity="center"
-                        android:padding="@dimen/_2sdp"
+                        android:layout_margin="@dimen/_4sdp"
                         android:src="@drawable/time_icon" />
 
                     <LinearLayout
