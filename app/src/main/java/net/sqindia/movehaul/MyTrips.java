@@ -48,18 +48,14 @@ public class MyTrips extends AppCompatActivity {
     TabIndicatorView tiv;
     ListView ht_lview;
     LinearLayout btn_back;
-
-    ArrayList<String> ht_arlist, up_arlist;
-
+    ArrayList<String> ht_arlist;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mytrips);
-
-        FontsManager.initFormAssets(this, "fonts/lato.ttf");       //initialization
+        FontsManager.initFormAssets(this, "fonts/lato.ttf");
         FontsManager.changeFonts(this);
-
         btn_back = (LinearLayout) findViewById(R.id.layout_back);
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,12 +73,9 @@ public class MyTrips extends AppCompatActivity {
 
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         tiv = (TabIndicatorView) findViewById(R.id.tab_indicator);
-
-
         myViewPagerAdapter = new MyViewPagerAdapter();
         viewPager.setAdapter(myViewPagerAdapter);
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
-
         tiv.setTabIndicatorFactory(new TabIndicatorView.ViewPagerIndicatorFactory(viewPager));
 
 
@@ -109,7 +102,8 @@ public class MyTrips extends AppCompatActivity {
 
 
             }
-            else if (position == 1) {
+            else if (position == 1)
+            {
                 ht_lview = (ListView) view.findViewById(R.id.lview);
                 ht_arlist = new ArrayList<>();
                 HistoryAdapter adapter = new HistoryAdapter(MyTrips.this, ht_arlist);
@@ -125,17 +119,16 @@ public class MyTrips extends AppCompatActivity {
                 up_lview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
                 up_lview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
+                    public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l)
+                    {
                         // toggle clicked cell state
                         ((FoldingCell) view).toggle(false);
                         // register in adapter that state for selected cell is toggled
                         up_adapter.registerToggle(pos);
                         Log.e("tag","clicked"+pos);
 
-
                     }
                 });
-
 
             }
 
@@ -175,6 +168,8 @@ public class MyTrips extends AppCompatActivity {
 
             return title;
         }
+
+
 
     }
 
