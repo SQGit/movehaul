@@ -5,14 +5,12 @@
     android:background="@android:color/transparent"
     android:descendantFocusability="blocksDescendants"
     android:orientation="vertical"
-    android:paddingTop="@dimen/_5sdp"
-    android:visibility="gone"
     android:paddingBottom="@dimen/_5sdp"
->
+    android:visibility="gone">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_475sdp"
+        android:layout_height="@dimen/_335sdp"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -24,25 +22,24 @@
 
             <View
                 android:layout_width="2dp"
-                android:layout_height="@dimen/_70sdp"
+                android:layout_height="@dimen/_140sdp"
                 android:layout_marginBottom="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:background="@color/redColor" />
 
 
             <ImageView
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
                 android:background="@drawable/ring_bg" />
 
 
             <View
                 android:layout_width="2dp"
-                android:layout_height="@dimen/_70sdp"
+                android:layout_height="@dimen/_140sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@color/redColor" />
-
 
         </LinearLayout>
 
@@ -53,8 +50,8 @@
             android:layout_marginRight="-15dp"
             android:background="@drawable/white_bg"
             android:orientation="vertical"
-            android:paddingTop="@dimen/_10sdp"
-            android:paddingBottom="@dimen/_10sdp"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_5sdp"
             android:paddingLeft="@dimen/_5sdp"
             android:paddingRight="@dimen/_20sdp">
 
@@ -143,7 +140,7 @@
                         android:singleLine="true"
                         android:text="#6, North Avenue, Abuja, Nigeria"
                         android:textColor="@color/textColor"
-                        android:textSize="@dimen/_14sdp" />
+                        android:textSize="@dimen/_13sdp" />
 
                 </LinearLayout>
 
@@ -193,7 +190,7 @@
                         android:paddingTop="@dimen/_1sdp"
                         android:text="#977, West Boage, Dekina, Nigeria"
                         android:textColor="@color/textColor"
-                        android:textSize="@dimen/_14sdp" />
+                        android:textSize="@dimen/_13sdp" />
 
                 </LinearLayout>
 
@@ -203,7 +200,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_2sdp"
                 android:focusable="false">
 
                 <ImageView
@@ -231,7 +228,7 @@
                         android:focusable="false"
                         android:text="Stephen"
                         android:textColor="@color/textColor"
-                        android:textSize="@dimen/_14sdp" />
+                        android:textSize="@dimen/_13sdp" />
 
                     <com.rey.material.widget.TextView
                         android:id="@+id/textview_dasadfte"
@@ -241,7 +238,7 @@
                         android:paddingTop="@dimen/_1sdp"
                         android:text="85635946656"
                         android:textColor="@color/textColor"
-                        android:textSize="@dimen/_14sdp" />
+                        android:textSize="@dimen/_13sdp" />
 
                 </LinearLayout>
 
@@ -292,7 +289,7 @@
                             android:paddingTop="@dimen/_1sdp"
                             android:text="05-10-2016"
                             android:textColor="@color/textColor"
-                            android:textSize="@dimen/_14sdp" />
+                            android:textSize="@dimen/_13sdp" />
 
                     </LinearLayout>
 
@@ -335,7 +332,7 @@
                             android:paddingTop="@dimen/_1sdp"
                             android:text="12.30 PM"
                             android:textColor="@color/textColor"
-                            android:textSize="@dimen/_14sdp" />
+                            android:textSize="@dimen/_13sdp" />
 
                     </LinearLayout>
 
@@ -348,19 +345,19 @@
             <com.rey.material.widget.Button
                 android:id="@+id/button_cancel"
                 style="@style/Material.Drawable.Ripple.Touch"
-                android:layout_width="@dimen/_140sdp"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_width="@dimen/_115sdp"
+                android:layout_height="@dimen/_30sdp"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginBottom="@dimen/_5sdp"
                 android:background="@drawable/submit"
                 android:gravity="center|center_horizontal"
                 android:paddingBottom="@dimen/_5sdp"
+                android:paddingTop="@dimen/_3sdp"
                 android:paddingRight="@dimen/_3sdp"
                 android:text="Cancel Job"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
-                android:textSize="@dimen/_18sdp" />
+                android:textSize="@dimen/_15sdp" />
 
 
         </LinearLayout>
