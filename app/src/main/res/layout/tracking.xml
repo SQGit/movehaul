@@ -56,6 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/_15sdp"
         android:gravity="center"
+        android:layout_marginTop="@dimen/_3sdp"
         android:orientation="horizontal">
 
         <EditText
@@ -116,6 +117,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
+            android:scrollbars="none"
             android:id="@+id/scrollView_tracking">
 
             <LinearLayout
@@ -146,6 +148,7 @@
                             android:layout_height="wrap_content"
                             android:drawableLeft="@drawable/date_tracking"
                             android:gravity="center"
+                            android:drawablePadding="@dimen/_10sdp"
                             android:text="07-10-2016"
                             android:textColor="@color/textColor"
                             android:textSize="@dimen/_15sdp" />
@@ -158,15 +161,17 @@
                         android:layout_weight="1">
 
                         <ImageView
-                            android:layout_width="@dimen/_21sdp"
-                            android:layout_height="@dimen/_21sdp"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"
                             android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/_5sdp"
                             android:src="@drawable/time_icon_tracking" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:paddingLeft="@dimen/_10sdp"
                             android:text="12:30 PM"
                             android:textColor="@color/textColor"
                             android:textSize="@dimen/_15sdp" />
@@ -187,7 +192,7 @@
                     android:layout_gravity="center"
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp">
+                    android:layout_marginTop="@dimen/_5sdp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -214,7 +219,7 @@
                     android:layout_gravity="center"
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:orientation="horizontal"
                     android:weightSum="2">
 
@@ -266,7 +271,7 @@
                     android:layout_gravity="center"
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:orientation="horizontal"
                     android:weightSum="2">
 
@@ -317,7 +322,7 @@
                     android:layout_gravity="center"
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp">
+                    android:layout_marginTop="@dimen/_5sdp">
 
                     <TextView
                         android:id="@+id/textView2"
@@ -343,7 +348,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_6sdp"
                     android:weightSum="2">
 
                     <LinearLayout
