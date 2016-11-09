@@ -1,17 +1,21 @@
 package net.sqindia.movehaul;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,6 +40,7 @@ public class DriversList extends AppCompatActivity {
     Button btn_filter;
     com.rey.material.widget.LinearLayout btn_back,btn_refresh;
     ImageView iv_close,iv_refresh;
+    int i=0;
 
 
     @Override
@@ -60,6 +65,17 @@ public class DriversList extends AppCompatActivity {
         final RotateAnimation rotate = new RotateAnimation(0, 180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotate.setDuration(1000);
         rotate.setInterpolator(new LinearInterpolator());
+
+
+        final int height = getDeviceHeight(DriversList.this);
+
+
+
+
+
+
+
+
 
         final ArrayList<String> drv_arlist = new ArrayList<>();
 
@@ -98,13 +114,46 @@ public class DriversList extends AppCompatActivity {
 
 
 ////*******Showing Filter Options *********/////
+
+        iv_close.setVisibility(View.GONE);
+
         iv_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //dialog_filter.show();
 
-                lt_filter_dialog.setVisibility(View.VISIBLE);
-                lv_drv_list.setEnabled(false);
+                TranslateAnimation anim_btn_b2t = new TranslateAnimation(0, 0, height,0);
+                anim_btn_b2t.setDuration(500);
+
+                TranslateAnimation anim_btn_t2b = new TranslateAnimation(0, 0, 0,height);
+                anim_btn_t2b.setDuration(500);
+
+
+                if(i==0) {
+                   // iv_filter.setImageDrawable(getResources().getDrawable(R.drawable.close_btn));
+                    iv_filter.setImageResource(R.drawable.close_btn);
+
+
+                    i=1;
+
+                    lt_filter_dialog.setVisibility(View.VISIBLE);
+                    lv_drv_list.setEnabled(false);
+                    lt_filter_dialog.setAnimation(anim_btn_b2t);
+                    btn_refresh.setVisibility(View.GONE);
+
+                }
+                else if(i ==1){
+                   // iv_filter.setImageDrawable(getResources().getDrawable(R.drawable.filter_ico));
+                    iv_filter.setImageResource(R.mipmap.ic_filter_ico);
+                    i=0;
+
+                    lt_filter_dialog.setVisibility(View.GONE);
+                    lv_drv_list.setEnabled(true);
+                    lt_filter_dialog.setAnimation(anim_btn_t2b);
+                    btn_refresh.setVisibility(View.VISIBLE);
+                    iv_filter.setVisibility(View.VISIBLE);
+                }
+
             }
         });
 
@@ -114,14 +163,29 @@ public class DriversList extends AppCompatActivity {
             public void onClick(View view) {
                 lt_filter_dialog.setVisibility(View.GONE);
                 lv_drv_list.setEnabled(true);
+
+                TranslateAnimation anim_btn_t2b = new TranslateAnimation(0, 0, 0,height);
+                anim_btn_t2b.setDuration(500);
+
+                iv_filter.setImageResource(R.mipmap.ic_filter_ico);
+                i=0;
+
+                lt_filter_dialog.setAnimation(anim_btn_t2b);
+                btn_refresh.setVisibility(View.VISIBLE);
+                iv_filter.setVisibility(View.VISIBLE);
+
+
             }
         });
 
         iv_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                lt_filter_dialog.setVisibility(View.GONE);
-                lv_drv_list.setEnabled(true);
+
+
+
+
+
             }
         });
 
@@ -133,5 +197,13 @@ public class DriversList extends AppCompatActivity {
 
 
 
+    }
+
+
+    public static int getDeviceHeight(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        int height = display.getHeight();
+        return height;
     }
 }
