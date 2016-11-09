@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
@@ -18,14 +21,10 @@ import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.rey.material.widget.Button;
 import com.sloop.fonts.FontsManager;
 import com.wang.avi.AVLoadingIndicatorView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * Created by sqindia on 21-10-2016.
@@ -38,6 +37,9 @@ public class Splash_screen extends Activity {
     int is = 0;
     Config config;
     AVLoadingIndicatorView av_loader;
+    LinearLayout lt_top;
+    Snackbar snackbar;
+    Typeface tf;
 
     public static int getDeviceWidth(Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -63,6 +65,9 @@ public class Splash_screen extends Activity {
         FontsManager.changeFonts(this);
 
 
+        tf = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
+
+
         config = new Config();
 
         getDeviceWidth(this);
@@ -71,6 +76,8 @@ public class Splash_screen extends Activity {
         float widthby = (float) (getDeviceWidth(this) / 3.4);
         Log.e("tag", "width1" + widthby);
 
+
+        lt_top = (LinearLayout) findViewById(R.id.top);
 
         btn_register = (Button) findViewById(R.id.btn_register);
         btn_login = (Button) findViewById(R.id.btn_login);
@@ -81,6 +88,31 @@ public class Splash_screen extends Activity {
         av_loader = (AVLoadingIndicatorView) findViewById(R.id.loader);
 
         av_loader.setVisibility(View.GONE);
+
+
+        snackbar = Snackbar
+                .make(lt_top, "No internet connection!", Snackbar.LENGTH_INDEFINITE)
+                .setAction("Open Settings", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                       // snackbar.dismiss();
+                        finish();
+                    }
+                });
+
+// Changing message text color
+        snackbar.setActionTextColor(Color.RED);
+
+
+// Changing action button text color
+        View sbView = snackbar.getView();
+        android.widget.TextView textView = (android.widget.TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+
+        android.widget.TextView textView1 = (android.widget.TextView) sbView.findViewById(android.support.design.R.id.snackbar_action);
+        textView.setTextColor(Color.WHITE);
+        textView.setTypeface(tf);
+        textView1.setTypeface(tf);
+
 
         //img_loading = (ImageView) findViewById(R.id.imageview);
 
@@ -136,7 +168,6 @@ public class Splash_screen extends Activity {
         anim_truck_c2r.setFillAfter(false);
 
 
-
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -144,8 +175,6 @@ public class Splash_screen extends Activity {
                 new check_internet().execute();
             }
         }, 1300);
-
-
 
 
         btn_login.setOnClickListener(new View.OnClickListener() {
@@ -220,7 +249,7 @@ public class Splash_screen extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Log.e("tag","reg_preexe");
+            Log.e("tag", "reg_preexe");
             av_loader.setVisibility(View.VISIBLE);
         }
 
@@ -231,10 +260,9 @@ public class Splash_screen extends Activity {
 
                 boolean isconnected = config.isConnected(Splash_screen.this);
 
-                if(isconnected){
+                if (isconnected) {
                     return "true";
-                }
-                else{
+                } else {
                     return "false";
                 }
 
@@ -248,16 +276,14 @@ public class Splash_screen extends Activity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.e("tag","net:"+s);
+            Log.e("tag", "net:" + s);
 
-            if(s.equals("true")){
+            if (s.equals("true")) {
                 av_loader.setVisibility(View.GONE);
-            }
-            else if(s.equals("false")){
+            } else if (s.equals("false")) {
                 av_loader.setVisibility(View.GONE);
-                Toast.makeText(getApplicationContext(),"splash",Toast.LENGTH_LONG).show();
+                snackbar.show();
             }
-
 
 
         }
