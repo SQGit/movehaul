@@ -92,7 +92,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:focusable="false"
                 android:src="@drawable/truck_ad" />
 
@@ -249,7 +249,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_2sdp"
                 android:focusable="false"
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/_5sdp">
@@ -349,7 +349,7 @@
                 android:layout_width="@dimen/_115sdp"
                 android:layout_height="@dimen/_30sdp"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_2sdp"
                 android:background="@drawable/submit"
                 android:gravity="center|center_horizontal"
                 android:paddingBottom="@dimen/_5sdp"
