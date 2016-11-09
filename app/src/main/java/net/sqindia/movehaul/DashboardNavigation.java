@@ -140,7 +140,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         destination = (AutoCompleteTextView) findViewById(R.id.editText_dropLocation);
         flt_pickup = (TextInputLayout) findViewById(R.id.float_pickup);
         flt_droplocation = (TextInputLayout) findViewById(R.id.float_drop);
-        fab_truck = (FloatingActionButton) findViewById(R.id.float_icon);
+       // fab_truck = (FloatingActionButton) findViewById(R.id.float_icon);
         droplv=(android.widget.LinearLayout) findViewById(R.id.layout_drop);
         pickuplv=(android.widget.LinearLayout) findViewById(R.id.layout_pickuptype);
         btn_menu = (ImageView) findViewById(R.id.img_menu);
@@ -224,20 +224,22 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        final SubActionButton.Builder rLSubBuilder = new SubActionButton.Builder(DashboardNavigation.this);
+
+
+
+        ///////**************** Arc Menu ****************//////////////
+
+
+      /*  final SubActionButton.Builder rLSubBuilder = new SubActionButton.Builder(DashboardNavigation.this);
         rLSubBuilder.setBackgroundDrawable(getResources().getDrawable(R.drawable.round_dr));
-
-
         final FrameLayout.LayoutParams tvParams = new FrameLayout.LayoutParams(90, 90);
       //  rLSubBuilder.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-
         final ImageView rlIcon1 = new ImageView(DashboardNavigation.this);
         final ImageView rlIcon2 = new ImageView(DashboardNavigation.this);
         final ImageView rlIcon3 = new ImageView(DashboardNavigation.this);
         final ImageView rlIcon4 = new ImageView(DashboardNavigation.this);
         final ImageView rlIcon5 = new ImageView(DashboardNavigation.this);
         final ImageView rlIcon6 = new ImageView(DashboardNavigation.this);
-
         rlIcon1.setBackground(getResources().getDrawable(R.drawable.filter_truck_1));
       //  rlIcon1.setLayoutParams(tvParams);
         rlIcon2.setBackground(getResources().getDrawable(R.drawable.filter_truck_2));
@@ -250,25 +252,16 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
        // rlIcon5.setLayoutParams(tvParams);
         rlIcon6.setBackground(getResources().getDrawable(R.drawable.filter_truck_6));
       //  rlIcon6.setLayoutParams(tvParams);
-
-
         SubActionButton.Builder tCSubBuilder = new SubActionButton.Builder(this);
-
         int blueSubActionButtonContentMargin = getResources().getDimensionPixelSize(R.dimen.blue_sub_action_button_content_margin);
-
         FrameLayout.LayoutParams blueContentParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
         blueContentParams.setMargins(blueSubActionButtonContentMargin,
                 blueSubActionButtonContentMargin,
                 blueSubActionButtonContentMargin,
                 blueSubActionButtonContentMargin);
-
         ImageView rlIcons = new ImageView(DashboardNavigation.this);
-
         rlIcons.setImageDrawable(getResources().getDrawable(R.drawable.truck_1));
-
         SubActionButton tcSub1 = tCSubBuilder.setContentView(rlIcons, blueContentParams).build();
-
-
         final FloatingActionMenu fam_truck_choose = new FloatingActionMenu.Builder(DashboardNavigation.this)
                 //.setRadius(150)
                 .setStartAngle(150)
@@ -281,7 +274,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 .addSubActionView(rLSubBuilder.setContentView(rlIcon6).build())
                 .attachTo(fab_truck)
                 .build();
-
 
         fam_truck_choose.setStateChangeListener(new FloatingActionMenu.MenuStateChangeListener() {
             @Override
@@ -382,7 +374,13 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 rlIcon5.setBackground(getResources().getDrawable(R.drawable.filter_truck_5));
                 rlIcon6.setBackground(getResources().getDrawable(R.drawable.filter_truck_6));
             }
-        });
+        });*/
+
+
+
+
+
+
 
 
         btn_menu.setOnClickListener(new View.OnClickListener() {

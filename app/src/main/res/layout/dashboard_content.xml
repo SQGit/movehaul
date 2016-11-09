@@ -70,6 +70,7 @@
             tools:context=".DasboardNavigation" />
 
 
+<!--
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/float_icon"
             android:layout_width="wrap_content"
@@ -80,6 +81,7 @@
             android:src="@drawable/lor"
             app:backgroundTint="@color/redColor"
             app:elevation="4dp" />
+-->
 
 
         <LinearLayout
