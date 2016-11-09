@@ -7,10 +7,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.support.design.widget.TextInputLayout;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -27,6 +30,15 @@ import android.widget.TextView;
 import com.rey.material.widget.Button;
 import com.sloop.fonts.FontsManager;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+
+import static net.sqindia.movehaul.R.id.msg;
+import nl.changer.polypicker.Config;
+import nl.changer.polypicker.ImagePickerActivity;
+import nl.changer.polypicker.utils.ImageInternalFetcher;
 /**
  * Created by sqindia on 25-10-2016.
  */
@@ -40,20 +52,29 @@ public class Book_now extends Activity {
     Button btn_post, btn_ok;
     Dialog dialog1;
     ImageView btn_close;
-    TextView jobtv1,jobtv2,jobtv3,jobtv4;
+    TextView jobtv1,jobtv2,jobtv3,jobtv4,msg;
     Typeface type;
+    ArrayList<String> mdatas;
+    private static final int INTENT_REQUEST_GET_IMAGES = 13;
+    private static final int INTENT_REQUEST_GET_N_IMAGES = 14;
+    private ViewGroup mSelectedImagesContainer;
+    HashSet<Uri> mMedia = new HashSet<Uri>();
+    ArrayList<Uri> image_path = new ArrayList<>();
+    String[] imagearray;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_now);
         FontsManager.initFormAssets(this, "fonts/lato.ttf");       //initialization
         FontsManager.changeFonts(this);
-
+        mdatas = new ArrayList<>();
          type = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
         et_delivery_address = (EditText) findViewById(R.id.editTextDelieveryAddress);
         et_goodstype = (EditText) findViewById(R.id.editTextGoodsType);
         et_trucktype = (EditText) findViewById(R.id.editTextTruck_type);
         et_description = (EditText) findViewById(R.id.editTextDescription);
+        msg=(TextView) findViewById(R.id.msg);
+        mSelectedImagesContainer = (ViewGroup) findViewById(R.id.selected_photos_container);
 
         flt_delivery_address = (TextInputLayout) findViewById(R.id.float_deliveryaddress);
         flt_goodstype = (TextInputLayout) findViewById(R.id.float_goodstype);
@@ -83,7 +104,14 @@ public class Book_now extends Activity {
 
             }
         });
+        View getImages = findViewById(R.id.get_images);
+        getImages.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                getImagesView();
+            }
+        });
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -289,5 +317,108 @@ public class Book_now extends Activity {
             imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
         return super.dispatchTouchEvent(ev);
+    }
+
+    private void getImagesView() {
+
+        Intent intent = new Intent(getApplicationContext(), ImagePickerActivity.class);
+        Config config = new Config.Builder()
+                .setTabBackgroundColor(R.color.white)    // set tab background color. Default white.
+
+                .setSelectionLimit(6)    // set photo selection limit. Default unlimited selection.
+                .build();
+        ImagePickerActivity.setConfig(config);
+        startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
+
+       /* Intent intent_image = new Intent(PostHouse.this, ImagePickerActivity.class);
+        startActivityForResult(intent_image, INTENT_REQUEST_GET_IMAGES);*/
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resuleCode, Intent intent) {
+        super.onActivityResult(requestCode, resuleCode, intent);
+        msg.setVisibility(View.GONE);
+
+        if (resuleCode == Activity.RESULT_OK) {
+            if (requestCode == INTENT_REQUEST_GET_IMAGES || requestCode == INTENT_REQUEST_GET_N_IMAGES) {
+                Parcelable[] parcelableUris = intent.getParcelableArrayExtra(ImagePickerActivity.EXTRA_IMAGE_URIS);
+
+                if (parcelableUris == null) {
+                    return;
+                }
+
+                // Java doesn't allow array casting, this is a little hack
+                Uri[] uris = new Uri[parcelableUris.length];
+                System.arraycopy(parcelableUris, 0, uris, 0, parcelableUris.length);
+
+                if (uris != null) {
+
+                    for (Uri uri : uris) {
+                        Log.e("tag", " uri: " + uri);
+                        //**************************************************
+                       String path = uri.toString();
+                        //**************************************************
+                        mMedia.add(uri);
+
+                        mdatas.add(String.valueOf(uri));
+                        //path=String.valueOf(uri);
+
+                        Log.d("tag", "choosed file" + mMedia);
+                        StringBuilder builder = new StringBuilder();
+                        for (Uri value : mMedia) {
+                            builder.append(value + "#####");
+
+                        }
+                        String text = builder.toString();
+                        imagearray=text.split("\\#\\#\\#\\#\\#");
+
+
+
+
+                    }
+                    showMedia();
+                }
+            }
+        }
+    }
+
+
+
+    private void showMedia() {
+        // Remove all views before
+        // adding the new ones.
+        mSelectedImagesContainer.removeAllViews();
+
+        Iterator<Uri> iterator = mMedia.iterator();
+        ImageInternalFetcher imageFetcher = new ImageInternalFetcher(this, 500);
+        while (iterator.hasNext()) {
+            Uri uri = iterator.next();
+
+            // showImage(uri);
+            Log.i("tah", " uri: " + uri);
+            if (mMedia.size() >= 1) {
+                mSelectedImagesContainer.setVisibility(View.VISIBLE);
+            }
+
+            View imageHolder = LayoutInflater.from(this).inflate(R.layout.media_layout, null);
+            ImageView thumbnail = (ImageView) imageHolder.findViewById(R.id.media_image);
+
+            if (!uri.toString().contains("content://")) {
+                uri = Uri.fromFile(new File(uri.toString()));
+            }
+
+            imageFetcher.loadImage(uri, thumbnail);
+
+            mSelectedImagesContainer.addView(imageHolder);
+
+
+            int wdpx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250, getResources().getDisplayMetrics());
+            int htpx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250, getResources().getDisplayMetrics());
+            //thumbnail.setLayoutParams(new FrameLayout.LayoutParams(wdpx, htpx));
+            thumbnail.getLayoutParams().width = 250;
+            thumbnail.getLayoutParams().height = 250;
+            thumbnail.setAdjustViewBounds(true);
+        }
     }
 }

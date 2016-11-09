@@ -5,7 +5,7 @@
     android:layout_marginLeft="@dimen/_20sdp"
     android:background="@android:color/transparent"
     android:orientation="vertical"
-    >
+    android:paddingBottom="@dimen/_3sdp">
 
     <LinearLayout
         android:layout_width="match_parent"
