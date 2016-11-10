@@ -71,7 +71,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:hint="Name"
+                android:hint="User Name"
                 android:inputType="text"
                 android:maxLines="1"
                 android:paddingTop="@dimen/_10sdp"
