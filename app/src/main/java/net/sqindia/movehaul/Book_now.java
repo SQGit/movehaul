@@ -356,14 +356,10 @@ public class Book_now extends Activity {
 
                     for (Uri uri : uris) {
                         Log.e("tag", " uri: " + uri);
-                        //**************************************************
                        String path = uri.toString();
-                        //**************************************************
                         mMedia.add(uri);
-
                         mdatas.add(String.valueOf(uri));
                         //path=String.valueOf(uri);
-
                         Log.d("tag", "choosed file" + mMedia);
                         StringBuilder builder = new StringBuilder();
                         for (Uri value : mMedia) {

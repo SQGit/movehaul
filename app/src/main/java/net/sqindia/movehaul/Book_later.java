@@ -154,8 +154,7 @@ public class Book_later extends Activity {
                 mTimePicker.setTitle("Select Time");
                 mTimePicker.show();
 
-               /* et_time.setText("23:35:00");
-                Log.e("tag", "ttt");*/
+
             }
         });
 

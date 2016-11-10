@@ -37,7 +37,6 @@ public class LoginActivity extends Activity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-       // overridePendingTransition(R.anim.anim3, R.anim.anim4);
     }
 
     @Override
@@ -62,13 +61,8 @@ public class LoginActivity extends Activity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              /*  Intent i = new Intent(LoginActivity.this, Splash_screen.class);
-                startActivity(i);
-                finish();*/
-               // onBackPressed();
                 finish();
-                //overridePendingTransition(R.anim.anim3, R.anim.anim4);
-               // finish();
+
             }
         });
 
@@ -86,18 +80,15 @@ public class LoginActivity extends Activity {
                 str_mobile = et_mobile_no.getText().toString().trim();
 
                 if (!(str_mobile.isEmpty() || str_mobile.length() < 9)) {
-
-
-                   //new login_customer().execute();
-
-                  Intent i = new Intent(LoginActivity.this, DashboardNavigation.class);
-                    //i.putExtra("phone",str_mobile);
+                    Intent i = new Intent(LoginActivity.this, DashboardNavigation.class);
                     startActivity(i);
                     finish();
 
 
 
-                } else {
+                }
+                else
+                {
                     et_mobile_no.setError("Enter valid phone number");
                     et_mobile_no.requestFocus();
                 }
@@ -105,9 +96,6 @@ public class LoginActivity extends Activity {
             }
         });
     }
-
-
-
 
     public class login_customer extends AsyncTask<String, Void, String> {
 
@@ -149,12 +137,6 @@ public class LoginActivity extends Activity {
                     String msg = jo.getString("message");
                     Log.d("tag", "<-----Status----->" + status);
                     if (status.equals("true")) {
-
-
-                       // String sus_txt = "Thank you for Signing Up MoveHaul.";
-
-                        //Toast.makeText(getApplicationContext(),sus_txt,Toast.LENGTH_LONG).show();
-
                         Intent i = new Intent(LoginActivity.this, LoginOtpActivity.class);
                         startActivity(i);
                         finish();

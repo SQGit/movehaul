@@ -28,13 +28,11 @@ android {
 repositories {
     maven { url 'https://repo.commonsware.com.s3.amazonaws.com' }
     maven { url 'https://jitpack.io' }
-
     maven { url "https://s3.amazonaws.com/repo.commonsware.com" }
 }
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.github.GcsSloop:FontsManager:v1.0.0'
     compile 'com.intuit.sdp:sdp-android:1.0.3'
     compile 'de.hdodenhof:circleimageview:2.1.0'
