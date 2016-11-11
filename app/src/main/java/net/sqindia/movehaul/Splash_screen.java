@@ -9,6 +9,7 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.Display;
@@ -96,7 +97,8 @@ public class Splash_screen extends Activity {
                     @Override
                     public void onClick(View view) {
                        // snackbar.dismiss();
-                        finish();
+                        startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+
                     }
                 });
 
@@ -236,11 +238,19 @@ public class Splash_screen extends Activity {
         });
     }
 
+
     @Override
     protected void onRestart() {
         super.onRestart();
+        if (!config.isConnected(Splash_screen.this)) {
+            snackbar.show();
+        } else {
+           snackbar.dismiss();
+        }
+
         Log.e("tag", "ds+" + is);
     }
+
 
 
     public class check_internet extends AsyncTask<String, Void, String> {
@@ -290,4 +300,9 @@ public class Splash_screen extends Activity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
+    }
 }

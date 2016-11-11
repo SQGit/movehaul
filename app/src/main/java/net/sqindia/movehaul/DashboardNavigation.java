@@ -4,6 +4,7 @@ package net.sqindia.movehaul;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -114,6 +115,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     protected GoogleApiClient mGoogleApiClient;
     ImageView pickup_close,btn_menu,rightmenu;
     android.widget.LinearLayout droplv,pickuplv;
+    Dialog dialog1;
+    Button btn_yes,btn_no;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -377,6 +380,28 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         });*/
 
 
+
+        dialog1 = new Dialog(DashboardNavigation.this);
+        dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog1.setCancelable(false);
+        dialog1.setContentView(R.layout.dialog_yes_no);
+        btn_yes = (Button) dialog1.findViewById(R.id.button_yes);
+        btn_no = (Button) dialog1.findViewById(R.id.button_no);
+
+        btn_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finishAffinity();
+            }
+        });
+
+        btn_no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog1.dismiss();
+            }
+        });
 
 
 
@@ -1002,6 +1027,12 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     .show();
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        dialog1.show();
     }
 
 

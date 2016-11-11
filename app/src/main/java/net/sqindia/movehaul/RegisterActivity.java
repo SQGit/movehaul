@@ -3,15 +3,18 @@ package net.sqindia.movehaul;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +41,11 @@ public class RegisterActivity extends Activity {
     String str_email, str_mobile, str_name;
     TextInputLayout til_name, til_email, til_mobile;
     OkHttpClient ok_client;
+    Snackbar snackbar;
+    Typeface tf;
+    ProgressBar progress;
+
+    android.widget.TextView snack_text;
 
 
     @Override
@@ -52,6 +60,10 @@ public class RegisterActivity extends Activity {
         setContentView(R.layout.register_screen);
         FontsManager.initFormAssets(this, "fonts/lato.ttf");       //initialization
         FontsManager.changeFonts(this);
+
+        tf = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
+       // progress = new ProgressBar(this);
+       // progress.setVisibility(View.GONE);
 
         btn_back = (LinearLayout) findViewById(R.id.layout_back);
         btn_submit = (Button) findViewById(R.id.btn_submit);
@@ -68,6 +80,17 @@ public class RegisterActivity extends Activity {
         til_email.setTypeface(type);
         til_mobile.setTypeface(type);
         til_name.setTypeface(type);
+
+
+        snackbar = Snackbar
+                .make(findViewById(R.id.top), "No internet connection!", Snackbar.LENGTH_LONG);
+
+
+// Changing action button text color
+        View sbView = snackbar.getView();
+        snack_text = (android.widget.TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        snack_text.setTextColor(Color.WHITE);
+        snack_text.setTypeface(tf);
 
 
         ok_client = new OkHttpClient();
@@ -124,11 +147,19 @@ public class RegisterActivity extends Activity {
                 startActivity(i);
                 finish();*/
                 onBackPressed();
-               // finish();
+                // finish();
             }
         });
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (getCurrentFocus() != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+        return super.dispatchTouchEvent(ev);
+    }
 
     public class register_customer extends AsyncTask<String, Void, String> {
 
@@ -136,7 +167,10 @@ public class RegisterActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Log.e("tag","reg_preexe");
+            Log.e("tag", "reg_preexe");
+
+           // progress.setVisibility(View.VISIBLE);
+          //  progress.setBackgroundColor(getResources().getColor(R.color.redColor));
         }
 
         @Override
@@ -147,7 +181,7 @@ public class RegisterActivity extends Activity {
             try {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.accumulate("customer_name", str_name);
-                jsonObject.accumulate("customer_mobile", "+91"+str_mobile);
+                jsonObject.accumulate("customer_mobile", "+91" + str_mobile);
                 jsonObject.accumulate("customer_email", str_email);
 
                 json = jsonObject.toString();
@@ -163,7 +197,9 @@ public class RegisterActivity extends Activity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.e("tag","tag"+s);
+            Log.e("tag", "tag" + s);
+
+           // progress.setVisibility(View.GONE);
 
 
             if (s != null) {
@@ -177,7 +213,7 @@ public class RegisterActivity extends Activity {
 
                         String sus_txt = "Thank you for Signing Up MoveHaul.";
 
-                        Toast.makeText(getApplicationContext(),sus_txt,Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), sus_txt, Toast.LENGTH_LONG).show();
 
                         Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
                         startActivity(i);
@@ -189,35 +225,35 @@ public class RegisterActivity extends Activity {
                         if (msg.contains("customer_mobile_UNIQUE")) {
 
                             et_mobile.requestFocus();
-                            Toast.makeText(getApplicationContext(),"Mobile Number Already Registered",Toast.LENGTH_LONG).show();
+                          //  Toast.makeText(getApplicationContext(), "Mobile Number Already Registered", Toast.LENGTH_LONG).show();
+
+                            snackbar.show();
+                            snack_text.setText("Mobile Number Already Registered");
 
                         } else if (msg.contains("customer_email_UNIQUE")) {
                             et_email.requestFocus();
-                            Toast.makeText(getApplicationContext(),"Email Already Registered",Toast.LENGTH_LONG).show();
+                           // Toast.makeText(getApplicationContext(), "Email Already Registered", Toast.LENGTH_LONG).show();
+
+                            snackbar.show();
+                            snack_text.setText("Email Already Registered");
                         }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Log.e("tag","nt"+e.toString());
-                    Toast.makeText(getApplicationContext(),"Network Errror0",Toast.LENGTH_LONG).show();
+                    Log.e("tag", "nt" + e.toString());
+                    // Toast.makeText(getApplicationContext(), "Network Errror0", Toast.LENGTH_LONG).show();
+                    snackbar.show();
+                    snack_text.setText("No Network Please Try Again Later");
                 }
             } else {
-                Toast.makeText(getApplicationContext(),"Network Errror1",Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "Network Errror1", Toast.LENGTH_LONG).show();
+                snackbar.show();
+                snack_text.setText("No Network Please Try Again Later");
             }
 
         }
 
     }
-
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (getCurrentFocus() != null) {
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-        }
-        return super.dispatchTouchEvent(ev);
-    }
-
 
 
 }
