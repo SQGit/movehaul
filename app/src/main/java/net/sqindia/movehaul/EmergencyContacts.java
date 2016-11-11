@@ -36,10 +36,7 @@ public class EmergencyContacts extends Activity {
         FontsManager.initFormAssets(EmergencyContacts.this, "fonts/lato.ttf");       //initialization
         FontsManager.changeFonts(EmergencyContacts.this);
 
-
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
-
-
 
         btn_submit = (Button) findViewById(R.id.button_submit);
         tv_hint = (TextView) findViewById(R.id.textview_hint);

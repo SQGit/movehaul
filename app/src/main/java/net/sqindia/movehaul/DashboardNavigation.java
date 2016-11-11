@@ -155,18 +155,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         flt_pickup.setTypeface(type);
         flt_droplocation.setTypeface(type);
 
-/*
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            // Set paddingTop of toolbar to height of status bar.
-            // Fixes statusbar covers toolbar issue
-            Rect rectangle = new Rect();
-            Window window = getWindow();
-            window.getDecorView().getWindowVisibleDisplayFrame(rectangle);
-            int statusBarHeight = rectangle.top;
-            toolbar.setPadding(0,statusBarHeight, 0, 0);
-        }*/
 
         mapFragment.getMapAsync(this);
         mResultReceiver = new AddressResultReceiver(new Handler());

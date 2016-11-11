@@ -35,7 +35,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 
-import static net.sqindia.movehaul.R.id.msg;
 import nl.changer.polypicker.Config;
 import nl.changer.polypicker.ImagePickerActivity;
 import nl.changer.polypicker.utils.ImageInternalFetcher;
@@ -68,7 +67,7 @@ public class Book_now extends Activity {
         FontsManager.initFormAssets(this, "fonts/lato.ttf");       //initialization
         FontsManager.changeFonts(this);
         mdatas = new ArrayList<>();
-         type = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
+        type = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
         et_delivery_address = (EditText) findViewById(R.id.editTextDelieveryAddress);
         et_goodstype = (EditText) findViewById(R.id.editTextGoodsType);
         et_trucktype = (EditText) findViewById(R.id.editTextTruck_type);
@@ -162,6 +161,19 @@ public class Book_now extends Activity {
             }
         });
 
+        mSelectedImagesContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+
+                Log.e("tag","111");
+
+                mSelectedImagesContainer.removeView(v);
+                Log.e("tag","111");
+
+            }
+        });
+
     }
 
     private void truck_type() {
@@ -205,8 +217,6 @@ public class Book_now extends Activity {
 
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-
                 if (checkedId == R.id.radio1) {
                     truck = "Heavy Truck, 8 Ton";
                 } else if (checkedId == R.id.radio2) {
@@ -218,10 +228,7 @@ public class Book_now extends Activity {
                 } else if (checkedId == R.id.radio5) {
                     truck = "Openroof Truck, 5 Ton";
                 }
-
-
                 Log.e("TAG", "asd" + truck);
-                //alertD.dismiss();
                 handler.postDelayed(runnable, 700);
                 et_trucktype.setText(truck);
             }
@@ -274,8 +281,6 @@ public class Book_now extends Activity {
 
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-
                 if (checkedId == R.id.radio1) {
                     goods = "Wooden boxes";
                 } else if (checkedId == R.id.radio2) {
@@ -324,14 +329,11 @@ public class Book_now extends Activity {
         Intent intent = new Intent(getApplicationContext(), ImagePickerActivity.class);
         Config config = new Config.Builder()
                 .setTabBackgroundColor(R.color.white)    // set tab background color. Default white.
-
-                .setSelectionLimit(6)    // set photo selection limit. Default unlimited selection.
+                .setSelectionLimit(5)    // set photo selection limit. Default unlimited selection.
                 .build();
         ImagePickerActivity.setConfig(config);
         startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
 
-       /* Intent intent_image = new Intent(PostHouse.this, ImagePickerActivity.class);
-        startActivityForResult(intent_image, INTENT_REQUEST_GET_IMAGES);*/
     }
 
 
@@ -386,6 +388,7 @@ public class Book_now extends Activity {
         // adding the new ones.
         mSelectedImagesContainer.removeAllViews();
 
+
         Iterator<Uri> iterator = mMedia.iterator();
         ImageInternalFetcher imageFetcher = new ImageInternalFetcher(this, 500);
         while (iterator.hasNext()) {
@@ -407,6 +410,24 @@ public class Book_now extends Activity {
             imageFetcher.loadImage(uri, thumbnail);
 
             mSelectedImagesContainer.addView(imageHolder);
+            imageHolder.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mSelectedImagesContainer.removeView(v);
+
+                }
+            });
+
+
+/*
+            imageHolder.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Log.i("tah", " uri: " +v);
+                    mSelectedImagesContainer.removeView(v);
+                    return true;
+                }
+            });*/
 
 
             int wdpx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250, getResources().getDisplayMetrics());
