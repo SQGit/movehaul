@@ -11,7 +11,7 @@ public class Config {
 
 
 
-    public static final String WEB_URL = "http://104.197.7.143:3030/";
+    public static final String WEB_URL = "http://104.197.80.225:3030/";
 
 
 
