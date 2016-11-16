@@ -36,16 +36,16 @@ public class RegisterActivity extends Activity {
 
     LinearLayout btn_back;
     Button btn_submit;
-    TextView tv_register;
+    TextView tv_register,tv_snack;
     EditText et_name, et_email, et_mobile;
     String str_email, str_mobile, str_name;
     TextInputLayout til_name, til_email, til_mobile;
     OkHttpClient ok_client;
     Snackbar snackbar;
+    Config config;
     Typeface tf;
     ProgressBar progress;
 
-    android.widget.TextView snack_text;
 
 
     @Override
@@ -60,10 +60,8 @@ public class RegisterActivity extends Activity {
         setContentView(R.layout.register_screen);
         FontsManager.initFormAssets(this, "fonts/lato.ttf");       //initialization
         FontsManager.changeFonts(this);
-
         tf = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
-       // progress = new ProgressBar(this);
-       // progress.setVisibility(View.GONE);
+        config = new Config();
 
         btn_back = (LinearLayout) findViewById(R.id.layout_back);
         btn_submit = (Button) findViewById(R.id.btn_submit);
@@ -75,25 +73,24 @@ public class RegisterActivity extends Activity {
         til_mobile = (TextInputLayout) findViewById(R.id.float_mobile);
         til_name = (TextInputLayout) findViewById(R.id.float_name);
 
+        til_email.setTypeface(tf);
+        til_mobile.setTypeface(tf);
+        til_name.setTypeface(tf);
 
-        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
-        til_email.setTypeface(type);
-        til_mobile.setTypeface(type);
-        til_name.setTypeface(type);
 
 
         snackbar = Snackbar
-                .make(findViewById(R.id.top), "No internet connection!", Snackbar.LENGTH_LONG);
-
-
-// Changing action button text color
+                .make(findViewById(R.id.top), "Network Error! Please Try Again Later", Snackbar.LENGTH_LONG);
         View sbView = snackbar.getView();
-        snack_text = (android.widget.TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-        snack_text.setTextColor(Color.WHITE);
-        snack_text.setTypeface(tf);
+        tv_snack = (android.widget.TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        tv_snack.setTextColor(Color.WHITE);
+        tv_snack.setTypeface(tf);
 
 
-        ok_client = new OkHttpClient();
+        if (!config.isConnected(RegisterActivity.this)) {
+            snackbar.show();
+            tv_snack.setText("Please Connect Internet and Try again");
+        }
 
 
         btn_submit.setOnClickListener(new View.OnClickListener() {
@@ -105,17 +102,29 @@ public class RegisterActivity extends Activity {
 
                 if (!(str_name.isEmpty())) {
                     if (!(str_email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(str_email).matches())) {
-                        if (!(str_mobile.isEmpty() || str_mobile.length() < 9)) {
+                        if (!(str_mobile.isEmpty() || str_mobile.length() < 10)) {
 
                             /*Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
                             startActivity(i);
                             finish();*/
 
-                            str_email = et_email.getText().toString().trim();
-                            str_mobile = et_mobile.getText().toString().trim();
-                            str_name = et_name.getText().toString().trim();
+                            if (config.isConnected(RegisterActivity.this)) {
 
-                            new register_customer().execute();
+                                str_email = et_email.getText().toString().trim();
+                                str_mobile = et_mobile.getText().toString().trim();
+                                str_name = et_name.getText().toString().trim();
+
+                                new register_customer().execute();
+
+                            } else {
+                                snackbar.show();
+                                tv_snack.setText("Please Connect Internet and Try again");
+                            }
+
+
+
+
+
 
                         } else {
                             et_mobile.setError("Enter valid phone number");
@@ -169,8 +178,6 @@ public class RegisterActivity extends Activity {
             super.onPreExecute();
             Log.e("tag", "reg_preexe");
 
-           // progress.setVisibility(View.VISIBLE);
-          //  progress.setBackgroundColor(getResources().getColor(R.color.redColor));
         }
 
         @Override
@@ -199,7 +206,6 @@ public class RegisterActivity extends Activity {
             super.onPostExecute(s);
             Log.e("tag", "tag" + s);
 
-           // progress.setVisibility(View.GONE);
 
 
             if (s != null) {
@@ -228,14 +234,14 @@ public class RegisterActivity extends Activity {
                           //  Toast.makeText(getApplicationContext(), "Mobile Number Already Registered", Toast.LENGTH_LONG).show();
 
                             snackbar.show();
-                            snack_text.setText("Mobile Number Already Registered");
+                            tv_snack.setText("Mobile Number Already Registered");
 
                         } else if (msg.contains("customer_email_UNIQUE")) {
                             et_email.requestFocus();
                            // Toast.makeText(getApplicationContext(), "Email Already Registered", Toast.LENGTH_LONG).show();
 
                             snackbar.show();
-                            snack_text.setText("Email Already Registered");
+                            tv_snack.setText("Email Already Registered");
                         }
                     }
                 } catch (JSONException e) {
@@ -243,12 +249,12 @@ public class RegisterActivity extends Activity {
                     Log.e("tag", "nt" + e.toString());
                     // Toast.makeText(getApplicationContext(), "Network Errror0", Toast.LENGTH_LONG).show();
                     snackbar.show();
-                    snack_text.setText("No Network Please Try Again Later");
+                    tv_snack.setText("No Network Please Try Again Later");
                 }
             } else {
                 //Toast.makeText(getApplicationContext(), "Network Errror1", Toast.LENGTH_LONG).show();
                 snackbar.show();
-                snack_text.setText("No Network Please Try Again Later");
+                tv_snack.setText("No Network Please Try Again Later");
             }
 
         }

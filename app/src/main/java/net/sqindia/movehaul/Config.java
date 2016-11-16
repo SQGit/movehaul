@@ -1,8 +1,16 @@
 package net.sqindia.movehaul;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.provider.Settings;
+import android.support.design.widget.Snackbar;
+import android.view.View;
+import android.widget.TextView;
 
 //asdf
 public class Config {
@@ -46,6 +54,34 @@ public class Config {
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         return activeNetwork != null
                 && activeNetwork.isConnectedOrConnecting();
+    }
+
+
+
+
+    public  Snackbar snackbar(Snackbar snack, final Activity activity, TextView tv_snack, Typeface tf){
+
+
+
+            snack = Snackbar
+                    .make(activity.findViewById(R.id.top), "No internet connection!", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Open Settings", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            activity.startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                        }
+                    });
+            snack.setActionTextColor(Color.RED);
+            View sbView = snack.getView();
+            tv_snack = (android.widget.TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            android.widget.TextView textView = (android.widget.TextView) sbView.findViewById(android.support.design.R.id.snackbar_action);
+            tv_snack.setTextColor(Color.WHITE);
+            tv_snack.setTypeface(tf);
+            textView.setTypeface(tf);
+            //snack.show();
+
+
+        return snack;
     }
 
 

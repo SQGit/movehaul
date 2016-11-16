@@ -157,7 +157,17 @@ public class Forgot_Mobile extends Activity {
 
                             Toast.makeText(getApplicationContext(),"Mobile Number Not Registered",Toast.LENGTH_LONG).show();
 
-                        } else  {
+                        }
+                        else if (msg.contains("Error Occured[object Object]")) {
+
+                            Intent i = new Intent(Forgot_Mobile.this, LoginOtpActivity.class);
+                            i.putExtra("for","email");
+                            i.putExtra("data",str_email);
+                            startActivity(i);
+                            finish();
+
+                        }
+                        else  {
 
                             Toast.makeText(getApplicationContext(),"Please Try Again Later",Toast.LENGTH_LONG).show();
                         }

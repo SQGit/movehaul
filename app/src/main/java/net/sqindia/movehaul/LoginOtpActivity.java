@@ -3,8 +3,13 @@ package net.sqindia.movehaul;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -14,7 +19,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.rey.material.widget.Button;
 import com.rey.material.widget.LinearLayout;
@@ -33,8 +38,13 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
     LinearLayout btn_back;
     String str_otppin, str_for, str_data;
     Button btn_submit;
-    TextView tv_resendotp;
+    TextView tv_resendotp,tv_snack;
     private View view;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    Snackbar snackbar, snack_wifi;
+    Config config;
+    Typeface tf;
 
     private LoginOtpActivity(View view) {
         this.view = view;
@@ -54,6 +64,9 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
         setContentView(R.layout.login_otp_screen);
         FontsManager.initFormAssets(this, "fonts/lato.ttf");       //initialization
         FontsManager.changeFonts(this);
+        tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/lato.ttf");
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginOtpActivity.this);
+        editor = sharedPreferences.edit();
 
         Intent getIntent = getIntent();
 
@@ -71,6 +84,19 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
 
         btn_submit = (Button) findViewById(R.id.button_submit);
         tv_resendotp = (TextView) findViewById(R.id.textview_resendotp);
+
+
+        snackbar = Snackbar
+                .make(findViewById(R.id.top), "Network Error! Please Try Again Later.", Snackbar.LENGTH_LONG);
+        View sbView = snackbar.getView();
+        tv_snack = (android.widget.TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        tv_snack.setTextColor(Color.WHITE);
+        tv_snack.setTypeface(tf);
+
+        if (!config.isConnected(LoginOtpActivity.this)) {
+            snackbar.show();
+            tv_snack.setText("Please Connect Internet and Try again");
+        }
 
 
     /*    ReceiveSmsBroadcastReceiver.bindListener(new SmsListener() {
@@ -123,7 +149,8 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
             @Override
             public void onClick(View view) {
                 tv_resendotp.setVisibility(View.GONE);
-                Toast.makeText(getApplicationContext(), "Otp Send to " + str_for, Toast.LENGTH_LONG).show();
+                snackbar.show();
+                tv_snack.setText("Otp Send to " + str_for);
             }
         });
 
@@ -145,6 +172,8 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
                             } else {
                                 str_otppin = et_otp1.getText().toString() + et_otp2.getText().toString() + et_otp3.getText().toString() + et_otp4.getText().toString();
                                 Log.e("tag", "pin:" + str_otppin);
+
+                                Log.e("tag","for"+str_for+str_data);
 
                                 new otp_verify().execute();
 
@@ -176,7 +205,7 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
     public void receiveSms(String message) {
         Log.e("tag", "msgd4" + message);
 
-        Toast.makeText(getApplicationContext(), "toast::" + message, Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), "toast::" + message, Toast.LENGTH_LONG).show();
 
         try {
 
@@ -311,9 +340,9 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
                 JSONObject jsonObject = new JSONObject();
 
 
-                if (str_for.equals("mobile")) {
+                if (str_for.equals("phone")) {
 
-                    jsonObject.accumulate("customer_mobile", str_data);
+                    jsonObject.accumulate("customer_mobile", "+91"+str_data);
                     jsonObject.accumulate("customer_otp", str_otppin);
                 } else {
 
@@ -346,6 +375,18 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
                     Log.d("tag", "<-----Status----->" + status);
                     if (status.equals("true")) {
 
+                        String id = jo.getString("id");
+                        String token = jo.getString("token");
+                        String mobile = jo.getString("customer_mobile");
+                        String email = jo.getString("customer_email");
+
+                        editor.putString("id",id);
+                        editor.putString("token",token);
+                        editor.putString("customer_mobile",mobile);
+                        editor.putString("customer_email",email);
+                        editor.putString("login","success");
+                        editor.commit();
+
                         Intent i = new Intent(LoginOtpActivity.this, DashboardNavigation.class);
                         startActivity(i);
                         finish();
@@ -354,16 +395,16 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
                     } else if (status.equals("false")) {
 
 
-                        Toast.makeText(getApplicationContext(), "Otp Failed", Toast.LENGTH_LONG).show();
+                        snackbar.show();
 
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("tag", "nt" + e.toString());
-                    Toast.makeText(getApplicationContext(), "Network Errror0", Toast.LENGTH_LONG).show();
+                    snackbar.show();
                 }
             } else {
-                Toast.makeText(getApplicationContext(), "Network Errror1", Toast.LENGTH_LONG).show();
+                snackbar.show();
             }
 
         }

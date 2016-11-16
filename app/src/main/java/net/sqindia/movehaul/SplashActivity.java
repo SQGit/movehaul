@@ -1,5 +1,8 @@
 package net.sqindia.movehaul;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
@@ -15,6 +18,7 @@ import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.Display;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -36,7 +40,6 @@ public class SplashActivity extends Activity {
     Button btn_register, btn_login;
     ImageView truck_icon, logo_icon, bg_icon;
     LinearLayout lt_bottom;
-    boolean isBottom = true;
     int is = 0;
     Config config;
     AVLoadingIndicatorView av_loader;
@@ -47,6 +50,8 @@ public class SplashActivity extends Activity {
     SharedPreferences.Editor editor;
     TranslateAnimation anim_btn_b2t, anim_btn_t2b, anim_truck_c2r;
     Animation fadeIn, fadeOut;
+
+    LayoutInflater mInflater;
 
     public static int getDeviceWidth(Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -68,7 +73,7 @@ public class SplashActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.splash_screen);
-        FontsManager.initFormAssets(this, "fonts/lato.ttf");       //initialization
+        FontsManager.initFormAssets(this, "fonts/lato.ttf");
         FontsManager.changeFonts(this);
         tf = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(SplashActivity.this);
@@ -77,7 +82,6 @@ public class SplashActivity extends Activity {
 
         final float width = getDeviceWidth(this);
         final float height = getDeviceHeight(this);
-        float widthby = (float) (getDeviceWidth(this) / 3.4);
 
         lt_top = (LinearLayout) findViewById(R.id.top);
         btn_register = (Button) findViewById(R.id.btn_register);
@@ -96,6 +100,29 @@ public class SplashActivity extends Activity {
                         startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
                     }
                 });
+
+
+
+/*
+        mInflater = LayoutInflater.from(this);
+        Snackbar snackbar = Snackbar.make(lt_top, "", Snackbar.LENGTH_INDEFINITE);
+        Snackbar.SnackbarLayout layout = (Snackbar.SnackbarLayout) snackbar.getView();
+        TextView textViews = (TextView) layout.findViewById(android.support.design.R.id.snackbar_text);
+        textViews.setVisibility(View.INVISIBLE);
+        View snackView = mInflater.inflate(R.layout.my_snackbar, null);
+        TextView textViewTop = (TextView) snackView.findViewById(R.id.text);
+        textViewTop.setText("No Internet Connection");
+        textViewTop.setTextColor(Color.WHITE);
+        textViewTop.setTypeface(tf);
+        layout.addView(snackView, 0);*/
+       // snackbar.show();
+
+
+
+
+
+
+
         snackbar.setActionTextColor(Color.RED);
         View sbView = snackbar.getView();
         android.widget.TextView textView = (android.widget.TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
@@ -104,6 +131,17 @@ public class SplashActivity extends Activity {
         textView.setTextColor(Color.WHITE);
         textView.setTypeface(tf);
         textView1.setTypeface(tf);
+
+
+        final ObjectAnimator backgroundColorAnimator = ObjectAnimator.ofObject(sbView,
+                "backgroundColor",
+                new ArgbEvaluator(),
+                0xFF313131,
+                0xff000000);
+        backgroundColorAnimator.setDuration(1000);
+        backgroundColorAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        backgroundColorAnimator.setRepeatMode(ValueAnimator.REVERSE);
+        backgroundColorAnimator.start();
 
         if (sharedPreferences.getString("login", "").equals("success")) {
             lt_bottom.setVisibility(View.GONE);
@@ -217,7 +255,7 @@ public class SplashActivity extends Activity {
         protected void onPreExecute() {
             super.onPreExecute();
             Log.e("tag", "reg_preexe");
-            av_loader.setVisibility(View.VISIBLE);
+           // av_loader.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -246,7 +284,7 @@ public class SplashActivity extends Activity {
             Log.e("tag", "net:" + s);
 
             if (s.equals("true")) {
-                av_loader.setVisibility(View.GONE);
+               // av_loader.setVisibility(View.GONE);
 
                 if (sharedPreferences.getString("login", "").equals("success")) {
 
@@ -273,7 +311,7 @@ public class SplashActivity extends Activity {
 
 
             } else if (s.equals("false")) {
-                av_loader.setVisibility(View.GONE);
+               // av_loader.setVisibility(View.GONE);
                 snackbar.show();
             }
         }

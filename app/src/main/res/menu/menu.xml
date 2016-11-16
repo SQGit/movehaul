@@ -3,13 +3,13 @@
 
 
     <item
-        android:id="@+id/item2"
+        android:id="@+id/support"
         android:title="Support" />
     <item
-        android:id="@+id/item3"
+        android:id="@+id/feedback"
         android:title="Feedback" />
     <item
-        android:id="@+id/item1"
+        android:id="@+id/logout"
         android:title="Logout" />
 
 </menu>

@@ -8,6 +8,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 
@@ -20,6 +21,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -117,6 +119,12 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     android.widget.LinearLayout droplv,pickuplv;
     Dialog dialog1;
     Button btn_yes,btn_no;
+    int exit_status;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    Typeface tf;
+    android.widget.TextView tv_txt1,tv_txt2,tv_txt3;
+    String service_id,service_token;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -124,6 +132,9 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         setContentView(R.layout.activity_dashboard);
         FontsManager.initFormAssets(this, "fonts/lato.ttf");
         FontsManager.changeFonts(this);
+        tf = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DashboardNavigation.this);
+        editor = sharedPreferences.edit();
         mContext = this;
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -154,6 +165,11 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         Typeface type = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
         flt_pickup.setTypeface(type);
         flt_droplocation.setTypeface(type);
+
+
+
+        service_id = sharedPreferences.getString("id","");
+        service_token = sharedPreferences.getString("token","");
 
 
         mapFragment.getMapAsync(this);
@@ -377,10 +393,40 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         btn_yes = (Button) dialog1.findViewById(R.id.button_yes);
         btn_no = (Button) dialog1.findViewById(R.id.button_no);
 
+        tv_txt1 = (android.widget.TextView) dialog1.findViewById(R.id.textView_1);
+        tv_txt2 = (android.widget.TextView) dialog1.findViewById(R.id.textView_2);
+        tv_txt3 = (android.widget.TextView) dialog1.findViewById(R.id.textView_3);
+
+        tv_txt1.setTypeface(tf);
+        tv_txt2.setTypeface(tf);
+        tv_txt3.setTypeface(tf);
+
+
         btn_yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finishAffinity();
+
+                if(exit_status ==0){
+
+                    editor.putString("login","");
+                    editor.clear();
+                    editor.commit();
+
+                    dialog1.dismiss();
+
+                    Intent i = new Intent(DashboardNavigation.this, LoginActivity.class);
+                    startActivity(i);
+                    finishAffinity();
+
+
+
+                }
+                else if (exit_status ==1){
+                    finishAffinity();
+                    dialog1.dismiss();
+                }
+
+
             }
         });
 
@@ -445,11 +491,20 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
                         switch (item.getItemId()) {
 
-                            case R.id.item1: {
+                            case R.id.support: {
 
                                 return true;
                             }
-                            case R.id.item2: {
+                            case R.id.feedback: {
+
+                                return true;
+                            }
+                            case R.id.logout: {
+
+
+                                dialog1.show();
+                                exit_status =0;
+                                tv_txt3.setText("Logout");
 
                                 return true;
                             }
@@ -1012,6 +1067,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     public void onBackPressed() {
         //super.onBackPressed();
         dialog1.show();
+        exit_status =1;
+        tv_txt3.setText("Exit");
     }
 
 
