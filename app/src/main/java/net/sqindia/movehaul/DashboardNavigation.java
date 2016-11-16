@@ -440,10 +440,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
 
 
-
-
-
-
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
 
@@ -469,11 +465,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 });
 
                 popup.show();
-
-
-
-
-
 
             }
         });
