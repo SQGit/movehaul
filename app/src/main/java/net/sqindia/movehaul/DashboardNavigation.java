@@ -17,6 +17,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -86,6 +87,9 @@ import com.rey.material.widget.LinearLayout;
 import com.rey.material.widget.TextView;
 import com.sloop.fonts.FontsManager;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by SQINDIA on 10/26/2016.
  */
@@ -124,7 +128,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     SharedPreferences.Editor editor;
     Typeface tf;
     android.widget.TextView tv_txt1,tv_txt2,tv_txt3;
-    String service_id,service_token;
+    String service_id,service_token,str_lati,str_longi,str_locality,str_address;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -1069,6 +1073,72 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         dialog1.show();
         exit_status =1;
         tv_txt3.setText("Exit");
+    }
+
+
+    public class updateLocation extends AsyncTask<String, Void, String> {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Log.e("tag","reg_preexe");
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            String json = "", jsonStr = "";
+
+            try {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.accumulate("customer_latitude", str_lati);
+                jsonObject.accumulate("customer_longitude", str_longi);
+                jsonObject.accumulate("customer_locality1", str_locality);
+                jsonObject.accumulate("customer_locality2", str_address);
+                json = jsonObject.toString();
+                return jsonStr = HttpUtils.makeRequest1(Config.WEB_URL + "customer/finddrivers", json,service_id,service_token);
+
+            } catch (Exception e) {
+                Log.e("InputStream", e.getLocalizedMessage());
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("tag","tag"+s);
+
+
+            if (s != null) {
+                try {
+                    JSONObject jo = new JSONObject(s);
+                    String status = jo.getString("status");
+                    String msg = jo.getString("message");
+                    Log.d("tag", "<-----Status----->" + status);
+                    if (status.equals("true")) {
+                        Log.e("tag","Location Updated");
+
+                    } else if (status.equals("false")) {
+
+                        Log.e("tag","Location not updated");
+                        //has to check internet and location...
+
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.e("tag","nt"+e.toString());
+                    // Toast.makeText(getApplicationContext(),"Network Errror0",Toast.LENGTH_LONG).show();
+                }
+            } else {
+                // Toast.makeText(getApplicationContext(),"Network Errror1",Toast.LENGTH_LONG).show();
+            }
+
+        }
+
     }
 
 
