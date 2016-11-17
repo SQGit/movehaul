@@ -803,6 +803,10 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     Location mLocation = new Location("");
                     mLocation.setLatitude(mCenterLatLong.latitude);
                     mLocation.setLongitude(mCenterLatLong.longitude);
+                    LatLng latLng=new LatLng(mCenterLatLong.latitude,mCenterLatLong.longitude);
+                    mMap.clear();
+
+                    mMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_point)));
 
                     startIntentService(mLocation);
                     mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
