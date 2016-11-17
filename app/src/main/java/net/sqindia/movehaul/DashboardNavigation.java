@@ -238,155 +238,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
 
 
-        ///////**************** Arc Menu ****************//////////////
-
-
-      /*  final SubActionButton.Builder rLSubBuilder = new SubActionButton.Builder(DashboardNavigation.this);
-        rLSubBuilder.setBackgroundDrawable(getResources().getDrawable(R.drawable.round_dr));
-        final FrameLayout.LayoutParams tvParams = new FrameLayout.LayoutParams(90, 90);
-      //  rLSubBuilder.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-        final ImageView rlIcon1 = new ImageView(DashboardNavigation.this);
-        final ImageView rlIcon2 = new ImageView(DashboardNavigation.this);
-        final ImageView rlIcon3 = new ImageView(DashboardNavigation.this);
-        final ImageView rlIcon4 = new ImageView(DashboardNavigation.this);
-        final ImageView rlIcon5 = new ImageView(DashboardNavigation.this);
-        final ImageView rlIcon6 = new ImageView(DashboardNavigation.this);
-        rlIcon1.setBackground(getResources().getDrawable(R.drawable.filter_truck_1));
-      //  rlIcon1.setLayoutParams(tvParams);
-        rlIcon2.setBackground(getResources().getDrawable(R.drawable.filter_truck_2));
-       // rlIcon2.setLayoutParams(tvParams);
-        rlIcon3.setBackground(getResources().getDrawable(R.drawable.filter_truck_3));
-       // rlIcon3.setLayoutParams(tvParams);
-        rlIcon4.setBackground(getResources().getDrawable(R.drawable.filter_truck_4));
-       // rlIcon4.setLayoutParams(tvParams);
-        rlIcon5.setBackground(getResources().getDrawable(R.drawable.filter_truck_5));
-       // rlIcon5.setLayoutParams(tvParams);
-        rlIcon6.setBackground(getResources().getDrawable(R.drawable.filter_truck_6));
-      //  rlIcon6.setLayoutParams(tvParams);
-        SubActionButton.Builder tCSubBuilder = new SubActionButton.Builder(this);
-        int blueSubActionButtonContentMargin = getResources().getDimensionPixelSize(R.dimen.blue_sub_action_button_content_margin);
-        FrameLayout.LayoutParams blueContentParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-        blueContentParams.setMargins(blueSubActionButtonContentMargin,
-                blueSubActionButtonContentMargin,
-                blueSubActionButtonContentMargin,
-                blueSubActionButtonContentMargin);
-        ImageView rlIcons = new ImageView(DashboardNavigation.this);
-        rlIcons.setImageDrawable(getResources().getDrawable(R.drawable.truck_1));
-        SubActionButton tcSub1 = tCSubBuilder.setContentView(rlIcons, blueContentParams).build();
-        final FloatingActionMenu fam_truck_choose = new FloatingActionMenu.Builder(DashboardNavigation.this)
-                //.setRadius(150)
-                .setStartAngle(150)
-                .addSubActionView(rLSubBuilder.setContentView(rlIcon1).build())
-                .addSubActionView(rLSubBuilder.setContentView(rlIcon2).build())
-                .addSubActionView(rLSubBuilder.setContentView(rlIcon3).build())
-                //.addSubActionView(tcSub1, tcSub1.getLayoutParams().width, tcSub1.getLayoutParams().height)
-                .addSubActionView(rLSubBuilder.setContentView(rlIcon4).build())
-                .addSubActionView(rLSubBuilder.setContentView(rlIcon5).build())
-                .addSubActionView(rLSubBuilder.setContentView(rlIcon6).build())
-                .attachTo(fab_truck)
-                .build();
-
-        fam_truck_choose.setStateChangeListener(new FloatingActionMenu.MenuStateChangeListener() {
-            @Override
-            public void onMenuOpened(FloatingActionMenu menu) {
-
-            }
-
-            @Override
-            public void onMenuClosed(FloatingActionMenu menu) {
-                if (serviceWillBeDismissed) {
-                    serviceWillBeDismissed = false;
-                }
-            }
-        });
-
-        // make the red button terminate the service
-        rlIcon1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                serviceWillBeDismissed = true; // the order is important
-                //  fam_truck_choose.close(true);
-                rlIcon1.setBackground(getResources().getDrawable(R.drawable.filter_truck_1));
-                rLSubBuilder.setBackgroundDrawable(getResources().getDrawable(R.drawable.round_dr_red));
-                Log.e("tag","clicke1");
-                rlIcon2.setBackground(getResources().getDrawable(R.drawable.filter_truck_2));
-                rlIcon3.setBackground(getResources().getDrawable(R.drawable.filter_truck_3));
-                rlIcon4.setBackground(getResources().getDrawable(R.drawable.filter_truck_4));
-                rlIcon5.setBackground(getResources().getDrawable(R.drawable.filter_truck_5));
-                rlIcon6.setBackground(getResources().getDrawable(R.drawable.filter_truck_6));
-            }
-        });
-
-        rlIcon2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                serviceWillBeDismissed = true; // the order is important
-                //  fam_truck_choose.close(true);
-                rlIcon1.setBackground(getResources().getDrawable(R.drawable.filter_truck_1));
-                rlIcon2.setBackground(getResources().getDrawable(R.drawable.filter_truck_2));
-                rlIcon3.setBackground(getResources().getDrawable(R.drawable.filter_truck_3));
-                rlIcon4.setBackground(getResources().getDrawable(R.drawable.filter_truck_4));
-                rlIcon5.setBackground(getResources().getDrawable(R.drawable.filter_truck_5));
-                rlIcon6.setBackground(getResources().getDrawable(R.drawable.filter_truck_6));
-            }
-        });
-
-        rlIcon3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                serviceWillBeDismissed = true; // the order is important
-                //  fam_truck_choose.close(true);
-                rlIcon1.setBackground(getResources().getDrawable(R.drawable.filter_truck_1));
-                rlIcon2.setBackground(getResources().getDrawable(R.drawable.filter_truck_2));
-                rlIcon3.setBackground(getResources().getDrawable(R.drawable.filter_truck_3));
-                rlIcon4.setBackground(getResources().getDrawable(R.drawable.filter_truck_4));
-                rlIcon5.setBackground(getResources().getDrawable(R.drawable.filter_truck_5));
-                rlIcon6.setBackground(getResources().getDrawable(R.drawable.filter_truck_6));
-            }
-        });
-
-        rlIcon4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                serviceWillBeDismissed = true; // the order is important
-                //  fam_truck_choose.close(true);
-                rlIcon1.setBackground(getResources().getDrawable(R.drawable.filter_truck_1));
-                rlIcon2.setBackground(getResources().getDrawable(R.drawable.filter_truck_2));
-                rlIcon3.setBackground(getResources().getDrawable(R.drawable.filter_truck_3));
-                rlIcon4.setBackground(getResources().getDrawable(R.drawable.filter_truck_4));
-                rlIcon5.setBackground(getResources().getDrawable(R.drawable.filter_truck_5));
-                rlIcon6.setBackground(getResources().getDrawable(R.drawable.filter_truck_6));
-            }
-        });
-
-        rlIcon5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                serviceWillBeDismissed = true; // the order is important
-                //  fam_truck_choose.close(true);
-                rlIcon1.setBackground(getResources().getDrawable(R.drawable.filter_truck_1));
-                rlIcon2.setBackground(getResources().getDrawable(R.drawable.filter_truck_2));
-                rlIcon3.setBackground(getResources().getDrawable(R.drawable.filter_truck_3));
-                rlIcon4.setBackground(getResources().getDrawable(R.drawable.filter_truck_4));
-                rlIcon5.setBackground(getResources().getDrawable(R.drawable.filter_truck_5));
-                rlIcon6.setBackground(getResources().getDrawable(R.drawable.filter_truck_6));
-            }
-        });
-
-        rlIcon6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                serviceWillBeDismissed = true; // the order is important
-                //  fam_truck_choose.close(true);
-                rlIcon1.setBackground(getResources().getDrawable(R.drawable.filter_truck_1));
-                rlIcon2.setBackground(getResources().getDrawable(R.drawable.filter_truck_2));
-                rlIcon3.setBackground(getResources().getDrawable(R.drawable.filter_truck_3));
-                rlIcon4.setBackground(getResources().getDrawable(R.drawable.filter_truck_4));
-                rlIcon5.setBackground(getResources().getDrawable(R.drawable.filter_truck_5));
-                rlIcon6.setBackground(getResources().getDrawable(R.drawable.filter_truck_6));
-            }
-        });*/
-
 
 
         dialog1 = new Dialog(DashboardNavigation.this);
@@ -458,14 +309,9 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             public void onClick(View view) {
                 openContextMenu(view);
 
-
-
                 PopupMenu popup = new PopupMenu(DashboardNavigation.this, rightmenu);
 
                 popup.getMenuInflater().inflate(R.menu.menu, popup.getMenu());
-
-
-
 
                 Menu m = popup.getMenu();
                 for (int i=0;i<m.size();i++) {
@@ -767,16 +613,15 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     //latLong = new LatLng(location.getLatitude(), location.getLongitude());
 
                     CameraPosition cameraPosition = new CameraPosition.Builder()
-                            .target(latLong).zoom(15f).build();
+                            .target(latLong).zoom(10f).build();
 
-                    mMap.setMyLocationEnabled(true);
+                    mMap.setMyLocationEnabled(false);
                     mMap.getUiSettings().setMyLocationButtonEnabled(true);
                     mMap.animateCamera(CameraUpdateFactory
                             .newCameraPosition(cameraPosition));
                     mMap.addMarker(new MarkerOptions().position(latLong).icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_point)));
 
-                    // mLocationMarkerText.setText("Lat : " + location.getLatitude() + "," + "Long : " + location.getLongitude());
-                    // startIntentService(location);
+
 
 
 
@@ -960,8 +805,20 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     mLocation.setLongitude(mCenterLatLong.longitude);
 
                     startIntentService(mLocation);
-                    // mLocationMarkerText.setText("Lat : " + mCenterLatLong.latitude + "," + "Long : " + mCenterLatLong.longitude);
+                    mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                        @Override
+                        public void onMapClick(LatLng latLng)
+                        {
 
+                            mMap.clear();
+                            CameraPosition cameraPosition = new CameraPosition.Builder()
+                                    .target(latLng).zoom(10f).build();
+                            mMap.animateCamera(CameraUpdateFactory
+                                    .newCameraPosition(cameraPosition));
+                            mMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_point)));
+
+                        }
+                    });
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -1045,9 +902,9 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             latLong = new LatLng(location.getLatitude(), location.getLongitude());
 
             CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(latLong).zoom(19f).build();
+                    .target(latLong).zoom(10f).build();
 
-            mMap.setMyLocationEnabled(true);
+            mMap.setMyLocationEnabled(false);
             mMap.getUiSettings().setMyLocationButtonEnabled(true);
             mMap.animateCamera(CameraUpdateFactory
                     .newCameraPosition(cameraPosition));
@@ -1055,6 +912,21 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
             // mLocationMarkerText.setText("Lat : " + location.getLatitude() + "," + "Long : " + location.getLongitude());
             startIntentService(location);
+
+            mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                @Override
+                public void onMapClick(LatLng latLng)
+                {
+
+                    mMap.clear();
+                    CameraPosition cameraPosition = new CameraPosition.Builder()
+                            .target(latLng).zoom(10f).build();
+                    mMap.animateCamera(CameraUpdateFactory
+                            .newCameraPosition(cameraPosition));
+                    mMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_point)));
+
+                }
+            });
 
 
 
