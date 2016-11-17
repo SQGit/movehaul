@@ -8,6 +8,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 
@@ -16,10 +17,12 @@ import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -84,6 +87,9 @@ import com.rey.material.widget.LinearLayout;
 import com.rey.material.widget.TextView;
 import com.sloop.fonts.FontsManager;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by SQINDIA on 10/26/2016.
  */
@@ -117,6 +123,12 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     android.widget.LinearLayout droplv,pickuplv;
     Dialog dialog1;
     Button btn_yes,btn_no;
+    int exit_status;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    Typeface tf;
+    android.widget.TextView tv_txt1,tv_txt2,tv_txt3;
+    String service_id,service_token,str_lati,str_longi,str_locality,str_address;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -124,6 +136,9 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         setContentView(R.layout.activity_dashboard);
         FontsManager.initFormAssets(this, "fonts/lato.ttf");
         FontsManager.changeFonts(this);
+        tf = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DashboardNavigation.this);
+        editor = sharedPreferences.edit();
         mContext = this;
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -143,7 +158,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         destination = (AutoCompleteTextView) findViewById(R.id.editText_dropLocation);
         flt_pickup = (TextInputLayout) findViewById(R.id.float_pickup);
         flt_droplocation = (TextInputLayout) findViewById(R.id.float_drop);
-        // fab_truck = (FloatingActionButton) findViewById(R.id.float_icon);
+       // fab_truck = (FloatingActionButton) findViewById(R.id.float_icon);
         droplv=(android.widget.LinearLayout) findViewById(R.id.layout_drop);
         pickuplv=(android.widget.LinearLayout) findViewById(R.id.layout_pickuptype);
         btn_menu = (ImageView) findViewById(R.id.img_menu);
@@ -154,6 +169,11 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         Typeface type = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
         flt_pickup.setTypeface(type);
         flt_droplocation.setTypeface(type);
+
+
+
+        service_id = sharedPreferences.getString("id","");
+        service_token = sharedPreferences.getString("token","");
 
 
         mapFragment.getMapAsync(this);
@@ -377,10 +397,40 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         btn_yes = (Button) dialog1.findViewById(R.id.button_yes);
         btn_no = (Button) dialog1.findViewById(R.id.button_no);
 
+        tv_txt1 = (android.widget.TextView) dialog1.findViewById(R.id.textView_1);
+        tv_txt2 = (android.widget.TextView) dialog1.findViewById(R.id.textView_2);
+        tv_txt3 = (android.widget.TextView) dialog1.findViewById(R.id.textView_3);
+
+        tv_txt1.setTypeface(tf);
+        tv_txt2.setTypeface(tf);
+        tv_txt3.setTypeface(tf);
+
+
         btn_yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finishAffinity();
+
+                if(exit_status ==0){
+
+                    editor.putString("login","");
+                    editor.clear();
+                    editor.commit();
+
+                    dialog1.dismiss();
+
+                    Intent i = new Intent(DashboardNavigation.this, LoginActivity.class);
+                    startActivity(i);
+                    finishAffinity();
+
+
+
+                }
+                else if (exit_status ==1){
+                    finishAffinity();
+                    dialog1.dismiss();
+                }
+
+
             }
         });
 
@@ -440,16 +490,25 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
 
 
-               /* popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
 
                         switch (item.getItemId()) {
 
-                            case R.id.item1: {
+                            case R.id.support: {
 
                                 return true;
                             }
-                            case R.id.item2: {
+                            case R.id.feedback: {
+
+                                return true;
+                            }
+                            case R.id.logout: {
+
+
+                                dialog1.show();
+                                exit_status =0;
+                                tv_txt3.setText("Logout");
 
                                 return true;
                             }
@@ -465,7 +524,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 });
 
                 popup.show();
-*/
+
             }
         });
 
@@ -555,7 +614,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
     private void applyFontToMenuItem(MenuItem mi)
     {
-        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
+            Typeface font = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
         SpannableString mNewTitle = new SpannableString(mi.getTitle());
         mNewTitle.setSpan(new CustomTypefaceSpan("" , font), 0 , mNewTitle.length(),  Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         mi.setTitle(mNewTitle);
@@ -981,7 +1040,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             LatLng latLong;
 
             mMap.clear();
-            //
 
 
             latLong = new LatLng(location.getLatitude(), location.getLongitude());
@@ -1013,6 +1071,74 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     public void onBackPressed() {
         //super.onBackPressed();
         dialog1.show();
+        exit_status =1;
+        tv_txt3.setText("Exit");
+    }
+
+
+    public class updateLocation extends AsyncTask<String, Void, String> {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Log.e("tag","reg_preexe");
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            String json = "", jsonStr = "";
+
+            try {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.accumulate("customer_latitude", str_lati);
+                jsonObject.accumulate("customer_longitude", str_longi);
+                jsonObject.accumulate("customer_locality1", str_locality);
+                jsonObject.accumulate("customer_locality2", str_address);
+                json = jsonObject.toString();
+                return jsonStr = HttpUtils.makeRequest1(Config.WEB_URL + "customer/finddrivers", json,service_id,service_token);
+
+            } catch (Exception e) {
+                Log.e("InputStream", e.getLocalizedMessage());
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("tag","tag"+s);
+
+
+            if (s != null) {
+                try {
+                    JSONObject jo = new JSONObject(s);
+                    String status = jo.getString("status");
+                    String msg = jo.getString("message");
+                    Log.d("tag", "<-----Status----->" + status);
+                    if (status.equals("true")) {
+                        Log.e("tag","Location Updated");
+
+                    } else if (status.equals("false")) {
+
+                        Log.e("tag","Location not updated");
+                        //has to check internet and location...
+
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.e("tag","nt"+e.toString());
+                    // Toast.makeText(getApplicationContext(),"Network Errror0",Toast.LENGTH_LONG).show();
+                }
+            } else {
+                // Toast.makeText(getApplicationContext(),"Network Errror1",Toast.LENGTH_LONG).show();
+            }
+
+        }
+
     }
 
 
