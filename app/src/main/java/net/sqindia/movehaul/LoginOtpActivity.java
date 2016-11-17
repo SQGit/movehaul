@@ -247,6 +247,7 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
             et_otp2.setText(String.valueOf(cArray[cArray.length - 3]));
             et_otp3.setText(String.valueOf(cArray[cArray.length - 2]));
             et_otp4.setText(String.valueOf(cArray[cArray.length - 1]));
+            //
 
 
         } catch (Exception e) {
