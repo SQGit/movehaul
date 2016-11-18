@@ -96,7 +96,7 @@ import java.util.Locale;
  * Created by SQINDIA on 10/26/2016.
  */
 
-public class DashboardNavigation extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, com.google.android.gms.location.LocationListener, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks,  GoogleMap.OnGroundOverlayClickListener{
+public class DashboardNavigation extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, com.google.android.gms.location.LocationListener, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, GoogleMap.OnGroundOverlayClickListener {
 
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
@@ -134,8 +134,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     private AddressResultReceiver mResultReceiver;
     private boolean serviceWillBeDismissed;
     private GroundOverlay mGroundOverlay;
-    LinearLayout lt_first,lt_last;
-    FrameLayout lt_second,lt_frame;
+    LinearLayout lt_first, lt_last;
+    FrameLayout lt_second, lt_frame;
     SupportMapFragment mapFragment;
 
     @Override
@@ -269,7 +269,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         lt_frame.setOnDragListener(new View.OnDragListener() {
             @Override
             public boolean onDrag(View v, DragEvent event) {
-                switch(event.getAction()) {
+                switch (event.getAction()) {
                     case DragEvent.ACTION_DRAG_STARTED:
 
                         lt_first.setVisibility(View.GONE);
@@ -281,17 +281,16 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
                         break;
 
-                    case DragEvent.ACTION_DRAG_EXITED :
-
+                    case DragEvent.ACTION_DRAG_EXITED:
 
 
                         break;
 
-                    case DragEvent.ACTION_DRAG_LOCATION  :
+                    case DragEvent.ACTION_DRAG_LOCATION:
 
                         break;
 
-                    case DragEvent.ACTION_DRAG_ENDED   :
+                    case DragEvent.ACTION_DRAG_ENDED:
 
                         lt_first.setVisibility(View.VISIBLE);
                         lt_second.setVisibility(View.VISIBLE);
@@ -306,7 +305,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                         lt_last.setVisibility(View.VISIBLE);
 
                         break;
-                    default: break;
+                    default:
+                        break;
                 }
                 return true;
             }
@@ -322,9 +322,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     editor.putString("login", "");
                     editor.clear();
                     editor.commit();
-
                     dialog1.dismiss();
-
                     Intent i = new Intent(DashboardNavigation.this, LoginActivity.class);
                     startActivity(i);
                     finishAffinity();
@@ -366,8 +364,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 Menu m = popup.getMenu();
                 for (int i = 0; i < m.size(); i++) {
                     MenuItem mi = m.getItem(i);
-
-                    //for aapplying a font to subMenu ...
                     SubMenu subMenu = mi.getSubMenu();
                     if (subMenu != null && subMenu.size() > 0) {
                         for (int j = 0; j < subMenu.size(); j++) {
@@ -387,22 +383,16 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     public boolean onMenuItemClick(MenuItem item) {
 
                         switch (item.getItemId()) {
-
                             case R.id.support: {
-
                                 return true;
                             }
                             case R.id.feedback: {
-
                                 return true;
                             }
                             case R.id.logout: {
-
-
                                 dialog1.show();
                                 exit_status = 0;
                                 tv_txt3.setText("Logout");
-
                                 return true;
                             }
 
@@ -419,13 +409,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 popup.show();
 
             }
-
-
-
-
-
-
-
 
 
         });
@@ -641,7 +624,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
                 starting.setText("");
                 starting.append(place.getAddress());
-                Log.e("tagplace", " place " + place.getAddress()+ " attrib " +place.getAttributions()+ " name " +place.getName()+ " phone " +place.getPhoneNumber()+ " latlon " +place.getLatLng().toString()
+                Log.e("tagplace", " place " + place.getAddress() + " attrib " + place.getAttributions() + " name " + place.getName() + " phone " + place.getPhoneNumber() + " latlon " + place.getLatLng().toString()
                 );
 
 
@@ -691,10 +674,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 destination.setText("");
 
 
-
                 destination.append(place1.getAddress());
                 Log.e("tag", "place111" + place1.getAddress());
-
 
 
                 if (mMap != null) {
@@ -708,19 +689,19 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     //latLong = new LatLng(location.getLatitude(), location.getLongitude());
 
                     CameraPosition cameraPosition = new CameraPosition.Builder()
-                           .target(latLong).zoom(10f).build();
+                            .target(latLong).zoom(10f).build();
 
 
-                   // mMap.setMyLocationEnabled(false);
-                   // mMap.getUiSettings().setMyLocationButtonEnabled(true);
+                    // mMap.setMyLocationEnabled(false);
+                    // mMap.getUiSettings().setMyLocationButtonEnabled(true);
                     mMap.animateCamera(CameraUpdateFactory
                             .newCameraPosition(cameraPosition));
                     mMap.addMarker(new MarkerOptions().position(latLong).icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_filter_ico)));
 
 
                     mMap.addPolyline(new PolylineOptions().geodesic(true)
-                            .add(new LatLng(Double.valueOf(str_lati.trim()),Double.valueOf(str_longi.trim())))  // Sydney
-                            .add(new LatLng(latit,longg))  // Fiji
+                            .add(new LatLng(Double.valueOf(str_lati.trim()), Double.valueOf(str_longi.trim())))  // Sydney
+                            .add(new LatLng(latit, longg))  // Fiji
 
                     );
 
@@ -837,8 +818,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     }
 
 
-
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
@@ -846,26 +825,22 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         mMap = googleMap;
 
 
+        mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+            @Override
+            public void onMarkerDragStart(Marker marker) {
+                Toast.makeText(getApplicationContext(), "ddd", Toast.LENGTH_LONG).show();
+            }
 
+            @Override
+            public void onMarkerDrag(Marker marker) {
+                Toast.makeText(getApplicationContext(), "asdfa", Toast.LENGTH_LONG).show();
+            }
 
-            mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
-                @Override
-                public void onMarkerDragStart(Marker marker) {
-                    Toast.makeText(getApplicationContext(),"ddd",Toast.LENGTH_LONG).show();
-                }
-
-                @Override
-                public void onMarkerDrag(Marker marker) {
-                    Toast.makeText(getApplicationContext(),"asdfa",Toast.LENGTH_LONG).show();
-                }
-
-                @Override
-                public void onMarkerDragEnd(Marker marker) {
-                    Toast.makeText(getApplicationContext(),"end",Toast.LENGTH_LONG).show();
-                }
-            });
-
-
+            @Override
+            public void onMarkerDragEnd(Marker marker) {
+                Toast.makeText(getApplicationContext(), "end", Toast.LENGTH_LONG).show();
+            }
+        });
 
 
         mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
@@ -887,7 +862,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     mLocation.setLongitude(mCenterLatLong.longitude);
                     LatLng latLng = new LatLng(mCenterLatLong.latitude, mCenterLatLong.longitude);
                     mMap.clear();
-
                     mMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_point)));
                     str_lati = String.valueOf(mCenterLatLong.latitude);
                     str_longi = String.valueOf(mCenterLatLong.longitude);
@@ -913,9 +887,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     });
 
 
-
-
-
                     geocoder = new Geocoder(DashboardNavigation.this, Locale.getDefault());
 
                     try {
@@ -934,8 +905,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                }
-                finally {
+                } finally {
                     lt_first.setVisibility(View.VISIBLE);
                     lt_second.setVisibility(View.VISIBLE);
                     lt_last.setVisibility(View.VISIBLE);
