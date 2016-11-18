@@ -183,6 +183,7 @@ public class LoginActivity extends Activity {
                     String status = jo.getString("status");
                     String msg = jo.getString("message");
                     Log.d("tag", "<-----Status----->" + status);
+
                     if (status.equals("true")) {
                         Intent i = new Intent(LoginActivity.this, LoginOtpActivity.class);
                         i.putExtra("for", "phone");

@@ -109,7 +109,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     SharedPreferences.Editor editor;
     Typeface tf;
     android.widget.TextView tv_txt1, tv_txt2, tv_txt3;
-    String service_id, service_token, str_lati, str_longi, str_locality, str_address;
+    String service_id, service_token, str_lati, str_longi, str_locality, str_address,customer_mobile,customer_email,customer_name;
     Geocoder geocoder;
     List<Address> addresses;
     LinearLayout lt_first, lt_last;
@@ -166,6 +166,9 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         flt_droplocation.setTypeface(type);
         service_id = sharedPreferences.getString("id", "");
         service_token = sharedPreferences.getString("token", "");
+        customer_mobile = sharedPreferences.getString("customer_mobile", "");
+        customer_email = sharedPreferences.getString("customer_email", "");
+        customer_name = sharedPreferences.getString("customer_name", "");
         mapFragment.getMapAsync(this);
         mResultReceiver = new AddressResultReceiver(new Handler());
         if (checkPlayServices()) {
@@ -203,8 +206,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             @Override
             public void onClick(View view) {
                 dialog2.show();
-                et_username.setText("J5i");
-                et_email.setText("dwffg");
+                et_username.setText(customer_name);
+                et_email.setText(customer_email);
             }
         });
 
@@ -219,6 +222,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         et_email = (EditText) dialog2.findViewById(R.id.editTextEmail);
         flt_uname = (TextInputLayout) dialog2.findViewById(R.id.float_name);
         flt_email = (TextInputLayout) dialog2.findViewById(R.id.float_email);
+        tv_name.setText(customer_name);
+        tv_email.setText(customer_email);
 
         et_username.setTypeface(tf);
         et_email.setTypeface(tf);
@@ -574,7 +579,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     //latLong = new LatLng(location.getLatitude(), location.getLongitude());
 
                     CameraPosition cameraPosition = new CameraPosition.Builder()
-                            .target(latLong).zoom(3f).build();
+                            .target(latLong).zoom(15f).build();
 
                     mMap.setMyLocationEnabled(false);
                     mMap.getUiSettings().setMyLocationButtonEnabled(true);
@@ -611,7 +616,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     //latLong = new LatLng(location.getLatitude(), location.getLongitude());
 
                     CameraPosition cameraPosition = new CameraPosition.Builder()
-                            .target(latLong).zoom(10f).build();
+                            .target(latLong).zoom(15f).build();
 
 
                     // mMap.setMyLocationEnabled(false);
@@ -745,7 +750,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
                             mMap.clear();
                             CameraPosition cameraPosition = new CameraPosition.Builder()
-                                    .target(latLng).zoom(10f).build();
+                                    .target(latLng).zoom(15f).build();
                             mMap.animateCamera(CameraUpdateFactory
                                     .newCameraPosition(cameraPosition));
                             mMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_point)));
@@ -860,7 +865,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             latLong = new LatLng(location.getLatitude(), location.getLongitude());
 
             CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(latLong).zoom(10f).build();
+                    .target(latLong).zoom(15f).build();
 
             mMap.setMyLocationEnabled(false);
             mMap.getUiSettings().setMyLocationButtonEnabled(true);
@@ -877,7 +882,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
                     mMap.clear();
                     CameraPosition cameraPosition = new CameraPosition.Builder()
-                            .target(latLng).zoom(10f).build();
+                            .target(latLng).zoom(15f).build();
                     mMap.animateCamera(CameraUpdateFactory
                             .newCameraPosition(cameraPosition));
                     mMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_point)));
@@ -916,19 +921,10 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
             // Display the address string or an error message sent from the intent service.
             mAddressOutput = resultData.getString(AppUtils.LocationConstants.RESULT_DATA_KEY);
-            Log.e("tag", "0000000" + mAddressOutput);
             mAreaOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_AREA);
-            Log.e("tag", "11111111" + mAreaOutput);
-
             mCityOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_CITY);
-            Log.e("tag", "22222222" + mCityOutput);
-
             mStateOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_STREET);
-
-            Log.e("tag", "33333333333" + mStateOutput);
-
             displayAddressOutput();
-            Log.e("tag", "4444444444");
 
             // Show a toast message if an address was found.
             if (resultCode == AppUtils.LocationConstants.SUCCESS_RESULT) {
@@ -940,26 +936,23 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
     }
 
-    public class updateLocation extends AsyncTask<String, Void, String> {
-
-
+    public class updateLocation extends AsyncTask<String, Void, String>
+    {
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
             super.onPreExecute();
             Log.e("tag", "reg_preexe");
         }
 
         @Override
         protected String doInBackground(String... strings) {
-
             String json = "", jsonStr = "";
-
             try {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.accumulate("customer_latitude", str_lati);
                 jsonObject.accumulate("customer_longitude", str_longi);
                 jsonObject.accumulate("customer_locality1", str_locality);
-               // jsonObject.accumulate("customer_locality2", str_address);
                 json = jsonObject.toString();
                 return jsonStr = HttpUtils.makeRequest1(Config.WEB_URL + "customer/finddrivers", json, service_id, service_token);
 

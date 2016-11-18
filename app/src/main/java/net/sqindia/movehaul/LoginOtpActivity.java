@@ -99,21 +99,6 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
         }
 
 
-    /*    ReceiveSmsBroadcastReceiver.bindListener(new SmsListener() {
-            @Override
-            public void messageReceived(String messageText) {
-                Log.e("Text",messageText);
-
-                char[] cArray = messageText.toCharArray();
-
-                et_otp1.setText(String.valueOf(cArray[0]));
-                et_otp2.setText(String.valueOf(cArray[1]));
-                et_otp3.setText(String.valueOf(cArray[2]));
-                et_otp4.setText(String.valueOf(cArray[3]));
-
-                Toast.makeText(LoginOtpActivity.this,"Message: "+messageText,Toast.LENGTH_LONG).show();
-            }
-        });*/
 
 
         btn_back.setOnClickListener(new View.OnClickListener() {
@@ -381,10 +366,13 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
                         String mobile = jo.getString("customer_mobile");
                         String email = jo.getString("customer_email");
 
+                        String name = jo.getString("customer_name");
+
                         editor.putString("id",id);
                         editor.putString("token",token);
                         editor.putString("customer_mobile",mobile);
                         editor.putString("customer_email",email);
+                        editor.putString("customer_name",name);
                         editor.putString("login","success");
                         editor.commit();
 
