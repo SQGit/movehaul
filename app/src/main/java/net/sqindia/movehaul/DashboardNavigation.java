@@ -203,6 +203,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             @Override
             public void onClick(View view) {
                 dialog2.show();
+                et_username.setText("J5i");
+                et_email.setText("dwffg");
             }
         });
 
