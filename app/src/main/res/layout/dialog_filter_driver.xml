@@ -773,7 +773,7 @@
         android:background="@drawable/submit"
         android:gravity="center"
         android:layout_gravity="center"
-
+        android:paddingBottom="@dimen/_2sdp"
         android:paddingRight="@dimen/_3sdp"
         android:text="Filter"
         android:textAllCaps="false"
