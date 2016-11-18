@@ -529,7 +529,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     //latLong = new LatLng(location.getLatitude(), location.getLongitude());
 
                     CameraPosition cameraPosition = new CameraPosition.Builder()
-                            .target(latLong).zoom(10f).build();
+                            .target(latLong).zoom(3f).build();
 
                     mMap.setMyLocationEnabled(false);
                     mMap.getUiSettings().setMyLocationButtonEnabled(true);
@@ -914,7 +914,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 jsonObject.accumulate("customer_latitude", str_lati);
                 jsonObject.accumulate("customer_longitude", str_longi);
                 jsonObject.accumulate("customer_locality1", str_locality);
-                jsonObject.accumulate("customer_locality2", str_address);
+               // jsonObject.accumulate("customer_locality2", str_address);
                 json = jsonObject.toString();
                 return jsonStr = HttpUtils.makeRequest1(Config.WEB_URL + "customer/finddrivers", json, service_id, service_token);
 

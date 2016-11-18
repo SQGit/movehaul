@@ -43,6 +43,7 @@ import nl.changer.polypicker.utils.ImageInternalFetcher;
  */
 
 public class Book_now extends Activity {
+
     String truck, goods;
     LinearLayout lt_goodsType, lt_truckType;
     EditText et_delivery_address, et_goodstype, et_trucktype, et_description;
@@ -60,11 +61,12 @@ public class Book_now extends Activity {
     HashSet<Uri> mMedia = new HashSet<Uri>();
     ArrayList<Uri> image_path = new ArrayList<>();
     String[] imagearray;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_now);
-        FontsManager.initFormAssets(this, "fonts/lato.ttf");       //initialization
+        FontsManager.initFormAssets(this, "fonts/lato.ttf");
         FontsManager.changeFonts(this);
         mdatas = new ArrayList<>();
         type = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
@@ -74,7 +76,6 @@ public class Book_now extends Activity {
         et_description = (EditText) findViewById(R.id.editTextDescription);
         msg=(TextView) findViewById(R.id.msg);
         mSelectedImagesContainer = (ViewGroup) findViewById(R.id.selected_photos_container);
-
         flt_delivery_address = (TextInputLayout) findViewById(R.id.float_deliveryaddress);
         flt_goodstype = (TextInputLayout) findViewById(R.id.float_goodstype);
         flt_trucktype = (TextInputLayout) findViewById(R.id.float_trucktype);
