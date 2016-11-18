@@ -39,6 +39,7 @@ import android.view.SubMenu;
 import android.view.View;
 import android.view.Window;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -101,8 +102,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     TextInputLayout flt_pickup, flt_droplocation;
     ImageView btn_menu, rightmenu;
     android.widget.LinearLayout droplv, pickuplv;
-    Dialog dialog1;
-    Button btn_yes, btn_no;
+    Dialog dialog1,dialog2;
+    Button btn_yes, btn_no,btn_update;
     int exit_status;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -117,6 +118,9 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     private GoogleMap mMap;
     private LatLng mCenterLatLong;
     private AddressResultReceiver mResultReceiver;
+    ImageView btn_editProfile,btn_close;
+    EditText et_username,et_email;
+    TextInputLayout flt_uname,flt_email;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -155,6 +159,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         lt_second = (FrameLayout) findViewById(R.id.second);
         lt_last = (LinearLayout) findViewById(R.id.last);
         lt_frame = (FrameLayout) findViewById(R.id.frame);
+        btn_editProfile = (ImageView) findViewById(R.id.imageView2);
 
         Typeface type = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
         flt_pickup.setTypeface(type);
@@ -193,6 +198,44 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         drawer.setDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+        btn_editProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog2.show();
+            }
+        });
+
+        dialog2 = new Dialog(DashboardNavigation.this);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog2.setCancelable(false);
+        dialog2.setContentView(R.layout.dialogue_profile);
+        btn_update = (Button) dialog2.findViewById(R.id.button_update);
+        btn_close = (ImageView) dialog2.findViewById(R.id.button_close);
+        et_username = (EditText) dialog2.findViewById(R.id.editTextName);
+        et_email = (EditText) dialog2.findViewById(R.id.editTextEmail);
+        flt_uname = (TextInputLayout) dialog2.findViewById(R.id.float_name);
+        flt_email = (TextInputLayout) dialog2.findViewById(R.id.float_email);
+
+        et_username.setTypeface(tf);
+        et_email.setTypeface(tf);
+        flt_uname.setTypeface(tf);
+        flt_email.setTypeface(tf);
+        btn_update.setTypeface(tf);
+        btn_update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog2.dismiss();
+            }
+        });
+        btn_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog2.dismiss();
+            }
+        });
+
 
         dialog1 = new Dialog(DashboardNavigation.this);
         dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
