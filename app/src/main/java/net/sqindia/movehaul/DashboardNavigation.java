@@ -2,7 +2,6 @@ package net.sqindia.movehaul;
 
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -10,17 +9,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-
-import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationListener;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
@@ -35,7 +29,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -43,21 +36,18 @@ import android.util.Log;
 import android.view.ContextMenu;
 import android.view.DragEvent;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -66,27 +56,19 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.ActivityRecognition;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.PlaceDetectionApi;
-import com.google.android.gms.location.places.PlaceLikelihood;
-import com.google.android.gms.location.places.PlaceLikelihoodBuffer;
-import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.GroundOverlay;
-import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -106,23 +88,18 @@ import java.util.Locale;
  * Created by SQINDIA on 10/26/2016.
  */
 
-public class DashboardNavigation extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, com.google.android.gms.location.LocationListener, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks,  GoogleMap.OnGroundOverlayClickListener{
+public class DashboardNavigation extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, com.google.android.gms.location.LocationListener, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
-    private GoogleMap mMap;
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
+    private static final int REQUEST_CODE_AUTOCOMPLETE1 = 2;
     private static String TAG = "MAP LOCATION";
-    Context mContext;
-    private LatLng mCenterLatLong;
-    private AddressResultReceiver mResultReceiver;
     protected String mAddressOutput;
     protected String mAreaOutput;
     protected String mCityOutput;
     protected String mStateOutput;
     protected GoogleApiClient mGoogleApiClient;
     Context mContext;
-    EditText mLocationAddress;
-    private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
-    private static final int REQUEST_CODE_AUTOCOMPLETE1 = 2;
     Toolbar toolbar;
     DrawerLayout drawer;
     NavigationView navigationView;
@@ -130,13 +107,10 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     TextView tv_name, tv_email, tv_myTrips, tv_jobReview, tv_payments, tv_tracking, tv_offers, tv_emergencyContacts;
     AutoCompleteTextView starting, destination;
     TextInputLayout flt_pickup, flt_droplocation;
-    FloatingActionButton fab_truck;
-    private boolean serviceWillBeDismissed;
-    protected GoogleApiClient mGoogleApiClient;
-    ImageView pickup_close,btn_menu,rightmenu;
-    android.widget.LinearLayout droplv,pickuplv;
+    ImageView btn_menu, rightmenu;
+    android.widget.LinearLayout droplv, pickuplv;
     Dialog dialog1;
-    Button btn_yes,btn_no;
+    Button btn_yes, btn_no;
     int exit_status;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -145,14 +119,12 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     String service_id, service_token, str_lati, str_longi, str_locality, str_address;
     Geocoder geocoder;
     List<Address> addresses;
-    private GoogleMap mMap;
-    private LatLng mCenterLatLong;
-    private AddressResultReceiver mResultReceiver;
-    private boolean serviceWillBeDismissed;
-    private GroundOverlay mGroundOverlay;
     LinearLayout lt_first, lt_last;
     FrameLayout lt_second, lt_frame;
     SupportMapFragment mapFragment;
+    private GoogleMap mMap;
+    private LatLng mCenterLatLong;
+    private AddressResultReceiver mResultReceiver;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -164,7 +136,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DashboardNavigation.this);
         editor = sharedPreferences.edit();
         mContext = this;
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -182,34 +154,25 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         destination = (AutoCompleteTextView) findViewById(R.id.editText_dropLocation);
         flt_pickup = (TextInputLayout) findViewById(R.id.float_pickup);
         flt_droplocation = (TextInputLayout) findViewById(R.id.float_drop);
-       // fab_truck = (FloatingActionButton) findViewById(R.id.float_icon);
-        droplv=(android.widget.LinearLayout) findViewById(R.id.layout_drop);
-        pickuplv=(android.widget.LinearLayout) findViewById(R.id.layout_pickuptype);
+        droplv = (android.widget.LinearLayout) findViewById(R.id.layout_drop);
+        pickuplv = (android.widget.LinearLayout) findViewById(R.id.layout_pickuptype);
         btn_menu = (ImageView) findViewById(R.id.img_menu);
         rightmenu = (ImageView) findViewById(R.id.right_menu);
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-
         lt_first = (LinearLayout) findViewById(R.id.first);
         lt_second = (FrameLayout) findViewById(R.id.second);
         lt_last = (LinearLayout) findViewById(R.id.last);
-
         lt_frame = (FrameLayout) findViewById(R.id.frame);
 
         Typeface type = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
         flt_pickup.setTypeface(type);
         flt_droplocation.setTypeface(type);
-        service_id = sharedPreferences.getString("id","");
-        service_token = sharedPreferences.getString("token","");
-
-
+        service_id = sharedPreferences.getString("id", "");
+        service_token = sharedPreferences.getString("token", "");
         mapFragment.getMapAsync(this);
         mResultReceiver = new AddressResultReceiver(new Handler());
         if (checkPlayServices()) {
-            // If this check succeeds, proceed with normal processing.
-            // Otherwise, prompt user to get valid Play Services APK.
             if (!AppUtils.isLocationEnabled(mContext)) {
-                // notify user
                 AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
                 dialog.setMessage("Location not enabled!");
                 dialog.setPositiveButton("Open location settings", new DialogInterface.OnClickListener() {
@@ -220,11 +183,9 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     }
                 });
                 dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-
                     @Override
                     public void onClick(DialogInterface paramDialogInterface, int paramInt) {
                         // TODO Auto-generated method stub
-
                     }
                 });
                 dialog.show();
@@ -234,38 +195,12 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             Toast.makeText(mContext, "Location not supported in this device", Toast.LENGTH_SHORT).show();
         }
 
-        pickuplv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                openAutocompleteActivity();
-
-            }
-
-
-        });
-        droplv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                openAutocompleteActivity1();
-
-            }
-
-
-        });
-
 
         final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.app_name, R.string.app_name);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-
-
-
-
-
 
         dialog1 = new Dialog(DashboardNavigation.this);
         dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -283,39 +218,50 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         tv_txt2.setTypeface(tf);
         tv_txt3.setTypeface(tf);
 
+        pickuplv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openAutocompleteActivity();
+            }
+        });
+        droplv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openAutocompleteActivity1();
+            }
+        });
+
 
         lt_frame.setOnDragListener(new View.OnDragListener() {
             @Override
             public boolean onDrag(View v, DragEvent event) {
-                switch(event.getAction()) {
+                switch (event.getAction()) {
                     case DragEvent.ACTION_DRAG_STARTED:
 
                         lt_first.setVisibility(View.GONE);
                         lt_second.setVisibility(View.GONE);
                         lt_last.setVisibility(View.GONE);
-                        Log.e("tagdrag","started");
                         break;
 
                     case DragEvent.ACTION_DRAG_ENTERED:
-                        Log.e("tagdrag","ACTION_DRAG_ENTERED");
-                        break;
-
-                    case DragEvent.ACTION_DRAG_EXITED :
-
-                        Log.e("tagdrag","ACTION_DRAG_EXITED");
 
                         break;
 
-                    case DragEvent.ACTION_DRAG_LOCATION  :
-                        Log.e("tagdrag","ACTION_DRAG_LOCATION");
+                    case DragEvent.ACTION_DRAG_EXITED:
+
+
                         break;
 
-                    case DragEvent.ACTION_DRAG_ENDED   :
+                    case DragEvent.ACTION_DRAG_LOCATION:
+
+                        break;
+
+                    case DragEvent.ACTION_DRAG_ENDED:
 
                         lt_first.setVisibility(View.VISIBLE);
                         lt_second.setVisibility(View.VISIBLE);
                         lt_last.setVisibility(View.VISIBLE);
-                        Log.e("tagdrag","ACTION_DRAG_ENDED");
+
                         break;
 
                     case DragEvent.ACTION_DROP:
@@ -323,9 +269,10 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                         lt_first.setVisibility(View.VISIBLE);
                         lt_second.setVisibility(View.VISIBLE);
                         lt_last.setVisibility(View.VISIBLE);
-                        Log.e("tagdrag","ACTION_DROP");
+
                         break;
-                    default: break;
+                    default:
+                        break;
                 }
                 return true;
             }
@@ -336,9 +283,9 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             @Override
             public void onClick(View view) {
 
-                if(exit_status ==0){
+                if (exit_status == 0) {
 
-                    editor.putString("login","");
+                    editor.putString("login", "");
                     editor.clear();
                     editor.commit();
 
@@ -349,9 +296,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     finishAffinity();
 
 
-
-                }
-                else if (exit_status ==1){
+                } else if (exit_status == 1) {
                     finishAffinity();
                     dialog1.dismiss();
                 }
@@ -368,10 +313,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         });
 
 
-
-
-
-
         btn_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -382,17 +323,11 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         rightmenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openContextMenu(view);
-
                 PopupMenu popup = new PopupMenu(DashboardNavigation.this, rightmenu);
-
                 popup.getMenuInflater().inflate(R.menu.menu, popup.getMenu());
-
                 Menu m = popup.getMenu();
-                for (int i=0;i<m.size();i++) {
+                for (int i = 0; i < m.size(); i++) {
                     MenuItem mi = m.getItem(i);
-
-                    //for aapplying a font to subMenu ...
                     SubMenu subMenu = mi.getSubMenu();
                     if (subMenu != null && subMenu.size() > 0) {
                         for (int j = 0; j < subMenu.size(); j++) {
@@ -400,66 +335,36 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                             applyFontToMenuItem(subMenuItem);
                         }
                     }
-
-
-                    //the method we have create in activity
                     applyFontToMenuItem(mi);
-
                 }
 
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
 
                         switch (item.getItemId()) {
-                            case R.id.support:
-                            {
-
                             case R.id.support: {
-
                                 return true;
                             }
-                            case R.id.feedback:
-                            {
                             case R.id.feedback: {
-
                                 return true;
                             }
-                            case R.id.logout:
-                            {
                             case R.id.logout: {
-
-
                                 dialog1.show();
-                                exit_status =0;
+                                exit_status = 0;
                                 tv_txt3.setText("Logout");
-
                                 return true;
                             }
 
                             default: {
                                 return true;
                             }
-
                         }
-
-
                     }
                 });
-
                 popup.show();
-
             }
 
-
-
-
-
-
-
-
-
         });
-
 
 
         tv_jobReview.setOnClickListener(new View.OnClickListener() {
@@ -502,10 +407,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         btn_book_now.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent i = new Intent(DashboardNavigation.this, Book_now.class);
                 startActivity(i);
-
             }
         });
 
@@ -517,7 +420,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             }
         });
 
-
         tv_emergencyContacts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -525,36 +427,20 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 startActivity(goIntsd);
             }
         });
-
-
-    }
-
-
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v,
-                                    ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-
-
-
-
-
     }
 
 
 
 
-    private void applyFontToMenuItem(MenuItem mi)
-    {
-            Typeface font = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
+
+
+
+    private void applyFontToMenuItem(MenuItem mi) {
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
         SpannableString mNewTitle = new SpannableString(mi.getTitle());
-        mNewTitle.setSpan(new CustomTypefaceSpan("" , font), 0 , mNewTitle.length(),  Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        mNewTitle.setSpan(new CustomTypefaceSpan("", font), 0, mNewTitle.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         mi.setTitle(mNewTitle);
     }
-
 
 
     @Override
@@ -680,8 +566,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
                 starting.setText("");
                 starting.append(place.getAddress());
-                Log.e("tag", "place" + place.getAddress());
-                Log.e("tagplace", " place " + place.getAddress()+ " attrib " +place.getAttributions()+ " name " +place.getName()+ " phone " +place.getPhoneNumber()+ " latlon " +place.getLatLng().toString()
+                Log.e("tagplace", " place " + place.getAddress() + " attrib " + place.getAttributions() + " name " + place.getName() + " phone " + place.getPhoneNumber() + " latlon " + place.getLatLng().toString()
                 );
 
 
@@ -712,16 +597,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                             .newCameraPosition(cameraPosition));
                     mMap.addMarker(new MarkerOptions().position(latLong).icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_point)));
 
-
-
-
-
-
                 }
-
-
-
-
 
 
             }
@@ -741,23 +617,32 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 destination.append(place1.getAddress());
                 Log.e("tag", "place111" + place1.getAddress());
 
-               /* CameraPosition cameraPosition = new CameraPosition.Builder()
-                        .target(latLong).zoom(10f).tilt(50).build();
+                if (mMap != null) {
+                    //mMap.getUiSettings().setZoomControlsEnabled(false);
+                    latLong = place1.getLatLng();
+                    double latit = latLong.latitude;
+                    double longg = latLong.longitude;
 
-                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return;
+                    //latLong = new LatLng(location.getLatitude(), location.getLongitude());
+
+                    CameraPosition cameraPosition = new CameraPosition.Builder()
+                            .target(latLong).zoom(10f).build();
+
+
+                    // mMap.setMyLocationEnabled(false);
+                    // mMap.getUiSettings().setMyLocationButtonEnabled(true);
+                    mMap.animateCamera(CameraUpdateFactory
+                            .newCameraPosition(cameraPosition));
+                    mMap.addMarker(new MarkerOptions().position(latLong).icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_filter_ico)));
+
+
+                    mMap.addPolyline(new PolylineOptions().geodesic(true)
+                            .add(new LatLng(Double.valueOf(str_lati.trim()), Double.valueOf(str_longi.trim())))  // Sydney
+                            .add(new LatLng(latit, longg))  // Fiji
+
+                    );
+
                 }
-                mMap.setMyLocationEnabled(true);
-                mMap.animateCamera(CameraUpdateFactory
-                        .newCameraPosition(cameraPosition));*/
-
 
             }
 
@@ -816,48 +701,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         mGoogleApiClient.connect();
     }
 
-
-    class AddressResultReceiver extends ResultReceiver {
-        public AddressResultReceiver(Handler handler) {
-            super(handler);
-        }
-
-        /**
-         * Receives data sent from FetchAddressIntentService and updates the UI in MainActivity.
-         */
-        @Override
-        protected void onReceiveResult(int resultCode, Bundle resultData) {
-
-            // Display the address string or an error message sent from the intent service.
-            mAddressOutput = resultData.getString(AppUtils.LocationConstants.RESULT_DATA_KEY);
-            Log.e("tag", "0000000" + mAddressOutput);
-            mAreaOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_AREA);
-            Log.e("tag", "11111111" + mAreaOutput);
-
-            mCityOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_CITY);
-            Log.e("tag", "22222222" + mCityOutput);
-
-            mStateOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_STREET);
-
-            Log.e("tag", "33333333333" + mStateOutput);
-
-
-            displayAddressOutput();
-            Log.e("tag", "4444444444");
-
-            // Show a toast message if an address was found.
-            if (resultCode == AppUtils.LocationConstants.SUCCESS_RESULT) {
-                //  showToast(getString(R.string.address_found));
-
-
-            }
-
-
-        }
-
-    }
-
-
     protected void displayAddressOutput() {
 
         Log.e("tag", "output11111" + mAddressOutput);
@@ -880,28 +723,40 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
         Log.d(TAG, "OnMapReady");
         mMap = googleMap;
 
+
         mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+
             @Override
             public void onCameraChange(CameraPosition cameraPosition) {
                 Log.d("Camera postion change" + "", cameraPosition + "");
                 mCenterLatLong = cameraPosition.target;
                 // mMap.clear();
+
+                lt_first.setVisibility(View.GONE);
+                lt_second.setVisibility(View.GONE);
+                lt_last.setVisibility(View.GONE);
+
                 try {
 
                     Location mLocation = new Location("");
                     mLocation.setLatitude(mCenterLatLong.latitude);
                     mLocation.setLongitude(mCenterLatLong.longitude);
-                    LatLng latLng=new LatLng(mCenterLatLong.latitude,mCenterLatLong.longitude);
+                    LatLng latLng = new LatLng(mCenterLatLong.latitude, mCenterLatLong.longitude);
                     mMap.clear();
+
                     mMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_point)));
+                    str_lati = String.valueOf(mCenterLatLong.latitude);
+                    str_longi = String.valueOf(mCenterLatLong.longitude);
+
+
                     startIntentService(mLocation);
                     mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                         @Override
-                        public void onMapClick(LatLng latLng)
-                        {
+                        public void onMapClick(LatLng latLng) {
 
                             mMap.clear();
                             CameraPosition cameraPosition = new CameraPosition.Builder()
@@ -914,8 +769,35 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
                         }
                     });
+
+
+                    geocoder = new Geocoder(DashboardNavigation.this, Locale.getDefault());
+                    try {
+                        addresses = geocoder.getFromLocation(mCenterLatLong.latitude, mCenterLatLong.longitude, 1);
+                    }
+                    catch (Exception e){
+                        Log.e("tag","er:"+e.toString());
+                    }
+                    str_locality = addresses.get(0).getLocality();
+                    str_address = addresses.get(0).getAddressLine(0);
+                    Log.e("tagplace0", "lati: " + str_lati + "longi: " + str_longi + "\nlocality: " + str_locality + "\taddr0: " + str_address +
+                            "\naddr1: " + addresses.get(0).getAddressLine(1) + "\n addr2: " + addresses.get(0).getAddressLine(2) + "\n adminarea: "
+                            + addresses.get(0).getAdminArea() + "\n feature name: " + addresses.get(0).getFeatureName() + "\n Sub loca: "
+                            + addresses.get(0).getSubLocality() + "\n subadmin: " + addresses.get(0).getSubAdminArea()
+                            + "\n premisis: " + addresses.get(0).getPremises() + "\n postal " + addresses.get(0).getPostalCode());
+
+
+
+                    new updateLocation().execute();
+
+
                 } catch (Exception e) {
                     e.printStackTrace();
+                    Log.e("tag","eroo:"+e.toString());
+                } finally {
+                    lt_first.setVisibility(View.VISIBLE);
+                    lt_second.setVisibility(View.VISIBLE);
+                    lt_last.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -937,7 +819,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 //        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
-
 
     protected void startIntentService(Location mLocation) {
         // Create an intent for passing to the intent service responsible for fetching the address.
@@ -969,10 +850,9 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         return true;
     }
 
-
     private void changeMap(Location location) {
 
-        Log.d(TAG, "Reaching map" + mMap);
+        Log.e(TAG, "Reaching map" + mMap);
 
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -1010,8 +890,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
             mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                 @Override
-                public void onMapClick(LatLng latLng)
-                {
+                public void onMapClick(LatLng latLng) {
 
                     mMap.clear();
                     CameraPosition cameraPosition = new CameraPosition.Builder()
@@ -1022,8 +901,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
                 }
             });
-
-
 
 
         } else {
@@ -1038,10 +915,48 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     public void onBackPressed() {
         //super.onBackPressed();
         dialog1.show();
-        exit_status =1;
+        exit_status = 1;
         tv_txt3.setText("Exit");
     }
 
+
+
+    class AddressResultReceiver extends ResultReceiver {
+        public AddressResultReceiver(Handler handler) {
+            super(handler);
+        }
+
+        /**
+         * Receives data sent from FetchAddressIntentService and updates the UI in MainActivity.
+         */
+        @Override
+        protected void onReceiveResult(int resultCode, Bundle resultData) {
+
+            // Display the address string or an error message sent from the intent service.
+            mAddressOutput = resultData.getString(AppUtils.LocationConstants.RESULT_DATA_KEY);
+            Log.e("tag", "0000000" + mAddressOutput);
+            mAreaOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_AREA);
+            Log.e("tag", "11111111" + mAreaOutput);
+
+            mCityOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_CITY);
+            Log.e("tag", "22222222" + mCityOutput);
+
+            mStateOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_STREET);
+
+            Log.e("tag", "33333333333" + mStateOutput);
+
+            displayAddressOutput();
+            Log.e("tag", "4444444444");
+
+            // Show a toast message if an address was found.
+            if (resultCode == AppUtils.LocationConstants.SUCCESS_RESULT) {
+                //  showToast(getString(R.string.address_found));
+
+            }
+
+        }
+
+    }
 
     public class updateLocation extends AsyncTask<String, Void, String> {
 
@@ -1049,7 +964,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Log.e("tag","reg_preexe");
+            Log.e("tag", "reg_preexe");
         }
 
         @Override
@@ -1064,7 +979,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 jsonObject.accumulate("customer_locality1", str_locality);
                 jsonObject.accumulate("customer_locality2", str_address);
                 json = jsonObject.toString();
-                return jsonStr = HttpUtils.makeRequest1(Config.WEB_URL + "customer/finddrivers", json,service_id,service_token);
+                return jsonStr = HttpUtils.makeRequest1(Config.WEB_URL + "customer/finddrivers", json, service_id, service_token);
 
             } catch (Exception e) {
                 Log.e("InputStream", e.getLocalizedMessage());
@@ -1076,7 +991,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.e("tag","tag"+s);
+            Log.e("tag", "tag" + s);
 
 
             if (s != null) {
@@ -1086,18 +1001,18 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     String msg = jo.getString("message");
                     Log.d("tag", "<-----Status----->" + status);
                     if (status.equals("true")) {
-                        Log.e("tag","Location Updated");
+                        Log.e("tag", "Location Updated");
 
                     } else if (status.equals("false")) {
 
-                        Log.e("tag","Location not updated");
+                        Log.e("tag", "Location not updated");
                         //has to check internet and location...
 
 
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Log.e("tag","nt"+e.toString());
+                    Log.e("tag", "nt" + e.toString());
                     // Toast.makeText(getApplicationContext(),"Network Errror0",Toast.LENGTH_LONG).show();
                 }
             } else {
@@ -1107,8 +1022,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         }
 
     }
-
-
 
 
 }

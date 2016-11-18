@@ -210,7 +210,7 @@
                     android:orientation="vertical"
                     android:paddingTop="@dimen/_5sdp"
                     android:paddingLeft="@dimen/_20sdp"
-                   >
+                    android:visibility="gone">
 
 
                     <LinearLayout
@@ -225,7 +225,7 @@
                             android:orientation="vertical">
 
                             <com.rey.material.widget.TextView
-                                android:id="@+id/textview_emergency_name1"
+                                android:id="@+id/textview_book_from"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="top|left"
@@ -237,7 +237,7 @@
                                 android:textSize="@dimen/_18sdp" />
 
                             <com.rey.material.widget.TextView
-                                android:id="@+id/textview_emergency_relation1"
+                                android:id="@+id/textview_book_from_txt"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
@@ -246,7 +246,7 @@
                                 android:textSize="@dimen/_15sdp" />
 
                             <com.rey.material.widget.TextView
-                                android:id="@+id/textview_emergency_number1"
+                                android:id="@+id/textview_book_froms"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="bottom"
@@ -293,7 +293,7 @@
 
 
                             <com.rey.material.widget.TextView
-                                android:id="@+id/textview_emergency_name2"
+                                android:id="@+id/textview_booksdaf_from"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:maxLines="1"
@@ -304,7 +304,7 @@
                                 android:textSize="@dimen/_18sdp" />
 
                             <com.rey.material.widget.TextView
-                                android:id="@+id/textview_emergency_relation2"
+                                android:id="@+id/textview_book_sdfrom_txt"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Cousine"
@@ -312,7 +312,7 @@
                                 android:textSize="@dimen/_15sdp" />
 
                             <com.rey.material.widget.TextView
-                                android:id="@+id/textview_emergency_number2"
+                                android:id="@+id/textview_booasdk_froms"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_1sdp"
