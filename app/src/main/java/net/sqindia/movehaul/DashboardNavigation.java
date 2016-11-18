@@ -232,53 +232,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         });
 
 
-        lt_frame.setOnDragListener(new View.OnDragListener() {
-            @Override
-            public boolean onDrag(View v, DragEvent event) {
-                switch (event.getAction()) {
-                    case DragEvent.ACTION_DRAG_STARTED:
-
-                        lt_first.setVisibility(View.GONE);
-                        lt_second.setVisibility(View.GONE);
-                        lt_last.setVisibility(View.GONE);
-                        break;
-
-                    case DragEvent.ACTION_DRAG_ENTERED:
-
-                        break;
-
-                    case DragEvent.ACTION_DRAG_EXITED:
-
-
-                        break;
-
-                    case DragEvent.ACTION_DRAG_LOCATION:
-
-                        break;
-
-                    case DragEvent.ACTION_DRAG_ENDED:
-
-                        lt_first.setVisibility(View.VISIBLE);
-                        lt_second.setVisibility(View.VISIBLE);
-                        lt_last.setVisibility(View.VISIBLE);
-
-                        break;
-
-                    case DragEvent.ACTION_DROP:
-
-                        lt_first.setVisibility(View.VISIBLE);
-                        lt_second.setVisibility(View.VISIBLE);
-                        lt_last.setVisibility(View.VISIBLE);
-
-                        break;
-                    default:
-                        break;
-                }
-                return true;
-            }
-        });
-
-
         btn_yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
