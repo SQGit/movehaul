@@ -22,7 +22,6 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
@@ -33,17 +32,13 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.DragEvent;
 import android.view.Gravity;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.Window;
 import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -68,9 +63,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.GroundOverlay;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.rey.material.widget.Button;
@@ -80,7 +73,6 @@ import com.sloop.fonts.FontsManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
@@ -381,11 +373,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             }
         });
     }
-
-
-
-
-
 
 
     private void applyFontToMenuItem(MenuItem mi) {
@@ -727,9 +714,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     geocoder = new Geocoder(DashboardNavigation.this, Locale.getDefault());
                     try {
                         addresses = geocoder.getFromLocation(mCenterLatLong.latitude, mCenterLatLong.longitude, 1);
-                    }
-                    catch (Exception e){
-                        Log.e("tag","er:"+e.toString());
+                    } catch (Exception e) {
+                        Log.e("tag", "er:" + e.toString());
                     }
                     str_locality = addresses.get(0).getLocality();
                     str_address = addresses.get(0).getAddressLine(0);
@@ -740,13 +726,12 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                             + "\n premisis: " + addresses.get(0).getPremises() + "\n postal " + addresses.get(0).getPostalCode());
 
 
-
                     new updateLocation().execute();
 
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.e("tag","eroo:"+e.toString());
+                    Log.e("tag", "eroo:" + e.toString());
                 } finally {
                     lt_first.setVisibility(View.VISIBLE);
                     lt_second.setVisibility(View.VISIBLE);
@@ -871,7 +856,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         exit_status = 1;
         tv_txt3.setText("Exit");
     }
-
 
 
     class AddressResultReceiver extends ResultReceiver {
