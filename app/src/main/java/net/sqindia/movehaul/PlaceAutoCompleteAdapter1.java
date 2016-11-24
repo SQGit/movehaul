@@ -22,6 +22,7 @@ package net.sqindia.movehaul;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.text.style.CharacterStyle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -220,10 +221,11 @@ public class PlaceAutoCompleteAdapter1
             Iterator<AutocompletePrediction> iterator = autocompletePredictions.iterator();
             ArrayList resultList = new ArrayList<>(autocompletePredictions.getCount());
             while (iterator.hasNext()) {
+                CharacterStyle var1 = null;
                 AutocompletePrediction prediction = iterator.next();
                 // Get the details of this prediction and copy it into a new PlaceAutocomplete object.
                 resultList.add(new PlaceAutocomplete(prediction.getPlaceId(),
-                        prediction.getDescription()));
+                        prediction.getFullText(var1)));
             }
 
             // Release the buffer now that all data has been copied.

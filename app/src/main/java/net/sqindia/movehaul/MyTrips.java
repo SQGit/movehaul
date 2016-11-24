@@ -174,6 +174,8 @@ public class MyTrips extends AppCompatActivity {
     }
 
 
+
+
     ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
 
         @Override

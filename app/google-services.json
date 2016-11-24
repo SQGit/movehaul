@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "720587571829",
+    "firebase_url": "https://movehaul-147509.firebaseio.com",
+    "project_id": "movehaul-147509",
+    "storage_bucket": "movehaul-147509.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:720587571829:android:040af1c5dbbf94bf",
+        "android_client_info": {
+          "package_name": "net.sqindia.movehaul.driver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "720587571829-27mulho2vi5gs7gbcdmje589vl1lis9l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAD543-_GdgU03iJF2gz-jqAvjMRetXqfQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:720587571829:android:44a3532d09fae41c",
+        "android_client_info": {
+          "package_name": "net.sqindia.movehaul"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "720587571829-27mulho2vi5gs7gbcdmje589vl1lis9l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAD543-_GdgU03iJF2gz-jqAvjMRetXqfQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
