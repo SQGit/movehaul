@@ -1,6 +1,7 @@
 package net.sqindia.movehaul;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -45,6 +46,7 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
     Snackbar snackbar, snack_wifi;
     Config config;
     Typeface tf;
+    ProgressDialog mProgressDialog;
 
     private LoginOtpActivity(View view) {
         this.view = view;
@@ -67,6 +69,14 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
         tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/lato.ttf");
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginOtpActivity.this);
         editor = sharedPreferences.edit();
+
+        mProgressDialog = new ProgressDialog(LoginOtpActivity.this);
+        mProgressDialog.setTitle("Loading..");
+        mProgressDialog.setMessage("Please wait");
+        mProgressDialog.setIndeterminate(false);
+        mProgressDialog.setCancelable(false);
+
+
 
         Intent getIntent = getIntent();
 
@@ -134,8 +144,9 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
             @Override
             public void onClick(View view) {
                 tv_resendotp.setVisibility(View.GONE);
-                snackbar.show();
-                tv_snack.setText("Otp Send to " + str_for);
+
+                new resend_otp().execute();
+
             }
         });
 
@@ -393,6 +404,101 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
                     snackbar.show();
                 }
             } else {
+                snackbar.show();
+            }
+
+        }
+
+    }
+
+
+    public class resend_otp extends AsyncTask<String, Void, String> {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Log.e("tag","reg_preexe");
+            mProgressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            String json = "", jsonStr = "",url;
+
+            try {
+                JSONObject jsonObject = new JSONObject();
+
+
+
+                if (str_for.equals("phone")) {
+
+                    jsonObject.accumulate("driver_mobile", "+91"+str_data);
+                    jsonObject.accumulate("driver_otp", str_otppin);
+                    url ="customermobileotp";
+                } else {
+
+                    jsonObject.accumulate("driver_email", str_data);
+                    jsonObject.accumulate("driver_otp", str_otppin);
+                    url = "customeremailotp";
+                }
+
+
+                json = jsonObject.toString();
+                return jsonStr = HttpUtils.makeRequest(Config.WEB_URL + url, json);
+
+            } catch (Exception e) {
+                Log.e("InputStream", e.getLocalizedMessage());
+                mProgressDialog.dismiss();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("tag","tag"+s);
+            mProgressDialog.dismiss();
+
+
+            if (s != null) {
+                try {
+                    JSONObject jo = new JSONObject(s);
+                    String status = jo.getString("status");
+                    String msg = jo.getString("message");
+                    Log.d("tag", "<-----Status----->" + status);
+                    if (status.equals("true")) {
+
+
+                        // String sus_txt = "Thank you for Signing Up MoveHaul.";
+
+                        //Toast.makeText(getApplicationContext(),sus_txt,Toast.LENGTH_LONG).show();
+                        tv_snack.setText("Otp Send to " + str_data);
+                        snackbar.show();
+
+
+                    } else if (status.equals("false")) {
+
+
+                        if (msg.contains("Error Occured[object Object]")) {
+
+
+
+                        }
+
+
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.e("tag","nt"+e.toString());
+                    // Toast.makeText(getApplicationContext(),"Network Errror0",Toast.LENGTH_LONG).show();
+                    snackbar.show();
+                }
+            } else {
+                // Toast.makeText(getApplicationContext(),"Network Errror1",Toast.LENGTH_LONG).show();
                 snackbar.show();
             }
 

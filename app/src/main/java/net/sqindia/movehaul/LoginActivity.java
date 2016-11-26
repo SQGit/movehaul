@@ -1,6 +1,7 @@
 package net.sqindia.movehaul;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -38,6 +39,7 @@ public class LoginActivity extends Activity {
     Snackbar snackbar, snack_wifi;
     Config config;
     Typeface tf;
+    ProgressDialog mProgressDialog;
 
     @Override
     public void onBackPressed() {
@@ -64,6 +66,13 @@ public class LoginActivity extends Activity {
         flt_mobile_no.setTypeface(type);
 
         // show_wifi_not_connected();
+
+
+        mProgressDialog = new ProgressDialog(LoginActivity.this);
+        mProgressDialog.setTitle("Loading..");
+        mProgressDialog.setMessage("Please wait");
+        mProgressDialog.setIndeterminate(false);
+        mProgressDialog.setCancelable(false);
 
         snack_wifi = config.snackbar(snack_wifi, LoginActivity.this, tv_snack, tf);
 
@@ -110,7 +119,9 @@ public class LoginActivity extends Activity {
                     }
 
                 } else {
-                    et_mobile_no.setError("Enter valid phone number");
+                   // et_mobile_no.setError("Enter valid phone number");
+                    snackbar.show();
+                    tv_snack.setText("Enter valid phone Number");
                     et_mobile_no.requestFocus();
                 }
 
@@ -157,6 +168,7 @@ public class LoginActivity extends Activity {
         protected void onPreExecute() {
             super.onPreExecute();
             Log.e("tag", "reg_preexe");
+            mProgressDialog.show();
         }
 
         @Override
@@ -177,6 +189,7 @@ public class LoginActivity extends Activity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.e("tag", "tag" + s);
+            mProgressDialog.dismiss();
             if (s != null) {
                 try {
                     JSONObject jo = new JSONObject(s);

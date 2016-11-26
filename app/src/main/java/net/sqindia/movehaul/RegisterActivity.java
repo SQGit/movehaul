@@ -1,6 +1,7 @@
 package net.sqindia.movehaul;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -44,7 +45,7 @@ public class RegisterActivity extends Activity {
     Snackbar snackbar;
     Config config;
     Typeface tf;
-    ProgressBar progress;
+    ProgressDialog mProgressDialog;
 
 
 
@@ -62,6 +63,16 @@ public class RegisterActivity extends Activity {
         FontsManager.changeFonts(this);
         tf = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
         config = new Config();
+
+
+        mProgressDialog = new ProgressDialog(RegisterActivity.this);
+        mProgressDialog.setTitle("Loading..");
+        mProgressDialog.setMessage("Please wait");
+        mProgressDialog.setIndeterminate(false);
+        mProgressDialog.setCancelable(false);
+
+
+
 
         btn_back = (LinearLayout) findViewById(R.id.layout_back);
         btn_submit = (Button) findViewById(R.id.btn_submit);
@@ -122,20 +133,22 @@ public class RegisterActivity extends Activity {
                             }
 
 
-
-
-
-
                         } else {
-                            et_mobile.setError("Enter valid phone number");
+                            //et_mobile.setError("Enter valid phone number");
+                            snackbar.show();
+                            tv_snack.setText("Enter valid phone number");
                             et_mobile.requestFocus();
                         }
                     } else {
-                        et_email.setError("Enter a valid email address!");
+                        //et_email.setError("Enter a valid email address!");
+                        snackbar.show();
+                        tv_snack.setText("Enter valid email address!");
                         et_email.requestFocus();
                     }
                 } else {
-                    et_name.setError("Enter a Name!");
+                   // et_name.setError("Enter a Name!");
+                    snackbar.show();
+                    tv_snack.setText("Enter User Name!");
                     et_name.requestFocus();
                 }
 
@@ -177,6 +190,7 @@ public class RegisterActivity extends Activity {
         protected void onPreExecute() {
             super.onPreExecute();
             Log.e("tag", "reg_preexe");
+            mProgressDialog.show();
 
         }
 
@@ -205,7 +219,7 @@ public class RegisterActivity extends Activity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.e("tag", "tag" + s);
-
+            mProgressDialog.dismiss();
 
 
             if (s != null) {
