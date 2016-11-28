@@ -30,6 +30,11 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCmazMFvYuwHw6Y6UrUGbp5F0SDJF7y9cw" />
 
+        <meta-data
+            android:name="com.razorpay.ApiKey"
+            android:value="rzp_test_yQ0CCrG1W0EA67"
+            />
+
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="sensorPortrait">

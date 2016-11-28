@@ -10,15 +10,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/_143sdp"
-        android:background="@drawable/white_bg"
         android:layout_marginRight="-2dp"
+        android:background="@drawable/white_bg"
         android:orientation="vertical">
 
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
             <View
                 android:layout_width="match_parent"
@@ -32,13 +31,13 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:gravity="center"
-                    android:paddingLeft="@dimen/_3sdp"
-                    android:paddingRight="@dimen/_3sdp"
-                    android:paddingTop="@dimen/_7sdp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/_3sdp"
+                    android:paddingRight="@dimen/_3sdp"
+                    android:paddingTop="@dimen/_7sdp">
 
                     <com.rey.material.widget.TextView
                         android:id="@+id/textview_cosst"
@@ -50,39 +49,49 @@
                         android:textColor="@color/redColor"
                         android:textSize="@dimen/_19sdp" />
 
-                    <ImageView
-                        android:id="@+id/imagsdesdView2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <!--     <ImageView
+                         android:id="@+id/driver_image"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_gravity="center"
+                         android:paddingTop="@dimen/_8sdp"
+                         android:paddingBottom="@dimen/_6sdp"
+                         android:src="@drawable/profile_img" />-->
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/driver_image"
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"
                         android:layout_gravity="center"
-                        android:paddingTop="@dimen/_8sdp"
+                        android:layout_marginLeft="@dimen/_5sdp"
                         android:paddingBottom="@dimen/_6sdp"
+                        android:paddingTop="@dimen/_8sdp"
                         android:src="@drawable/profile_img" />
 
                     <RatingBar
                         android:id="@+id/ratingBsdar"
+                        style="?android:attr/ratingBarStyleSmall"
                         android:layout_width="wrap_content"
-                        style = "?android:attr/ratingBarStyleSmall"
                         android:layout_height="wrap_content"
-                        android:rating="3"
-                        android:numStars="5"
-                        android:max="5"
                         android:layout_gravity="center"
-                        android:paddingTop="@dimen/_5sdp"/>
-                  <!--  android:progressTint="@color/gold"
-                    android:progressBackgroundTint="@android:color/transparent"
-                    android:secondaryProgressTint="@color/gold"-->
+                        android:max="5"
+                        android:numStars="5"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:rating="3" />
+                    <!--  android:progressTint="@color/gold"
+                      android:progressBackgroundTint="@android:color/transparent"
+                      android:secondaryProgressTint="@color/gold"-->
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:orientation="vertical"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_7sdp"
                     android:layout_weight="2"
-                    android:layout_height="match_parent">
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/_7sdp">
 
                     <TextView
                         android:id="@+id/textview_bxt"
@@ -104,8 +113,8 @@
                         android:id="@+id/textview_bootxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Damage Control"
                         android:paddingTop="@dimen/_3sdp"
+                        android:text="Damage Control"
                         android:textColor="@color/redColor"
                         android:textSize="@dimen/_13sdp" />
 
@@ -122,8 +131,8 @@
                         android:id="@+id/textview_book_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Truck"
                         android:paddingTop="@dimen/_3sdp"
+                        android:text="Truck"
                         android:textColor="@color/redColor"
                         android:textSize="@dimen/_13sdp" />
 
@@ -147,10 +156,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|bottom"
                 android:focusable="false"
+                android:paddingBottom="@dimen/_10sdp"
                 android:paddingLeft="@dimen/_10sdp"
                 android:paddingRight="@dimen/_10sdp"
                 android:paddingTop="@dimen/_10sdp"
-                android:paddingBottom="@dimen/_10sdp"
                 android:src="@drawable/bid_icon" />
 
 

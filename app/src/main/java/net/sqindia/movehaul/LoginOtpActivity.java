@@ -434,13 +434,13 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
 
                 if (str_for.equals("phone")) {
 
-                    jsonObject.accumulate("driver_mobile", "+91"+str_data);
-                    jsonObject.accumulate("driver_otp", str_otppin);
+                    jsonObject.accumulate("customer_mobile", "+91"+str_data);
+                    jsonObject.accumulate("customer_otp", str_otppin);
                     url ="customermobileotp";
                 } else {
 
-                    jsonObject.accumulate("driver_email", str_data);
-                    jsonObject.accumulate("driver_otp", str_otppin);
+                    jsonObject.accumulate("customer_email", str_data);
+                    jsonObject.accumulate("customer_otp", str_otppin);
                     url = "customeremailotp";
                 }
 
@@ -481,12 +481,6 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
 
                     } else if (status.equals("false")) {
 
-
-                        if (msg.contains("Error Occured[object Object]")) {
-
-
-
-                        }
 
 
 
