@@ -3,14 +3,20 @@ package net.sqindia.movehaul;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 import android.util.TypedValue;
@@ -30,8 +36,13 @@ import android.widget.TextView;
 import com.rey.material.widget.Button;
 import com.sloop.fonts.FontsManager;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 
@@ -44,7 +55,7 @@ import nl.changer.polypicker.utils.ImageInternalFetcher;
 
 public class Book_now extends Activity {
 
-    String truck, goods;
+    String truck, goods,id,token;
     LinearLayout lt_goodsType, lt_truckType;
     EditText et_delivery_address, et_goodstype, et_trucktype, et_description;
     TextInputLayout flt_delivery_address, flt_goodstype, flt_trucktype, flt_description;
@@ -52,8 +63,8 @@ public class Book_now extends Activity {
     Button btn_post, btn_ok;
     Dialog dialog1;
     ImageView btn_close;
-    TextView jobtv1,jobtv2,jobtv3,jobtv4,msg;
-    Typeface type;
+    TextView jobtv1,jobtv2,jobtv3,jobtv4,msg,tv_snack;
+
     ArrayList<String> mdatas;
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
     private static final int INTENT_REQUEST_GET_N_IMAGES = 14;
@@ -61,6 +72,12 @@ public class Book_now extends Activity {
     HashSet<Uri> mMedia = new HashSet<Uri>();
     ArrayList<Uri> image_path = new ArrayList<>();
     String[] imagearray;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    Snackbar snackbar;
+    Typeface tf;
+    ArrayList<String> ar_goods_type = new ArrayList<>();
+    ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +86,7 @@ public class Book_now extends Activity {
         FontsManager.initFormAssets(this, "fonts/lato.ttf");
         FontsManager.changeFonts(this);
         mdatas = new ArrayList<>();
-        type = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
+        tf = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
         et_delivery_address = (EditText) findViewById(R.id.editTextDelieveryAddress);
         et_goodstype = (EditText) findViewById(R.id.editTextGoodsType);
         et_trucktype = (EditText) findViewById(R.id.editTextTruck_type);
@@ -86,10 +103,10 @@ public class Book_now extends Activity {
 
         btn_back = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_back);
         btn_post = (Button) findViewById(R.id.btn_post);
-        flt_delivery_address.setTypeface(type);
-        flt_goodstype.setTypeface(type);
-        flt_trucktype.setTypeface(type);
-        flt_description.setTypeface(type);
+        flt_delivery_address.setTypeface(tf);
+        flt_goodstype.setTypeface(tf);
+        flt_trucktype.setTypeface(tf);
+        flt_description.setTypeface(tf);
 
         lt_goodsType.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,6 +122,43 @@ public class Book_now extends Activity {
             }
         });
         View getImages = findViewById(R.id.get_images);
+
+
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Book_now.this);
+        editor = sharedPreferences.edit();
+
+
+        id = sharedPreferences.getString("id", "");
+        token = sharedPreferences.getString("token", "");
+        Log.e("tag","id: "+id);
+        Log.e("tag","tok: "+token);
+
+        snackbar = Snackbar
+                .make(findViewById(R.id.top), "Network Error! Please Try Again Later.", Snackbar.LENGTH_LONG);
+        View sbView = snackbar.getView();
+        tv_snack = (android.widget.TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        tv_snack.setTextColor(Color.WHITE);
+        tv_snack.setTypeface(tf);
+
+
+        mProgressDialog = new ProgressDialog(Book_now.this);
+        mProgressDialog.setTitle("Loading..");
+        mProgressDialog.setMessage("Please wait");
+        mProgressDialog.setIndeterminate(false);
+        mProgressDialog.setCancelable(false);
+
+        if (!net.sqindia.movehaul.Config.isConnected(Book_now.this)) {
+            snackbar.show();
+            tv_snack.setText("Please Connect Internet and Try again");
+        }
+        else{
+            //new fetch_goods().execute();
+            new fetch_trucks().execute();
+        }
+
+
+
         getImages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,11 +194,11 @@ public class Book_now extends Activity {
         jobtv4 = (TextView) dialog1.findViewById(R.id.textView_4);
         btn_close = (ImageView) dialog1.findViewById(R.id.button_close);
 
-        jobtv1.setTypeface(type);
-        jobtv2.setTypeface(type);
-        jobtv3.setTypeface(type);
-        jobtv4.setTypeface(type);
-        btn_ok.setTypeface(type);
+        jobtv1.setTypeface(tf);
+        jobtv2.setTypeface(tf);
+        jobtv3.setTypeface(tf);
+        jobtv4.setTypeface(tf);
+        btn_ok.setTypeface(tf);
 
         btn_close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,6 +230,9 @@ public class Book_now extends Activity {
         });
 
     }
+
+
+    //customer/goodstype
 
     private void truck_type() {
 
@@ -380,6 +437,185 @@ public class Book_now extends Activity {
                 }
             }
         }
+    }
+
+    class fetch_goods extends AsyncTask<String, Void, String> {
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mProgressDialog.show();
+
+        }
+
+        protected String doInBackground(String... params) {
+
+            String json = "", jsonStr = "";
+
+
+            try {
+
+                String virtual_url = net.sqindia.movehaul.Config.WEB_URL + "customer/goodstype";
+                Log.e("tag","url: "+virtual_url);
+
+
+                JSONObject jsonobject = HttpUtils.getData(virtual_url,id,token);
+
+                Log.e("tag_", "0" + jsonobject.toString());
+                if (jsonobject.toString() == "sam") {
+
+                    Log.e("tag_", "1" + jsonobject.toString());
+                }
+
+                json = jsonobject.toString();
+
+                return json;
+            } catch (Exception e) {
+                Log.e("InputStream", "" + e.getLocalizedMessage());
+                jsonStr = "";
+
+            }
+            return jsonStr;
+
+        }
+
+        @Override
+        protected void onPostExecute(String jsonStr) {
+            Log.e("tag", "<-----rerseres---->" + jsonStr);
+            super.onPostExecute(jsonStr);
+            mProgressDialog.dismiss();
+
+
+
+            try {
+
+                JSONObject jo = new JSONObject(jsonStr);
+                String status = jo.getString("status");
+              //  String count = jo.getString("count");
+
+
+                if (status.equals("success")) {
+
+                    JSONArray goods_data = jo.getJSONArray("goods_type");
+
+
+                    if(goods_data.length()>0) {
+
+
+                        for (int i = 0; i < goods_data.length(); i++) {
+                            String datas = goods_data.getString(i);
+                            ar_goods_type.add(datas);
+                        }
+                    }
+                    else{
+
+                    }
+
+                }
+                else {
+
+
+
+                }
+
+
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+
+
+
+            }
+
+        }
+
+    }
+
+
+    class fetch_trucks extends AsyncTask<String, Void, String> {
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mProgressDialog.show();
+
+        }
+
+        protected String doInBackground(String... params) {
+
+            String json = "", jsonStr = "";
+
+
+            try {
+
+                String virtual_url = net.sqindia.movehaul.Config.WEB_URL + "customer/trucktype";
+                Log.e("tag","url: "+virtual_url);
+
+
+                JSONObject jsonobject = HttpUtils.getData(virtual_url,id,token);
+
+                Log.e("tag_", "0" + jsonobject.toString());
+                if (jsonobject.toString() == "sam") {
+
+                    Log.e("tag_", "1" + jsonobject.toString());
+                }
+
+                json = jsonobject.toString();
+
+                return json;
+            } catch (Exception e) {
+                Log.e("InputStream", "" + e.getLocalizedMessage());
+                jsonStr = "";
+
+            }
+            return jsonStr;
+
+        }
+
+        @Override
+        protected void onPostExecute(String jsonStr) {
+            Log.e("tag", "<-----rerseres---->" + jsonStr);
+            super.onPostExecute(jsonStr);
+            mProgressDialog.dismiss();
+
+
+
+            try {
+
+                JSONObject jo = new JSONObject(jsonStr);
+                String status = jo.getString("status");
+                //  String count = jo.getString("count");
+
+
+                if (status.equals("success")) {
+
+
+              /*      if(Integer.valueOf(count)>0) {
+
+                        JSONArray staff_datas = jo.getJSONArray("company");
+                        Log.d("tag", "<-----company----->" + "" + staff_datas);
+                        for (int i = 0; i < staff_datas.length(); i++) {
+                            JSONObject datas = staff_datas.getJSONObject(i);
+                        }
+                    }
+                    else{
+
+                    }*/
+
+                }
+                else {
+
+
+
+                }
+
+
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+
+
+
+            }
+
+        }
+
     }
 
 

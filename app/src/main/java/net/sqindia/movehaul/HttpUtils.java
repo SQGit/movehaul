@@ -110,7 +110,7 @@ public class HttpUtils {
     }
 
 
-    public static JSONObject getData(String url) throws JSONException {
+    public static JSONObject getData(String url,String id,String token) throws JSONException {
         InputStream is = null;
         String result = "";
         JSONObject jArray = null;
@@ -121,7 +121,8 @@ public class HttpUtils {
 
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(url);
-            httppost.setHeader("apikey", "1eo7u4tig9704k2humvdywwnb4hnl2xa1jbrh7go");
+            httppost.setHeader("id",id);
+            httppost.setHeader("sessiontoken",token);
             HttpResponse response = httpclient.execute(httppost);
             HttpEntity entity = response.getEntity();
             is = entity.getContent();
