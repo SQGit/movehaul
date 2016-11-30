@@ -6,6 +6,6 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/truck_icon"/>
+        android:background="@drawable/truck_side_img_full"/>
 
 </LinearLayout>

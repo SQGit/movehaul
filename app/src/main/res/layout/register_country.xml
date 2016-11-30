@@ -3,9 +3,12 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/truck_back_img_full"/>
+        android:id="@+id/lview"
+        android:divider="@null"
+        android:layout_height="match_parent">
+
+    </ListView>
 
 </LinearLayout>

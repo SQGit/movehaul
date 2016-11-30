@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -77,6 +78,9 @@ public class Book_now extends Activity {
     Snackbar snackbar;
     Typeface tf;
     ArrayList<String> ar_goods_type = new ArrayList<>();
+    ArrayList<String> ar_truck_type = new ArrayList<>();
+    HashMap<String,String> hash_subtype = new HashMap<String,String>();
+    HashMap<String,String> hash_truck_imgs = new HashMap<String,String>();
     ProgressDialog mProgressDialog;
 
     @Override
@@ -108,19 +112,6 @@ public class Book_now extends Activity {
         flt_trucktype.setTypeface(tf);
         flt_description.setTypeface(tf);
 
-        lt_goodsType.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goods_type();
-            }
-        });
-        lt_truckType.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                truck_type();
-
-            }
-        });
         View getImages = findViewById(R.id.get_images);
 
 
@@ -153,10 +144,27 @@ public class Book_now extends Activity {
             tv_snack.setText("Please Connect Internet and Try again");
         }
         else{
-            //new fetch_goods().execute();
-            new fetch_trucks().execute();
+            new fetch_goods().execute();
+           // new fetch_trucks().execute();
         }
 
+
+
+
+
+        lt_goodsType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goods_type();
+            }
+        });
+        lt_truckType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                truck_type();
+
+            }
+        });
 
 
         getImages.setOnClickListener(new View.OnClickListener() {
@@ -232,9 +240,8 @@ public class Book_now extends Activity {
     }
 
 
-    //customer/goodstype
 
-    private void truck_type() {
+   /* private void truck_type() {
 
         LayoutInflater layoutInflater = LayoutInflater.from(Book_now.this);
         View promptView = layoutInflater.inflate(R.layout.truck_selecting, null);
@@ -294,9 +301,55 @@ public class Book_now extends Activity {
         });
         alertD.setView(promptView);
         alertD.show();
+    }*/
+
+    private void goods_type(){
+
+        Log.e("tag","ss: "+ar_goods_type.size());
+        Dialog_Region dialog_region = new Dialog_Region(Book_now.this,ar_goods_type);
+        dialog_region.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.choose));
+        dialog_region.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        //dialog_region.getWindow().setStatusBarColor(getResources().getColor(R.color.aaa));
+        dialog_region.show();
+
+
+        dialog_region.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                if(!(sharedPreferences.getString("goods","").equals(""))){
+                    et_goodstype.setText(sharedPreferences.getString("goods",""));
+                }
+            }
+        });
     }
 
-    private void goods_type() {
+    private void truck_type() {
+
+
+        Dialog_Region1 dialog_region1 = new Dialog_Region1(Book_now.this,ar_truck_type,hash_subtype,hash_truck_imgs);
+        dialog_region1.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.choose));
+        dialog_region1.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        dialog_region1.show();
+
+
+        dialog_region1.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                if(!(sharedPreferences.getString("goods","").equals(""))){
+                    et_goodstype.setText(sharedPreferences.getString("goods",""));
+                }
+            }
+        });
+
+
+
+
+
+    }
+
+
+
+   /* private void goods_type() {
 
         LayoutInflater layoutInflater = LayoutInflater.from(Book_now.this);
         View promptView = layoutInflater.inflate(R.layout.goods_selecting, null);
@@ -305,7 +358,6 @@ public class Book_now extends Activity {
         Window window = alertD.getWindow();
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         alertD.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.parseColor("#00FFFFFF")));
-
 
         final RadioGroup radioGroup = (RadioGroup) promptView.findViewById(R.id.radioGroup2);
         final RadioButton rb_goods1 = (RadioButton) promptView.findViewById(R.id.radio1);
@@ -363,7 +415,7 @@ public class Book_now extends Activity {
         });
         alertD.setView(promptView);
         alertD.show();
-    }
+    }*/
 
     @Override
     public void onBackPressed() {
@@ -492,7 +544,7 @@ public class Book_now extends Activity {
               //  String count = jo.getString("count");
 
 
-                if (status.equals("success")) {
+                if (status.equals("true")) {
 
                     JSONArray goods_data = jo.getJSONArray("goods_type");
 
@@ -502,6 +554,7 @@ public class Book_now extends Activity {
 
                         for (int i = 0; i < goods_data.length(); i++) {
                             String datas = goods_data.getString(i);
+                            Log.e("tag","s: "+datas);
                             ar_goods_type.add(datas);
                         }
                     }
@@ -586,18 +639,31 @@ public class Book_now extends Activity {
                 if (status.equals("success")) {
 
 
-              /*      if(Integer.valueOf(count)>0) {
+                    JSONArray truck_data = jo.getJSONArray("truck_type");
 
-                        JSONArray staff_datas = jo.getJSONArray("company");
-                        Log.d("tag", "<-----company----->" + "" + staff_datas);
-                        for (int i = 0; i < staff_datas.length(); i++) {
-                            JSONObject datas = staff_datas.getJSONObject(i);
+
+                    if(truck_data.length()>0) {
+
+
+                        for (int i = 0; i < truck_data.length(); i++) {
+                            String datas = truck_data.getString(i);
+                            JSONObject subs = new JSONObject(datas);
+
+                           // subs.getString("truck_type");
+                          // subs.getString("truck_sub_type");
+                           // subs.getString("truck_image");
+
+                            ar_truck_type.add(subs.getString("truck_type"));
+                            hash_subtype.put(subs.getString("truck_type"),subs.getString("truck_sub_type"));
+                            hash_truck_imgs.put(subs.getString("truck_type"),subs.getString("truck_image"));
                         }
+
+
+
                     }
                     else{
 
-                    }*/
-
+                    }
                 }
                 else {
 
