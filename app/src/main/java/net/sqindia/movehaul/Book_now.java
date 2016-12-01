@@ -37,17 +37,31 @@ import android.widget.TextView;
 import com.rey.material.widget.Button;
 import com.sloop.fonts.FontsManager;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.List;
 
+import me.iwf.photopicker.PhotoPickerActivity;
+import me.iwf.photopicker.utils.PhotoPickerIntent;
 import nl.changer.polypicker.Config;
 import nl.changer.polypicker.ImagePickerActivity;
 import nl.changer.polypicker.utils.ImageInternalFetcher;
@@ -57,6 +71,7 @@ import nl.changer.polypicker.utils.ImageInternalFetcher;
 
 public class Book_now extends Activity {
 
+    private static final int REQUEST_VEC_FRONT = 1;
     String truck, goods,id,token;
     LinearLayout lt_goodsType, lt_truckType;
     EditText et_delivery_address, et_goodstype, et_trucktype, et_description;
@@ -84,6 +99,8 @@ public class Book_now extends Activity {
     HashMap<String,String> hash_subtype ;
     HashMap<String,String> hash_truck_imgs = new HashMap<String,String>();
     ProgressDialog mProgressDialog;
+    ArrayList<String> selectedPhotos = new ArrayList<>();
+    String str_delivery_address,str_pickup,str_drop,str_goods_type,str_truck_type,str_desc,str_goods_pic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,8 +189,14 @@ public class Book_now extends Activity {
         getImages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                getImagesView();
+                
+                PhotoPickerIntent intent = new PhotoPickerIntent(Book_now.this);
+                intent.setPhotoCount(1);
+                intent.setColumn(4);
+                intent.setShowCamera(true);
+                startActivityForResult(intent, REQUEST_VEC_FRONT);
+                
+               // getImagesView();
             }
         });
         btn_back.setOnClickListener(new View.OnClickListener() {
@@ -188,6 +211,13 @@ public class Book_now extends Activity {
             @Override
             public void onClick(View view) {
                 //dialog1.show();
+
+                str_delivery_address = et_delivery_address.getText().toString();
+                str_goods_type = et_goodstype.getText().toString();
+                str_truck_type = et_trucktype.getText().toString();
+                str_pickup = "pickup loc";
+                str_drop = "drop_loc";
+                str_desc = "desc...";
 
                 new book_now().execute();
 
@@ -457,11 +487,31 @@ public class Book_now extends Activity {
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resuleCode, Intent intent) {
-        super.onActivityResult(requestCode, resuleCode, intent);
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
         msg.setVisibility(View.GONE);
+        List<String> photos = null;
 
-        if (resuleCode == Activity.RESULT_OK) {
+
+
+        if (resultCode == RESULT_OK && requestCode == REQUEST_VEC_FRONT) {
+            if (intent != null) {
+                photos = intent.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS);
+            }
+            selectedPhotos.clear();
+            if (photos != null) {
+                selectedPhotos.addAll(photos);
+            }
+            Log.d("tag", "img: " + selectedPhotos.get(0));
+            str_goods_pic = selectedPhotos.get(0);
+        }
+
+
+
+
+
+
+       /* if (resultCode == Activity.RESULT_OK) {
             if (requestCode == INTENT_REQUEST_GET_IMAGES || requestCode == INTENT_REQUEST_GET_N_IMAGES) {
                 Parcelable[] parcelableUris = intent.getParcelableArrayExtra(ImagePickerActivity.EXTRA_IMAGE_URIS);
 
@@ -497,7 +547,7 @@ public class Book_now extends Activity {
                     showMedia();
                 }
             }
-        }
+        }*/
     }
 
     class fetch_goods extends AsyncTask<String, Void, String> {
@@ -778,19 +828,96 @@ public class Book_now extends Activity {
         @Override
         protected String doInBackground(String... strings) {
             String json = "", jsonStr = "";
-            try {
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.accumulate("customer_latitude", "");
-                jsonObject.accumulate("customer_longitude", "");
-                jsonObject.accumulate("customer_locality1", "");
-                json = jsonObject.toString();
-                return jsonStr = HttpUtils.makeRequest1(net.sqindia.movehaul.Config.WEB_URL + "customer/finddrivers", json, id, token);
 
-            } catch (Exception e) {
-                Log.e("InputStream", e.getLocalizedMessage());
+            if (selectedPhotos.size() > 0) {
+
+                String responseString = null;
+                HttpClient httpclient = new DefaultHttpClient();
+                HttpPost httppost = new HttpPost(net.sqindia.movehaul.Config.WEB_URL + "customer/booking");
+                httppost.setHeader("id", id);
+                httppost.setHeader("sessiontoken", token);
+
+                httppost.setHeader("pickup_location", str_pickup);
+                httppost.setHeader("drop_location", str_drop);
+                httppost.setHeader("drop", str_delivery_address);
+                httppost.setHeader("goods_type", str_goods_type);
+                httppost.setHeader("truck_type", str_truck_type);
+                httppost.setHeader("description", str_desc);
+                httppost.setHeader("booking_time", "2016/12/20 T 16:24");
+
+
+
+
+                try {
+
+                    JSONObject jsonObject = new JSONObject();
+
+               /* try {
+                    jsonObject.put("description", str_apt_description);
+                    jsonObject.put("complaint", str_complaint);
+                    json = jsonObject.toString();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }*/
+
+
+                    MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+
+
+                    File sourceFile = new File(selectedPhotos.get(0));
+                    Log.e("tag3", "" + sourceFile);
+                    entity.addPart("file", new FileBody(sourceFile, "image/jpeg"));
+                    entity.addPart("file", new FileBody(sourceFile, "image/jpeg"));
+                    httppost.setEntity(entity);
+                    HttpResponse response = httpclient.execute(httppost);
+                    HttpEntity r_entity = response.getEntity();
+                    int statusCode = response.getStatusLine().getStatusCode();
+                    Log.e("tag", response.getStatusLine().toString());
+                    if (statusCode == 200) {
+                        responseString = EntityUtils.toString(r_entity);
+                    } else {
+                        responseString = "Error occurred! Http Status Code: "
+                                + statusCode;
+                    }
+                } catch (ClientProtocolException e) {
+                    responseString = e.toString();
+                } catch (IOException e) {
+                    responseString = e.toString();
+                }
+                return responseString;
+
+
+
             }
 
-            return null;
+            else {
+                Log.e("tag","no poto");
+
+                String  s = "";
+                JSONObject jsonObject = new JSONObject();
+                try {
+
+
+                    jsonObject.put("pickup_location", str_pickup);
+                    jsonObject.put("drop_location", str_drop);
+                    jsonObject.put("drop", str_delivery_address);
+                    jsonObject.put("goods_type", str_goods_type);
+                    jsonObject.put("truck_type", str_truck_type);
+                    jsonObject.put("description", str_desc);
+                    jsonObject.put("booking_time", "2016/12/20 T 16:24");
+
+
+
+                    json = jsonObject.toString();
+
+                    return s = HttpUtils.makeRequest1(net.sqindia.movehaul.Config.WEB_URL + "customer/booking",json,id,token);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                return null;
+
+            }
+
         }
 
         @Override
