@@ -24,6 +24,9 @@ import com.rey.material.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -36,9 +39,9 @@ public class Dialog_Region1 extends Dialog {
     TextView tv_header;
     ImageView img_back;
     Typeface tf;
-    ArrayList<String> country_lists = new ArrayList<>();
+    ArrayList<String> aaaa = new ArrayList<>();
     ArrayList<String> state_lists = new ArrayList<>();
-    ArrayList<String> zip_lists = new ArrayList<>();
+    ArrayList<String> ar_sub_type = new ArrayList<>();
     ListAdapter adapter1, adapter2, adapter3;
 
     Context context;
@@ -50,6 +53,7 @@ public class Dialog_Region1 extends Dialog {
     HashMap<String, String> hash_subtype = new HashMap<String, String>();
     HashMap<String, String> hash_truck_imgs = new HashMap<String, String>();
     ListView lview_cont, lview_state, lview_zip;
+    ImageView iv_truck_ico,image;
 
 
     ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
@@ -57,33 +61,129 @@ public class Dialog_Region1 extends Dialog {
         @Override
         public void onPageSelected(int position) {
             if (position == 0) {
-
+                //iv_truck_ico.setImageDrawable(activity.getResources().getDrawable(R.drawable.truck_1));
+                image.setVisibility(View.GONE);
             } else {
+                Log.e("tag","from listner"+hash_subtype.size());
+                ar_sub_type.clear();
+                String shard = sharedPreferences.getString("truck_type","");
+
+
+
+                for (int i=0;i<hash_subtype.size();i++) {
+
+                    Log.e("tag","ar :"+aaaa.get(i));
+                    String asdf = aaaa.get(i);
+                    String secc = null;
+                   /* try {
+                        Log.e("tag","s: "+hash_subtype.get(i));
+                    }
+                    catch (Exception e){
+                        Log.e("tag","see: "+e.toString());
+                    }*/
+
+                    try {
+                       // Log.e("tag","e "+hash_subtype.get(asdf));
+                        secc = hash_subtype.get(asdf);
+
+                        Log.e("tag","ss: "+sharedPreferences.getString("truck_type",""));
+                        Log.e("tag","a : "+secc);
+
+                        if(sharedPreferences.getString("truck_type","").equals(hash_subtype.get(asdf))){
+                            Log.e("tag",i+" d: "+aaaa.get(i));
+                            ar_sub_type.add(aaaa.get(i));
+                        }
+
+                    }
+                    catch (Exception e){
+                        Log.e("tag","sa: "+e.toString());
+                    }
+
+
+
+
+
+                    /*if (hash_subtype.get(aaaa.get(i)) == shard) {
+
+                        Log.e("tag","ss: "+aaaa.get(i));
+
+                         }*/
+                }
+
+                adapter2.notifyDataSetChanged();
+
+               /* for (int i=0;i<hash_subtype.size();i++){
+                   // Log.e("tag","hs: "+hash_subtype.get(sharedPreferences.getString("truck_type","")));
+
+
+
+                    String key= null;
+                    String value="somename";
+                    for(Map.Entry<String,String> entry: hash_subtype.entrySet()){
+                        if(shard.equals(entry.getValue())){
+                            key = entry.getKey();
+                            Log.e("tag","kk: "+key);
+                            ar_sub_type.add(key);
+                            break; //breaking because its one to one map
+                        }
+                    }*/
+
+
+                    /*if(entry.getValue() == shard){
+                        Log.e("tag","entry: "+entry.getKey());
+                    }
+                    else{
+                        Log.e("tag","val: "+entry.getValue());
+
+                    }*/
+
+                   /* for (Map.Entry<String, String> entry : hash_subtype.entrySet()) {
+                        if (entry.getValue().equals(sharedPreferences.getString("truck_type",""))) {
+                            ar_sub_type.add(entry.getKey());
+                            Log.e("tag", "hsa: " + ar_sub_type.get(i));
+                        }
+                    }*/
+
+                  /*  Log.e("tag","has: "+hash_subtype.get(sharedPreferences.getString("truck_type","")));
+                    Log.e("tag","sar: "+sharedPreferences.getString("truck_type",""));
+
+                    if(hash_subtype.get(i) == sharedPreferences.getString("truck_type","")) {
+                        ar_sub_type.add(hash_subtype.get(sharedPreferences.getString("truck_type", "")));
+                        Log.e("tag", "hsa: " + ar_sub_type.get(i));
+                    }*/
+
+
+
+               // lview_state = (ListView) findViewById(R.id.lview);
+
+              //  adapter2 = new ListAdapter(activity.getApplicationContext(), R.layout.dialog_region_txts1, ar_sub_type,1);
+              //  lview_state.setAdapter(adapter2);
+
+
+
+
+                iv_truck_ico.setVisibility(View.GONE);
+                image.setVisibility(View.VISIBLE);
 
             }
         }
-
         @Override
-        public void onPageScrolled(int arg0, float arg1, int arg2) {
-
-        }
-
+        public void onPageScrolled(int arg0, float arg1, int arg2) {  }
         @Override
-        public void onPageScrollStateChanged(int arg0) {
-
-        }
+        public void onPageScrollStateChanged(int arg0) {  }
     };
     private ViewPager viewPager;
     private int[] layouts;
     private MyViewPagerAdapter myViewPagerAdapter;
 
 
-    public Dialog_Region1(Activity activity, ArrayList<String> ar_trucks, HashMap<String, String> hash_subtype, HashMap<String, String> hash_subimg) {
+    public Dialog_Region1(Activity activity, ArrayList<String> ar_trucks, HashMap<String, String> hash_subtype, HashMap<String, String> hash_subimg, ArrayList<String> ar_trucksss) {
         super(activity);
         this.activity = activity;
         this.ar_truck_type = ar_trucks;
         this.hash_subtype = hash_subtype;
         this.hash_truck_imgs = hash_subimg;
+        this.aaaa = ar_trucksss;
 
     }
 
@@ -101,6 +201,9 @@ public class Dialog_Region1 extends Dialog {
 
         viewPager = (ViewPager) findViewById(R.id.view_pager);
 
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        editor = sharedPreferences.edit();
+
 
         myViewPagerAdapter = new MyViewPagerAdapter();
         viewPager.setAdapter(myViewPagerAdapter);
@@ -116,23 +219,6 @@ public class Dialog_Region1 extends Dialog {
 
         viewPager.beginFakeDrag();
 
-        img_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                int current = 0;
-                current = viewPager.getCurrentItem() - 1;
-                // Do something after 5s = 5000ms
-                if (current < layouts.length) {
-                    // move to next screen
-                    viewPager.setCurrentItem(current);
-
-                } else {
-                    // launchHomeScreen();
-                }
-
-            }
-        });
 
 
     }
@@ -140,7 +226,7 @@ public class Dialog_Region1 extends Dialog {
 
     public class MyViewPagerAdapter extends PagerAdapter {
 
-        ListView lview_cont, lview_state, lview_zip;
+        ListView lview_cont, lview_state;
         private LayoutInflater layoutInflater;
 
         public MyViewPagerAdapter() {
@@ -156,18 +242,19 @@ public class Dialog_Region1 extends Dialog {
 
             if (position == 0) {
 
-                lview_cont = (ListView) view.findViewById(R.id.lview);
-                adapter1 = new ListAdapter(activity.getApplicationContext(), R.layout.dialog_region_txts, ar_truck_type);
-                lview_cont.setAdapter(adapter1);
+                HashSet<String> listToSet = new HashSet<String>(ar_truck_type);
+                ArrayList<String> ar_truck_types = new ArrayList<String>(listToSet);
 
+                lview_cont = (ListView) view.findViewById(R.id.lview);
+                adapter1 = new ListAdapter(activity.getApplicationContext(), R.layout.dialog_region_txts1, ar_truck_types,0);
+                lview_cont.setAdapter(adapter1);
 
             } else {
 
-
+                Log.e("tag","from_pager");
                 lview_state = (ListView) view.findViewById(R.id.lview);
-                adapter2 = new ListAdapter(activity.getApplicationContext(), R.layout.dialog_region_txts, ar_truck_type);
+                adapter2 = new ListAdapter(activity.getApplicationContext(), R.layout.dialog_region_txts1, ar_sub_type,1);
                 lview_state.setAdapter(adapter2);
-
 
             }
 
@@ -198,18 +285,22 @@ public class Dialog_Region1 extends Dialog {
         Context cc;
         ArrayList<String> data_lists;
         int resourceid;
+        int page;
 
-        public ListAdapter(Context context, int textViewResourceId, ArrayList<String> objects) {
+        public ListAdapter(Context context, int textViewResourceId, ArrayList<String> objects,int page) {
             super(context, textViewResourceId, objects);
             this.cc = context;
             this.data_lists = objects;
             this.resourceid = textViewResourceId;
+            this.page = page;
+
+
         }
 
-        @Override
+      /*  @Override
         public int getCount() {
             return ar_truck_type.size();
-        }
+        }*/
 
         @Override
         public View getDropDownView(int posi, View convertView, ViewGroup parent) {
@@ -232,33 +323,62 @@ public class Dialog_Region1 extends Dialog {
 
             final TextView label = (TextView) arow.findViewById(R.id.textview_header);
 
-            final ImageView image = (ImageView) arow.findViewById(R.id.image);
+            image = (ImageView) arow.findViewById(R.id.image);
+            iv_truck_ico = (ImageView) arow.findViewById(R.id.image_icon);
 
             label.setTypeface(tf);
 
-            label.setText(data_lists.get(posi));
-            Log.e("tag", "s: " + data_lists.get(posi));
+            if(page==0) {
+
+                iv_truck_ico.setImageDrawable(cc.getResources().getDrawable(R.drawable.truck_1));
+                image.setVisibility(View.GONE);
+            }
+            else{
+                iv_truck_ico.setVisibility(View.GONE);
+                image.setVisibility(View.VISIBLE);
+            }
+
+
+            if(page ==0){
+                label.setText(data_lists.get(posi));
+                Log.e("tag", "s: " + data_lists.get(posi));
+            }
+            else{
+                label.setText(data_lists.get(posi));
+                Log.e("tag", "sd: " + data_lists.get(posi));
+            }
+
 
             arow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-                    image.setImageDrawable(cc.getResources().getDrawable(R.mipmap.select_tick));
-
-                    sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cc);
-                    editor = sharedPreferences.edit();
-
-                    editor.putString("goods", label.getText().toString());
-                    editor.commit();
-
                     final Handler handler = new Handler();
+
                     final Runnable runnable = new Runnable() {
                         @Override
                         public void run() {
+                            editor.putString("sub_truck_type", label.getText().toString());
+                            editor.commit();
                             dismiss();
                         }
                     };
-                    handler.postDelayed(runnable, 500);
+
+                    if(page ==0){
+                        editor.putString("truck_type", label.getText().toString());
+                        editor.commit();
+                        Log.e("tag","edi: "+label.getText().toString());
+                        viewPager.setCurrentItem(1);
+
+                    }
+                    else{
+                        handler.postDelayed(runnable, 500);
+                        image.setImageDrawable(cc.getResources().getDrawable(R.mipmap.select_tick));
+                    }
+
+
+
+
+
 
 
                 }

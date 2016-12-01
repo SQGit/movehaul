@@ -29,6 +29,15 @@
             android:textColor="@color/textColor"
             android:textSize="@dimen/_16sdp" />
 
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/image_icon"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_gravity="center_vertical|center"
+            android:src="@drawable/truck_1"/>
+
     </LinearLayout>
 
     <View

@@ -936,8 +936,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
     }
 
-    public class updateLocation extends AsyncTask<String, Void, String>
-    {
+    public class updateLocation extends AsyncTask<String, Void, String>   {
         @Override
         protected void onPreExecute()
         {

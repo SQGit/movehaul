@@ -46,6 +46,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 
 import nl.changer.polypicker.Config;
 import nl.changer.polypicker.ImagePickerActivity;
@@ -79,7 +80,8 @@ public class Book_now extends Activity {
     Typeface tf;
     ArrayList<String> ar_goods_type = new ArrayList<>();
     ArrayList<String> ar_truck_type = new ArrayList<>();
-    HashMap<String,String> hash_subtype = new HashMap<String,String>();
+    ArrayList<String> ar_truck_sstype = new ArrayList<>();
+    HashMap<String,String> hash_subtype ;
     HashMap<String,String> hash_truck_imgs = new HashMap<String,String>();
     ProgressDialog mProgressDialog;
 
@@ -145,7 +147,7 @@ public class Book_now extends Activity {
         }
         else{
             new fetch_goods().execute();
-           // new fetch_trucks().execute();
+           new fetch_trucks().execute();
         }
 
 
@@ -185,7 +187,11 @@ public class Book_now extends Activity {
         btn_post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog1.show();
+                //dialog1.show();
+
+                new book_now().execute();
+
+
             }
         });
 
@@ -326,8 +332,12 @@ public class Book_now extends Activity {
     private void truck_type() {
 
 
-        Dialog_Region1 dialog_region1 = new Dialog_Region1(Book_now.this,ar_truck_type,hash_subtype,hash_truck_imgs);
-        dialog_region1.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.choose));
+
+        Log.e("tag","ss "+ar_truck_type.size());
+        Log.e("tag","sss "+hash_subtype.size());
+        Log.e("tag","ssss "+hash_truck_imgs.size());
+        Dialog_Region1 dialog_region1 = new Dialog_Region1(Book_now.this,ar_truck_type,hash_subtype,hash_truck_imgs,ar_truck_sstype);
+        //dialog_region1.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.choose));
         dialog_region1.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         dialog_region1.show();
 
@@ -335,12 +345,11 @@ public class Book_now extends Activity {
         dialog_region1.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
-                if(!(sharedPreferences.getString("goods","").equals(""))){
-                    et_goodstype.setText(sharedPreferences.getString("goods",""));
+                if(!(sharedPreferences.getString("truck","").equals(""))){
+                    et_trucktype.setText(sharedPreferences.getString("sub_truck_type",""));
                 }
             }
         });
-
 
 
 
@@ -636,27 +645,41 @@ public class Book_now extends Activity {
                 //  String count = jo.getString("count");
 
 
-                if (status.equals("success")) {
+                if (status.equals("true")) {
 
 
                     JSONArray truck_data = jo.getJSONArray("truck_type");
 
 
                     if(truck_data.length()>0) {
-
+                        hash_subtype = new HashMap<String,String>();
 
                         for (int i = 0; i < truck_data.length(); i++) {
+
                             String datas = truck_data.getString(i);
                             JSONObject subs = new JSONObject(datas);
 
-                           // subs.getString("truck_type");
-                          // subs.getString("truck_sub_type");
-                           // subs.getString("truck_image");
+                           //Log.e("tag","tp: "+subs.getString("truck_type"));
+                          //  Log.e("tag","stp: "+subs.getString("truck_sub_type"));
+                            //Log.e("tag","simtp: "+subs.getString("truck_image"));
+
+
 
                             ar_truck_type.add(subs.getString("truck_type"));
-                            hash_subtype.put(subs.getString("truck_type"),subs.getString("truck_sub_type"));
-                            hash_truck_imgs.put(subs.getString("truck_type"),subs.getString("truck_image"));
+                            ar_truck_sstype.add(subs.getString("truck_sub_type"));
+                            hash_subtype.put(subs.getString("truck_sub_type"),subs.getString("truck_type"));
+
+                         //   Log.e("tag","hash:: "+hash_subtype.get(ar_truck_type.get(i)));
+                            Log.e("tag","siz: "+hash_subtype.size());
+
+                           // hash_truck_imgs.put(subs.getString("truck_type"),subs.getString("truck_image"));
                         }
+
+                        Log.e("tag","sizA: "+hash_subtype.size());
+
+
+                        //ar_truck_type = new ArrayList<String>(new LinkedHashSet<String>(ar_truck_type));
+
 
 
 
@@ -741,4 +764,71 @@ public class Book_now extends Activity {
             thumbnail.setAdjustViewBounds(true);
         }
     }
+
+
+
+    public class book_now extends AsyncTask<String, Void, String>   {
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            Log.e("tag", "reg_preexe");
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String json = "", jsonStr = "";
+            try {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.accumulate("customer_latitude", "");
+                jsonObject.accumulate("customer_longitude", "");
+                jsonObject.accumulate("customer_locality1", "");
+                json = jsonObject.toString();
+                return jsonStr = HttpUtils.makeRequest1(net.sqindia.movehaul.Config.WEB_URL + "customer/finddrivers", json, id, token);
+
+            } catch (Exception e) {
+                Log.e("InputStream", e.getLocalizedMessage());
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("tag", "tag" + s);
+
+
+            if (s != null) {
+                try {
+                    JSONObject jo = new JSONObject(s);
+                    String status = jo.getString("status");
+                    String msg = jo.getString("message");
+                    Log.d("tag", "<-----Status----->" + status);
+                    if (status.equals("true")) {
+                        Log.e("tag", "Location Updated");
+
+                    } else if (status.equals("false")) {
+
+                        Log.e("tag", "Location not updated");
+                        //has to check internet and location...
+
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.e("tag", "nt" + e.toString());
+                    // Toast.makeText(getApplicationContext(),"Network Errror0",Toast.LENGTH_LONG).show();
+                }
+            } else {
+                // Toast.makeText(getApplicationContext(),"Network Errror1",Toast.LENGTH_LONG).show();
+            }
+
+        }
+
+    }
+
+
+
+
 }
