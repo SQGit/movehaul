@@ -96,6 +96,7 @@ public class Book_now extends Activity {
     ArrayList<String> ar_goods_type = new ArrayList<>();
     ArrayList<String> ar_truck_type = new ArrayList<>();
     ArrayList<String> ar_truck_sstype = new ArrayList<>();
+    ArrayList<String> ar_truck_imgs = new ArrayList<>();
     HashMap<String,String> hash_subtype ;
     HashMap<String,String> hash_truck_imgs = new HashMap<String,String>();
     ProgressDialog mProgressDialog;
@@ -363,10 +364,10 @@ public class Book_now extends Activity {
 
 
 
-        Log.e("tag","ss "+ar_truck_type.size());
-        Log.e("tag","sss "+hash_subtype.size());
-        Log.e("tag","ssss "+hash_truck_imgs.size());
-        Dialog_Region1 dialog_region1 = new Dialog_Region1(Book_now.this,ar_truck_type,hash_subtype,hash_truck_imgs,ar_truck_sstype);
+       // Log.e("tag","ss "+ar_truck_type.size());
+       // Log.e("tag","sss "+hash_subtype.size());
+       // Log.e("tag","ssss "+hash_truck_imgs.size());
+        Dialog_Region1 dialog_region1 = new Dialog_Region1(Book_now.this,ar_truck_type,hash_subtype,hash_truck_imgs,ar_truck_sstype,ar_truck_imgs);
         //dialog_region1.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.choose));
         dialog_region1.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         dialog_region1.show();
@@ -375,7 +376,7 @@ public class Book_now extends Activity {
         dialog_region1.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
-                if(!(sharedPreferences.getString("truck","").equals(""))){
+                if(!(sharedPreferences.getString("sub_truck_type","").equals(""))){
                     et_trucktype.setText(sharedPreferences.getString("sub_truck_type",""));
                 }
             }
@@ -717,7 +718,9 @@ public class Book_now extends Activity {
 
                             ar_truck_type.add(subs.getString("truck_type"));
                             ar_truck_sstype.add(subs.getString("truck_sub_type"));
+                            ar_truck_imgs.add(subs.getString("truck_image"));
                             hash_subtype.put(subs.getString("truck_sub_type"),subs.getString("truck_type"));
+                            hash_truck_imgs.put(subs.getString("truck_image"),subs.getString("truck_type"));
 
                          //   Log.e("tag","hash:: "+hash_subtype.get(ar_truck_type.get(i)));
                             Log.e("tag","siz: "+hash_subtype.size());
@@ -823,6 +826,7 @@ public class Book_now extends Activity {
         {
             super.onPreExecute();
             Log.e("tag", "reg_preexe");
+            mProgressDialog.show();
         }
 
         @Override
@@ -839,7 +843,7 @@ public class Book_now extends Activity {
 
                 httppost.setHeader("pickup_location", str_pickup);
                 httppost.setHeader("drop_location", str_drop);
-                httppost.setHeader("drop", str_delivery_address);
+               // httppost.setHeader("drop", str_delivery_address);
                 httppost.setHeader("goods_type", str_goods_type);
                 httppost.setHeader("truck_type", str_truck_type);
                 httppost.setHeader("description", str_desc);
@@ -866,8 +870,8 @@ public class Book_now extends Activity {
 
                     File sourceFile = new File(selectedPhotos.get(0));
                     Log.e("tag3", "" + sourceFile);
-                    entity.addPart("file", new FileBody(sourceFile, "image/jpeg"));
-                    entity.addPart("file", new FileBody(sourceFile, "image/jpeg"));
+                    entity.addPart("bookinggoods", new FileBody(sourceFile, "image/jpeg"));
+                    entity.addPart("bookinggoods", new FileBody(sourceFile, "image/jpeg"));
                     httppost.setEntity(entity);
                     HttpResponse response = httpclient.execute(httppost);
                     HttpEntity r_entity = response.getEntity();
@@ -900,7 +904,7 @@ public class Book_now extends Activity {
 
                     jsonObject.put("pickup_location", str_pickup);
                     jsonObject.put("drop_location", str_drop);
-                    jsonObject.put("drop", str_delivery_address);
+                  // jsonObject.put("drop", str_delivery_address);
                     jsonObject.put("goods_type", str_goods_type);
                     jsonObject.put("truck_type", str_truck_type);
                     jsonObject.put("description", str_desc);
@@ -924,7 +928,7 @@ public class Book_now extends Activity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.e("tag", "tag" + s);
-
+            mProgressDialog.dismiss();
 
             if (s != null) {
                 try {

@@ -20,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.bumptech.glide.Glide;
 import com.rey.material.widget.TextView;
 
 import java.util.ArrayList;
@@ -54,7 +55,8 @@ public class Dialog_Region1 extends Dialog {
     HashMap<String, String> hash_truck_imgs = new HashMap<String, String>();
     ListView lview_cont, lview_state, lview_zip;
     ImageView iv_truck_ico,image;
-
+    ArrayList<String> ar_truck_imgs = new ArrayList<>();
+    ArrayList<String> ar_truck_iimgs;
 
     ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
 
@@ -177,13 +179,14 @@ public class Dialog_Region1 extends Dialog {
     private MyViewPagerAdapter myViewPagerAdapter;
 
 
-    public Dialog_Region1(Activity activity, ArrayList<String> ar_trucks, HashMap<String, String> hash_subtype, HashMap<String, String> hash_subimg, ArrayList<String> ar_trucksss) {
+    public Dialog_Region1(Activity activity, ArrayList<String> ar_trucks, HashMap<String, String> hash_subtype, HashMap<String, String> hash_subimg, ArrayList<String> ar_trucksss,ArrayList<String> truck_imgs) {
         super(activity);
         this.activity = activity;
         this.ar_truck_type = ar_trucks;
         this.hash_subtype = hash_subtype;
         this.hash_truck_imgs = hash_subimg;
         this.aaaa = ar_trucksss;
+        this.ar_truck_imgs = truck_imgs;
 
     }
 
@@ -244,6 +247,11 @@ public class Dialog_Region1 extends Dialog {
 
                 HashSet<String> listToSet = new HashSet<String>(ar_truck_type);
                 ArrayList<String> ar_truck_types = new ArrayList<String>(listToSet);
+
+                HashSet<String> listToSetimg = new HashSet<String>(ar_truck_imgs);
+                ar_truck_iimgs = new ArrayList<String>(listToSetimg);
+
+
 
                 lview_cont = (ListView) view.findViewById(R.id.lview);
                 adapter1 = new ListAdapter(activity.getApplicationContext(), R.layout.dialog_region_txts1, ar_truck_types,0);
@@ -332,6 +340,9 @@ public class Dialog_Region1 extends Dialog {
 
                 iv_truck_ico.setImageDrawable(cc.getResources().getDrawable(R.drawable.truck_1));
                 image.setVisibility(View.GONE);
+               // Log.e("tag",posi+"\t"+Config.WEB_URL+"vehicledetails/"+ar_truck_iimgs.get(posi));
+                Glide.with(cc).load(Config.WEB_URL+"truck_types/"+ar_truck_iimgs.get(posi)).into(iv_truck_ico);
+
             }
             else{
                 iv_truck_ico.setVisibility(View.GONE);
