@@ -939,6 +939,8 @@ public class Book_now extends Activity {
                     if (status.equals("true")) {
                         Log.e("tag", "Location Updated");
 
+                        finish();
+
                     } else if (status.equals("false")) {
 
                         Log.e("tag", "Location not updated");
