@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
@@ -33,7 +35,9 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.rey.material.widget.Button;
 import com.sloop.fonts.FontsManager;
 
@@ -100,9 +104,10 @@ public class Book_now extends Activity {
     HashMap<String,String> hash_subtype ;
     HashMap<String,String> hash_truck_imgs = new HashMap<String,String>();
     ProgressDialog mProgressDialog;
+    LinearLayout ll;
     ArrayList<String> selectedPhotos = new ArrayList<>();
     String str_delivery_address,str_pickup,str_drop,str_goods_type,str_truck_type,str_desc,str_goods_pic;
-
+    LinearLayout.LayoutParams lp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,6 +138,13 @@ public class Book_now extends Activity {
         flt_description.setTypeface(tf);
 
         View getImages = findViewById(R.id.get_images);
+
+
+
+
+        ll = (LinearLayout)findViewById(R.id.selected_photos_container);
+        ll.setOrientation(LinearLayout.HORIZONTAL);
+        lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
 
 
@@ -213,14 +225,42 @@ public class Book_now extends Activity {
             public void onClick(View view) {
                 //dialog1.show();
 
-                str_delivery_address = et_delivery_address.getText().toString();
-                str_goods_type = et_goodstype.getText().toString();
-                str_truck_type = et_trucktype.getText().toString();
-                str_pickup = "pickup loc";
-                str_drop = "drop_loc";
-                str_desc = "desc...";
 
-                new book_now().execute();
+              //  str_pickup = "pickup loc";
+              //  str_drop = "drop_loc";
+             //   str_desc = "desc...";
+
+                if(!(et_delivery_address.getText().toString().trim().isEmpty())){
+                    if(!(et_goodstype.getText().toString().trim().equals("Goods Type"))){
+                        if(!(et_goodstype.getText().toString().trim().equals("Truck Type"))){
+                            if (!(et_description.getText().toString().trim().isEmpty())) {
+
+                                str_delivery_address = et_delivery_address.getText().toString();
+                                str_goods_type = et_goodstype.getText().toString();
+                                str_truck_type = et_trucktype.getText().toString();
+                                str_desc = et_description.getText().toString();
+
+                                new book_now().execute();
+                            }
+                            else{
+                                Toast.makeText(getApplicationContext(),"Choose Description",Toast.LENGTH_LONG).show();
+                            }
+
+                        }
+                        else{
+                            Toast.makeText(getApplicationContext(),"Choose Truck Type",Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(),"Choose Goods Type",Toast.LENGTH_LONG).show();
+                    }
+                }
+                else{
+                    et_delivery_address.setError("Enter Delivery Address");
+                    et_delivery_address.requestFocus();
+                }
+
+
 
 
             }
@@ -505,6 +545,42 @@ public class Book_now extends Activity {
             }
             Log.d("tag", "img: " + selectedPhotos.get(0));
             str_goods_pic = selectedPhotos.get(0);
+
+
+            ImageView img_view = new ImageView(this);
+
+            File imgFile = new  File(str_goods_pic);
+
+           //Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            //img_view.setImageBitmap(myBitmap);
+
+
+            Glide.with(Book_now.this).load(new File(selectedPhotos.get(0))).into(img_view);
+            ll.removeAllViews();
+            ll.addView(img_view);
+
+
+           /* for (int i = 0; i < 3; i++) {
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+
+                LinearLayout layout = new LinearLayout(getApplicationContext());
+                LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                layout.setOrientation(LinearLayout.VERTICAL);
+                layout.setLayoutParams(params);
+                ImageView img_views = new ImageView(this);
+                //img_views.setImageDrawable(getResources().getDrawable(R.drawable.truck_icon));
+                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                img_views.setImageBitmap(myBitmap);
+
+                layout.addView(img_views);
+                ll.addView(layout);
+            }*/
+
+
         }
 
 
@@ -841,8 +917,8 @@ public class Book_now extends Activity {
                 httppost.setHeader("id", id);
                 httppost.setHeader("sessiontoken", token);
 
-                httppost.setHeader("pickup_location", str_pickup);
-                httppost.setHeader("drop_location", str_drop);
+                httppost.setHeader("pickup_location", sharedPreferences.getString("pickup",""));
+                httppost.setHeader("drop_location", sharedPreferences.getString("drop",""));
                // httppost.setHeader("drop", str_delivery_address);
                 httppost.setHeader("goods_type", str_goods_type);
                 httppost.setHeader("truck_type", str_truck_type);
@@ -902,8 +978,8 @@ public class Book_now extends Activity {
                 try {
 
 
-                    jsonObject.put("pickup_location", str_pickup);
-                    jsonObject.put("drop_location", str_drop);
+                    jsonObject.put("pickup_location", str_delivery_address);
+                    jsonObject.put("drop_location", str_delivery_address);
                   // jsonObject.put("drop", str_delivery_address);
                     jsonObject.put("goods_type", str_goods_type);
                     jsonObject.put("truck_type", str_truck_type);
@@ -935,10 +1011,16 @@ public class Book_now extends Activity {
                     JSONObject jo = new JSONObject(s);
                     String status = jo.getString("status");
                     String msg = jo.getString("message");
+                    String bookingid = jo.getString("booking_id");
                     Log.d("tag", "<-----Status----->" + status);
                     if (status.equals("true")) {
                         Log.e("tag", "Location Updated");
 
+                        editor.putString("job_id",bookingid);
+                        editor.commit();
+
+                        Intent goReve = new Intent(getApplicationContext(),Job_review.class);
+                        startActivity(goReve);
                         finish();
 
                     } else if (status.equals("false")) {

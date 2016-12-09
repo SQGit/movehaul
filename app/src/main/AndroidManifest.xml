@@ -28,7 +28,7 @@
         android:theme="@style/AppTheme1">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCmazMFvYuwHw6Y6UrUGbp5F0SDJF7y9cw" />
+            android:value="AIzaSyB3Zko2LecX_BWk5nL378dDqyyLUwFvWc0" />
 
         <meta-data
             android:name="com.razorpay.ApiKey"

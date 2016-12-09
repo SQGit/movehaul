@@ -88,6 +88,7 @@
                             android:drawableLeft="@drawable/delivery_addr"
                             android:hint="Delivery Address"
                             android:inputType="text"
+                            android:imeOptions="actionDone"
                             android:maxLines="1"
                             android:paddingTop="@dimen/_10sdp"
                             android:textColor="#000000"
@@ -199,25 +200,20 @@
                         android:textSize="@dimen/_12sdp" />
 
                     <LinearLayout
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="@dimen/_70sdp"
                         android:orientation="horizontal">
 
-                        <HorizontalScrollView
-                            android:id="@+id/hori_scroll_view"
-                            android:layout_width="@dimen/_200sdp"
-                            android:layout_height="match_parent"
-                            android:fillViewport="false"
-                            android:foregroundGravity="left"
-                            android:paddingLeft="@dimen/_10sdp">
+
 
                             <LinearLayout
                                 android:id="@+id/selected_photos_container"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="left"
+                                android:gravity="left"
                                 android:orientation="horizontal"
-                                android:gravity="center"
+                                android:layout_weight="1"
                                 android:visibility="visible">
 
 
@@ -231,7 +227,7 @@
 
 
                             </LinearLayout>
-                        </HorizontalScrollView>
+                       <!-- </HorizontalScrollView>-->
 
                         <com.rey.material.widget.ImageButton
                             android:id="@+id/get_images"

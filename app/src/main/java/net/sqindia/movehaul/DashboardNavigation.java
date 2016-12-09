@@ -402,6 +402,12 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         btn_book_now.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+                editor.putString("pickup",starting.getText().toString());
+                editor.putString("drop",starting.getText().toString());
+                editor.commit();
+
                 Intent i = new Intent(DashboardNavigation.this, Book_now.class);
                 startActivity(i);
             }
