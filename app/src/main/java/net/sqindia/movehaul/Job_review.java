@@ -130,7 +130,7 @@ public class Job_review extends Activity {
                 //vibrator.cancel();
                 Intent i = new Intent(Job_review.this,DriversList.class);
                 startActivity(i);
-                finish();
+                //finish();
 
             }
         });
@@ -217,7 +217,7 @@ public class Job_review extends Activity {
 
 
                                 String booking_id = jos.getString("booking_id");
-                                String customer_id = jos.getString("customer_id");
+                                String customer_id = jos.getString("driver_id");
                                 String pickup_location = jos.getString("pickup_location");
                                 String drop_location = jos.getString("drop_location");
                                 String goods_type = jos.getString("goods_type");

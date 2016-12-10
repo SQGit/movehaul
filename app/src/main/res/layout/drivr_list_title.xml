@@ -72,7 +72,7 @@
                 android:textSize="@dimen/_13sdp" />
 
             <com.rey.material.widget.TextView
-                android:id="@+id/textview_book_from"
+                android:id="@+id/textview_title_truck_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
@@ -107,7 +107,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/_1sdp"
-                android:id="@+id/textview_bookdd_from"
+                android:id="@+id/textview_title_driver_name"
                 android:maxLines="1"
                 android:text="Samson"
                 android:textColor="@color/textColor"

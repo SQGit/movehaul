@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -16,7 +15,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
@@ -58,6 +56,9 @@ public class DriversList extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     String id,token;
+     DriversListAdapter drv_adapter;
+    ArrayList<MV_Datas> ar_driver_data;
+    MV_Datas mv_datas;
 
 
     @Override
@@ -121,8 +122,7 @@ public class DriversList extends AppCompatActivity {
 
         final ArrayList<String> drv_arlist = new ArrayList<>();
 
-        final DriversListAdapter drv_adapter = new DriversListAdapter(DriversList.this,DriversList.this, drv_arlist);
-        lv_drv_list.setAdapter(drv_adapter);
+
 
         lv_drv_list.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
@@ -288,51 +288,84 @@ public class DriversList extends AppCompatActivity {
                     String status = jo.getString("status");
                     // String msg = jo.getString("message");
                     Log.d("tag", "<-----Status----->" + status);
-                    if (status.equals("true")) {
 
 
 
-                        JSONArray goods_data = jo.getJSONArray("message");
 
-                        if(goods_data.length()>0) {
-                            for (int i = 0; i < goods_data.length(); i++) {
+                        if (status.equals("true")) {
 
 
-                                JSONObject jos = goods_data.getJSONObject(i);
+                            JSONArray goods_data = jo.getJSONArray("message");
 
-                                Log.e("tag","ds"+jos.getString("truck_image_front"));
+                            editor.putString("jobsize",String.valueOf(goods_data.length()));
+                            editor.commit();
 
-
-                                /*String booking_id = jos.getString("booking_id");
-                                String customer_id = jos.getString("customer_id");
-                                String pickup_location = jos.getString("pickup_location");
-                                String drop_location = jos.getString("drop_location");
-                                String goods_type = jos.getString("goods_type");
-                                String description = jos.getString("description");
-                                String booking_time = jos.getString("booking_time");
-                                String truck_type = jos.getString("truck_type");
-
-                                //2016\/12\/08 T 18:12
-
-                                String[] parts = booking_time.split("T");
-                                String part1 = parts[0]; // 004
-                                String part2 = parts[1]; // 034556
-
-                                Log.e("tag","1st"+part1);
-                                Log.e("tag","2st"+part2);
-                                Log.e("tag","2stasd"+goods_type);
-
-                                tv_pickup.setText(pickup_location);
-                                tv_drop.setText(drop_location);
-                                tv_delivery.setText(drop_location);
-                                tv_date.setText(part1);
-                                tv_time.setText(part2);
-                                tv_truck.setText(truck_type);*/
+                            if(goods_data.length()>0) {
+                                for (int i = 0; i < goods_data.length(); i++) {
 
 
+                                    JSONObject jos = goods_data.getJSONObject(i);
+                                    mv_datas = new MV_Datas();
 
+                                    String driver_name = jos.getString("driver_name");
+                                    String driver_id = jos.getString("driver_id");
+                                    String driver_image = jos.getString("driver_image");
+                                    String truck_front = jos.getString("truck_image_front");
+                                    String truck_back = jos.getString("truck_image_back");
+                                    String truck_side = jos.getString("truck_image_side");
+                                    String truck_type= jos.getString("truck_type");
+                                    String bidding= jos.getString("truck_type");
+
+
+/*
+                                    "driver_id": 17,
+                                            "driver_image": "17-driverimage-1481365004651.jpeg",
+                                            "driver_name": "ramya",
+                                            "truck_id": 3,
+                                            "truck_type": "Flatbed Truck, 3 Ton",
+                                            "truck_image_front": "13-vehiclefront-1481282375845.jpeg",
+                                            "truck_image_back": "13-vehicleback-1481282378215.jpeg",
+                                            "truck_image_side": "13-vehicleside-1481282382000.jpeg"*/
+
+
+                                    mv_datas.setDriver_id(driver_id);
+                                    mv_datas.setName(driver_name);
+                                    mv_datas.setDriver_image(driver_image);
+                                    mv_datas.setTruck_front(truck_front);
+                                    mv_datas.setTruck_back(truck_back);
+                                    mv_datas.setTruck_side(truck_side);
+                                    mv_datas.setTruck_type(truck_type);
+                                    mv_datas.setBidding(truck_type);
+
+
+
+                                    ar_driver_data.add(mv_datas);
+
+
+
+                                }
+                            }
+                            else{
+                                finish();
+                                Toast.makeText(getApplicationContext(),"No Drivers Bidded,Please Wait for some more time.",Toast.LENGTH_LONG).show();
 
                             }
+
+
+
+                            drv_adapter = new DriversListAdapter(DriversList.this,DriversList.this, ar_driver_data);
+                            lv_drv_list.setAdapter(drv_adapter);
+
+
+
+
+
+
+                        }
+                        else {
+
+
+
                         }
 
 
@@ -340,13 +373,33 @@ public class DriversList extends AppCompatActivity {
 
 
 
-                    } else if (status.equals("false")) {
-
-                        Log.e("tag", "Location not updated");
-                        //has to check internet and location...
 
 
-                    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("tag", "nt" + e.toString());

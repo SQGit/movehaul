@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.LayerDrawable;
@@ -17,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -25,46 +22,47 @@ import android.widget.TextView;
 
 import com.ramotion.foldingcell.FoldingCell;
 import com.rey.material.widget.Button;
-import com.rey.material.widget.ListView;
 import com.sloop.fonts.FontsManager;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 
 /**
  * Simple example of ListAdapter for using with Folding Cell
  * Adapter holds indexes of unfolded elements for correct work with default reusable views behavior
  */
-public class DriversListAdapter extends ArrayAdapter<String> {
+public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
 
-    private HashSet<Integer> unfoldedIndexes = new HashSet<>();
-    private View.OnClickListener defaultRequestBtnClickListener;
     Context context;
-    ArrayList<String> up_lists;
+    ArrayList<MV_Datas> ar_drv_list;
     Activity act;
     FoldingCell cell;
     ImageView btn_confirm;
-    Dialog dialog1,dialog2;
+    Dialog dialog1, dialog2;
     ImageView btn_close;
     Button btn_ok;
-    TextView tv_dialog1,tv_dialog2,tv_dialog3,tv_dialog4;
+    TextView tv_dialog1, tv_dialog2, tv_dialog3, tv_dialog4;
     Typeface type;
-    ImageView iv_driver_image,iv_back,iv_front;
+    ImageView iv_driver_image, iv_back, iv_front;
     ViewPager viewPager;
+    private HashSet<Integer> unfoldedIndexes = new HashSet<>();
+    private View.OnClickListener defaultRequestBtnClickListener;
     private int[] layouts;
     private MyViewPagerAdapter myViewPagerAdapter;
+    com.rey.material.widget.TextView tv_title_truck,tv_title_driver_name;
+    MV_Datas mv_datas;
 
-    public DriversListAdapter(Context context, Activity acti, List<String> objects) {
+    public DriversListAdapter(Context context, Activity acti, ArrayList<MV_Datas> objects) {
         super(context, 0, objects);
         this.act = acti;
-        this.context=context;
+        this.context = context;
+        this.ar_drv_list = objects;
 
     }
 
     @Override
     public int getCount() {
-        return 10;
+        return ar_drv_list.size();
     }
 
     @Override
@@ -72,13 +70,15 @@ public class DriversListAdapter extends ArrayAdapter<String> {
         // get item for selected view
         //Item item = getItem(position);
         // if cell is exists - reuse it, if not - create the new one from resource
-         cell = (FoldingCell) convertView;
+        cell = (FoldingCell) convertView;
         ViewHolder viewHolder;
 
-       FontsManager.initFormAssets(act, "fonts/lato.ttf");       //initialization
-       FontsManager.changeFonts(act);
+        FontsManager.initFormAssets(act, "fonts/lato.ttf");       //initialization
+        FontsManager.changeFonts(act);
 
         type = Typeface.createFromAsset(getContext().getAssets(), "fonts/lato.ttf");
+
+        mv_datas = ar_drv_list.get(position);
 
         if (cell == null) {
             viewHolder = new ViewHolder();
@@ -133,6 +133,30 @@ public class DriversListAdapter extends ArrayAdapter<String> {
         DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable.getDrawable(2)),
                 context.getResources().getColor(R.color.gold));
 
+
+
+
+
+        tv_title_truck = (com.rey.material.widget.TextView) cell.findViewById(R.id.textview_title_truck_type);
+        tv_title_driver_name = (com.rey.material.widget.TextView) cell.findViewById(R.id.textview_title_driver_name);
+
+
+
+
+
+
+        tv_title_truck.setText(mv_datas.getTruck_type());
+        tv_title_driver_name.setText(mv_datas.getName());
+
+
+
+
+
+
+
+
+
+
         btn_confirm = (ImageView) cell.findViewById(R.id.imageView_doubletick);
 
         btn_confirm.setOnClickListener(new View.OnClickListener() {
@@ -145,12 +169,10 @@ public class DriversListAdapter extends ArrayAdapter<String> {
         iv_driver_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("tag","clik");
+                Log.e("tag", "clik");
                 dialog2.show();
             }
         });
-
-
 
 
         dialog2 = new Dialog(DriversListAdapter.this.getContext());
@@ -167,18 +189,15 @@ public class DriversListAdapter extends ArrayAdapter<String> {
         viewPager.setAdapter(myViewPagerAdapter);
 
 
-
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if(viewPager.getCurrentItem()==0){
+                if (viewPager.getCurrentItem() == 0) {
                     viewPager.setCurrentItem(2);
-                }
-                else if(viewPager.getCurrentItem()==1){
+                } else if (viewPager.getCurrentItem() == 1) {
                     viewPager.setCurrentItem(0);
-                }
-                else{
+                } else {
                     viewPager.setCurrentItem(1);
                 }
             }
@@ -188,22 +207,16 @@ public class DriversListAdapter extends ArrayAdapter<String> {
             @Override
             public void onClick(View view) {
 
-                if(viewPager.getCurrentItem()==0){
+                if (viewPager.getCurrentItem() == 0) {
                     viewPager.setCurrentItem(1);
-                }
-                else if(viewPager.getCurrentItem()==1){
+                } else if (viewPager.getCurrentItem() == 1) {
                     viewPager.setCurrentItem(2);
-                }
-                else{
+                } else {
                     viewPager.setCurrentItem(0);
                 }
 
             }
         });
-
-
-
-
 
 
         dialog1 = new Dialog(DriversListAdapter.this.getContext());
@@ -279,9 +292,6 @@ public class DriversListAdapter extends ArrayAdapter<String> {
     }
 
 
-
-
-
     public class MyViewPagerAdapter extends PagerAdapter {
         private LayoutInflater layoutInflater;
 
@@ -297,17 +307,12 @@ public class DriversListAdapter extends ArrayAdapter<String> {
            /*FontsManager.initFormAssets(getApplicationContext(), "fonts/lato.ttf");       //initialization
             FontsManager.changeFonts((Activity) getApplicationContext());*/
 
-            if (position == 0)
-            {
+            if (position == 0) {
 
 
-            }
-            else if (position == 1)
-            {
+            } else if (position == 1) {
 
-            }
-            else
-            {
+            } else {
 
 
             }
@@ -350,17 +355,7 @@ public class DriversListAdapter extends ArrayAdapter<String> {
         }
 
 
-
     }
-
-
-
-
-
-
-
-
-
 
 
 }
