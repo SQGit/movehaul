@@ -403,13 +403,18 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             @Override
             public void onClick(View view) {
 
+                if(destination.getText().toString().isEmpty()){
+                    Toast.makeText(getApplicationContext(),"Choose Drop Location",Toast.LENGTH_LONG).show();
+                }
+                else {
 
-                editor.putString("pickup",starting.getText().toString());
-                editor.putString("drop",starting.getText().toString());
-                editor.commit();
+                    editor.putString("pickup", starting.getText().toString());
+                    editor.putString("drop", destination.getText().toString());
+                    editor.commit();
 
-                Intent i = new Intent(DashboardNavigation.this, Book_now.class);
-                startActivity(i);
+                    Intent i = new Intent(DashboardNavigation.this, Book_now.class);
+                    startActivity(i);
+                }
             }
         });
 
