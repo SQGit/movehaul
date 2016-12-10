@@ -57,7 +57,9 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -76,7 +78,7 @@ import nl.changer.polypicker.utils.ImageInternalFetcher;
 public class Book_now extends Activity {
 
     private static final int REQUEST_VEC_FRONT = 1;
-    String truck, goods,id,token;
+    String truck, goods,id,token,str_time;
     LinearLayout lt_goodsType, lt_truckType;
     EditText et_delivery_address, et_goodstype, et_trucktype, et_description;
     TextInputLayout flt_delivery_address, flt_goodstype, flt_trucktype, flt_description;
@@ -180,6 +182,29 @@ public class Book_now extends Activity {
            new fetch_trucks().execute();
         }
 
+
+
+
+
+        Calendar c = Calendar.getInstance();
+       // System.out.println("Current time => "+c.getTime());
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = df.format(c.getTime());
+        // formattedDate have current date/time
+       // Toast.makeText(this, formattedDate, Toast.LENGTH_SHORT).show();
+
+
+        //2016-12-10 12:33:15
+        Log.e("tag","tim: |"+df.format(c.getTime()));
+
+        String[] parts = formattedDate.split(" ");
+        String part1 = parts[0]; // 004
+        String part2 = parts[1]; // 034556
+        Log.e("tag","ti:"+part1);
+
+        str_time = part1 +" T "+part2;
+        Log.e("tag","tis:"+str_time);
 
 
 
@@ -919,11 +944,11 @@ public class Book_now extends Activity {
 
                 httppost.setHeader("pickup_location", sharedPreferences.getString("pickup",""));
                 httppost.setHeader("drop_location", sharedPreferences.getString("drop",""));
-               // httppost.setHeader("drop", str_delivery_address);
+                httppost.setHeader("delivery_address", str_delivery_address);
                 httppost.setHeader("goods_type", str_goods_type);
                 httppost.setHeader("truck_type", str_truck_type);
                 httppost.setHeader("description", str_desc);
-                httppost.setHeader("booking_time", "2016/12/20 T 16:24");
+                httppost.setHeader("booking_time", str_time);
 
 
 
@@ -980,11 +1005,11 @@ public class Book_now extends Activity {
 
                     jsonObject.put("pickup_location", str_delivery_address);
                     jsonObject.put("drop_location", str_delivery_address);
-                  // jsonObject.put("drop", str_delivery_address);
+                    jsonObject.put("delivery_address", str_delivery_address);
                     jsonObject.put("goods_type", str_goods_type);
                     jsonObject.put("truck_type", str_truck_type);
                     jsonObject.put("description", str_desc);
-                    jsonObject.put("booking_time", "2016/12/20 T 16:24");
+                    jsonObject.put("booking_time",str_time);
 
 
 

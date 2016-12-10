@@ -227,7 +227,7 @@ public class Job_review extends Activity {
 
                                 //2016\/12\/08 T 18:12
 
-                                String[] parts = booking_time.split("T");
+                                String[] parts = booking_time.trim().split("T");
                                 String part1 = parts[0]; // 004
                                 String part2 = parts[1]; // 034556
 
