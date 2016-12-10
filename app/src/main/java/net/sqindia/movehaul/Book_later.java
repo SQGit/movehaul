@@ -123,14 +123,12 @@ public class Book_later extends Activity {
         lt_goodsType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //et_goodsType.setText("Computer Systems");
                 goods_type();
             }
         });
         lt_truckType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // et_truckType.setText("Heavy Truck");
                 truck_type();
             }
         });
@@ -147,7 +145,6 @@ public class Book_later extends Activity {
                 mTimePicker = new TimePickerDialog(Book_later.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                       // et_time.setText( selectedHour + ":" + selectedMinute);
                         updateTime(selectedHour,selectedMinute);
                     }
                 }, hour, minute, true);//Yes 24 hour time
@@ -158,21 +155,15 @@ public class Book_later extends Activity {
             }
         });
 
-
-
-
-//Getting current date//
         final Calendar c1 = Calendar.getInstance();
         year = c1.get(Calendar.YEAR);
         month = c1.get(Calendar.MONTH);
         day = c1.get(Calendar.DAY_OF_MONTH);
-        // dt = cal.toLocaleString();
-        //  txtDate.setText(dt.toString());
         btn_date.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 showDialog(DATE_PICKER_ID1);
-                // et_date.setText("23-10-2016");
             }
         });
 
@@ -268,8 +259,6 @@ public class Book_later extends Activity {
     }
 
     private DatePickerDialog.OnDateSetListener pickerListener1 = new DatePickerDialog.OnDateSetListener() {
-
-        // when dialog box is closed, below method will be called.
         @Override
         public void onDateSet(DatePicker view, int selectedYear,
                               int selectedMonth, int selectedDay) {
@@ -323,8 +312,6 @@ public class Book_later extends Activity {
 
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-
                 if (checkedId == R.id.radio1) {
                     truck = "Heavy Truck, 8 Ton";
                 } else if (checkedId == R.id.radio2) {
@@ -336,10 +323,7 @@ public class Book_later extends Activity {
                 } else if (checkedId == R.id.radio5) {
                     truck = "Openroof Truck, 5 Ton";
                 }
-
-
                 Log.e("TAG", "asd" + truck);
-                //alertD.dismiss();
                 handler.postDelayed(runnable, 700);
                 et_truckType.setText(truck);
             }
@@ -350,7 +334,6 @@ public class Book_later extends Activity {
     }
 
     private void goods_type() {
-
         LayoutInflater layoutInflater = LayoutInflater.from(Book_later.this);
         View promptView = layoutInflater.inflate(R.layout.goods_selecting, null);
         final AlertDialog alertD = new AlertDialog.Builder(Book_later.this).create();
@@ -359,7 +342,6 @@ public class Book_later extends Activity {
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         alertD.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.parseColor("#00FFFFFF")));
 
-
         final RadioGroup radioGroup = (RadioGroup) promptView.findViewById(R.id.radioGroup2);
         final RadioButton rb_goods1 = (RadioButton) promptView.findViewById(R.id.radio1);
         final RadioButton rb_goods2 = (RadioButton) promptView.findViewById(R.id.radio2);
@@ -367,7 +349,6 @@ public class Book_later extends Activity {
         final RadioButton rb_goods4 = (RadioButton) promptView.findViewById(R.id.radio4);
         final RadioButton rb_goods5 = (RadioButton) promptView.findViewById(R.id.radio5);
         final RadioButton rb_goods6 = (RadioButton) promptView.findViewById(R.id.radio6);
-
 
         Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/lato.ttf");
         rb_goods1.setTypeface(tf);
@@ -392,8 +373,6 @@ public class Book_later extends Activity {
 
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-
                 if (checkedId == R.id.radio1) {
                     goods = "Wooden boxes";
                 } else if (checkedId == R.id.radio2) {

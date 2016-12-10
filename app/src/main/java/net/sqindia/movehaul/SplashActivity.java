@@ -92,36 +92,13 @@ public class SplashActivity extends Activity {
         lt_bottom = (LinearLayout) findViewById(R.id.layout_bottom);
         av_loader = (AVLoadingIndicatorView) findViewById(R.id.loader);
         av_loader.setVisibility(View.GONE);
-        snackbar = Snackbar
-                .make(lt_top, "No internet connection!", Snackbar.LENGTH_INDEFINITE)
+        snackbar = Snackbar.make(lt_top, "No internet connection!", Snackbar.LENGTH_INDEFINITE)
                 .setAction("Open Settings", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
                     }
                 });
-
-
-
-/*
-        mInflater = LayoutInflater.from(this);
-        Snackbar snackbar = Snackbar.make(lt_top, "", Snackbar.LENGTH_INDEFINITE);
-        Snackbar.SnackbarLayout layout = (Snackbar.SnackbarLayout) snackbar.getView();
-        TextView textViews = (TextView) layout.findViewById(android.support.design.R.id.snackbar_text);
-        textViews.setVisibility(View.INVISIBLE);
-        View snackView = mInflater.inflate(R.layout.my_snackbar, null);
-        TextView textViewTop = (TextView) snackView.findViewById(R.id.text);
-        textViewTop.setText("No Internet Connection");
-        textViewTop.setTextColor(Color.WHITE);
-        textViewTop.setTypeface(tf);
-        layout.addView(snackView, 0);*/
-       // snackbar.show();
-
-
-
-
-
-
 
         snackbar.setActionTextColor(Color.RED);
         View sbView = snackbar.getView();

@@ -359,15 +359,20 @@ public class Book_now extends Activity {
 
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.radio1) {
+                if (checkedId == R.id.radio1)
+                {
                     truck = "Heavy Truck, 8 Ton";
-                } else if (checkedId == R.id.radio2) {
+                } else if (checkedId == R.id.radio2)
+                {
                     truck = "Light Truck, 1 Ton";
-                } else if (checkedId == R.id.radio3) {
+                } else if (checkedId == R.id.radio3)
+                {
                     truck = "Lift Truck, 1 Ton";
-                } else if (checkedId == R.id.radio4) {
+                } else if (checkedId == R.id.radio4)
+                {
                     truck = "Flatbed Truck, 3 Ton";
-                } else if (checkedId == R.id.radio5) {
+                } else if (checkedId == R.id.radio5)
+                {
                     truck = "Openroof Truck, 5 Ton";
                 }
                 Log.e("TAG", "asd" + truck);
@@ -484,10 +489,7 @@ public class Book_now extends Activity {
                 } else if (checkedId == R.id.radio6) {
                     goods = "Company items";
                 }
-
-
                 Log.e("TAG", "asd" + truck);
-                //alertD.dismiss();
                 handler.postDelayed(runnable, 700);
                 et_goodstype.setText(goods);
             }
@@ -607,7 +609,6 @@ public class Book_now extends Activity {
                        String path = uri.toString();
                         mMedia.add(uri);
                         mdatas.add(String.valueOf(uri));
-                        //path=String.valueOf(uri);
                         Log.d("tag", "choosed file" + mMedia);
                         StringBuilder builder = new StringBuilder();
                         for (Uri value : mMedia) {
@@ -616,9 +617,6 @@ public class Book_now extends Activity {
                         }
                         String text = builder.toString();
                         imagearray=text.split("\\#\\#\\#\\#\\#");
-
-
-
 
                     }
                     showMedia();
@@ -873,16 +871,6 @@ public class Book_now extends Activity {
                 }
             });
 
-
-/*
-            imageHolder.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    Log.i("tah", " uri: " +v);
-                    mSelectedImagesContainer.removeView(v);
-                    return true;
-                }
-            });*/
 
 
             int wdpx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250, getResources().getDisplayMetrics());
