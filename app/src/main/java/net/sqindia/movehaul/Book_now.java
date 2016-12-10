@@ -256,8 +256,8 @@ public class Book_now extends Activity {
              //   str_desc = "desc...";
 
                 if(!(et_delivery_address.getText().toString().trim().isEmpty())){
-                    if(!(et_goodstype.getText().toString().trim().equals("Goods Type"))){
-                        if(!(et_goodstype.getText().toString().trim().equals("Truck Type"))){
+                    if(!(et_goodstype.getText().toString().trim().isEmpty())){
+                        if(!(et_goodstype.getText().toString().trim().isEmpty())){
                             if (!(et_description.getText().toString().trim().isEmpty())) {
 
                                 str_delivery_address = et_delivery_address.getText().toString();
@@ -265,10 +265,13 @@ public class Book_now extends Activity {
                                 str_truck_type = et_trucktype.getText().toString();
                                 str_desc = et_description.getText().toString();
 
+                                Log.e("tag","aa "+str_goods_type+str_truck_type);
+
                                 new book_now().execute();
                             }
                             else{
-                                Toast.makeText(getApplicationContext(),"Choose Description",Toast.LENGTH_LONG).show();
+                                et_description.setError("Enter Description");
+                                et_description.requestFocus();
                             }
 
                         }
@@ -342,69 +345,6 @@ public class Book_now extends Activity {
     }
 
 
-
-   /* private void truck_type() {
-
-        LayoutInflater layoutInflater = LayoutInflater.from(Book_now.this);
-        View promptView = layoutInflater.inflate(R.layout.truck_selecting, null);
-        final AlertDialog alertD = new AlertDialog.Builder(Book_now.this).create();
-        alertD.setCancelable(true);
-        Window window = alertD.getWindow();
-        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        alertD.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.parseColor("#00FFFFFF")));
-
-
-        final RadioGroup radioGroup = (RadioGroup) promptView.findViewById(R.id.radioGroup2);
-        final RadioButton rb_truck1 = (RadioButton) promptView.findViewById(R.id.radio1);
-        final RadioButton rb_truck2 = (RadioButton) promptView.findViewById(R.id.radio2);
-        final RadioButton rb_truck3 = (RadioButton) promptView.findViewById(R.id.radio3);
-        final RadioButton rb_truck4 = (RadioButton) promptView.findViewById(R.id.radio4);
-        final RadioButton rb_truck5 = (RadioButton) promptView.findViewById(R.id.radio5);
-
-
-        Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/lato.ttf");
-        rb_truck1.setTypeface(tf);
-        rb_truck2.setTypeface(tf);
-        rb_truck3.setTypeface(tf);
-        rb_truck4.setTypeface(tf);
-        rb_truck5.setTypeface(tf);
-
-        final Handler handler = new Handler();
-        final Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                if (alertD.isShowing()) {
-                    alertD.dismiss();
-                }
-            }
-        };
-
-
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.radio1) {
-                    truck = "Heavy Truck, 8 Ton";
-                } else if (checkedId == R.id.radio2) {
-                    truck = "Light Truck, 1 Ton";
-                } else if (checkedId == R.id.radio3) {
-                    truck = "Lift Truck, 1 Ton";
-                } else if (checkedId == R.id.radio4) {
-                    truck = "Flatbed Truck, 3 Ton";
-                } else if (checkedId == R.id.radio5) {
-                    truck = "Openroof Truck, 5 Ton";
-                }
-                Log.e("TAG", "asd" + truck);
-                handler.postDelayed(runnable, 700);
-                et_trucktype.setText(truck);
-            }
-
-        });
-        alertD.setView(promptView);
-        alertD.show();
-    }*/
-
     private void goods_type(){
 
         Log.e("tag","ss: "+ar_goods_type.size());
@@ -452,75 +392,6 @@ public class Book_now extends Activity {
 
     }
 
-
-
-   /* private void goods_type() {
-
-        LayoutInflater layoutInflater = LayoutInflater.from(Book_now.this);
-        View promptView = layoutInflater.inflate(R.layout.goods_selecting, null);
-        final AlertDialog alertD = new AlertDialog.Builder(Book_now.this).create();
-        alertD.setCancelable(true);
-        Window window = alertD.getWindow();
-        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        alertD.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.parseColor("#00FFFFFF")));
-
-        final RadioGroup radioGroup = (RadioGroup) promptView.findViewById(R.id.radioGroup2);
-        final RadioButton rb_goods1 = (RadioButton) promptView.findViewById(R.id.radio1);
-        final RadioButton rb_goods2 = (RadioButton) promptView.findViewById(R.id.radio2);
-        final RadioButton rb_goods3 = (RadioButton) promptView.findViewById(R.id.radio3);
-        final RadioButton rb_goods4 = (RadioButton) promptView.findViewById(R.id.radio4);
-        final RadioButton rb_goods5 = (RadioButton) promptView.findViewById(R.id.radio5);
-        final RadioButton rb_goods6 = (RadioButton) promptView.findViewById(R.id.radio6);
-
-
-        Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/lato.ttf");
-        rb_goods1.setTypeface(tf);
-        rb_goods2.setTypeface(tf);
-        rb_goods3.setTypeface(tf);
-        rb_goods4.setTypeface(tf);
-        rb_goods5.setTypeface(tf);
-        rb_goods6.setTypeface(tf);
-
-        final Handler handler = new Handler();
-        final Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                if (alertD.isShowing()) {
-                    alertD.dismiss();
-                }
-            }
-        };
-
-
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.radio1) {
-                    goods = "Wooden boxes";
-                } else if (checkedId == R.id.radio2) {
-                    goods = "Hard steel";
-                } else if (checkedId == R.id.radio3) {
-                    goods = "Cardboard boxes";
-                } else if (checkedId == R.id.radio4) {
-                    goods = "Computers systems";
-                } else if (checkedId == R.id.radio5) {
-                    goods = "House Furniture";
-                } else if (checkedId == R.id.radio6) {
-                    goods = "Company items";
-                }
-
-
-                Log.e("TAG", "asd" + truck);
-                //alertD.dismiss();
-                handler.postDelayed(runnable, 700);
-                et_goodstype.setText(goods);
-            }
-
-        });
-        alertD.setView(promptView);
-        alertD.show();
-    }*/
 
     @Override
     public void onBackPressed() {
@@ -1003,8 +874,8 @@ public class Book_now extends Activity {
                 try {
 
 
-                    jsonObject.put("pickup_location", str_delivery_address);
-                    jsonObject.put("drop_location", str_delivery_address);
+                    jsonObject.put("pickup_location", sharedPreferences.getString("pickup",""));
+                    jsonObject.put("drop_location", sharedPreferences.getString("drop",""));
                     jsonObject.put("delivery_address", str_delivery_address);
                     jsonObject.put("goods_type", str_goods_type);
                     jsonObject.put("truck_type", str_truck_type);

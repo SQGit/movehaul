@@ -77,13 +77,6 @@ public class Dialog_Region1 extends Dialog {
                     Log.e("tag","ar :"+aaaa.get(i));
                     String asdf = aaaa.get(i);
                     String secc = null;
-                   /* try {
-                        Log.e("tag","s: "+hash_subtype.get(i));
-                    }
-                    catch (Exception e){
-                        Log.e("tag","see: "+e.toString());
-                    }*/
-
                     try {
                        // Log.e("tag","e "+hash_subtype.get(asdf));
                         secc = hash_subtype.get(asdf);
@@ -102,67 +95,9 @@ public class Dialog_Region1 extends Dialog {
                     }
 
 
-
-
-
-                    /*if (hash_subtype.get(aaaa.get(i)) == shard) {
-
-                        Log.e("tag","ss: "+aaaa.get(i));
-
-                         }*/
                 }
 
                 adapter2.notifyDataSetChanged();
-
-               /* for (int i=0;i<hash_subtype.size();i++){
-                   // Log.e("tag","hs: "+hash_subtype.get(sharedPreferences.getString("truck_type","")));
-
-
-
-                    String key= null;
-                    String value="somename";
-                    for(Map.Entry<String,String> entry: hash_subtype.entrySet()){
-                        if(shard.equals(entry.getValue())){
-                            key = entry.getKey();
-                            Log.e("tag","kk: "+key);
-                            ar_sub_type.add(key);
-                            break; //breaking because its one to one map
-                        }
-                    }*/
-
-
-                    /*if(entry.getValue() == shard){
-                        Log.e("tag","entry: "+entry.getKey());
-                    }
-                    else{
-                        Log.e("tag","val: "+entry.getValue());
-
-                    }*/
-
-                   /* for (Map.Entry<String, String> entry : hash_subtype.entrySet()) {
-                        if (entry.getValue().equals(sharedPreferences.getString("truck_type",""))) {
-                            ar_sub_type.add(entry.getKey());
-                            Log.e("tag", "hsa: " + ar_sub_type.get(i));
-                        }
-                    }*/
-
-                  /*  Log.e("tag","has: "+hash_subtype.get(sharedPreferences.getString("truck_type","")));
-                    Log.e("tag","sar: "+sharedPreferences.getString("truck_type",""));
-
-                    if(hash_subtype.get(i) == sharedPreferences.getString("truck_type","")) {
-                        ar_sub_type.add(hash_subtype.get(sharedPreferences.getString("truck_type", "")));
-                        Log.e("tag", "hsa: " + ar_sub_type.get(i));
-                    }*/
-
-
-
-               // lview_state = (ListView) findViewById(R.id.lview);
-
-              //  adapter2 = new ListAdapter(activity.getApplicationContext(), R.layout.dialog_region_txts1, ar_sub_type,1);
-              //  lview_state.setAdapter(adapter2);
-
-
-
 
                 iv_truck_ico.setVisibility(View.GONE);
                 image.setVisibility(View.VISIBLE);
@@ -251,8 +186,6 @@ public class Dialog_Region1 extends Dialog {
                 HashSet<String> listToSetimg = new HashSet<String>(ar_truck_imgs);
                 ar_truck_iimgs = new ArrayList<String>(listToSetimg);
 
-
-
                 lview_cont = (ListView) view.findViewById(R.id.lview);
                 adapter1 = new ListAdapter(activity.getApplicationContext(), R.layout.dialog_region_txts1, ar_truck_types,0);
                 lview_cont.setAdapter(adapter1);
@@ -327,7 +260,7 @@ public class Dialog_Region1 extends Dialog {
 
             LayoutInflater inflater = (LayoutInflater) cc.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            View arow = inflater.inflate(resourceid, parent, false);
+            final View arow = inflater.inflate(resourceid, parent, false);
 
             final TextView label = (TextView) arow.findViewById(R.id.textview_header);
 
@@ -383,7 +316,9 @@ public class Dialog_Region1 extends Dialog {
                     }
                     else{
                         handler.postDelayed(runnable, 500);
+                        image = (ImageView) arow.findViewById(R.id.image);
                         image.setImageDrawable(cc.getResources().getDrawable(R.mipmap.select_tick));
+                        Log.e("tag","po: "+posi);
                     }
 
 
