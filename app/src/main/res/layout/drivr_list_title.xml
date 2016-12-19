@@ -25,7 +25,7 @@
             android:orientation="vertical">
 
             <com.rey.material.widget.TextView
-                android:id="@+id/textview_cost"
+                android:id="@+id/textview_title_bidding"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"

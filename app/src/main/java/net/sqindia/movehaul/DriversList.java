@@ -73,6 +73,8 @@ public class DriversList extends AppCompatActivity {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DriversList.this);
         editor = sharedPreferences.edit();
 
+        ar_driver_data = new ArrayList<>();
+
         id = sharedPreferences.getString("id", "");
         token = sharedPreferences.getString("token", "");
 
@@ -314,18 +316,24 @@ public class DriversList extends AppCompatActivity {
                                     String truck_back = jos.getString("truck_image_back");
                                     String truck_side = jos.getString("truck_image_side");
                                     String truck_type= jos.getString("truck_type");
-                                    String bidding= jos.getString("truck_type");
+                                    String bidding= jos.getString("bidding_cost");
+                                    String rating= jos.getString("driver_rating");
+                                    String damage_control= jos.getString("damage_control");
 
 
-/*
-                                    "driver_id": 17,
+                                 /*   "booking_id": 19,
+                                            "bidding_cost": "289",
+                                            "driver_id": 17,
                                             "driver_image": "17-driverimage-1481365004651.jpeg",
                                             "driver_name": "ramya",
-                                            "truck_id": 3,
-                                            "truck_type": "Flatbed Truck, 3 Ton",
-                                            "truck_image_front": "13-vehiclefront-1481282375845.jpeg",
-                                            "truck_image_back": "13-vehicleback-1481282378215.jpeg",
-                                            "truck_image_side": "13-vehicleside-1481282382000.jpeg"*/
+                                            "driver_rating": null,
+                                            "truck_id": 22,
+                                            "truck_type": null,
+                                            "truck_image_front": "17-vehiclefront-1481365009741.jpeg",
+                                            "truck_image_back": "17-vehicleback-1481365012473.jpeg",
+                                            "truck_image_side": "17-vehicleside-1481365013768.jpeg",
+                                            "damage_control": null*/
+
 
 
                                     mv_datas.setDriver_id(driver_id);
@@ -335,7 +343,9 @@ public class DriversList extends AppCompatActivity {
                                     mv_datas.setTruck_back(truck_back);
                                     mv_datas.setTruck_side(truck_side);
                                     mv_datas.setTruck_type(truck_type);
-                                    mv_datas.setBidding(truck_type);
+                                    mv_datas.setBidding(bidding);
+                                    mv_datas.setRating(rating);
+                                    mv_datas.setDamage_control(damage_control);
 
 
 
@@ -352,19 +362,13 @@ public class DriversList extends AppCompatActivity {
                             }
 
 
-
                             drv_adapter = new DriversListAdapter(DriversList.this,DriversList.this, ar_driver_data);
                             lv_drv_list.setAdapter(drv_adapter);
 
-
-
-
-
-
                         }
                         else {
-
-
+                            finish();
+                            Toast.makeText(getApplicationContext(),"No Drivers Bidded,Please Wait for some more time.",Toast.LENGTH_LONG).show();
 
                         }
 

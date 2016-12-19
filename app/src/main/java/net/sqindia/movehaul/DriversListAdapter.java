@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.LayerDrawable;
+import android.preference.PreferenceManager;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -20,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.ramotion.foldingcell.FoldingCell;
 import com.rey.material.widget.Button;
 import com.sloop.fonts.FontsManager;
@@ -49,8 +52,12 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
     private View.OnClickListener defaultRequestBtnClickListener;
     private int[] layouts;
     private MyViewPagerAdapter myViewPagerAdapter;
-    com.rey.material.widget.TextView tv_title_truck,tv_title_driver_name;
+    com.rey.material.widget.TextView tv_title_truck,tv_title_driver_name,tv_title_bidding,        tv_content_bidding,tv_content_driver_name,tv_content_damage_control,tv_content_truck;
     MV_Datas mv_datas;
+    String tr_front,tr_side,tr_back;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    String bidding;
 
     public DriversListAdapter(Context context, Activity acti, ArrayList<MV_Datas> objects) {
         super(context, 0, objects);
@@ -75,6 +82,9 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
 
         FontsManager.initFormAssets(act, "fonts/lato.ttf");       //initialization
         FontsManager.changeFonts(act);
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(act);
+        editor = sharedPreferences.edit();
 
         type = Typeface.createFromAsset(getContext().getAssets(), "fonts/lato.ttf");
 
@@ -109,7 +119,7 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
                 R.layout.truck_back,};
 
 
-        iv_driver_image = (ImageView) cell.findViewById(R.id.driver_image);
+
 
         RatingBar ratingBar = (RatingBar) cell.findViewById(R.id.ratingBsdar);
         RatingBar ratingBar1 = (RatingBar) cell.findViewById(R.id.ratingbar);
@@ -136,25 +146,57 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
 
 
 
-
+        tv_title_bidding = (com.rey.material.widget.TextView) cell.findViewById(R.id.textview_title_bidding);
         tv_title_truck = (com.rey.material.widget.TextView) cell.findViewById(R.id.textview_title_truck_type);
         tv_title_driver_name = (com.rey.material.widget.TextView) cell.findViewById(R.id.textview_title_driver_name);
 
 
 
+        tv_content_bidding = (com.rey.material.widget.TextView) cell.findViewById(R.id.textview_content_bidding);
+        tv_content_driver_name = (com.rey.material.widget.TextView) cell.findViewById(R.id.textview_content_driver_name);
+        tv_content_damage_control = (com.rey.material.widget.TextView) cell.findViewById(R.id.textview_content_damage_control);
+        tv_content_truck = (com.rey.material.widget.TextView) cell.findViewById(R.id.textview_content_truck_type);
+        iv_driver_image = (ImageView) cell.findViewById(R.id.driver_image);
 
 
+      /*  Glide.with(ProfileActivity.this).load(Config.WEB_URL+"vehicle_details/"+img).error(R.drawable.truck_front_ico).into(iv_vec_front);
+        Glide.with(ProfileActivity.this).load(Config.WEB_URL+"vehicle_details/"+img1).error(R.drawable.truck_side_ico).into(iv_vec_side);
+        Glide.with(ProfileActivity.this).load(Config.WEB_URL+"vehicle_details/"+img2).error(R.drawable.truck_back_ico).into(iv_vec_back);
+        Glide.with(ProfileActivity.this).load(Config.WEB_URL+"vehicle_details/"+img3).into(iv_vec_rc);
+        Glide.with(ProfileActivity.this).load(Config.WEB_URL+"vehicle_details/"+img4).into(iv_vec_ins);*/
 
+        mv_datas = ar_drv_list.get(position);
+
+
+        bidding = mv_datas.getBidding();
+        Log.e("tag","ss: "+mv_datas.getBidding());
+
+        tv_title_bidding.setText("$ "+bidding);
         tv_title_truck.setText(mv_datas.getTruck_type());
         tv_title_driver_name.setText(mv_datas.getName());
 
 
 
 
+        tv_content_bidding.setText("$ "+bidding);
+        tv_content_truck.setText(mv_datas.getTruck_type());
+        tv_content_driver_name.setText(mv_datas.getName());
+        tv_content_damage_control.setText(mv_datas.getDamage_control());
+
+        Glide.with(act).load(Config.WEB_URL+"driver_details/"+mv_datas.getDriver_image()).into(iv_driver_image);
 
 
 
-
+        iv_driver_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("tag", "clik");
+                dialog2.show();
+                tr_front = mv_datas.getTruck_front();
+                tr_back  = mv_datas.getTruck_back();
+                tr_side  = mv_datas.getTruck_side();
+            }
+        });
 
 
         btn_confirm = (ImageView) cell.findViewById(R.id.imageView_doubletick);
@@ -166,13 +208,7 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
             }
         });
 
-        iv_driver_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.e("tag", "clik");
-                dialog2.show();
-            }
-        });
+
 
 
         dialog2 = new Dialog(DriversListAdapter.this.getContext());
@@ -251,8 +287,15 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
             @Override
             public void onClick(View view) {
                 dialog1.dismiss();
+
+                editor.putString("payment_amount",bidding);
+                editor.commit();
+
                 Intent i = new Intent(DriversListAdapter.this.getContext(), Payment_Details.class);
                 getContext().startActivity(i);
+
+
+
                 //finish();
             }
         });
@@ -304,19 +347,17 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
 
             View view = layoutInflater.inflate(layouts[position], container, false);
             container.addView(view);
-           /*FontsManager.initFormAssets(getApplicationContext(), "fonts/lato.ttf");       //initialization
-            FontsManager.changeFonts((Activity) getApplicationContext());*/
 
             if (position == 0) {
-
-
+                ImageView iv_trk = (ImageView) view.findViewById(R.id.image);
+                Glide.with(act).load(Config.WEB_URL+"vehicle_details/"+tr_front).into(iv_trk);
             } else if (position == 1) {
-
+                ImageView iv_trk = (ImageView) view.findViewById(R.id.image);
+                Glide.with(act).load(Config.WEB_URL+"vehicle_details/"+tr_side).into(iv_trk);
             } else {
-
-
+                ImageView iv_trk = (ImageView) view.findViewById(R.id.image);
+                Glide.with(act).load(Config.WEB_URL+"vehicle_details/"+tr_back).into(iv_trk);
             }
-
 
             return view;
         }
@@ -339,20 +380,6 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
         }
 
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-            String title;
-
-            if (position == 0) {
-                title = "Current";
-            } else if (position == 1) {
-                title = "History";
-            } else {
-                title = "Upcoming";
-            }
-
-            return title;
-        }
 
 
     }

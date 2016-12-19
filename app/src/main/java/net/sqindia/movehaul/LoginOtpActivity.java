@@ -372,7 +372,7 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
                     Log.d("tag", "<-----Status----->" + status);
                     if (status.equals("true")) {
 
-                        String id = jo.getString("driver_id");
+                        String id = jo.getString("customer_id");
                         String token = jo.getString("token");
                         String mobile = jo.getString("customer_mobile");
                         String email = jo.getString("customer_email");

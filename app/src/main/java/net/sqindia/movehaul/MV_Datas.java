@@ -19,7 +19,15 @@ public class MV_Datas {
     String damage_control;
     String truck_type;
     String bidding;
+    String rating;
 
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
 
     public String getTruck_type() {
         return truck_type;
