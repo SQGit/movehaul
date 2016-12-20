@@ -259,6 +259,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 if(!(et_username.getText().toString().isEmpty())){
                     if(!(et_email.getText().toString().isEmpty())){
 
+                        customer_name = et_username.getText().toString();
+                        customer_email = et_email.getText().toString();
                         new profile_update().execute();
 
                     }
@@ -295,6 +297,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         tv_txt1.setTypeface(tf);
         tv_txt2.setTypeface(tf);
         tv_txt3.setTypeface(tf);
+        btn_yes.setTypeface(tf);
+        btn_no.setTypeface(tf);
 
         pickuplv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -652,7 +656,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     CameraPosition cameraPosition = new CameraPosition.Builder()
                             .target(latLong).zoom(15f).build();
 
-                    mMap.setMyLocationEnabled(false);
+                    mMap.setMyLocationEnabled(true);
                     mMap.getUiSettings().setMyLocationButtonEnabled(true);
                     mMap.animateCamera(CameraUpdateFactory
                             .newCameraPosition(cameraPosition));
@@ -958,7 +962,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(latLong).zoom(15f).build();
 
-            mMap.setMyLocationEnabled(false);
+            mMap.setMyLocationEnabled(true);
             mMap.getUiSettings().setMyLocationButtonEnabled(true);
             mMap.animateCamera(CameraUpdateFactory
                     .newCameraPosition(cameraPosition));
@@ -1058,12 +1062,16 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 JSONObject jsonObject = new JSONObject();
                 try {
 
+                    Log.e("tag",customer_name);
+                    Log.e("tag",customer_email);
+
                     jsonObject.put("customer_name", customer_name);
                     jsonObject.put("customer_email", customer_email);
                     String json = jsonObject.toString();
                     return s = HttpUtils.makeRequest1(net.sqindia.movehaul.Config.WEB_URL + "customer/customerupdate",json,id,token);
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Log.e("tag",e.toString());
                 }
                 return null;
 
@@ -1100,6 +1108,11 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                         editor.commit();
 
                         Log.e("tag","img: "+Config.WEB_URL+"customer_details/"+img);
+                        Log.e("tag","img: "+name);
+                        Log.e("tag","img: "+email);
+
+                        tv_name.setText(name);
+                        tv_email.setText(email);
 
                         //Glide.with(DashboardNavigation.this).load(new File(str_profile_img)).into(btn_editProfile_img);
 
