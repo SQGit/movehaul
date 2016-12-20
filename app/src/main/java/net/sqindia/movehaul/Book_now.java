@@ -809,7 +809,7 @@ public class Book_now extends Activity {
 
                 String responseString = null;
                 HttpClient httpclient = new DefaultHttpClient();
-                HttpPost httppost = new HttpPost(net.sqindia.movehaul.Config.WEB_URL + "customer/booking");
+                HttpPost httppost = new HttpPost("http://104.197.80.225:3030/"+ "customer/booking");
                 httppost.setHeader("id", id);
                 httppost.setHeader("sessiontoken", token);
 
@@ -825,30 +825,17 @@ public class Book_now extends Activity {
 
 
                 try {
-
-                    JSONObject jsonObject = new JSONObject();
-
-               /* try {
-                    jsonObject.put("description", str_apt_description);
-                    jsonObject.put("complaint", str_complaint);
-                    json = jsonObject.toString();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }*/
-
-
                     MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-
-
                     File sourceFile = new File(selectedPhotos.get(0));
-                    Log.e("tag3", "" + sourceFile);
+                    Log.e("tag3", "qqL: " + sourceFile);
                     entity.addPart("bookinggoods", new FileBody(sourceFile, "image/jpeg"));
-                    entity.addPart("bookinggoods", new FileBody(sourceFile, "image/jpeg"));
+                    //entity.addPart("bookinggoods", new FileBody(sourceFile, "image/jpeg"));
                     httppost.setEntity(entity);
                     HttpResponse response = httpclient.execute(httppost);
                     HttpEntity r_entity = response.getEntity();
                     int statusCode = response.getStatusLine().getStatusCode();
-                    Log.e("tag", response.getStatusLine().toString());
+                    Log.e("tag3", response.getStatusLine().toString());
+                    Log.e("tag3","cd:"+statusCode);
                     if (statusCode == 200) {
                         responseString = EntityUtils.toString(r_entity);
                     } else {
@@ -857,8 +844,10 @@ public class Book_now extends Activity {
                     }
                 } catch (ClientProtocolException e) {
                     responseString = e.toString();
+                    Log.e("tag3","ss"+responseString);
                 } catch (IOException e) {
                     responseString = e.toString();
+                    Log.e("tag3","ss2"+responseString);
                 }
                 return responseString;
 
