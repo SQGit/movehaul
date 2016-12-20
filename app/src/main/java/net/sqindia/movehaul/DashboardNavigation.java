@@ -659,7 +659,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 destination.append(place1.getAddress());
                 Log.e("tag", "place111" + place1.getAddress());
 
-                if (mMap != null) {
+               /* if (mMap != null) {
                     //mMap.getUiSettings().setZoomControlsEnabled(false);
                     latLong = place1.getLatLng();
                     double latit = latLong.latitude;
@@ -684,7 +684,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
                     );
 
-                }
+                }*/
 
             }
 
