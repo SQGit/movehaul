@@ -96,7 +96,7 @@ public class Job_review extends Activity {
 
         btn_continue.setEnabled(false);
 
-        new CountDownTimer(30000, 1000) { // adjust the milli seconds here
+        new CountDownTimer(20000, 1000) { // adjust the milli seconds here
 
             public void onTick(long millisUntilFinished) {
 
@@ -130,7 +130,7 @@ public class Job_review extends Activity {
                 //vibrator.cancel();
                 Intent i = new Intent(Job_review.this,DriversList.class);
                 startActivity(i);
-                finish();
+                //finish();
 
             }
         });
@@ -217,9 +217,10 @@ public class Job_review extends Activity {
 
 
                                 String booking_id = jos.getString("booking_id");
-                                String customer_id = jos.getString("customer_id");
+                                String customer_id = jos.getString("driver_id");
                                 String pickup_location = jos.getString("pickup_location");
                                 String drop_location = jos.getString("drop_location");
+                                String delivery_address = jos.getString("delivery_address");
                                 String goods_type = jos.getString("goods_type");
                                 String description = jos.getString("description");
                                 String booking_time = jos.getString("booking_time");
@@ -237,7 +238,7 @@ public class Job_review extends Activity {
 
                                 tv_pickup.setText(pickup_location);
                                 tv_drop.setText(drop_location);
-                                tv_delivery.setText(drop_location);
+                                tv_delivery.setText(delivery_address);
                                 tv_date.setText(part1);
                                 tv_time.setText(part2);
                                 tv_truck.setText(truck_type);

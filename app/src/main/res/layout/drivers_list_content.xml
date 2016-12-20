@@ -40,7 +40,7 @@
                     android:paddingTop="@dimen/_7sdp">
 
                     <com.rey.material.widget.TextView
-                        android:id="@+id/textview_cosst"
+                        android:id="@+id/textview_content_bidding"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="top|center"
@@ -101,8 +101,8 @@
                         android:textColor="@color/redColor"
                         android:textSize="@dimen/_13sdp" />
 
-                    <TextView
-                        android:id="@+id/textvk_from"
+                    <com.rey.material.widget.TextView
+                        android:id="@+id/textview_content_driver_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Samson"
@@ -118,11 +118,10 @@
                         android:textColor="@color/redColor"
                         android:textSize="@dimen/_13sdp" />
 
-                    <TextView
-                        android:id="@+id/textview_bom"
+                    <com.rey.material.widget.TextView
+                        android:id="@+id/textview_content_damage_control"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         android:text="No Damage, 2014 model"
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/_15sdp" />
@@ -136,8 +135,8 @@
                         android:textColor="@color/redColor"
                         android:textSize="@dimen/_13sdp" />
 
-                    <TextView
-                        android:id="@+id/textview_bo_from"
+                    <com.rey.material.widget.TextView
+                        android:id="@+id/textview_content_truck_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Heavy Load"

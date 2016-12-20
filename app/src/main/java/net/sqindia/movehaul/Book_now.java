@@ -257,7 +257,7 @@ public class Book_now extends Activity {
 
                 if(!(et_delivery_address.getText().toString().trim().isEmpty())){
                     if(!(et_goodstype.getText().toString().trim().isEmpty())){
-                        if(!(et_goodstype.getText().toString().trim().isEmpty())){
+                        if(!(et_trucktype.getText().toString().trim().isEmpty())){
                             if (!(et_description.getText().toString().trim().isEmpty())) {
 
                                 str_delivery_address = et_delivery_address.getText().toString();

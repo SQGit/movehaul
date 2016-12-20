@@ -46,6 +46,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -71,11 +72,27 @@ import com.rey.material.widget.Button;
 import com.rey.material.widget.TextView;
 import com.sloop.fonts.FontsManager;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import me.iwf.photopicker.PhotoPickerActivity;
+import me.iwf.photopicker.utils.PhotoPickerIntent;
 
 /**
  * Created by SQINDIA on 10/26/2016.
@@ -86,6 +103,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
     private static final int REQUEST_CODE_AUTOCOMPLETE1 = 2;
+    private static final int REQUEST_PROFILE = 5;
     private static String TAG = "MAP LOCATION";
     protected String mAddressOutput;
     protected String mAreaOutput;
@@ -102,25 +120,27 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     TextInputLayout flt_pickup, flt_droplocation;
     ImageView btn_menu, rightmenu;
     android.widget.LinearLayout droplv, pickuplv;
-    Dialog dialog1,dialog2;
-    Button btn_yes, btn_no,btn_update;
+    Dialog dialog1, dialog2;
+    Button btn_yes, btn_no, btn_update;
     int exit_status;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     Typeface tf;
     android.widget.TextView tv_txt1, tv_txt2, tv_txt3;
-    String service_id, service_token, str_lati, str_longi, str_locality, str_address,customer_mobile,customer_email,customer_name;
+    String service_id, service_token, str_lati, str_longi, str_locality, str_address, customer_mobile, customer_email, customer_name, str_profile_img;
     Geocoder geocoder;
     List<Address> addresses;
     LinearLayout lt_first, lt_last;
     FrameLayout lt_second, lt_frame;
     SupportMapFragment mapFragment;
+    ImageView btn_editProfile, btn_close, btn_editProfile_img;
+    EditText et_username, et_email;
+    String id, token;
+    TextInputLayout flt_uname, flt_email;
+    ArrayList<String> selectedPhotos = new ArrayList<>();
     private GoogleMap mMap;
     private LatLng mCenterLatLong;
     private AddressResultReceiver mResultReceiver;
-    ImageView btn_editProfile,btn_close;
-    EditText et_username,et_email;
-    TextInputLayout flt_uname,flt_email;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -160,6 +180,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         lt_last = (LinearLayout) findViewById(R.id.last);
         lt_frame = (FrameLayout) findViewById(R.id.frame);
         btn_editProfile = (ImageView) findViewById(R.id.imageView2);
+        btn_editProfile_img = (ImageView) findViewById(R.id.imageView);
 
         Typeface type = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
         flt_pickup.setTypeface(type);
@@ -169,6 +190,10 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         customer_mobile = sharedPreferences.getString("customer_mobile", "");
         customer_email = sharedPreferences.getString("customer_email", "");
         customer_name = sharedPreferences.getString("customer_name", "");
+
+        id = sharedPreferences.getString("id", "");
+        token = sharedPreferences.getString("token", "");
+
         mapFragment.getMapAsync(this);
         mResultReceiver = new AddressResultReceiver(new Handler());
         if (checkPlayServices()) {
@@ -202,14 +227,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        btn_editProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog2.show();
-                et_username.setText(customer_name);
-                et_email.setText(customer_email);
-            }
-        });
 
         dialog2 = new Dialog(DashboardNavigation.this);
         dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -304,6 +321,31 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             @Override
             public void onClick(View view) {
                 dialog1.dismiss();
+            }
+        });
+
+
+        btn_editProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog2.show();
+                et_username.setText(customer_name);
+                et_email.setText(customer_email);
+            }
+        });
+
+
+        btn_editProfile_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                PhotoPickerIntent intent = new PhotoPickerIntent(DashboardNavigation.this);
+                intent.setPhotoCount(1);
+                intent.setColumn(3);
+                intent.setShowCamera(true);
+                startActivityForResult(intent, REQUEST_PROFILE);
+
+
             }
         });
 
@@ -403,10 +445,9 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             @Override
             public void onClick(View view) {
 
-                if(destination.getText().toString().isEmpty()){
-                    Toast.makeText(getApplicationContext(),"Choose Drop Location",Toast.LENGTH_LONG).show();
-                }
-                else {
+                if (destination.getText().toString().isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Choose Drop Location", Toast.LENGTH_LONG).show();
+                } else {
 
                     editor.putString("pickup", starting.getText().toString());
                     editor.putString("drop", destination.getText().toString());
@@ -653,6 +694,22 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         } else if (resultCode == RESULT_CANCELED) {
             // Indicates that the activity closed before a selection was made. For example if
             // the user pressed the back button.
+        }
+
+        List<String> photos = null;
+        if (resultCode == RESULT_OK && requestCode == REQUEST_PROFILE) {
+            if (data != null) {
+                photos = data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS);
+            }
+            selectedPhotos.clear();
+            if (photos != null) {
+                selectedPhotos.addAll(photos);
+            }
+            Log.d("tag", "img: " + selectedPhotos.get(0));
+            str_profile_img = selectedPhotos.get(0);
+            //Picasso.with(ProfileActivity.this).load(new File(str_profile_img)).into(iv_profile);
+            new profile_update().execute();
+            // Glide.with(DashboardNavigation.this).load(new File(str_profile_img)).into(btn_editProfile_img);
         }
     }
 
@@ -918,6 +975,108 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         tv_txt3.setText("Exit");
     }
 
+    public class profile_update extends AsyncTask<String, Void, String> {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Log.e("tag", "reg_preexe");
+
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            String json = "", jsonStr = "";
+
+            try {
+
+                //driver/driverupdate
+                String responseString = null;
+                HttpClient httpclient = new DefaultHttpClient();
+                HttpPost httppost = new HttpPost(Config.WEB_URL + "customer/customerupdate");
+
+
+                httppost.setHeader("id", id);
+                httppost.setHeader("sessiontoken", token);
+                httppost.setHeader("customer_email", customer_email);
+                httppost.setHeader("customer_name",customer_name);
+
+
+                try {
+
+                    JSONObject jsonObject = new JSONObject();
+
+
+                    MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+                    entity.addPart("customerimage", new FileBody(new File(str_profile_img), "image/jpeg"));
+                    Log.e("tag", "img: if ");
+                    httppost.setEntity(entity);
+
+
+                    HttpResponse response = httpclient.execute(httppost);
+                    HttpEntity r_entity = response.getEntity();
+                    int statusCode = response.getStatusLine().getStatusCode();
+                    Log.e("tag", response.getStatusLine().toString());
+                    if (statusCode == 200) {
+                        responseString = EntityUtils.toString(r_entity);
+                    } else {
+                        responseString = "Error occurred! Http Status Code: "
+                                + statusCode;
+                    }
+                } catch (ClientProtocolException e) {
+                    responseString = e.toString();
+                } catch (IOException e) {
+                    responseString = e.toString();
+                }
+                return responseString;
+
+
+            } catch (Exception e) {
+                Log.e("InputStream0", e.getLocalizedMessage());
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("tag", "tag" + s);
+
+
+
+            if (s != null) {
+                try {
+                    JSONObject jo = new JSONObject(s);
+                    String status = jo.getString("status");
+                    String msg = jo.getString("driverimage");
+                    Log.d("tag", "<-----Status----->" + status);
+
+                    if (status.equals("true")) {
+
+                        Glide.with(DashboardNavigation.this).load(new File(str_profile_img)).into(btn_editProfile_img);
+
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Network Errror", Toast.LENGTH_LONG).show();
+
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.e("tag", "nt" + e.toString());
+                    //Toast.makeText(getApplicationContext(), "Network Errror0", Toast.LENGTH_LONG).show();
+
+                }
+            } else {
+                //Toast.makeText(getApplicationContext(), "Network Errror1", Toast.LENGTH_LONG).show();
+            }
+
+        }
+
+    }
 
     class AddressResultReceiver extends ResultReceiver {
         public AddressResultReceiver(Handler handler) {
@@ -947,10 +1106,9 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
     }
 
-    public class updateLocation extends AsyncTask<String, Void, String>   {
+    public class updateLocation extends AsyncTask<String, Void, String> {
         @Override
-        protected void onPreExecute()
-        {
+        protected void onPreExecute() {
             super.onPreExecute();
             Log.e("tag", "reg_preexe");
         }
