@@ -87,7 +87,7 @@ public class Book_now extends Activity {
     Dialog dialog1;
     ImageView btn_close;
     TextView jobtv1,jobtv2,jobtv3,jobtv4,msg,tv_snack;
-
+    String pickup_location,drop_location;
     ArrayList<String> mdatas;
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
     private static final int INTENT_REQUEST_GET_N_IMAGES = 14;
@@ -108,7 +108,7 @@ public class Book_now extends Activity {
     ProgressDialog mProgressDialog;
     LinearLayout ll;
     ArrayList<String> selectedPhotos = new ArrayList<>();
-    String str_delivery_address,str_pickup,str_drop,str_goods_type,str_truck_type,str_desc,str_goods_pic;
+    String str_delivery_address,str_pickup,str_drop,str_goods_type,str_truck_type,str_desc,str_goods_pic,str_profile_img;
     LinearLayout.LayoutParams lp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,8 +156,14 @@ public class Book_now extends Activity {
 
         id = sharedPreferences.getString("id", "");
         token = sharedPreferences.getString("token", "");
+        pickup_location = sharedPreferences.getString("pickup","");
+        drop_location = sharedPreferences.getString("drop","");
         Log.e("tag","id: "+id);
         Log.e("tag","tok: "+token);
+
+
+        Log.e("tag","pick: "+pickup_location);
+        Log.e("tag","drop: "+drop_location);
 
         snackbar = Snackbar
                 .make(findViewById(R.id.top), "Network Error! Please Try Again Later.", Snackbar.LENGTH_LONG);
@@ -449,7 +455,7 @@ public class Book_now extends Activity {
 
            //Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
             //img_view.setImageBitmap(myBitmap);
-
+            str_profile_img = selectedPhotos.get(0);
 
             Glide.with(Book_now.this).load(new File(selectedPhotos.get(0))).into(img_view);
             ll.removeAllViews();
@@ -807,9 +813,103 @@ public class Book_now extends Activity {
 
             if (selectedPhotos.size() > 0) {
 
+                Log.e("tag","p : "+pickup_location);
+                Log.e("tag","pqr :" +drop_location);
+
+
+                try {
+                    //driver/driverupdate
+                    String responseString = null;
+                    HttpClient httpclient = new DefaultHttpClient();
+                    HttpPost httppost = new HttpPost(net.sqindia.movehaul.Config.WEB_URL + "customer/booking");
+                    httppost.setHeader("id", id);
+                    httppost.setHeader("sessiontoken", token);
+                    httppost.setHeader("pickup_location", pickup_location);
+                    httppost.setHeader("drop_location", drop_location);
+                    httppost.setHeader("delivery_address",str_delivery_address);
+                    httppost.setHeader("goods_type", str_goods_type);
+                    httppost.setHeader("truck_type",str_truck_type);
+                    httppost.setHeader("description",str_desc);
+                    httppost.setHeader("booking_time",str_time);
+
+
+
+
+
+
+
+    /*                httppost.setHeader("Accept", "application/json");
+                    httppost.setHeader("Content-type", "application/x-www-form-urlencoded");
+                    ;
+
+               */
+
+                    HttpResponse response = null;
+                    HttpEntity r_entity = null;
+
+
+                    try {
+                        Log.e("tag0", "img: if "+str_profile_img);
+                        MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+                        entity.addPart("bookinggoods", new FileBody(new File(str_profile_img), "image/jpeg"));
+                        httppost.setEntity(entity);
+
+                        try {
+                             response = httpclient.execute(httppost);
+                        }
+                        catch (Exception e){
+                            Log.e("tag","ds:"+e.toString());
+                        }
+
+
+                        try {
+                            r_entity = response.getEntity();
+                        }
+                        catch (Exception e){
+                            Log.e("tag","dsa:"+e.toString());
+                        }
+
+
+
+                        int statusCode = response.getStatusLine().getStatusCode();
+                        Log.e("tag1", response.getStatusLine().toString());
+                        if (statusCode == 200) {
+                            responseString = EntityUtils.toString(r_entity);
+                            Log.e("tag2", responseString);
+                        } else {
+                            responseString = "Error occurred! Http Status Code: "
+                                    + statusCode;
+                            Log.e("tag3", responseString);
+                        }
+                    } catch (ClientProtocolException e) {
+                        responseString = e.toString();
+                        Log.e("tag44", responseString);
+                    } catch (IOException e) {
+                        responseString = e.toString();
+                        Log.e("tag45", responseString);
+                    }
+                    return responseString;
+                } catch (Exception e) {
+                    Log.e("tag_InputStream0", e.getLocalizedMessage());
+                }
+                return null;
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
                 String responseString = null;
                 HttpClient httpclient = new DefaultHttpClient();
-                HttpPost httppost = new HttpPost("http://104.197.80.225:3030/"+ "customer/booking");
+                HttpPost httppost = new HttpPost("http://104.197.80.225:3030/customer/booking");
                 httppost.setHeader("id", id);
                 httppost.setHeader("sessiontoken", token);
 
@@ -824,32 +924,50 @@ public class Book_now extends Activity {
 
 
 
-                try {
+             //   try {
                     MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-                    File sourceFile = new File(selectedPhotos.get(0));
-                    Log.e("tag3", "qqL: " + sourceFile);
-                    entity.addPart("bookinggoods", new FileBody(sourceFile, "image/jpeg"));
-                    //entity.addPart("bookinggoods", new FileBody(sourceFile, "image/jpeg"));
+                    entity.addPart("bookinggoods", new FileBody(new File(selectedPhotos.get(0)), "image/jpeg"));
+                   // entity.addPart("bookinggoods", new FileBody(sourceFile, "image/jpeg"));
                     httppost.setEntity(entity);
-                    HttpResponse response = httpclient.execute(httppost);
+                HttpResponse response = null;
+                try {
+                    response = httpclient.execute(httppost);
                     HttpEntity r_entity = response.getEntity();
-                    int statusCode = response.getStatusLine().getStatusCode();
-                    Log.e("tag3", response.getStatusLine().toString());
-                    Log.e("tag3","cd:"+statusCode);
-                    if (statusCode == 200) {
-                        responseString = EntityUtils.toString(r_entity);
+                    Log.e("tag3",r_entity.toString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.e("tag3","ss21"+responseString);
+                }
+
+                    //int statusCode = response.getStatusLine().getStatusCode();
+                   // Log.e("tag3", response.getStatusLine().toString());
+                   // Log.e("tag3","cd:"+statusCode);
+                   *//* if (statusCode == 200) {
+                       // responseString = EntityUtils.toString(r_entity);
                     } else {
                         responseString = "Error occurred! Http Status Code: "
                                 + statusCode;
-                    }
-                } catch (ClientProtocolException e) {
-                    responseString = e.toString();
-                    Log.e("tag3","ss"+responseString);
-                } catch (IOException e) {
+                    }*//*
+               *//* }  catch (IOException e) {
+
+                    Log.e("tag3","ss1"+responseString);
                     responseString = e.toString();
                     Log.e("tag3","ss2"+responseString);
-                }
+                }*//*
                 return responseString;
+
+
+
+                */
+
+
+
+
+
+
+
+
+
 
 
 
@@ -918,7 +1036,7 @@ public class Book_now extends Activity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("tag", "nt" + e.toString());
-                    // Toast.makeText(getApplicationContext(),"Network Errror0",Toast.LENGTH_LONG).show();
+                     Toast.makeText(getApplicationContext(),"Network Errror. Please Try Again Later",Toast.LENGTH_LONG).show();
                 }
             } else {
                 // Toast.makeText(getApplicationContext(),"Network Errror1",Toast.LENGTH_LONG).show();

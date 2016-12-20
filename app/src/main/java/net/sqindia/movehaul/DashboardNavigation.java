@@ -67,7 +67,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolylineOptions;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.TextView;
 import com.sloop.fonts.FontsManager;
@@ -108,7 +107,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     protected String mAddressOutput;
     protected String mAreaOutput;
     protected String mCityOutput;
-    protected String mStateOutput;
+    protected String mStreetOutput;
     protected GoogleApiClient mGoogleApiClient;
     Context mContext;
     Toolbar toolbar;
@@ -227,6 +226,10 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
+        if(!(sharedPreferences.getString("customer_image","").equals(""))){
+            Glide.with(DashboardNavigation.this).load(Config.WEB_URL+"customer_details/"+sharedPreferences.getString("customer_image","")).into(btn_editProfile_img);
+        }
+
 
         dialog2 = new Dialog(DashboardNavigation.this);
         dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -247,9 +250,25 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         flt_uname.setTypeface(tf);
         flt_email.setTypeface(tf);
         btn_update.setTypeface(tf);
+
+
         btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if(!(et_username.getText().toString().isEmpty())){
+                    if(!(et_email.getText().toString().isEmpty())){
+
+                        new profile_update().execute();
+
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(),"Enter User Email",Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"Enter User Name",Toast.LENGTH_SHORT).show();
+                }
                 dialog2.dismiss();
             }
         });
@@ -449,7 +468,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     Toast.makeText(getApplicationContext(), "Choose Drop Location", Toast.LENGTH_LONG).show();
                 } else {
 
-                    editor.putString("pickup", starting.getText().toString());
+                    editor.putString("pickup", mStreetOutput +", "+mCityOutput);
                     editor.putString("drop", destination.getText().toString());
                     editor.commit();
 
@@ -832,16 +851,20 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     geocoder = new Geocoder(DashboardNavigation.this, Locale.getDefault());
                     try {
                         addresses = geocoder.getFromLocation(mCenterLatLong.latitude, mCenterLatLong.longitude, 1);
+                        str_locality = addresses.get(0).getLocality();
+                        str_address = addresses.get(0).getAddressLine(0);
+                        Log.e("tagplace0", "lati: " + str_lati + "longi: " + str_longi + "\nlocality: " + str_locality + "\taddr0: " + str_address +
+                                "\naddr1: " + addresses.get(0).getAddressLine(1) + "\n addr2: " + addresses.get(0).getAddressLine(2) + "\n adminarea: "
+                                + addresses.get(0).getAdminArea() + "\n feature name: " + addresses.get(0).getFeatureName() + "\n Sub loca: "
+                                + addresses.get(0).getSubLocality() + "\n subadmin: " + addresses.get(0).getSubAdminArea()
+                                + "\n premisis: " + addresses.get(0).getPremises() + "\n postal " + addresses.get(0).getPostalCode());
+
+                        mStreetOutput = str_address;
+                        mCityOutput = str_locality;
+
                     } catch (Exception e) {
                         Log.e("tag", "er:" + e.toString());
                     }
-                    str_locality = addresses.get(0).getLocality();
-                    str_address = addresses.get(0).getAddressLine(0);
-                    Log.e("tagplace0", "lati: " + str_lati + "longi: " + str_longi + "\nlocality: " + str_locality + "\taddr0: " + str_address +
-                            "\naddr1: " + addresses.get(0).getAddressLine(1) + "\n addr2: " + addresses.get(0).getAddressLine(2) + "\n adminarea: "
-                            + addresses.get(0).getAdminArea() + "\n feature name: " + addresses.get(0).getFeatureName() + "\n Sub loca: "
-                            + addresses.get(0).getSubLocality() + "\n subadmin: " + addresses.get(0).getSubAdminArea()
-                            + "\n premisis: " + addresses.get(0).getPremises() + "\n postal " + addresses.get(0).getPostalCode());
 
 
                     new updateLocation().execute();
@@ -988,56 +1011,64 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         @Override
         protected String doInBackground(String... strings) {
 
-            String json = "", jsonStr = "";
 
-            try {
+            if(selectedPhotos.size()>0) {
+                String json = "", jsonStr = "";
+                try {
+                    //driver/driverupdate
+                    String responseString = null;
+                    HttpClient httpclient = new DefaultHttpClient();
+                    HttpPost httppost = new HttpPost(Config.WEB_URL + "customer/customerupdate");
+                    httppost.setHeader("id", id);
+                    httppost.setHeader("sessiontoken", token);
+                    httppost.setHeader("customer_email", customer_email);
+                    httppost.setHeader("customer_name", customer_name);
+                    try {
 
-                //driver/driverupdate
-                String responseString = null;
-                HttpClient httpclient = new DefaultHttpClient();
-                HttpPost httppost = new HttpPost(Config.WEB_URL + "customer/customerupdate");
+                        MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+                        entity.addPart("customerimage", new FileBody(new File(str_profile_img), "image/jpeg"));
+                        Log.e("tag", "img: if ");
+                        httppost.setEntity(entity);
+                        HttpResponse response = httpclient.execute(httppost);
+                        HttpEntity r_entity = response.getEntity();
+                        int statusCode = response.getStatusLine().getStatusCode();
+                        Log.e("tag", response.getStatusLine().toString());
+                        if (statusCode == 200) {
+                            responseString = EntityUtils.toString(r_entity);
+                        } else {
+                            responseString = "Error occurred! Http Status Code: "
+                                    + statusCode;
+                        }
+                    } catch (ClientProtocolException e) {
+                        responseString = e.toString();
+                    } catch (IOException e) {
+                        responseString = e.toString();
+                    }
+                    return responseString;
+                } catch (Exception e) {
+                    Log.e("InputStream0", e.getLocalizedMessage());
+                }
+                return null;
+            }
+            else{
 
+                Log.e("tag","no poto");
 
-                httppost.setHeader("id", id);
-                httppost.setHeader("sessiontoken", token);
-                httppost.setHeader("customer_email", customer_email);
-                httppost.setHeader("customer_name",customer_name);
-
-
+                String  s = "";
+                JSONObject jsonObject = new JSONObject();
                 try {
 
-                    JSONObject jsonObject = new JSONObject();
-
-
-                    MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-                    entity.addPart("customerimage", new FileBody(new File(str_profile_img), "image/jpeg"));
-                    Log.e("tag", "img: if ");
-                    httppost.setEntity(entity);
-
-
-                    HttpResponse response = httpclient.execute(httppost);
-                    HttpEntity r_entity = response.getEntity();
-                    int statusCode = response.getStatusLine().getStatusCode();
-                    Log.e("tag", response.getStatusLine().toString());
-                    if (statusCode == 200) {
-                        responseString = EntityUtils.toString(r_entity);
-                    } else {
-                        responseString = "Error occurred! Http Status Code: "
-                                + statusCode;
-                    }
-                } catch (ClientProtocolException e) {
-                    responseString = e.toString();
-                } catch (IOException e) {
-                    responseString = e.toString();
+                    jsonObject.put("customer_name", customer_name);
+                    jsonObject.put("customer_email", customer_email);
+                    String json = jsonObject.toString();
+                    return s = HttpUtils.makeRequest1(net.sqindia.movehaul.Config.WEB_URL + "customer/customerupdate",json,id,token);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                return responseString;
+                return null;
 
-
-            } catch (Exception e) {
-                Log.e("InputStream0", e.getLocalizedMessage());
             }
 
-            return null;
         }
 
         @Override
@@ -1051,12 +1082,26 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 try {
                     JSONObject jo = new JSONObject(s);
                     String status = jo.getString("status");
-                    String msg = jo.getString("driverimage");
+
                     Log.d("tag", "<-----Status----->" + status);
 
                     if (status.equals("true")) {
 
-                        Glide.with(DashboardNavigation.this).load(new File(str_profile_img)).into(btn_editProfile_img);
+                        String img = jo.getString("customer_image");
+                        String name = jo.getString("customer_name");
+                        String email = jo.getString("customer_email");
+
+
+                        Glide.with(DashboardNavigation.this).load(Config.WEB_URL+"customer_details/"+img).into(btn_editProfile_img);
+
+                        editor.putString("customer_image",img);
+                        editor.putString("customer_name",name);
+                        editor.putString("customer_email",email);
+                        editor.commit();
+
+                        Log.e("tag","img: "+Config.WEB_URL+"customer_details/"+img);
+
+                        //Glide.with(DashboardNavigation.this).load(new File(str_profile_img)).into(btn_editProfile_img);
 
                     } else {
                         Toast.makeText(getApplicationContext(), "Network Errror", Toast.LENGTH_LONG).show();
@@ -1093,7 +1138,10 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             mAddressOutput = resultData.getString(AppUtils.LocationConstants.RESULT_DATA_KEY);
             mAreaOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_AREA);
             mCityOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_CITY);
-            mStateOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_STREET);
+            mStreetOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_STREET);
+           // Log.e("tag0", mStreetOutput);
+           // Log.e("tag1",mCityOutput);
+           // Log.e("tag2",mAreaOutput);
             displayAddressOutput();
 
             // Show a toast message if an address was found.

@@ -52,7 +52,7 @@
                     android:paddingLeft="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_5sdp"/>
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imageView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
