@@ -184,54 +184,7 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
 
     }
 
-    public void updateList(final String smsMessage) {
 
-        Log.e("tag", "ss" + smsMessage);
-
-        /*char[] cArray = smsMessage.toCharArray();
-
-        et_otp1.setText(String.valueOf(cArray[0]));
-        et_otp2.setText(String.valueOf(cArray[1]));
-        et_otp3.setText(String.valueOf(cArray[2]));
-        et_otp4.setText(String.valueOf(cArray[3]));
-
-        Toast.makeText(LoginOtpActivity.this,"Message: "+smsMessage,Toast.LENGTH_LONG).show();*/
-    }
-
-    public void receiveSms(String message) {
-        Log.e("tag", "msgd4" + message);
-
-        //Toast.makeText(getApplicationContext(), "toast::" + message, Toast.LENGTH_LONG).show();
-
-        try {
-
-
-            char[] cArray = message.toCharArray();
-
-            et_otp1.setText(String.valueOf(cArray[0]));
-            et_otp2.setText("4");
-            et_otp3.setText(cArray[2]);
-            et_otp4.setText(cArray[3]);
-
-
-        } catch (Exception e) {
-            Log.e("tag", "asd: " + e.toString());
-        }
-
-
-       /* ComponentName receiver = new ComponentName(this, ReceiveSmsBroadcastReceiver.class);
-
-        PackageManager pm = this.getPackageManager();
-        pm.setComponentEnabledSetting(receiver,
-
-                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-
-                PackageManager.DONT_KILL_APP);
-
-        Toast.makeText(this, "Disabledbroadcseceiver", Toast.LENGTH_SHORT).show();*/
-
-
-    }
 
     public void recivedSms(String message) {
         try {
@@ -256,6 +209,11 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+
+
+
+
     }
 
     @Override
@@ -293,6 +251,9 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
 
                 if (editable.length() == 0) {
                     et_otp3.requestFocus();
+                   /* if(!et_otp3.getText().toString().isEmpty()){
+                        et_otp4.requestFocus();
+                    }*/
                 }
                 break;
         }
