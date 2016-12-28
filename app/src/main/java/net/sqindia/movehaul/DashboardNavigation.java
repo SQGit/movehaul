@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
@@ -23,6 +24,7 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -86,7 +88,10 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -103,7 +108,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
     private static final int REQUEST_CODE_AUTOCOMPLETE1 = 2;
     private static final int REQUEST_PROFILE = 5;
-    private static String TAG = "MAP LOCATION";
+    private static String TAG = "tag_MAP LOCATION";
     protected String mAddressOutput;
     protected String mAreaOutput;
     protected String mCityOutput;
@@ -125,8 +130,10 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     Typeface tf;
+    Snackbar snackbar;
+    android.widget.TextView tv_snack,tv_profile_name;
     android.widget.TextView tv_txt1, tv_txt2, tv_txt3;
-    String service_id, service_token, str_lati, str_longi, str_locality, str_address, customer_mobile, customer_email, customer_name, str_profile_img;
+    String current_time,service_id, service_token, str_lati, str_longi, str_locality, str_address, customer_mobile, customer_email, customer_name, str_profile_img;
     Geocoder geocoder;
     List<Address> addresses;
     LinearLayout lt_first, lt_last;
@@ -134,12 +141,13 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     SupportMapFragment mapFragment;
     ImageView btn_editProfile, btn_close, btn_editProfile_img;
     EditText et_username, et_email;
-    String id, token;
+    String id, token,mPickup_lat,mPickup_long,mDrop_lat,mDrop_long;
     TextInputLayout flt_uname, flt_email;
     ArrayList<String> selectedPhotos = new ArrayList<>();
     private GoogleMap mMap;
     private LatLng mCenterLatLong;
     private AddressResultReceiver mResultReceiver;
+    int diff;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -193,7 +201,48 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         id = sharedPreferences.getString("id", "");
         token = sharedPreferences.getString("token", "");
 
+
         mapFragment.getMapAsync(this);
+
+
+
+
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = df.format(c.getTime());
+        String[] parts = formattedDate.split(" ");
+        current_time = parts[1];
+
+
+
+
+        snackbar = Snackbar
+                .make(findViewById(R.id.top), "Network Error! Please Try Again Later.", Snackbar.LENGTH_SHORT);
+        snackbar.setActionTextColor(Color.RED);
+
+        View sbView = snackbar.getView();
+        tv_snack = (android.widget.TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        tv_snack.setTextColor(Color.WHITE);
+        tv_snack.setTypeface(tf);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         mResultReceiver = new AddressResultReceiver(new Handler());
         if (checkPlayServices()) {
             if (!AppUtils.isLocationEnabled(mContext)) {
@@ -255,14 +304,11 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if(!(et_username.getText().toString().isEmpty())){
                     if(!(et_email.getText().toString().isEmpty())){
-
                         customer_name = et_username.getText().toString();
                         customer_email = et_email.getText().toString();
                         new profile_update().execute();
-
                     }
                     else{
                         Toast.makeText(getApplicationContext(),"Enter User Email",Toast.LENGTH_SHORT).show();
@@ -347,7 +393,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             }
         });
 
-
         btn_editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -356,19 +401,14 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 et_email.setText(customer_email);
             }
         });
-
-
         btn_editProfile_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 PhotoPickerIntent intent = new PhotoPickerIntent(DashboardNavigation.this);
                 intent.setPhotoCount(1);
                 intent.setColumn(3);
                 intent.setShowCamera(true);
                 startActivityForResult(intent, REQUEST_PROFILE);
-
-
             }
         });
 
@@ -397,7 +437,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     }
                     applyFontToMenuItem(mi);
                 }
-
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
 
@@ -414,7 +453,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                                 tv_txt3.setText("Logout");
                                 return true;
                             }
-
                             default: {
                                 return true;
                             }
@@ -432,7 +470,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             public void onClick(View view) {
                 Intent i = new Intent(DashboardNavigation.this, Job_review.class);
                 startActivity(i);
-                finish();
+               // finish();
             }
         });
         tv_myTrips.setOnClickListener(new View.OnClickListener() {
@@ -440,7 +478,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             public void onClick(View view) {
                 Intent i = new Intent(DashboardNavigation.this, MyTrips.class);
                 startActivity(i);
-                finish();
+               // finish();
             }
         });
 
@@ -449,7 +487,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             public void onClick(View view) {
                 Intent i = new Intent(DashboardNavigation.this, Tracking.class);
                 startActivity(i);
-                finish();
+               // finish();
             }
         });
 
@@ -459,25 +497,72 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             public void onClick(View view) {
                 Intent i = new Intent(DashboardNavigation.this, Payment.class);
                 startActivity(i);
-                finish();
+               // finish();
             }
         });
+
+        tv_emergencyContacts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent goIntsd = new Intent(getApplicationContext(), EmergencyContacts.class);
+                startActivity(goIntsd);
+            }
+        });
+
+
+
+        if(!(sharedPreferences.getString("book_time","").equals(""))) {
+
+
+            String dateStart = current_time;
+            String dateStop = sharedPreferences.getString("book_time", "");
+            SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+            Date d1 = null;
+            Date d2 = null;
+            try {
+                d1 = format.parse(dateStart);
+                d2 = format.parse(dateStop);
+                long diff = d2.getTime() - d1.getTime();
+                long diffHours = diff / (60 * 60 * 1000) % 24;
+                diff = diffHours;
+                Log.e("test", diffHours + " hours, "+diff);
+            } catch (Exception e) {// TODO: handle exception        }
+
+            }
+        }
+        else{
+            diff = 7;
+        }
+
+
 
 
         btn_book_now.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if (destination.getText().toString().isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Choose Drop Location", Toast.LENGTH_LONG).show();
-                } else {
 
-                    editor.putString("pickup", mStreetOutput +", "+mCityOutput);
-                    editor.putString("drop", destination.getText().toString());
-                    editor.commit();
+                if(diff >= 0) {
 
-                    Intent i = new Intent(DashboardNavigation.this, Book_now.class);
-                    startActivity(i);
+                    if (destination.getText().toString().isEmpty()) {
+                        // Toast.makeText(getApplicationContext(), "Choose Drop Location", Toast.LENGTH_LONG).show();
+                        snackbar.show();
+                        tv_snack.setText("Choose Drop Location");
+                    } else {
+                        editor.putString("pickup", mStreetOutput + ", " + mCityOutput);
+                        editor.putString("drop", destination.getText().toString());
+                        editor.putString("pickup_lati", mPickup_lat);
+                        editor.putString("pickup_long", mPickup_long);
+                        editor.putString("drop_lati", mDrop_lat);
+                        editor.putString("drop_long", mDrop_long);
+                        editor.commit();
+                        Intent i = new Intent(DashboardNavigation.this, Book_now.class);
+                        startActivity(i);
+                    }
+                }
+                else{
+                    snackbar.show();
+                    tv_snack.setText("You already have current job. Please choose book later!");
                 }
             }
         });
@@ -490,13 +575,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             }
         });
 
-        tv_emergencyContacts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent goIntsd = new Intent(getApplicationContext(), EmergencyContacts.class);
-                startActivity(goIntsd);
-            }
-        });
+
     }
 
 
@@ -517,7 +596,12 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     public void onLocationChanged(Location location) {
         try {
             if (location != null)
-                Log.e("tag", "1234447" + location);
+             //   Log.e("tag", "1234447" + location.getLatitude());
+           // Log.e("tag", "1234448" + location.getLongitude());
+
+            mPickup_lat = String.valueOf(location.getLatitude());
+            mPickup_long = String.valueOf(location.getLongitude());
+
             changeMap(location);
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
 
@@ -669,7 +753,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
 
         } else if (requestCode == REQUEST_CODE_AUTOCOMPLETE1) {
-            Log.e("tag", "request111");
+            Log.e("tag", "request_drop");
 
             if (resultCode == RESULT_OK) {
                 // Get the user's selected place from the Intent.
@@ -681,6 +765,10 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
                 destination.append(place1.getAddress());
                 Log.e("tag", "place111" + place1.getAddress());
+                Log.e("tag","la00: "+place1.getLatLng());
+                mDrop_lat = String.valueOf(latLong.latitude);
+                mDrop_long = String.valueOf(latLong.longitude);
+
 
                /* if (mMap != null) {
                     //mMap.getUiSettings().setZoomControlsEnabled(false);
@@ -784,17 +872,17 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
     protected void displayAddressOutput() {
 
-        Log.e("tag", "output11111" + mAddressOutput);
+       // Log.e("tag00", "output11111" + mAddressOutput);
         //starting.setText(mAddressOutput);
         try {
             if (mAreaOutput != null)
                 // starting.setText(mAreaOutput+ "");
-                Log.e("tag", "output" + mAddressOutput);
+                Log.e("tag11", "output" + mAddressOutput);
             starting.setText("");
 
             starting.setText(mAddressOutput);
             //starting.setText(mAreaOutput);
-            Log.e("tag", "output" + mAreaOutput);
+         //   Log.e("tag22", "output" + mAreaOutput);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -865,13 +953,15 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
                         mStreetOutput = str_address;
                         mCityOutput = str_locality;
+                        mPickup_lat = str_lati;
+                        mPickup_long = str_longi;
 
                     } catch (Exception e) {
-                        Log.e("tag", "er:" + e.toString());
+                        Log.e("tag", "er_geocoder: " + e.toString());
                     }
 
 
-                    new updateLocation().execute();
+                   // new updateLocation().execute();
 
 
                 } catch (Exception e) {
@@ -935,7 +1025,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
     private void changeMap(Location location) {
 
-        Log.e(TAG, "Reaching map" + mMap);
+      //  Log.e(TAG, "Reaching map" + mMap);
 
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -1167,7 +1257,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
     }
 
-    public class updateLocation extends AsyncTask<String, Void, String> {
+    /*public class updateLocation extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -1225,7 +1315,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
         }
 
-    }
+    }*/
 
 
 }

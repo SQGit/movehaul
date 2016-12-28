@@ -87,7 +87,7 @@ public class Book_now extends Activity {
     Dialog dialog1;
     ImageView btn_close;
     TextView jobtv1,jobtv2,jobtv3,jobtv4,msg,tv_snack;
-    String pickup_location,drop_location;
+    String pickup_location,drop_location,pick_lati,pick_long,drop_lati,drop_long;
     ArrayList<String> mdatas;
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
     private static final int INTENT_REQUEST_GET_N_IMAGES = 14;
@@ -108,7 +108,7 @@ public class Book_now extends Activity {
     ProgressDialog mProgressDialog;
     LinearLayout ll;
     ArrayList<String> selectedPhotos = new ArrayList<>();
-    String str_delivery_address,str_pickup,str_drop,str_goods_type,str_truck_type,str_desc,str_goods_pic,str_profile_img;
+    String str_delivery_address,str_pickup,str_drop,str_goods_type,str_truck_type,str_desc,str_goods_pic,str_profile_img,book_time;
     LinearLayout.LayoutParams lp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,12 +158,19 @@ public class Book_now extends Activity {
         token = sharedPreferences.getString("token", "");
         pickup_location = sharedPreferences.getString("pickup","");
         drop_location = sharedPreferences.getString("drop","");
+        pick_lati = sharedPreferences.getString("pickup_lati","");
+        pick_long = sharedPreferences.getString("pickup_long","");
+        drop_lati = sharedPreferences.getString("drop_lati","");
+        drop_long = sharedPreferences.getString("drop_long","");
+
         Log.e("tag","id: "+id);
         Log.e("tag","tok: "+token);
 
 
         Log.e("tag","pick: "+pickup_location);
         Log.e("tag","drop: "+drop_location);
+        Log.e("tag","pi_l: "+pick_lati+":::"+pick_long);
+        Log.e("tag","dr_l: "+drop_lati+":::"+drop_long);
 
         snackbar = Snackbar
                 .make(findViewById(R.id.top), "Network Error! Please Try Again Later.", Snackbar.LENGTH_LONG);
@@ -194,20 +201,18 @@ public class Book_now extends Activity {
 
         Calendar c = Calendar.getInstance();
        // System.out.println("Current time => "+c.getTime());
-
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String formattedDate = df.format(c.getTime());
         // formattedDate have current date/time
        // Toast.makeText(this, formattedDate, Toast.LENGTH_SHORT).show();
-
-
         //2016-12-10 12:33:15
-        Log.e("tag","tim: |"+df.format(c.getTime()));
+      //  Log.e("tag","tim: |"+df.format(c.getTime()));
 
         String[] parts = formattedDate.split(" ");
         String part1 = parts[0]; // 004
         String part2 = parts[1]; // 034556
-        Log.e("tag","ti:"+part1);
+        book_time = parts[1];
+       // Log.e("tag","ti:"+part1);
 
         str_time = part1 +" T "+part2;
         Log.e("tag","tis:"+str_time);
@@ -239,8 +244,7 @@ public class Book_now extends Activity {
                 intent.setColumn(4);
                 intent.setShowCamera(true);
                 startActivityForResult(intent, REQUEST_VEC_FRONT);
-                
-               // getImagesView();
+                // getImagesView();
             }
         });
         btn_back.setOnClickListener(new View.OnClickListener() {
@@ -273,7 +277,7 @@ public class Book_now extends Activity {
 
                                 Log.e("tag","aa "+str_goods_type+str_truck_type);
 
-                                new book_now().execute();
+                                new book_now_task().execute();
                             }
                             else{
                                 et_description.setError("Enter Description");
@@ -339,12 +343,9 @@ public class Book_now extends Activity {
             @Override
             public void onClick(View v)
             {
-
-                Log.e("tag","111");
-
+                //Log.e("tag","111");
                 mSelectedImagesContainer.removeView(v);
-                Log.e("tag","111");
-
+               // Log.e("tag","111");
             }
         });
 
@@ -352,15 +353,12 @@ public class Book_now extends Activity {
 
 
     private void goods_type(){
-
-        Log.e("tag","ss: "+ar_goods_type.size());
+       // Log.e("tag","ss: "+ar_goods_type.size());
         Dialog_Region dialog_region = new Dialog_Region(Book_now.this,ar_goods_type);
         dialog_region.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.choose));
         dialog_region.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         //dialog_region.getWindow().setStatusBarColor(getResources().getColor(R.color.aaa));
         dialog_region.show();
-
-
         dialog_region.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
@@ -372,9 +370,6 @@ public class Book_now extends Activity {
     }
 
     private void truck_type() {
-
-
-
        // Log.e("tag","ss "+ar_truck_type.size());
        // Log.e("tag","sss "+hash_subtype.size());
        // Log.e("tag","ssss "+hash_truck_imgs.size());
@@ -382,8 +377,6 @@ public class Book_now extends Activity {
         //dialog_region1.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.choose));
         dialog_region1.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         dialog_region1.show();
-
-
         dialog_region1.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
@@ -392,12 +385,7 @@ public class Book_now extends Activity {
                 }
             }
         });
-
-
-
-
     }
-
 
     @Override
     public void onBackPressed() {
@@ -532,214 +520,104 @@ public class Book_now extends Activity {
     class fetch_goods extends AsyncTask<String, Void, String> {
         protected void onPreExecute() {
             super.onPreExecute();
-            mProgressDialog.show();
-
-        }
-
+            mProgressDialog.show();        }
         protected String doInBackground(String... params) {
-
             String json = "", jsonStr = "";
-
-
             try {
-
                 String virtual_url = net.sqindia.movehaul.Config.WEB_URL + "customer/goodstype";
-                Log.e("tag","url: "+virtual_url);
-
-
+              //  Log.e("tag","url: "+virtual_url);
                 JSONObject jsonobject = HttpUtils.getData(virtual_url,id,token);
-
-                Log.e("tag_", "0" + jsonobject.toString());
+               // Log.e("tag_", "0" + jsonobject.toString());
                 if (jsonobject.toString() == "sam") {
-
-                    Log.e("tag_", "1" + jsonobject.toString());
+                  //  Log.e("tag_", "1" + jsonobject.toString());
                 }
-
                 json = jsonobject.toString();
-
-                return json;
-            } catch (Exception e) {
-                Log.e("InputStream", "" + e.getLocalizedMessage());
-                jsonStr = "";
-
-            }
+                return json;} catch (Exception e) {
+              //  Log.e("InputStream", "" + e.getLocalizedMessage());
+                jsonStr = ""; }
             return jsonStr;
-
         }
-
         @Override
         protected void onPostExecute(String jsonStr) {
-            Log.e("tag", "<-----rerseres---->" + jsonStr);
+           // Log.e("tag", "<-----rerseres---->" + jsonStr);
             super.onPostExecute(jsonStr);
             mProgressDialog.dismiss();
-
-
-
             try {
-
                 JSONObject jo = new JSONObject(jsonStr);
                 String status = jo.getString("status");
               //  String count = jo.getString("count");
-
-
                 if (status.equals("true")) {
-
                     JSONArray goods_data = jo.getJSONArray("goods_type");
-
-
                     if(goods_data.length()>0) {
-
-
                         for (int i = 0; i < goods_data.length(); i++) {
                             String datas = goods_data.getString(i);
-                            Log.e("tag","s: "+datas);
+                           // Log.e("tag","s: "+datas);
                             ar_goods_type.add(datas);
-                        }
-                    }
-                    else{
-
-                    }
-
-                }
-                else {
-
-
-
-                }
-
-
+                        }                    }                    else{                    }                }
+                else {                }
             } catch (JSONException e) {
                 // TODO Auto-generated catch block
-                e.printStackTrace();
-
-
-
-            }
-
-        }
-
+                e.printStackTrace();}     }
     }
-
-
     class fetch_trucks extends AsyncTask<String, Void, String> {
         protected void onPreExecute() {
             super.onPreExecute();
-            mProgressDialog.show();
-
-        }
-
+            mProgressDialog.show();       }
         protected String doInBackground(String... params) {
-
             String json = "", jsonStr = "";
-
-
             try {
-
                 String virtual_url = net.sqindia.movehaul.Config.WEB_URL + "customer/trucktype";
-                Log.e("tag","url: "+virtual_url);
-
-
+                //Log.e("tag","url: "+virtual_url);
                 JSONObject jsonobject = HttpUtils.getData(virtual_url,id,token);
-
-                Log.e("tag_", "0" + jsonobject.toString());
+               // Log.e("tag_", "0" + jsonobject.toString());
                 if (jsonobject.toString() == "sam") {
-
-                    Log.e("tag_", "1" + jsonobject.toString());
+               //     Log.e("tag_", "1" + jsonobject.toString());
                 }
-
                 json = jsonobject.toString();
-
                 return json;
             } catch (Exception e) {
-                Log.e("InputStream", "" + e.getLocalizedMessage());
-                jsonStr = "";
-
-            }
+              //  Log.e("InputStream", "" + e.getLocalizedMessage());
+                jsonStr = "";           }
             return jsonStr;
-
         }
-
         @Override
         protected void onPostExecute(String jsonStr) {
-            Log.e("tag", "<-----rerseres---->" + jsonStr);
+         //   Log.e("tag", "<-----rerseres---->" + jsonStr);
             super.onPostExecute(jsonStr);
             mProgressDialog.dismiss();
-
-
-
             try {
-
                 JSONObject jo = new JSONObject(jsonStr);
                 String status = jo.getString("status");
                 //  String count = jo.getString("count");
-
-
                 if (status.equals("true")) {
-
-
                     JSONArray truck_data = jo.getJSONArray("truck_type");
-
-
                     if(truck_data.length()>0) {
                         hash_subtype = new HashMap<String,String>();
-
                         for (int i = 0; i < truck_data.length(); i++) {
-
                             String datas = truck_data.getString(i);
                             JSONObject subs = new JSONObject(datas);
-
                            //Log.e("tag","tp: "+subs.getString("truck_type"));
                           //  Log.e("tag","stp: "+subs.getString("truck_sub_type"));
                             //Log.e("tag","simtp: "+subs.getString("truck_image"));
-
-
-
                             ar_truck_type.add(subs.getString("truck_type"));
                             ar_truck_sstype.add(subs.getString("truck_sub_type"));
                             ar_truck_imgs.add(subs.getString("truck_image"));
                             hash_subtype.put(subs.getString("truck_sub_type"),subs.getString("truck_type"));
                             hash_truck_imgs.put(subs.getString("truck_image"),subs.getString("truck_type"));
-
                          //   Log.e("tag","hash:: "+hash_subtype.get(ar_truck_type.get(i)));
-                            Log.e("tag","siz: "+hash_subtype.size());
-
+                       //     Log.e("tag","siz: "+hash_subtype.size());
                            // hash_truck_imgs.put(subs.getString("truck_type"),subs.getString("truck_image"));
                         }
-
-                        Log.e("tag","sizA: "+hash_subtype.size());
-
-
+                       // Log.e("tag","sizA: "+hash_subtype.size());
                         //ar_truck_type = new ArrayList<String>(new LinkedHashSet<String>(ar_truck_type));
-
-
-
-
-                    }
-                    else{
-
-                    }
-                }
-                else {
-
-
-
-                }
-
+                    }                else{                    }
+                }                else {                }
 
             } catch (JSONException e) {
                 // TODO Auto-generated catch block
-                e.printStackTrace();
-
-
-
-            }
-
-        }
+                e.printStackTrace();            }        }
 
     }
-
-
-
     private void showMedia() {
         // Remove all views before
         // adding the new ones.
@@ -797,8 +675,7 @@ public class Book_now extends Activity {
     }
 
 
-
-    public class book_now extends AsyncTask<String, Void, String>   {
+    public class book_now_task extends AsyncTask<String, Void, String>   {
         @Override
         protected void onPreExecute()
         {
@@ -831,18 +708,10 @@ public class Book_now extends Activity {
                     httppost.setHeader("truck_type",str_truck_type);
                     httppost.setHeader("description",str_desc);
                     httppost.setHeader("booking_time",str_time);
-
-
-
-
-
-
-
-    /*                httppost.setHeader("Accept", "application/json");
-                    httppost.setHeader("Content-type", "application/x-www-form-urlencoded");
-                    ;
-
-               */
+                    httppost.setHeader("pickup_latitude",pick_lati);
+                    httppost.setHeader("pickup_longitude",pick_long);
+                    httppost.setHeader("drop_latitude",drop_lati);
+                    httppost.setHeader("drop_longitude",drop_long);
 
                     HttpResponse response = null;
                     HttpEntity r_entity = null;
@@ -893,18 +762,6 @@ public class Book_now extends Activity {
                     Log.e("tag_InputStream0", e.getLocalizedMessage());
                 }
                 return null;
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*
                 String responseString = null;
@@ -988,6 +845,10 @@ public class Book_now extends Activity {
                     jsonObject.put("truck_type", str_truck_type);
                     jsonObject.put("description", str_desc);
                     jsonObject.put("booking_time",str_time);
+                    jsonObject.put("pickup_latitude",pick_lati);
+                    jsonObject.put("pickup_longitude",pick_long);
+                    jsonObject.put("drop_latitude",drop_lati);
+                    jsonObject.put("drop_longitude",drop_long);
 
 
 
@@ -1020,6 +881,7 @@ public class Book_now extends Activity {
                         Log.e("tag", "Location Updated");
 
                         editor.putString("job_id",bookingid);
+                        editor.putString("book_time",book_time);
                         editor.commit();
 
                         Intent goReve = new Intent(getApplicationContext(),Job_review.class);
@@ -1030,7 +892,7 @@ public class Book_now extends Activity {
 
                         Log.e("tag", "Location not updated");
                         //has to check internet and location...
-
+                        Toast.makeText(getApplicationContext(),"Network Errror. Please Try Again Later",Toast.LENGTH_LONG).show();
 
                     }
                 } catch (JSONException e) {
