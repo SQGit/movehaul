@@ -20,6 +20,24 @@ public class MV_Datas {
     String truck_type;
     String bidding;
     String rating;
+    String booking_id;
+    String bidding_id;
+
+    public String getBidding_id() {
+        return bidding_id;
+    }
+
+    public void setBidding_id(String bidding_id) {
+        this.bidding_id = bidding_id;
+    }
+
+    public String getBooking_id() {
+        return booking_id;
+    }
+
+    public void setBooking_id(String booking_id) {
+        this.booking_id = booking_id;
+    }
 
     public String getRating() {
         return rating;

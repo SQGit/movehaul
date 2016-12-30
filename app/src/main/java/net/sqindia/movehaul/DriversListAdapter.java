@@ -288,7 +288,13 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
             public void onClick(View view) {
                 dialog1.dismiss();
 
+                mv_datas.getBooking_id();
+                mv_datas.getDriver_id();
+
                 editor.putString("payment_amount",bidding);
+                editor.putString("booking_id",mv_datas.getBooking_id());
+                editor.putString("driver_id",mv_datas.getDriver_id());
+                editor.putString("bidding_id",mv_datas.getBidding_id());
                 editor.commit();
 
                 Intent i = new Intent(DriversListAdapter.this.getContext(), Payment_Details.class);

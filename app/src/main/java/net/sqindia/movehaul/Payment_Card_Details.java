@@ -2,47 +2,88 @@ package net.sqindia.movehaul;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rey.material.widget.Button;
-
 import com.rey.material.widget.LinearLayout;
 import com.sloop.fonts.FontsManager;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by sqindia on 02-11-2016.
  */
 
 public class Payment_Card_Details extends Activity {
-    Button btn_paynow,btn_ok;
+    Button btn_paynow, btn_ok;
     Dialog dialog1;
     ImageView btn_close;
-    TextView tv_dialog1,tv_dialog2,tv_dialog3,tv_dialog4;
+    TextView tv_dialog1, tv_dialog2, tv_dialog3, tv_dialog4;
     LinearLayout btn_back;
-    TextInputLayout flt_exp_date,flt_cvv,flt_name;
+    TextInputLayout flt_exp_date, flt_cvv, flt_name;
     Typeface type;
+    SharedPreferences sharedPreferences;
+    String bidding_id, booking_id, driver_id, transaction_id,id,token;
+    SharedPreferences.Editor editor;
+    ProgressDialog mProgressDialog;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.payment_carddetails);
-        FontsManager.initFormAssets(this,"fonts/lato.ttf");       //initialization
+        FontsManager.initFormAssets(this, "fonts/lato.ttf");       //initialization
         FontsManager.changeFonts(this);
         btn_paynow = (Button) findViewById(R.id.btn_paynow);
         btn_back = (LinearLayout) findViewById(R.id.layout_back);
         flt_exp_date = (TextInputLayout) findViewById(R.id.float_exp_date);
         flt_cvv = (TextInputLayout) findViewById(R.id.float_cvv);
         flt_name = (TextInputLayout) findViewById(R.id.float_name);
+
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Payment_Card_Details.this);
+        editor = sharedPreferences.edit();
+
+        mProgressDialog = new ProgressDialog(Payment_Card_Details.this);
+        mProgressDialog.setTitle("Loading..");
+        mProgressDialog.setMessage("Please wait");
+        mProgressDialog.setIndeterminate(false);
+        mProgressDialog.setCancelable(false);
+
+
+        id = sharedPreferences.getString("id", "");
+        token = sharedPreferences.getString("token", "");
 
 
         type = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
@@ -53,7 +94,20 @@ public class Payment_Card_Details extends Activity {
         btn_paynow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog1.show();
+
+
+                booking_id = sharedPreferences.getString("booking_id", "");
+                driver_id = sharedPreferences.getString("driver_id", "");
+                bidding_id = sharedPreferences.getString("bidding_id", "");
+                transaction_id = "oid3982asdfeo3";
+
+                Log.e("tag","book "+booking_id);
+                Log.e("tag","drik "+driver_id);
+                Log.e("tag","bid "+bidding_id);
+
+                new book_now_task().execute();
+
+                //dialog1.show();
             }
         });
 
@@ -98,6 +152,7 @@ public class Payment_Card_Details extends Activity {
             @Override
             public void onClick(View view) {
                 dialog1.dismiss();
+
                 Intent i = new Intent(Payment_Card_Details.this, MyTrips.class);
                 startActivity(i);
                 finish();
@@ -105,10 +160,11 @@ public class Payment_Card_Details extends Activity {
         });
 
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(Payment_Card_Details.this,Payment_Details.class);
+        Intent i = new Intent(Payment_Card_Details.this, Payment_Details.class);
         startActivity(i);
         finish();
     }
@@ -121,4 +177,104 @@ public class Payment_Card_Details extends Activity {
         }
         return super.dispatchTouchEvent(ev);
     }
+
+
+
+
+
+
+
+    public class book_now_task extends AsyncTask<String, Void, String> {
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            Log.e("tag", "reg_preexe");
+            mProgressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String json = "", jsonStr = "";
+
+
+                Log.e("tag","no poto");
+
+                String  s = "";
+                JSONObject jsonObject = new JSONObject();
+                try {
+
+
+                    jsonObject.put("transaction_id",transaction_id);
+                    jsonObject.put("booking_id", booking_id);
+                    jsonObject.put("driver_id", driver_id);
+                    jsonObject.put("bidding_id", bidding_id);
+
+
+                    json = jsonObject.toString();
+
+                    return s = HttpUtils.makeRequest1(net.sqindia.movehaul.Config.WEB_URL + "customer/payment",json,id,token);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                return null;
+
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("tag", "tag" + s);
+            mProgressDialog.dismiss();
+
+            if (s != null) {
+                try {
+                    JSONObject jo = new JSONObject(s);
+                    String status = jo.getString("status");
+                    Log.d("tag", "<-----Status----->" + status);
+                    if (status.equals("true")) {
+
+                        dialog1.show();
+                    } else if (status.equals("false")) {
+
+                        Log.e("tag", "Location not updated");
+                        //has to check internet and location...
+                        Toast.makeText(getApplicationContext(),"Network Errror. Please Try Again Later",Toast.LENGTH_LONG).show();
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.e("tag", "nt" + e.toString());
+                    Toast.makeText(getApplicationContext(),"Network Errror. Please Try Again Later",Toast.LENGTH_LONG).show();
+                }
+            } else {
+                 Toast.makeText(getApplicationContext(),"Network Errror1",Toast.LENGTH_LONG).show();
+            }
+
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

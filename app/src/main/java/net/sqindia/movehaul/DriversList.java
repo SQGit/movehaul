@@ -319,6 +319,8 @@ public class DriversList extends AppCompatActivity {
                                     String bidding= jos.getString("bidding_cost");
                                     String rating= jos.getString("driver_rating");
                                     String damage_control= jos.getString("damage_control");
+                                    String booking_id =jos.getString("booking_id");
+                                    String bidding_id = jos.getString("bidding_id");
 
 
                                  /*   "booking_id": 19,
@@ -346,6 +348,8 @@ public class DriversList extends AppCompatActivity {
                                     mv_datas.setBidding(bidding);
                                     mv_datas.setRating(rating);
                                     mv_datas.setDamage_control(damage_control);
+                                    mv_datas.setBooking_id(booking_id);
+                                    mv_datas.setBidding_id(bidding_id);
 
 
 
