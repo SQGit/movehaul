@@ -57,6 +57,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:maxLines="1"
+                            android:id="@+id/cr_date"
                             android:text="07-10-2016"
                             android:textColor="@color/textColor"
                             android:textSize="@dimen/_14sdp" />
@@ -104,6 +105,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:maxLines="2"
+                            android:id="@+id/cr_time"
                             android:text="12:30 PM"
                             android:textColor="@color/textColor"
                             android:textSize="@dimen/_14sdp" />
@@ -151,7 +153,7 @@
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/_14sdp"
                         android:layout_marginBottom="@dimen/_5sdp"
-                        android:id="@+id/textView5" />
+                        android:id="@+id/cr_pickup" />
                 </LinearLayout>
 
                 <ImageView
@@ -199,7 +201,7 @@
                         android:textSize="@dimen/_14sdp"
                         android:layout_marginBottom="@dimen/_5sdp"
 
-                        android:id="@+id/textView4" />
+                        android:id="@+id/cr_drop" />
                 </LinearLayout>
 
                 <ImageView
@@ -244,7 +246,7 @@
                         android:text="Heavy Load"
                         android:textColor="@color/textColor"
                         android:layout_marginBottom="@dimen/_5sdp"
-
+                        android:id="@+id/cr_truck_type"
                         android:textSize="@dimen/_14sdp" />
                 </LinearLayout>
 
@@ -288,6 +290,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="2"
+                        android:id="@+id/cr_dr_name"
                         android:text="MJ.Tim harley"
                         android:textColor="@color/textColor"
                         android:layout_marginBottom="@dimen/_5sdp"
@@ -333,6 +336,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="2"
+                        android:id="@+id/cr_dr_phone"
                         android:text="+140 555 8965"
                         android:layout_marginBottom="@dimen/_5sdp"
                         android:textColor="@color/textColor"
@@ -371,6 +375,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="150"
+                    android:id="@+id/cr_job_cost"
                     android:textColor="@color/redColor"
                     android:textSize="@dimen/_15sdp" />
 

@@ -13,6 +13,7 @@ public class MV_Datas {
     String date;
     String name;
     String driver_image;
+    String driver_number;
     String truck_side;
     String truck_back;
     String truck_front;
@@ -22,6 +23,43 @@ public class MV_Datas {
     String rating;
     String booking_id;
     String bidding_id;
+    String job_cost;
+    String pickup;
+    String drop;
+
+
+    public String getDrop() {
+        return drop;
+    }
+
+    public String getJob_cost() {
+        return job_cost;
+    }
+
+    public String getPickup() {
+        return pickup;
+    }
+
+    public void setDrop(String drop) {
+        this.drop = drop;
+    }
+
+    public void setJob_cost(String job_cost) {
+        this.job_cost = job_cost;
+    }
+
+    public void setPickup(String pickup) {
+        this.pickup = pickup;
+    }
+
+
+    public String getDriver_number() {
+        return driver_number;
+    }
+
+    public void setDriver_number(String driver_number) {
+        this.driver_number = driver_number;
+    }
 
     public String getBidding_id() {
         return bidding_id;
