@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -94,6 +95,14 @@ public class MyTrips extends AppCompatActivity {
         mProgressDialog.setMessage("Please wait");
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.setCancelable(false);
+
+
+        snackbar = Snackbar
+                .make(findViewById(R.id.top), "Network Error! Please Try Again Later.", Snackbar.LENGTH_LONG);
+        View sbView = snackbar.getView();
+        tv_snack = (android.widget.TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        tv_snack.setTextColor(Color.WHITE);
+        tv_snack.setTypeface(tf);
 
 
         ar_job_history = new ArrayList<>();
