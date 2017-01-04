@@ -3,16 +3,18 @@ package net.sqindia.movehaul;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.rey.material.widget.Button;
 import com.rey.material.widget.LinearLayout;
@@ -31,6 +33,10 @@ public class Forgot_Mobile extends Activity {
     String str_email;
     TextInputLayout flt_email;
     Button btn_submit;
+    Typeface tf;
+    Snackbar snackbar;
+    Config config;
+    TextView tv_snack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +50,21 @@ public class Forgot_Mobile extends Activity {
         edtxt_email = (EditText) findViewById(R.id.editTextEmail);
         btn_submit = (Button) findViewById(R.id.btn_submit);
 
-        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
-        flt_email.setTypeface(type);
+         tf = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
+        flt_email.setTypeface(tf);
+
+
+        snackbar = Snackbar
+                .make(findViewById(R.id.top), "Network Error! Please Try Again Later.", Snackbar.LENGTH_LONG);
+        View sbView = snackbar.getView();
+        tv_snack = (android.widget.TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        tv_snack.setTextColor(Color.WHITE);
+        tv_snack.setTypeface(tf);
+
+        if (!config.isConnected(Forgot_Mobile.this)) {
+            snackbar.show();
+            tv_snack.setText("Please Connect Internet and Try again");
+        }
 
 
         btn_submit.setOnClickListener(new View.OnClickListener() {
@@ -155,7 +174,10 @@ public class Forgot_Mobile extends Activity {
 
                         if (msg.contains("Register with Movehaul first to Generate OTP")) {
 
-                            Toast.makeText(getApplicationContext(),"Mobile Number Not Registered",Toast.LENGTH_LONG).show();
+                           // Toast.makeText(getApplicationContext(),"Mobile Number Not Registered",Toast.LENGTH_LONG).show();
+
+                            tv_snack.setText("No Number Associated with this Email !");
+                            snackbar.show();
 
                         }
                         else if (msg.contains("Error Occured[object Object]")) {
@@ -169,7 +191,9 @@ public class Forgot_Mobile extends Activity {
                         }
                         else  {
 
-                            Toast.makeText(getApplicationContext(),"Please Try Again Later",Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getApplicationContext(),"Please Try Again Later",Toast.LENGTH_LONG).show();
+                            tv_snack.setText("Please Try Again Later !");
+                            snackbar.show();
                         }
 
 
@@ -177,10 +201,14 @@ public class Forgot_Mobile extends Activity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("tag","nt"+e.toString());
-                    Toast.makeText(getApplicationContext(),"Network Errror0",Toast.LENGTH_LONG).show();
+                   // Toast.makeText(getApplicationContext(),"Network Errror0",Toast.LENGTH_LONG).show();
+                    tv_snack.setText("Network Error, Please Try Again Later !");
+                    snackbar.show();
                 }
             } else {
-                Toast.makeText(getApplicationContext(),"Network Errror1",Toast.LENGTH_LONG).show();
+               // Toast.makeText(getApplicationContext(),"Network Errror1",Toast.LENGTH_LONG).show();
+                tv_snack.setText("Network Error, Please Try Again Later !");
+                snackbar.show();
             }
 
         }

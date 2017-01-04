@@ -292,7 +292,7 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
         @Override
         protected String doInBackground(String... strings) {
 
-            String json = "", jsonStr = "";
+            String json = "", jsonStr = "",url;
 
             try {
                 JSONObject jsonObject = new JSONObject();
@@ -302,15 +302,17 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
 
                     jsonObject.accumulate("customer_mobile", "+91"+str_data);
                     jsonObject.accumulate("customer_otp", str_otppin);
+                    url = "customer/mobilelogin";
                 } else {
 
                     jsonObject.accumulate("customer_email", str_data);
                     jsonObject.accumulate("customer_otp", str_otppin);
+                    url = "customer/emaillogin";
                 }
 
 
                 json = jsonObject.toString();
-                return jsonStr = HttpUtils.makeRequest(Config.WEB_URL + "customer/mobilelogin", json);
+                return jsonStr = HttpUtils.makeRequest(Config.WEB_URL + url, json);
 
             } catch (Exception e) {
                 Log.e("InputStream", e.getLocalizedMessage());
@@ -337,14 +339,19 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
                         String token = jo.getString("token");
                         String mobile = jo.getString("customer_mobile");
                         String email = jo.getString("customer_email");
-
+                        String fake_id = jo.getString("fake_id");
                         String name = jo.getString("customer_name");
+                        String image = jo.getString("customer_image");
 
                         editor.putString("id",id);
                         editor.putString("token",token);
                         editor.putString("customer_mobile",mobile);
                         editor.putString("customer_email",email);
                         editor.putString("customer_name",name);
+                        editor.putString("customer_id",fake_id);
+                        if(!(image.equals(null)||image == null || image == "null")){
+                            editor.putString("customer_image",image);
+                        }
                         editor.putString("login","success");
                         editor.commit();
 
@@ -355,8 +362,17 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
 
                     } else if (status.equals("false")) {
 
+                        if(msg.contains("Authentication failed.Wrong Password")){
+                            snackbar.show();
+                            tv_snack.setText("Authentication Failed, Enter Corrent OTP");
+                        }
+                        else{
+                            snackbar.show();
+                            tv_snack.setText("Please Connect Internet and Try again");
+                        }
 
-                        snackbar.show();
+
+
 
                     }
                 } catch (JSONException e) {

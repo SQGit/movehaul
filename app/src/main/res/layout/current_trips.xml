@@ -2,19 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="@dimen/_5sdp"
     android:background="@android:color/transparent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="@dimen/_5sdp">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fadeScrollbars="false"
         android:layout_weight="1"
+        android:fadeScrollbars="false"
         android:paddingBottom="@dimen/_1sdp">
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
@@ -31,19 +31,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/_3sdp"
                     android:layout_weight="1"
-                    android:paddingLeft="@dimen/_5sdp"
-                    android:paddingBottom="@dimen/_5sdp"
-                    android:paddingTop="@dimen/_5sdp"
                     android:background="@drawable/white_bg"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:paddingTop="@dimen/_5sdp">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:paddingLeft="@dimen/_10sdp"
-                       >
+                        android:paddingLeft="@dimen/_10sdp">
 
 
                         <TextView
@@ -54,44 +53,43 @@
                             android:textSize="@dimen/_12sdp" />
 
                         <TextView
+                            android:id="@+id/cr_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:maxLines="1"
-                            android:id="@+id/cr_date"
                             android:text="07-10-2016"
                             android:textColor="@color/textColor"
                             android:textSize="@dimen/_14sdp" />
                     </LinearLayout>
 
                     <ImageView
+                        android:id="@+id/imageView3"
                         android:layout_width="@dimen/_20sdp"
                         android:layout_height="@dimen/_20sdp"
                         android:layout_gravity="center"
-                        android:src="@drawable/date_icon"
                         android:layout_marginRight="@dimen/_12sdp"
-                        android:id="@+id/imageView3" />
+                        android:src="@drawable/date_icon" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_3sdp"
-                    android:layout_weight="1"
-                    android:paddingLeft="@dimen/_5sdp"
-                    android:paddingTop="@dimen/_5sdp"
-                    android:paddingBottom="@dimen/_5sdp"
-                    android:paddingRight="@dimen/_20sdp"
                     android:layout_marginRight="-15dp"
+                    android:layout_weight="1"
                     android:background="@drawable/white_bg"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:paddingRight="@dimen/_20sdp"
+                    android:paddingTop="@dimen/_5sdp">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:paddingLeft="@dimen/_10sdp"
-                        >
+                        android:paddingLeft="@dimen/_10sdp">
 
 
                         <TextView
@@ -102,10 +100,10 @@
                             android:textSize="@dimen/_12sdp" />
 
                         <TextView
+                            android:id="@+id/cr_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:maxLines="2"
-                            android:id="@+id/cr_time"
                             android:text="12:30 PM"
                             android:textColor="@color/textColor"
                             android:textSize="@dimen/_14sdp" />
@@ -124,12 +122,12 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/white_bg"
-                android:paddingLeft="@dimen/_5sdp"
-                android:paddingTop="@dimen/_5sdp"
-                android:paddingRight="@dimen/_20sdp"
                 android:layout_marginRight="-15dp"
-                android:orientation="horizontal">
+                android:background="@drawable/white_bg"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/_5sdp"
+                android:paddingRight="@dimen/_20sdp"
+                android:paddingTop="@dimen/_5sdp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -147,13 +145,13 @@
                         android:textSize="@dimen/_12sdp" />
 
                     <TextView
+                        android:id="@+id/cr_pickup"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_5sdp"
                         android:text="#6, North Avenue, Abuja, Nigeria"
                         android:textColor="@color/textColor"
-                        android:textSize="@dimen/_14sdp"
-                        android:layout_marginBottom="@dimen/_5sdp"
-                        android:id="@+id/cr_pickup" />
+                        android:textSize="@dimen/_14sdp" />
                 </LinearLayout>
 
                 <ImageView
@@ -168,21 +166,20 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:paddingLeft="@dimen/_5sdp"
-                android:paddingTop="@dimen/_5sdp"
-                android:paddingRight="@dimen/_20sdp"
                 android:layout_marginRight="-15dp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/white_bg"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/_5sdp"
+                android:paddingRight="@dimen/_20sdp"
+                android:paddingTop="@dimen/_5sdp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:paddingLeft="@dimen/_10sdp"
-                   >
+                    android:paddingLeft="@dimen/_10sdp">
 
 
                     <TextView
@@ -193,15 +190,15 @@
                         android:textSize="@dimen/_12sdp" />
 
                     <TextView
+                        android:id="@+id/cr_drop"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_5sdp"
                         android:paddingTop="@dimen/_5sdp"
                         android:text="#977, West Boage, Dekina, Nigeria"
                         android:textColor="@color/textColor"
-                        android:textSize="@dimen/_14sdp"
-                        android:layout_marginBottom="@dimen/_5sdp"
 
-                        android:id="@+id/cr_drop" />
+                        android:textSize="@dimen/_14sdp" />
                 </LinearLayout>
 
                 <ImageView
@@ -215,21 +212,20 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="-15dp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/white_bg"
+                android:orientation="horizontal"
                 android:paddingLeft="@dimen/_5sdp"
-                android:paddingTop="@dimen/_5sdp"
                 android:paddingRight="@dimen/_20sdp"
-                android:layout_marginRight="-15dp"
-                android:orientation="horizontal">
+                android:paddingTop="@dimen/_5sdp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:paddingLeft="@dimen/_10sdp"
-                   >
+                    android:paddingLeft="@dimen/_10sdp">
 
 
                     <TextView
@@ -240,43 +236,42 @@
                         android:textSize="@dimen/_12sdp" />
 
                     <TextView
+                        android:id="@+id/cr_truck_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_5sdp"
                         android:maxLines="2"
                         android:text="Heavy Load"
                         android:textColor="@color/textColor"
-                        android:layout_marginBottom="@dimen/_5sdp"
-                        android:id="@+id/cr_truck_type"
                         android:textSize="@dimen/_14sdp" />
                 </LinearLayout>
 
                 <ImageView
+                    android:id="@+id/imageView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:padding="@dimen/_5sdp"
-                    android:src="@drawable/select_truck_type"
-                    android:id="@+id/imageView5" />
+                    android:src="@drawable/select_truck_type" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="-15dp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/white_bg"
+                android:orientation="horizontal"
                 android:paddingLeft="@dimen/_5sdp"
-                android:paddingTop="@dimen/_5sdp"
                 android:paddingRight="@dimen/_20sdp"
-                android:layout_marginRight="-15dp"
-                android:orientation="horizontal">
+                android:paddingTop="@dimen/_5sdp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:paddingLeft="@dimen/_10sdp"
-                    >
+                    android:paddingLeft="@dimen/_10sdp">
 
 
                     <TextView
@@ -287,13 +282,13 @@
                         android:textSize="@dimen/_12sdp" />
 
                     <TextView
+                        android:id="@+id/cr_dr_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_5sdp"
                         android:maxLines="2"
-                        android:id="@+id/cr_dr_name"
                         android:text="MJ.Tim harley"
                         android:textColor="@color/textColor"
-                        android:layout_marginBottom="@dimen/_5sdp"
                         android:textSize="@dimen/_14sdp" />
                 </LinearLayout>
 
@@ -308,13 +303,13 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="-15dp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/white_bg"
+                android:orientation="horizontal"
                 android:paddingLeft="@dimen/_5sdp"
-                android:paddingTop="@dimen/_5sdp"
                 android:paddingRight="@dimen/_20sdp"
-                android:layout_marginRight="-15dp"
-                android:orientation="horizontal">
+                android:paddingTop="@dimen/_5sdp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -333,12 +328,12 @@
                         android:textSize="@dimen/_12sdp" />
 
                     <TextView
+                        android:id="@+id/cr_dr_phone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:maxLines="2"
-                        android:id="@+id/cr_dr_phone"
-                        android:text="+140 555 8965"
                         android:layout_marginBottom="@dimen/_5sdp"
+                        android:maxLines="2"
+                        android:text="+140 555 8965"
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/_14sdp" />
                 </LinearLayout>
@@ -371,11 +366,12 @@
                     android:text="$"
                     android:textColor="@color/redColor"
                     android:textSize="@dimen/_19sdp" />
+
                 <TextView
+                    android:id="@+id/cr_job_cost"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="150"
-                    android:id="@+id/cr_job_cost"
                     android:textColor="@color/redColor"
                     android:textSize="@dimen/_15sdp" />
 
@@ -389,7 +385,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:gravity="center|top"
-        android:layout_weight="1"
         android:padding="@dimen/_3sdp">
 
         <com.rey.material.widget.Button

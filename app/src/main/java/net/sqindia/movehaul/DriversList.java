@@ -303,61 +303,52 @@ public class DriversList extends AppCompatActivity {
                             editor.commit();
 
                             if(goods_data.length()>0) {
+
                                 for (int i = 0; i < goods_data.length(); i++) {
 
 
                                     JSONObject jos = goods_data.getJSONObject(i);
-                                    mv_datas = new MV_Datas();
-
-                                    String driver_name = jos.getString("driver_name");
-                                    String driver_id = jos.getString("driver_id");
-                                    String driver_image = jos.getString("driver_image");
-                                    String truck_front = jos.getString("truck_image_front");
-                                    String truck_back = jos.getString("truck_image_back");
-                                    String truck_side = jos.getString("truck_image_side");
-                                    String truck_type= jos.getString("truck_type");
-                                    String bidding= jos.getString("bidding_cost");
-                                    String rating= jos.getString("driver_rating");
-                                    String damage_control= jos.getString("damage_control");
-                                    String booking_id =jos.getString("booking_id");
-                                    String bidding_id = jos.getString("bidding_id");
 
 
-                                 /*   "booking_id": 19,
-                                            "bidding_cost": "289",
-                                            "driver_id": 17,
-                                            "driver_image": "17-driverimage-1481365004651.jpeg",
-                                            "driver_name": "ramya",
-                                            "driver_rating": null,
-                                            "truck_id": 22,
-                                            "truck_type": null,
-                                            "truck_image_front": "17-vehiclefront-1481365009741.jpeg",
-                                            "truck_image_back": "17-vehicleback-1481365012473.jpeg",
-                                            "truck_image_side": "17-vehicleside-1481365013768.jpeg",
-                                            "damage_control": null*/
+                                    if(jos.getString("driver_job_status").equals("free")) {
+                                        mv_datas = new MV_Datas();
+
+                                        String driver_name = jos.getString("driver_name");
+                                        String driver_id = jos.getString("driver_id");
+                                        String driver_image = jos.getString("driver_image");
+                                        String truck_front = jos.getString("truck_image_front");
+                                        String truck_back = jos.getString("truck_image_back");
+                                        String truck_side = jos.getString("truck_image_side");
+                                        String truck_type = jos.getString("truck_type");
+                                        String bidding = jos.getString("bidding_cost");
+                                        String rating = jos.getString("driver_rating");
+                                        String damage_control = jos.getString("damage_control");
+                                        String booking_id = jos.getString("booking_id");
+                                        String bidding_id = jos.getString("bidding_id");
 
 
+                                        mv_datas.setDriver_id(driver_id);
+                                        mv_datas.setName(driver_name);
+                                        mv_datas.setDriver_image(driver_image);
+                                        mv_datas.setTruck_front(truck_front);
+                                        mv_datas.setTruck_back(truck_back);
+                                        mv_datas.setTruck_side(truck_side);
+                                        mv_datas.setTruck_type(truck_type);
+                                        mv_datas.setBidding(bidding);
+                                        mv_datas.setRating(rating);
+                                        mv_datas.setDamage_control(damage_control);
+                                        mv_datas.setBooking_id(booking_id);
+                                        mv_datas.setBidding_id(bidding_id);
 
-                                    mv_datas.setDriver_id(driver_id);
-                                    mv_datas.setName(driver_name);
-                                    mv_datas.setDriver_image(driver_image);
-                                    mv_datas.setTruck_front(truck_front);
-                                    mv_datas.setTruck_back(truck_back);
-                                    mv_datas.setTruck_side(truck_side);
-                                    mv_datas.setTruck_type(truck_type);
-                                    mv_datas.setBidding(bidding);
-                                    mv_datas.setRating(rating);
-                                    mv_datas.setDamage_control(damage_control);
-                                    mv_datas.setBooking_id(booking_id);
-                                    mv_datas.setBidding_id(bidding_id);
-
-
-
-                                    ar_driver_data.add(mv_datas);
-
-
-
+                                        ar_driver_data.add(mv_datas);
+                                    }
                                 }
+
+                                if(ar_driver_data.size() ==0){
+                                    finish();
+                                    Toast.makeText(getApplicationContext(),"No Drivers Bidded,Please Wait for some more time.",Toast.LENGTH_LONG).show();
+                                }
+
                             }
                             else{
                                 finish();

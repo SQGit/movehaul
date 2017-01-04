@@ -130,10 +130,10 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     Typeface tf;
-    Snackbar snackbar;
-    android.widget.TextView tv_snack,tv_profile_name;
+    Snackbar snackbar, snackbar_loc;
+    android.widget.TextView tv_snack, tv_snack_loc, tv_snack_loc_act;
     android.widget.TextView tv_txt1, tv_txt2, tv_txt3;
-    String current_time,service_id, service_token, str_lati, str_longi, str_locality, str_address, customer_mobile, customer_email, customer_name, str_profile_img;
+    String current_time, service_id, service_token, str_lati, str_longi, str_locality, str_address, customer_mobile, customer_email, customer_name, str_profile_img;
     Geocoder geocoder;
     List<Address> addresses;
     LinearLayout lt_first, lt_last;
@@ -141,13 +141,13 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     SupportMapFragment mapFragment;
     ImageView btn_editProfile, btn_close, btn_editProfile_img;
     EditText et_username, et_email;
-    String id, token,mPickup_lat,mPickup_long,mDrop_lat,mDrop_long;
+    String id, token, mPickup_lat, mPickup_long, mDrop_lat, mDrop_long;
     TextInputLayout flt_uname, flt_email;
     ArrayList<String> selectedPhotos = new ArrayList<>();
+    int diff;
     private GoogleMap mMap;
     private LatLng mCenterLatLong;
     private AddressResultReceiver mResultReceiver;
-    int diff;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -205,15 +205,11 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         mapFragment.getMapAsync(this);
 
 
-
-
         Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String formattedDate = df.format(c.getTime());
         String[] parts = formattedDate.split(" ");
         current_time = parts[1];
-
-
 
 
         snackbar = Snackbar
@@ -226,27 +222,32 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         tv_snack.setTypeface(tf);
 
 
+        snackbar_loc = Snackbar
+                .make(findViewById(R.id.drawer_layout), "Location Not Enabled", Snackbar.LENGTH_INDEFINITE)
+                .setAction("Open Settings", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        snackbar_loc.dismiss();
+                        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+        View sbView_loc = snackbar_loc.getView();
+        tv_snack_loc = (android.widget.TextView) sbView_loc.findViewById(android.support.design.R.id.snackbar_text);
+        tv_snack_loc_act = (android.widget.TextView) sbView_loc.findViewById(android.support.design.R.id.snackbar_action);
+        tv_snack_loc.setTextColor(Color.WHITE);
+        tv_snack_loc.setTypeface(tf);
+        tv_snack_loc_act.setTypeface(tf);
+        tv_snack_loc_act.setTextColor(Color.RED);
 
 
         mResultReceiver = new AddressResultReceiver(new Handler());
         if (checkPlayServices()) {
             if (!AppUtils.isLocationEnabled(mContext)) {
-                AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+
+
+              /*  AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
                 dialog.setMessage("Location not enabled!");
                 dialog.setPositiveButton("Open location settings", new DialogInterface.OnClickListener() {
                     @Override
@@ -255,17 +256,17 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                         startActivity(myIntent);
                     }
                 });
-                dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                        // TODO Auto-generated method stub
-                    }
-                });
-                dialog.show();
+                dialog.setCancelable(false);
+                dialog.show();*/
+
+                snackbar_loc.show();
+
+
             }
             buildGoogleApiClient();
         } else {
-            Toast.makeText(mContext, "Location not supported in this device", Toast.LENGTH_SHORT).show();
+            snackbar.show();
+            tv_snack.setText("Location services not supporting in this device");
         }
 
 
@@ -275,8 +276,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        if(!(sharedPreferences.getString("customer_image","").equals(""))){
-            Glide.with(DashboardNavigation.this).load(Config.WEB_URL+"customer_details/"+sharedPreferences.getString("customer_image","")).into(btn_editProfile_img);
+        if (!(sharedPreferences.getString("customer_image", "").equals(""))) {
+            Glide.with(DashboardNavigation.this).load(Config.WEB_URL + "customer_details/" + sharedPreferences.getString("customer_image", "")).into(btn_editProfile_img);
         }
 
 
@@ -304,18 +305,16 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!(et_username.getText().toString().isEmpty())){
-                    if(!(et_email.getText().toString().isEmpty())){
+                if (!(et_username.getText().toString().isEmpty())) {
+                    if (!(et_email.getText().toString().isEmpty())) {
                         customer_name = et_username.getText().toString();
                         customer_email = et_email.getText().toString();
                         new profile_update().execute();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Enter User Email", Toast.LENGTH_SHORT).show();
                     }
-                    else{
-                        Toast.makeText(getApplicationContext(),"Enter User Email",Toast.LENGTH_SHORT).show();
-                    }
-                }
-                else{
-                    Toast.makeText(getApplicationContext(),"Enter User Name",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Enter User Name", Toast.LENGTH_SHORT).show();
                 }
                 dialog2.dismiss();
             }
@@ -468,9 +467,14 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         tv_jobReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(DashboardNavigation.this, Job_review.class);
-                startActivity(i);
-               // finish();
+                if(!(sharedPreferences.getString("job_id","").equals(""))){
+
+                    Intent i = new Intent(DashboardNavigation.this, Job_review.class);
+                    startActivity(i);
+                    drawer.closeDrawer(Gravity.LEFT);
+                }
+
+                // finish();
             }
         });
         tv_myTrips.setOnClickListener(new View.OnClickListener() {
@@ -478,7 +482,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             public void onClick(View view) {
                 Intent i = new Intent(DashboardNavigation.this, MyTrips.class);
                 startActivity(i);
-               // finish();
+                drawer.closeDrawer(Gravity.LEFT);
+                // finish();
             }
         });
 
@@ -487,7 +492,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             public void onClick(View view) {
                 Intent i = new Intent(DashboardNavigation.this, Tracking.class);
                 startActivity(i);
-               // finish();
+                drawer.closeDrawer(Gravity.LEFT);
+                // finish();
             }
         });
 
@@ -497,7 +503,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             public void onClick(View view) {
                 Intent i = new Intent(DashboardNavigation.this, Payment.class);
                 startActivity(i);
-               // finish();
+                drawer.closeDrawer(Gravity.LEFT);
+                // finish();
             }
         });
 
@@ -506,12 +513,12 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             public void onClick(View view) {
                 Intent goIntsd = new Intent(getApplicationContext(), EmergencyContacts.class);
                 startActivity(goIntsd);
+                drawer.closeDrawer(Gravity.LEFT);
             }
         });
 
 
-
-        if(!(sharedPreferences.getString("book_time","").equals(""))) {
+        if (!(sharedPreferences.getString("book_time", "").equals(""))) {
 
 
             String dateStart = current_time;
@@ -525,16 +532,13 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 long diff = d2.getTime() - d1.getTime();
                 long diffHours = diff / (60 * 60 * 1000) % 24;
                 diff = diffHours;
-                Log.e("test", diffHours + " hours, "+diff);
+                Log.e("test", diffHours + " hours, " + diff);
             } catch (Exception e) {// TODO: handle exception        }
 
             }
-        }
-        else{
+        } else {
             diff = 7;
         }
-
-
 
 
         btn_book_now.setOnClickListener(new View.OnClickListener() {
@@ -542,7 +546,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             public void onClick(View view) {
 
 
-                if(diff >= 0) {
+                if (diff >= 0) {
 
                     if (destination.getText().toString().isEmpty()) {
                         // Toast.makeText(getApplicationContext(), "Choose Drop Location", Toast.LENGTH_LONG).show();
@@ -559,8 +563,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                         Intent i = new Intent(DashboardNavigation.this, Book_now.class);
                         startActivity(i);
                     }
-                }
-                else{
+                } else {
                     snackbar.show();
                     tv_snack.setText("You already have current job. Please choose book later!");
                 }
@@ -596,10 +599,10 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     public void onLocationChanged(Location location) {
         try {
             if (location != null)
-             //   Log.e("tag", "1234447" + location.getLatitude());
-           // Log.e("tag", "1234448" + location.getLongitude());
+                //   Log.e("tag", "1234447" + location.getLatitude());
+                // Log.e("tag", "1234448" + location.getLongitude());
 
-            mPickup_lat = String.valueOf(location.getLatitude());
+                mPickup_lat = String.valueOf(location.getLatitude());
             mPickup_long = String.valueOf(location.getLongitude());
 
             changeMap(location);
@@ -634,6 +637,22 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        if (checkPlayServices()) {
+            if (!AppUtils.isLocationEnabled(mContext)) {
+                snackbar_loc.show();
+            }
+            buildGoogleApiClient();
+        } else {
+            snackbar.show();
+            tv_snack.setText("Location services not supporting in this device");
+        }
+
     }
 
     @Override
@@ -765,7 +784,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
                 destination.append(place1.getAddress());
                 Log.e("tag", "place111" + place1.getAddress());
-                Log.e("tag","la00: "+place1.getLatLng());
+                Log.e("tag", "la00: " + place1.getLatLng());
                 mDrop_lat = String.valueOf(latLong.latitude);
                 mDrop_long = String.valueOf(latLong.longitude);
 
@@ -872,7 +891,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
     protected void displayAddressOutput() {
 
-       // Log.e("tag00", "output11111" + mAddressOutput);
+        // Log.e("tag00", "output11111" + mAddressOutput);
         //starting.setText(mAddressOutput);
         try {
             if (mAreaOutput != null)
@@ -882,7 +901,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
             starting.setText(mAddressOutput);
             //starting.setText(mAreaOutput);
-         //   Log.e("tag22", "output" + mAreaOutput);
+            //   Log.e("tag22", "output" + mAreaOutput);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -961,7 +980,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     }
 
 
-                   // new updateLocation().execute();
+                    // new updateLocation().execute();
 
 
                 } catch (Exception e) {
@@ -1025,7 +1044,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
     private void changeMap(Location location) {
 
-      //  Log.e(TAG, "Reaching map" + mMap);
+        //  Log.e(TAG, "Reaching map" + mMap);
 
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -1106,7 +1125,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         protected String doInBackground(String... strings) {
 
 
-            if(selectedPhotos.size()>0) {
+            if (selectedPhotos.size() > 0) {
                 String json = "", jsonStr = "";
                 try {
                     //driver/driverupdate
@@ -1143,25 +1162,24 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     Log.e("InputStream0", e.getLocalizedMessage());
                 }
                 return null;
-            }
-            else{
+            } else {
 
-                Log.e("tag","no poto");
+                Log.e("tag", "no poto");
 
-                String  s = "";
+                String s = "";
                 JSONObject jsonObject = new JSONObject();
                 try {
 
-                    Log.e("tag",customer_name);
-                    Log.e("tag",customer_email);
+                    Log.e("tag", customer_name);
+                    Log.e("tag", customer_email);
 
                     jsonObject.put("customer_name", customer_name);
                     jsonObject.put("customer_email", customer_email);
                     String json = jsonObject.toString();
-                    return s = HttpUtils.makeRequest1(net.sqindia.movehaul.Config.WEB_URL + "customer/customerupdate",json,id,token);
+                    return s = HttpUtils.makeRequest1(net.sqindia.movehaul.Config.WEB_URL + "customer/customerupdate", json, id, token);
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Log.e("tag",e.toString());
+                    Log.e("tag", e.toString());
                 }
                 return null;
 
@@ -1173,7 +1191,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.e("tag", "tag" + s);
-
 
 
             if (s != null) {
@@ -1190,16 +1207,16 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                         String email = jo.getString("customer_email");
 
 
-                        Glide.with(DashboardNavigation.this).load(Config.WEB_URL+"customer_details/"+img).into(btn_editProfile_img);
+                        Glide.with(DashboardNavigation.this).load(Config.WEB_URL + "customer_details/" + img).into(btn_editProfile_img);
 
-                        editor.putString("customer_image",img);
-                        editor.putString("customer_name",name);
-                        editor.putString("customer_email",email);
+                        editor.putString("customer_image", img);
+                        editor.putString("customer_name", name);
+                        editor.putString("customer_email", email);
                         editor.commit();
 
-                        Log.e("tag","img: "+Config.WEB_URL+"customer_details/"+img);
-                        Log.e("tag","img: "+name);
-                        Log.e("tag","img: "+email);
+                        Log.e("tag", "img: " + Config.WEB_URL + "customer_details/" + img);
+                        Log.e("tag", "img: " + name);
+                        Log.e("tag", "img: " + email);
 
                         tv_name.setText(name);
                         tv_email.setText(email);
@@ -1242,9 +1259,9 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             mAreaOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_AREA);
             mCityOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_CITY);
             mStreetOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_STREET);
-           // Log.e("tag0", mStreetOutput);
-           // Log.e("tag1",mCityOutput);
-           // Log.e("tag2",mAreaOutput);
+            // Log.e("tag0", mStreetOutput);
+            // Log.e("tag1",mCityOutput);
+            // Log.e("tag2",mAreaOutput);
             displayAddressOutput();
 
             // Show a toast message if an address was found.

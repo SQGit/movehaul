@@ -218,6 +218,30 @@ public class SplashActivity extends Activity {
             snackbar.show();
         } else {
            snackbar.dismiss();
+
+            if (sharedPreferences.getString("login", "").equals("success")) {
+
+                lt_bottom.startAnimation(anim_btn_t2b);
+                truck_icon.startAnimation(anim_truck_c2r);
+                bg_icon.setAnimation(fadeOut);
+
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        Intent isd = new Intent(SplashActivity.this, DashboardNavigation.class);
+                        Bundle bndlanimation =
+                                ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anim1, R.anim.anim2).toBundle();
+                        startActivity(isd, bndlanimation);
+
+
+                    }
+                }, 1200);
+
+            }
+
+
         }
 
         Log.e("tag", "ds+" + is);

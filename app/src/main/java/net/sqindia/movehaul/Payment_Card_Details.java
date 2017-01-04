@@ -146,6 +146,13 @@ public class Payment_Card_Details extends Activity {
             @Override
             public void onClick(View view) {
                 dialog1.dismiss();
+
+                editor.putString("job_id","");
+                editor.commit();
+
+                Intent i = new Intent(Payment_Card_Details.this, DashboardNavigation.class);
+                startActivity(i);
+                finish();
             }
         });
         btn_ok.setOnClickListener(new View.OnClickListener() {
@@ -153,7 +160,11 @@ public class Payment_Card_Details extends Activity {
             public void onClick(View view) {
                 dialog1.dismiss();
 
-                Intent i = new Intent(Payment_Card_Details.this, MyTrips.class);
+
+                editor.putString("job_id","");
+                editor.commit();
+
+                Intent i = new Intent(Payment_Card_Details.this, DashboardNavigation.class);
                 startActivity(i);
                 finish();
             }

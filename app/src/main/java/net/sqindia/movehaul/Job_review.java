@@ -248,6 +248,9 @@ public class Job_review extends Activity {
 
                             }
                         }
+                        else{
+                            finish();
+                        }
 
 
 

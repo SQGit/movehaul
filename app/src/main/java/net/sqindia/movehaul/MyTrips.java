@@ -39,9 +39,6 @@ import java.util.ArrayList;
 
 public class MyTrips extends AppCompatActivity {
 
-    private ViewPager viewPager;
-    private int[] layouts;
-    private MyViewPagerAdapter myViewPagerAdapter;
     TabIndicatorView tiv;
     ListView ht_lview;
     LinearLayout btn_back;
@@ -49,14 +46,49 @@ public class MyTrips extends AppCompatActivity {
     MV_Datas mv_datas;
     Snackbar snackbar;
     Typeface tf;
-    android.widget.TextView tv_snack,tv_pickup,tv_drop,tv_delivery,tv_date,tv_time,tv_truck;
+    android.widget.TextView tv_snack, tv_pickup, tv_drop, tv_delivery, tv_date, tv_time, tv_truck;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-    String id,token;
+    String id, token;
     ArrayList<MV_Datas> ar_job_history;
     ProgressDialog mProgressDialog;
-    android.widget.TextView tv_cr_date,tv_cr_time,tv_cr_pickup,tv_cr_drop, tv_cr_tr_type,tv_cr_dr_name,tv_cr_dr_phone,tv_cr_job_cost;
+    android.widget.TextView tv_cr_date, tv_cr_time, tv_cr_pickup, tv_cr_drop, tv_cr_tr_type, tv_cr_dr_name, tv_cr_dr_phone, tv_cr_job_cost;
+    ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
 
+        @Override
+        public void onPageSelected(int position) {
+
+
+            if (position == 0) {
+
+                FontsManager.initFormAssets(MyTrips.this, "fonts/lato.ttf");       //initialization
+                FontsManager.changeFonts(MyTrips.this);
+
+
+            } else if (position == 1) {
+
+
+            } else {
+
+
+            }
+        }
+
+        @Override
+        public void onPageScrolled(int arg0, float arg1, int arg2) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int arg0) {
+
+        }
+
+
+    };
+    private ViewPager viewPager;
+    private int[] layouts;
+    private MyViewPagerAdapter myViewPagerAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -110,8 +142,7 @@ public class MyTrips extends AppCompatActivity {
         if (!net.sqindia.movehaul.Config.isConnected(MyTrips.this)) {
             snackbar.show();
             tv_snack.setText("Please Connect Internet and Try again");
-        }
-        else{
+        } else {
             new get_history().execute();
 
         }
@@ -122,6 +153,13 @@ public class MyTrips extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(MyTrips.this, DashboardNavigation.class);
+        startActivity(i);
+        finish();
+    }
 
     public class MyViewPagerAdapter extends PagerAdapter {
         private LayoutInflater layoutInflater;
@@ -138,11 +176,10 @@ public class MyTrips extends AppCompatActivity {
            /*FontsManager.initFormAssets(getApplicationContext(), "fonts/lato.ttf");       //initialization
             FontsManager.changeFonts((Activity) getApplicationContext());*/
 
-            if (position == 0)
-            {
-               mv_datas = ar_job_history.get(0);
-               Log.e("tag","pickup: "+mv_datas.getPickup()+mv_datas.getJob_cost());
-                Log.e("tag","33size "+ar_job_history.size());
+            if (position == 0) {
+                mv_datas = ar_job_history.get(0);
+                Log.e("tag", "pickup: " + mv_datas.getPickup() + mv_datas.getJob_cost());
+                Log.e("tag", "33size " + ar_job_history.size());
 
                 tv_cr_date = (android.widget.TextView) view.findViewById(R.id.cr_date);
                 tv_cr_time = (android.widget.TextView) view.findViewById(R.id.cr_time);
@@ -164,33 +201,28 @@ public class MyTrips extends AppCompatActivity {
                 tv_cr_job_cost.setText(mv_datas.getJob_cost());
 
 
-            }
-            else if (position == 1)
-            {
+            } else if (position == 1) {
                 ht_lview = (ListView) view.findViewById(R.id.lview);
                 ht_arlist = new ArrayList<>();
                 HistoryAdapter adapter = new HistoryAdapter(MyTrips.this, ht_arlist);
                 ht_lview.setAdapter(adapter);
-            }
-            else
-            {
+            } else {
                 android.widget.ListView up_lview;
                 up_lview = (android.widget.ListView) view.findViewById(R.id.lview);
 
                 final ArrayList<String> up_arlist = new ArrayList<>();
 
-                final UpcomingAdapter up_adapter = new UpcomingAdapter(MyTrips.this,MyTrips.this, ar_job_history);
+                final UpcomingAdapter up_adapter = new UpcomingAdapter(MyTrips.this, MyTrips.this, ar_job_history);
                 up_lview.setAdapter(up_adapter);
                 up_lview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
                 up_lview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l)
-                    {
+                    public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
                         // toggle clicked cell state
                         ((FoldingCell) view).toggle(false);
                         // register in adapter that state for selected cell is toggled
                         up_adapter.registerToggle(pos);
-                        Log.e("tag","clicked"+pos);
+                        Log.e("tag", "clicked" + pos);
 
                     }
                 });
@@ -235,64 +267,11 @@ public class MyTrips extends AppCompatActivity {
         }
 
 
-
-
-
-
-
     }
-
-
-
-
-    ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
-
-        @Override
-        public void onPageSelected(int position) {
-
-
-            if (position == 0) {
-
-                FontsManager.initFormAssets(MyTrips.this, "fonts/lato.ttf");       //initialization
-                FontsManager.changeFonts(MyTrips.this);
-
-
-            } else if (position == 1) {
-
-
-            } else {
-
-
-            }
-        }
-
-        @Override
-        public void onPageScrolled(int arg0, float arg1, int arg2) {
-            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int arg0) {
-
-        }
-
-
-    };
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent i = new Intent(MyTrips.this,DashboardNavigation.class);
-        startActivity(i);
-        finish();
-    }
-
-
 
     public class get_history extends AsyncTask<String, Void, String> {
         @Override
-        protected void onPreExecute()
-        {
+        protected void onPreExecute() {
             super.onPreExecute();
             mProgressDialog.show();
             Log.e("tag", "reg_preexe");
@@ -329,10 +308,9 @@ public class MyTrips extends AppCompatActivity {
                     if (status.equals("true")) {
 
 
-
                         JSONArray goods_data = jo.getJSONArray("message");
 
-                        if(goods_data.length()>0) {
+                        if (goods_data.length() > 0) {
                             for (int i = 0; i < goods_data.length(); i++) {
 
 
@@ -356,8 +334,8 @@ public class MyTrips extends AppCompatActivity {
                                 String part1 = parts[0]; // 004
                                 String part2 = parts[1]; // 034556
 
-                                Log.e("tag","1st"+part1);
-                                Log.e("tag","2st"+part2);
+                                Log.e("tag", "1st" + part1);
+                                Log.e("tag", "2st" + part2);
 
                                 mv_datas.setName(driver_name);
                                 mv_datas.setDriver_image(driver_image);
@@ -374,15 +352,15 @@ public class MyTrips extends AppCompatActivity {
 
 
                             }
+
+                            Log.e("tag", "size " + ar_job_history.size());
+                            viewPager.setAdapter(myViewPagerAdapter);
+                            viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
+                            tiv.setTabIndicatorFactory(new TabIndicatorView.ViewPagerIndicatorFactory(viewPager));
+
+                        } else {
+                            finish();
                         }
-
-
-                        Log.e("tag","size "+ar_job_history.size());
-                        viewPager.setAdapter(myViewPagerAdapter);
-                        viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
-                        tiv.setTabIndicatorFactory(new TabIndicatorView.ViewPagerIndicatorFactory(viewPager));
-
-
 
 
                     } else if (status.equals("false")) {
@@ -404,7 +382,6 @@ public class MyTrips extends AppCompatActivity {
         }
 
     }
-
 
 
 }
