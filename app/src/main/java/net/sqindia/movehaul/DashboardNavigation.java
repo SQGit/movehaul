@@ -3,10 +3,8 @@ package net.sqindia.movehaul;
 
 import android.Manifest;
 import android.app.Dialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -16,6 +14,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
@@ -93,32 +92,16 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.EventListener;
-import java.util.EventObject;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import me.iwf.photopicker.PhotoPickerActivity;
 import me.iwf.photopicker.utils.PhotoPickerIntent;
 
 
-interface BooleanChangeDispatcher {
-
-    public void addBooleanChangeListener(BooleanChangeListener listener);
-
-    public boolean getFlag();
-
-    public void setFlag(boolean flag);
-
-}
-
-interface BooleanChangeListener extends EventListener {
-
-    public void stateChanged(BooleanChangeEvent event);
-
-}
-
-public class DashboardNavigation extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, com.google.android.gms.location.LocationListener, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, BooleanChangeDispatcher {
+public class DashboardNavigation extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, com.google.android.gms.location.LocationListener, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
@@ -126,6 +109,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     private static final int REQUEST_PROFILE = 5;
     public static boolean mMapIsTouched = false;
     private static String TAG = "tag_MAP LOCATION";
+    final private int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124;
+    public LinearLayout lt_top, lt_bottom;
     protected String mAddressOutput;
     protected String mAreaOutput;
     protected String mCityOutput;
@@ -162,41 +147,119 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     String id, token, mPickup_lat, mPickup_long, mDrop_lat, mDrop_long;
     TextInputLayout flt_uname, flt_email;
     ArrayList<String> selectedPhotos = new ArrayList<>();
+    ImageView iv_location;
     int diff;
-    LinearLayout lt_top, lt_bottom;
-    BroadcastReceiver appendChatScreenMsgReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
+    /*    BroadcastReceiver appendChatScreenMsgReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
 
 
-            if (mMapIsTouched) {
-                Log.e("tagmap", "istouched");
-                lt_top.setVisibility(View.GONE);
-                lt_bottom.setVisibility(View.GONE);
-            } else {
-                Log.e("tagmap", "nottouched");
-                lt_top.setVisibility(View.VISIBLE);
-                lt_bottom.setVisibility(View.VISIBLE);
+                if (mMapIsTouched) {
+                    Log.e("tagmap", "istouched");
+                    lt_top.setVisibility(View.GONE);
+                    lt_bottom.setVisibility(View.GONE);
+                } else {
+                    Log.e("tagmap", "nottouched");
+                    lt_top.setVisibility(View.VISIBLE);
+                    lt_bottom.setVisibility(View.VISIBLE);
+                }
+
+
             }
-
-
-        }
-    };
+        };*/
     private GoogleMap mMap;
     private LatLng mCenterLatLong;
     private AddressResultReceiver mResultReceiver;
     private boolean flag;
-    private List<BooleanChangeListener> listeners;
+
+    private void insertDummyContactWrapper() {
+        List<String> permissionsNeeded = new ArrayList<String>();
+
+        final List<String> permissionsList = new ArrayList<String>();
+        if (!addPermission(permissionsList, Manifest.permission.ACCESS_FINE_LOCATION))
+            permissionsNeeded.add("GPS");
+        if (!addPermission(permissionsList, Manifest.permission.CAMERA))
+            permissionsNeeded.add("Read Contacts");
+        if (!addPermission(permissionsList, Manifest.permission.WRITE_EXTERNAL_STORAGE))
+            permissionsNeeded.add("Write Contacts");
+
+        if (permissionsList.size() > 0) {
+            if (permissionsNeeded.size() > 0) {
+                // Need Rationale
+                String message = "You need to grant access to " + permissionsNeeded.get(0);
+                for (int i = 1; i < permissionsNeeded.size(); i++)
+                    message = message + ", " + permissionsNeeded.get(i);
 
 
-    public DashboardNavigation(){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
+                            REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
+                }
 
+
+                return;
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
+                        REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
+            }
+            return;
+        }
+
+        // insertDummyContact();
     }
 
-    public DashboardNavigation(boolean initialFlagState) {
-        flag = initialFlagState;
-        listeners = new ArrayList<BooleanChangeListener>();
+    private boolean addPermission(List<String> permissionsList, String permission) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
+                permissionsList.add(permission);
+                // Check for Rationale Option
+                if (!shouldShowRequestPermissionRationale(permission))
+                    return false;
+            }
+        }
+        return true;
     }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS: {
+                Map<String, Integer> perms = new HashMap<String, Integer>();
+                // Initial
+                perms.put(Manifest.permission.ACCESS_FINE_LOCATION, PackageManager.PERMISSION_GRANTED);
+                perms.put(Manifest.permission.CAMERA, PackageManager.PERMISSION_GRANTED);
+                perms.put(Manifest.permission.WRITE_EXTERNAL_STORAGE, PackageManager.PERMISSION_GRANTED);
+                // Fill with results
+                for (int i = 0; i < permissions.length; i++)
+                    perms.put(permissions[i], grantResults[i]);
+                // Check for ACCESS_FINE_LOCATION
+                if (perms.get(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                        && perms.get(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
+                        && perms.get(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    // All Permissions Granted
+
+                   // recreate();
+
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+
+
+                } else {
+                    // Permission Denied
+                    insertDummyContactWrapper();
+                    Toast.makeText(DashboardNavigation.this, "Some Permission is Denied", Toast.LENGTH_SHORT)
+                            .show();
+                }
+            }
+            break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -208,6 +271,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DashboardNavigation.this);
         editor = sharedPreferences.edit();
         mContext = this;
+
+        insertDummyContactWrapper();
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -237,6 +302,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         btn_editProfile = (ImageView) findViewById(R.id.imageView2);
         btn_editProfile_img = (ImageView) findViewById(R.id.imageView);
 
+        iv_location = (ImageView) findViewById(R.id.imageview_location);
+
         Typeface type = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
         flt_pickup.setTypeface(type);
         flt_droplocation.setTypeface(type);
@@ -256,24 +323,10 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         mapFragment.getMapAsync(this);
 
 
-        DashboardNavigation.this.registerReceiver(this.appendChatScreenMsgReceiver, new IntentFilter("appendChatScreenMsg"));
+        // DashboardNavigation.this.registerReceiver(this.appendChatScreenMsgReceiver, new IntentFilter("appendChatScreenMsg"));
 
         lt_top = (LinearLayout) findViewById(R.id.top_layout);
         lt_bottom = (LinearLayout) findViewById(R.id.bottom_layout);
-
-
-        BooleanChangeListener listener = new BooleanChangeListener() {
-            @Override
-            public void stateChanged(BooleanChangeEvent event) {
-                Log.e("tagmap","Detected change to: "
-                        + " -- event: " + event);
-            }
-        };
-
-        DashboardNavigation test = new DashboardNavigation(mMapIsTouched);
-        test.addBooleanChangeListener(listener);
-
-        test.setFlag(mMapIsTouched); // no change, no event dispatch
 
 
         Calendar c = Calendar.getInstance();
@@ -561,6 +614,33 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             }
         });
 
+        iv_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                Location loc = mMap.getMyLocation();
+
+
+                if (loc != null) {
+                    LatLng latLang = new LatLng(loc.getLatitude(), loc
+                            .getLongitude());
+                /*    cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLang, 17);
+                mMap.animateCamera(cameraUpdate);
+*/
+                    mMap.clear();
+                    CameraPosition cameraPosition = new CameraPosition.Builder()
+                            .target(latLang).zoom(15f).build();
+                    mMap.animateCamera(CameraUpdateFactory
+                            .newCameraPosition(cameraPosition));
+                    mMap.addMarker(new MarkerOptions().position(latLang).icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_point)));
+
+                }
+
+
+            }
+        });
+
 
         if (!(sharedPreferences.getString("book_time", "").equals(""))) {
 
@@ -684,6 +764,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     protected void onRestart() {
         super.onRestart();
 
+        insertDummyContactWrapper();
+
         if (checkPlayServices()) {
             if (!AppUtils.isLocationEnabled(mContext)) {
                 snackbar_loc.show();
@@ -710,10 +792,35 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     }
 
 
+    public void show_disable() {
+
+        //Activity context = DashboardNavigation.this;
+//
+        // / /  //lt_top = (LinearLayout) findViewById(R.id.top_layout);
+        //lt_bottom = (LinearLayout) findViewById(R.id.bottom_layout);
+
+        if (mMapIsTouched) {
+            Log.e("tagmap", "istouched");
+            // lt_top = (LinearLayout) findViewById(R.id.top_layout);
+            ////  lt_bottom = (LinearLayout) findViewById(R.id.bottom_layout);
+
+            //   lt_top.setVisibility(View.GONE);
+            //   lt_bottom.setVisibility(View.GONE);
+        } else {
+            Log.e("tagmap", "nottouched");
+            //  lt_top = (LinearLayout) findViewById(R.id.top_layout);
+            // lt_bottom = (LinearLayout) findViewById(R.id.bottom_layout);
+
+            //  lt_top.setVisibility(View.VISIBLE);
+            //  lt_bottom.setVisibility(View.VISIBLE);
+        }
+
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        DashboardNavigation.this.unregisterReceiver(appendChatScreenMsgReceiver);
+        // DashboardNavigation.this.unregisterReceiver(appendChatScreenMsgReceiver);
     }
 
 
@@ -1069,6 +1176,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                         PLAY_SERVICES_RESOLUTION_REQUEST).show();
             } else {
                 //finish();
+                snackbar.show();
+                tv_snack.setText("Install Google Play Services.");
             }
             return false;
         }
@@ -1149,29 +1258,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         tv_txt3.setText("Exit");
     }
 
-
-    @Override
-    public void addBooleanChangeListener(BooleanChangeListener listener) {
-        listeners.add(listener);
-    }
-
-
-    @Override
-    public boolean getFlag() {
-        return flag;
-    }
-
-    @Override
-    public void setFlag(boolean flag) {
-
-        Log.e("tagmap", "flagvalue" + flag);
-
-        if (this.flag != flag) {
-            this.flag = flag;
-            // dispatchEvent();
-        }
-
-    }
 
     public class profile_update extends AsyncTask<String, Void, String> {
         @Override
@@ -1322,15 +1408,5 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
 }
 
-class BooleanChangeEvent extends EventObject {
 
-    private final BooleanChangeDispatcher dispatcher;
-
-    public BooleanChangeEvent(BooleanChangeDispatcher dispatcher) {
-        super(dispatcher);
-        this.dispatcher = dispatcher;
-    }
-
-
-}
 

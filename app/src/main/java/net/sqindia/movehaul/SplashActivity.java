@@ -31,7 +31,6 @@ import android.widget.LinearLayout;
 
 import com.rey.material.widget.Button;
 import com.sloop.fonts.FontsManager;
-import com.wang.avi.AVLoadingIndicatorView;
 
 /**
  * Created by sqindia on 21-10-2016.
@@ -42,7 +41,6 @@ public class SplashActivity extends Activity {
     LinearLayout lt_bottom;
     int is = 0;
     Config config;
-    AVLoadingIndicatorView av_loader;
     LinearLayout lt_top;
     Snackbar snackbar;
     Typeface tf;
@@ -90,8 +88,6 @@ public class SplashActivity extends Activity {
         bg_icon = (ImageView) findViewById(R.id.bg_icon);
         logo_icon = (ImageView) findViewById(R.id.logo_ico);
         lt_bottom = (LinearLayout) findViewById(R.id.layout_bottom);
-        av_loader = (AVLoadingIndicatorView) findViewById(R.id.loader);
-        av_loader.setVisibility(View.GONE);
         snackbar = Snackbar.make(lt_top, "No internet connection!", Snackbar.LENGTH_INDEFINITE)
                 .setAction("Open Settings", new View.OnClickListener() {
                     @Override

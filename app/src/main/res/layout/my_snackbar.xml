@@ -5,14 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-    <com.wang.avi.AVLoadingIndicatorView
-        android:id="@+id/image"
-        style="@style/AVLoadingIndicatorView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        app:indicatorColor="@color/redColor"
-        app:indicatorName="BallScaleMultipleIndicator" />
+
 
     <TextView
         android:id="@+id/text"
