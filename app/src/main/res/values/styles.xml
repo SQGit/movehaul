@@ -65,4 +65,9 @@
         <item name="android:textSize">2sp</item>
     </style>
 
+    <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/oror</item>
+        <item name="android:textColorPrimary">@color/or2</item>
+    </style>
+
 </resources>

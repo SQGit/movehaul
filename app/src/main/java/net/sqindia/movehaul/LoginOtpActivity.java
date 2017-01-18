@@ -70,7 +70,7 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginOtpActivity.this);
         editor = sharedPreferences.edit();
 
-        mProgressDialog = new ProgressDialog(LoginOtpActivity.this);
+        mProgressDialog = new ProgressDialog(LoginOtpActivity.this,R.style.AppCompatAlertDialogStyle);
         mProgressDialog.setTitle("Loading..");
         mProgressDialog.setMessage("Please wait");
         mProgressDialog.setIndeterminate(false);

@@ -68,7 +68,7 @@ public class LoginActivity extends Activity {
         // show_wifi_not_connected();
 
 
-        mProgressDialog = new ProgressDialog(LoginActivity.this);
+        mProgressDialog = new ProgressDialog(LoginActivity.this,R.style.AppCompatAlertDialogStyle);
         mProgressDialog.setTitle("Loading..");
         mProgressDialog.setMessage("Please wait");
         mProgressDialog.setIndeterminate(false);

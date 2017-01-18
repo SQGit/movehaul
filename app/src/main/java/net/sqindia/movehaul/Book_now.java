@@ -180,7 +180,7 @@ public class Book_now extends Activity {
         tv_snack.setTypeface(tf);
 
 
-        mProgressDialog = new ProgressDialog(Book_now.this);
+        mProgressDialog = new ProgressDialog(Book_now.this,R.style.AppCompatAlertDialogStyle);
         mProgressDialog.setTitle("Loading..");
         mProgressDialog.setMessage("Please wait");
         mProgressDialog.setIndeterminate(false);
