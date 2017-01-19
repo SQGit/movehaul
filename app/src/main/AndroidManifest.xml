@@ -28,8 +28,11 @@
         android:theme="@style/AppTheme1">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyB3Zko2LecX_BWk5nL378dDqyyLUwFvWc0" />
+            android:value="AIzaSyCylUHF_EPwHEJPtcCAx5C3lokC6DgZrIs" />
 
+
+
+        content_copy
 
 
         <activity
