@@ -7,6 +7,7 @@
         android:name="android.hardware.camera.autofocus"
         android:required="false" />
 
+
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -29,10 +30,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCylUHF_EPwHEJPtcCAx5C3lokC6DgZrIs" />
-
-
-
-        content_copy
 
 
         <activity
@@ -115,12 +112,12 @@
             android:name="net.sqindia.movehaul.FetchAddressIntentService"
             android:exported="false" />
 
-        <activity android:name="nl.changer.polypicker.ImagePickerActivity" />
+        <activity android:name="com.gun0912.tedpicker.ImagePickerActivity"
+            android:screenOrientation="portrait" android:theme="@style/ted_pick_theme"
+            />
 
+            />
 
-        <activity
-            android:name="me.iwf.photopicker.PhotoPickerActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
     </application>
 
 </manifest>

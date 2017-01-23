@@ -4,5 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="blue_sub_action_button_content_margin">16dp</dimen>
     <dimen name="blue_sub_action_button_content_margin1">16dp</dimen>
+    <dimen name="app_camera_height">@dimen/_400sdp</dimen>
+    <dimen name="bottom_height">100dp</dimen>
 
 </resources>

@@ -52,4 +52,6 @@ dependencies {
     compile 'com.razorpay:checkout:1.2.0'
     compile 'com.nineoldandroids:library:2.4.0'
 
+    compile 'com.github.ParkSangGwon:TedPicker:v1.0.10'
+
 }

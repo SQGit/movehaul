@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/top"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:id="@+id/top"
     android:background="@drawable/bg"
     android:orientation="vertical">
 
@@ -35,9 +35,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Book Now"
-                android:textStyle="bold"
                 android:textColor="#F65F52"
-                android:textSize="@dimen/_19sdp" />
+                android:textSize="@dimen/_19sdp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -87,8 +87,8 @@
                             android:background="@null"
                             android:drawableLeft="@drawable/delivery_addr"
                             android:hint="Delivery Address"
-                            android:inputType="text"
                             android:imeOptions="actionDone"
+                            android:inputType="text"
                             android:maxLines="1"
                             android:paddingTop="@dimen/_10sdp"
                             android:textColor="#000000"
@@ -199,45 +199,82 @@
                         android:textColor="#F65F52"
                         android:textSize="@dimen/_12sdp" />
 
+                    <!--<LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_70sdp"
+                        android:orientation="horizontal">
+
+
+                        <LinearLayout
+                            android:id="@+id/selected_photos_container2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="left"
+                            android:layout_weight="1"
+                            android:gravity="left"
+                            android:orientation="horizontal"
+                            android:visibility="visible">
+
+
+                            <TextView
+                                android:id="@+id/msg"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="@dimen/_30sdp"
+                                android:text="no images selected" />
+
+
+                        </LinearLayout>
+                        &lt;!&ndash; </HorizontalScrollView>&ndash;&gt;
+
+                        <com.rey.material.widget.ImageButton
+                            android:id="@+id/get_images"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:layout_marginRight="@dimen/_15sdp"
+                            android:background="@drawable/camera_icon" />
+                    </LinearLayout>-->
+
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_70sdp"
                         android:orientation="horizontal">
 
 
+                        <HorizontalScrollView
+                            android:id="@+id/hori_scroll_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:foregroundGravity="left|center_vertical">
 
                             <LinearLayout
                                 android:id="@+id/selected_photos_container"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_gravity="left"
-                                android:gravity="left"
+                                android:layout_gravity="left|center_vertical"
+                                android:animateLayoutChanges="true"
+                                android:gravity="left|center_vertical"
                                 android:orientation="horizontal"
-                                android:layout_weight="1"
-                                android:visibility="visible">
-
-
-                                <TextView
-                                    android:id="@+id/msg"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/_30sdp"
-                                    android:layout_gravity="center"
-                                    android:text="no images selected" />
-
-
-                            </LinearLayout>
-                       <!-- </HorizontalScrollView>-->
+                                android:visibility="visible"></LinearLayout>
+                        </HorizontalScrollView>
 
                         <com.rey.material.widget.ImageButton
-                            android:id="@+id/get_images"
+                            android:id="@+id/camera"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:layout_marginRight="@dimen/_15sdp"
-                            android:layout_gravity="center"
-                            android:background="@drawable/camera_icon" />
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/camera_icon"
+                            android:textColor="#000000" />
+
                     </LinearLayout>
+
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/float_description"

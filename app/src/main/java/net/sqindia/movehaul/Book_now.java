@@ -30,6 +30,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -38,6 +39,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.gun0912.tedpicker.ImagePickerActivity;
 import com.rey.material.widget.Button;
 import com.sloop.fonts.FontsManager;
 
@@ -62,15 +64,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.List;
 
-import me.iwf.photopicker.PhotoPickerActivity;
-import me.iwf.photopicker.utils.PhotoPickerIntent;
-import nl.changer.polypicker.Config;
-import nl.changer.polypicker.ImagePickerActivity;
-import nl.changer.polypicker.utils.ImageInternalFetcher;
+import com.gun0912.tedpicker.Config;
+
 /**
  * Created by sqindia on 25-10-2016.
  */
@@ -99,6 +95,8 @@ public class Book_now extends Activity {
     SharedPreferences.Editor editor;
     Snackbar snackbar;
     Typeface tf;
+    public int i;
+    int min,max;
     ArrayList<String> ar_goods_type = new ArrayList<>();
     ArrayList<String> ar_truck_type = new ArrayList<>();
     ArrayList<String> ar_truck_sstype = new ArrayList<>();
@@ -110,6 +108,11 @@ public class Book_now extends Activity {
     ArrayList<String> selectedPhotos = new ArrayList<>();
     String str_delivery_address,str_pickup,str_drop,str_goods_type,str_truck_type,str_desc,str_goods_pic,str_profile_img,book_time;
     LinearLayout.LayoutParams lp;
+    ArrayList<Uri>  image_uris;
+
+    ArrayList<Uri>  goods_imgs;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,7 +126,7 @@ public class Book_now extends Activity {
         et_trucktype = (EditText) findViewById(R.id.editTextTruck_type);
         et_description = (EditText) findViewById(R.id.editTextDescription);
         msg=(TextView) findViewById(R.id.msg);
-        mSelectedImagesContainer = (ViewGroup) findViewById(R.id.selected_photos_container);
+        //mSelectedImagesContainer = (ViewGroup) findViewById(R.id.selected_photos_container);
         flt_delivery_address = (TextInputLayout) findViewById(R.id.float_deliveryaddress);
         flt_goodstype = (TextInputLayout) findViewById(R.id.float_goodstype);
         flt_trucktype = (TextInputLayout) findViewById(R.id.float_trucktype);
@@ -139,9 +142,14 @@ public class Book_now extends Activity {
         flt_trucktype.setTypeface(tf);
         flt_description.setTypeface(tf);
 
-        View getImages = findViewById(R.id.get_images);
+        min = 2;
+        max = 4;
+        goods_imgs = new ArrayList<>();
+        image_uris = new ArrayList<>();
 
-
+      //  View getImages = findViewById(R.id.get_images);
+        View getImages = findViewById(R.id.camera);
+        mSelectedImagesContainer = (ViewGroup) findViewById(R.id.selected_photos_container);
 
 
         ll = (LinearLayout)findViewById(R.id.selected_photos_container);
@@ -239,11 +247,62 @@ public class Book_now extends Activity {
             @Override
             public void onClick(View v) {
                 
-                PhotoPickerIntent intent = new PhotoPickerIntent(Book_now.this);
+               /* PhotoPickerIntent intent = new PhotoPickerIntent(Book_now.this);
                 intent.setPhotoCount(1);
                 intent.setColumn(4);
                 intent.setShowCamera(true);
-                startActivityForResult(intent, REQUEST_VEC_FRONT);
+                startActivityForResult(intent, REQUEST_VEC_FRONT);*/
+
+                Log.e("tag","s:"+goods_imgs.size());
+                Log.e("tag","i:"+image_uris.size());
+
+                if(goods_imgs.isEmpty()){
+                    min =2;
+                    max =4;
+                }
+                else if(goods_imgs.size()==3){
+                    min =1;
+                    max =1;
+                }
+                else if(goods_imgs.size()==2){
+                    min =1;
+                    max =2;
+                } else  {
+                    min =1;
+                    max =3;
+                }
+
+                Config config = new Config();
+                config.setSelectionMin(min);
+                config.setSelectionLimit(max);
+                config.setCameraHeight(R.dimen.app_camera_height);
+
+                config.setCameraBtnBackground(R.drawable.round_dr_red);
+
+                config.setToolbarTitleRes(R.string.custom_title);
+                config.setSelectedBottomHeight(R.dimen.bottom_height);
+
+                ImagePickerActivity.setConfig(config);
+                Intent intent = new Intent(Book_now.this, com.gun0912.tedpicker.ImagePickerActivity.class);
+                startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
+
+
+                /*com.gun0912.tedpicker.Config config = new com.gun0912.tedpicker.Config();
+                config.setSelectionMin(2);
+                config.setSelectionLimit(4);
+                com.gun0912.tedpicker.ImagePickerActivity.setConfig(config);*/
+
+               /* Config config = new Config();
+                config.setCameraHeight(R.dimen.app_camera_height);
+                config.setToolbarTitleRes(R.string.custom_title);
+                config.setSelectionMin(2);
+                config.setSelectionLimit(4);
+                config.setSelectedBottomHeight(R.dimen.bottom_height);
+                ImagePickerActivity.setConfig(config);*/
+
+               /* Intent intent  = new Intent(Book_now.this, ImagePickerActivity.class);
+                startActivityForResult(intent,INTENT_REQUEST_GET_IMAGES);*/
+
                 // getImagesView();
             }
         });
@@ -352,6 +411,7 @@ public class Book_now extends Activity {
     }
 
 
+
     private void goods_type(){
        // Log.e("tag","ss: "+ar_goods_type.size());
         Dialog_Region dialog_region = new Dialog_Region(Book_now.this,ar_goods_type);
@@ -404,7 +464,7 @@ public class Book_now extends Activity {
         return super.dispatchTouchEvent(ev);
     }
 
-    private void getImagesView() {
+   /* private void getImagesView() {
 
         Intent intent = new Intent(getApplicationContext(), ImagePickerActivity.class);
         Config config = new Config.Builder()
@@ -414,9 +474,33 @@ public class Book_now extends Activity {
         ImagePickerActivity.setConfig(config);
         startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
 
+    }*/
+
+
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resuleCode, Intent intent) {
+        super.onActivityResult(requestCode, resuleCode, intent);
+
+        if (requestCode == INTENT_REQUEST_GET_IMAGES && resuleCode == Activity.RESULT_OK ) {
+
+            image_uris = intent.getParcelableArrayListExtra(com.gun0912.tedpicker.ImagePickerActivity.EXTRA_IMAGE_URIS);
+            Log.e("tag","12345"+image_uris);
+
+            if (image_uris != null) {
+                showMedia();
+            }
+        }
     }
 
 
+
+
+
+
+/*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
@@ -450,7 +534,7 @@ public class Book_now extends Activity {
             ll.addView(img_view);
 
 
-           /* for (int i = 0; i < 3; i++) {
+           *//* for (int i = 0; i < 3; i++) {
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -468,9 +552,18 @@ public class Book_now extends Activity {
 
                 layout.addView(img_views);
                 ll.addView(layout);
-            }*/
+            }*//*
 
 
+        }
+
+
+        if (requestCode == INTENT_REQUEST_GET_IMAGES && requestCode == Activity.RESULT_OK ) {
+
+             image_uris = intent.getParcelableArrayListExtra(ImagePickerActivity.EXTRA_IMAGE_URIS);
+            Log.e("tag","choosen");
+            showMedia();
+            //do something
         }
 
 
@@ -478,7 +571,9 @@ public class Book_now extends Activity {
 
 
 
-       /* if (resultCode == Activity.RESULT_OK) {
+
+
+       *//* if (resultCode == Activity.RESULT_OK) {
             if (requestCode == INTENT_REQUEST_GET_IMAGES || requestCode == INTENT_REQUEST_GET_N_IMAGES) {
                 Parcelable[] parcelableUris = intent.getParcelableArrayExtra(ImagePickerActivity.EXTRA_IMAGE_URIS);
 
@@ -514,8 +609,114 @@ public class Book_now extends Activity {
                     showMedia();
                 }
             }
-        }*/
+        }*//*
+    }*/
+
+
+
+    private void showMedia() {
+        // Remove all views before
+        // adding the new ones.
+
+        if(goods_imgs.isEmpty()){
+            goods_imgs = image_uris;
+        }
+        else {
+
+            if(goods_imgs.size()>3){
+                for(int i=0;i<image_uris.size();i++) {
+                    goods_imgs.add(image_uris.get(i));
+                }
+            }
+            else if(goods_imgs.size()>2){
+
+                for(int i=0;i<image_uris.size();i++) {
+                    goods_imgs.add(image_uris.get(i));
+                }
+            }
+            else{
+
+                for(int i=0;i<image_uris.size();i++) {
+                    goods_imgs.add(image_uris.get(i));
+                }
+            }
+        }
+
+
+
+
+
+
+        mSelectedImagesContainer.removeAllViews();
+        if (goods_imgs.size() >= 1) {
+            mSelectedImagesContainer.setVisibility(View.VISIBLE);
+        }
+
+        int wdpx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
+        int htpx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
+
+
+
+        for(i=0;i<goods_imgs.size();i++){
+
+            final View imageHolder = LayoutInflater.from(this).inflate(R.layout.image_item, null);
+            final ImageView thumbnail = (ImageView) imageHolder.findViewById(R.id.media_image);
+
+            Log.e("tag","s:"+goods_imgs.get(i).toString());
+
+            final String pa = goods_imgs.get(i).toString();
+
+            Glide.with(this)
+                    .load(goods_imgs.get(i).toString())
+                    .fitCenter()
+                    .into(thumbnail);
+            mSelectedImagesContainer.addView(imageHolder);
+            thumbnail.setLayoutParams(new FrameLayout.LayoutParams(wdpx, htpx));
+
+
+
+            imageHolder.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+
+                    mSelectedImagesContainer.removeView(view);
+
+                    for(int ik =0;ik<goods_imgs.size();ik++) {
+                        if(goods_imgs.get(ik).toString().equals(pa)) {
+                            goods_imgs.remove(ik);
+                        }
+                    }
+
+                    return false;
+                }
+            });
+
+      /*     imageHolder.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
+                   Log.e("tag","as:"+pa);
+                   Log.e("tag","count_before"+mSelectedImagesContainer.getChildCount());
+
+                   max = mSelectedImagesContainer.getChildCount();
+                   Log.e("tag",max+"count_after"+mSelectedImagesContainer.getChildCount());
+               }
+           });*/
+
+
+        }
+
     }
+
+
+
+
+
+
+
+
+
+
+
 
     class fetch_goods extends AsyncTask<String, Void, String> {
         protected void onPreExecute() {
@@ -618,7 +819,7 @@ public class Book_now extends Activity {
                 e.printStackTrace();            }        }
 
     }
-    private void showMedia() {
+    /*private void showMedia() {
         // Remove all views before
         // adding the new ones.
         mSelectedImagesContainer.removeAllViews();
@@ -654,7 +855,7 @@ public class Book_now extends Activity {
             });
 
 
-/*
+*//*
             imageHolder.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
@@ -662,7 +863,7 @@ public class Book_now extends Activity {
                     mSelectedImagesContainer.removeView(v);
                     return true;
                 }
-            });*/
+            });*//*
 
 
             int wdpx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250, getResources().getDisplayMetrics());
@@ -672,7 +873,11 @@ public class Book_now extends Activity {
             thumbnail.getLayoutParams().height = 250;
             thumbnail.setAdjustViewBounds(true);
         }
-    }
+    }*/
+
+
+
+
 
 
     public class book_now_task extends AsyncTask<String, Void, String>   {
@@ -762,71 +967,6 @@ public class Book_now extends Activity {
                     Log.e("tag_InputStream0", e.getLocalizedMessage());
                 }
                 return null;
-
-/*
-                String responseString = null;
-                HttpClient httpclient = new DefaultHttpClient();
-                HttpPost httppost = new HttpPost("http://104.197.80.225:3030/customer/booking");
-                httppost.setHeader("id", id);
-                httppost.setHeader("sessiontoken", token);
-
-                httppost.setHeader("pickup_location", sharedPreferences.getString("pickup",""));
-                httppost.setHeader("drop_location", sharedPreferences.getString("drop",""));
-                httppost.setHeader("delivery_address", str_delivery_address);
-                httppost.setHeader("goods_type", str_goods_type);
-                httppost.setHeader("truck_type", str_truck_type);
-                httppost.setHeader("description", str_desc);
-                httppost.setHeader("booking_time", str_time);
-
-
-
-
-             //   try {
-                    MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-                    entity.addPart("bookinggoods", new FileBody(new File(selectedPhotos.get(0)), "image/jpeg"));
-                   // entity.addPart("bookinggoods", new FileBody(sourceFile, "image/jpeg"));
-                    httppost.setEntity(entity);
-                HttpResponse response = null;
-                try {
-                    response = httpclient.execute(httppost);
-                    HttpEntity r_entity = response.getEntity();
-                    Log.e("tag3",r_entity.toString());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Log.e("tag3","ss21"+responseString);
-                }
-
-                    //int statusCode = response.getStatusLine().getStatusCode();
-                   // Log.e("tag3", response.getStatusLine().toString());
-                   // Log.e("tag3","cd:"+statusCode);
-                   *//* if (statusCode == 200) {
-                       // responseString = EntityUtils.toString(r_entity);
-                    } else {
-                        responseString = "Error occurred! Http Status Code: "
-                                + statusCode;
-                    }*//*
-               *//* }  catch (IOException e) {
-
-                    Log.e("tag3","ss1"+responseString);
-                    responseString = e.toString();
-                    Log.e("tag3","ss2"+responseString);
-                }*//*
-                return responseString;
-
-
-
-                */
-
-
-
-
-
-
-
-
-
-
-
 
             }
 

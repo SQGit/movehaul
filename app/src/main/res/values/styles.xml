@@ -70,4 +70,14 @@
         <item name="android:textColorPrimary">@color/or2</item>
     </style>
 
+
+    <style name="ted_pick_theme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <!-- Customize your theme here. -->
+    <item name="colorPrimary">@color/oror</item>
+    <item name="colorPrimaryDark">@color/brown</item>
+    <item name="colorAccent">@color/brown</item>
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+    </style>
+
 </resources>
