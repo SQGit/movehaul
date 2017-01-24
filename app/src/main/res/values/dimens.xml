@@ -6,5 +6,6 @@
     <dimen name="blue_sub_action_button_content_margin1">16dp</dimen>
     <dimen name="app_camera_height">@dimen/_400sdp</dimen>
     <dimen name="bottom_height">100dp</dimen>
+    <dimen name="pin_label_margin">15dp</dimen>
 
 </resources>
