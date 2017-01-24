@@ -125,7 +125,7 @@ public class Book_now extends Activity {
         et_goodstype = (EditText) findViewById(R.id.editTextGoodsType);
         et_trucktype = (EditText) findViewById(R.id.editTextTruck_type);
         et_description = (EditText) findViewById(R.id.editTextDescription);
-        msg=(TextView) findViewById(R.id.msg);
+        //msg=(TextView) findViewById(R.id.msg);
         //mSelectedImagesContainer = (ViewGroup) findViewById(R.id.selected_photos_container);
         flt_delivery_address = (TextInputLayout) findViewById(R.id.float_deliveryaddress);
         flt_goodstype = (TextInputLayout) findViewById(R.id.float_goodstype);
@@ -152,9 +152,9 @@ public class Book_now extends Activity {
         mSelectedImagesContainer = (ViewGroup) findViewById(R.id.selected_photos_container);
 
 
-        ll = (LinearLayout)findViewById(R.id.selected_photos_container);
-        ll.setOrientation(LinearLayout.HORIZONTAL);
-        lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        //ll = (LinearLayout)findViewById(R.id.selected_photos_container);
+        //ll.setOrientation(LinearLayout.HORIZONTAL);
+       // lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
 
 

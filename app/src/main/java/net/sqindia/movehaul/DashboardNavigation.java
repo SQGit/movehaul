@@ -690,14 +690,33 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     snackbar.show();
                     tv_snack.setText("You already have current job. Please choose book later!");
                 }
+
+
+
             }
         });
 
         btn_book_later.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(DashboardNavigation.this, Book_later.class);
-                startActivity(i);
+             /*   Intent i = new Intent(DashboardNavigation.this, Book_later.class);
+                startActivity(i);*/
+                if (destination.getText().toString().isEmpty()) {
+                    // Toast.makeText(getApplicationContext(), "Choose Drop Location", Toast.LENGTH_LONG).show();
+                    snackbar.show();
+                    tv_snack.setText("Choose Drop Location");
+                } else {
+                    editor.putString("pickup", mStreetOutput + ", " + mCityOutput);
+                    editor.putString("drop", destination.getText().toString());
+                    editor.putString("pickup_lati", mPickup_lat);
+                    editor.putString("pickup_long", mPickup_long);
+                    editor.putString("drop_lati", mDrop_lat);
+                    editor.putString("drop_long", mDrop_long);
+                    editor.commit();
+                    Intent i = new Intent(DashboardNavigation.this, Book_later.class);
+                    startActivity(i);
+                }
+
             }
         });
 

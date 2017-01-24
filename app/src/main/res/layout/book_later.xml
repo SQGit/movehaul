@@ -315,49 +315,45 @@
                         android:layout_marginTop="@dimen/_5sdp"
 
                         android:textSize="@dimen/_12sdp" />
+
+
+
+
+
                     <LinearLayout
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="@dimen/_70sdp"
                         android:orientation="horizontal">
 
+
                         <HorizontalScrollView
                             android:id="@+id/hori_scroll_view"
-                            android:layout_width="@dimen/_200sdp"
-                            android:layout_height="match_parent"
-                            android:fillViewport="false"
-                            android:foregroundGravity="left"
-                            android:paddingLeft="@dimen/_10sdp">
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:foregroundGravity="left|center_vertical">
 
                             <LinearLayout
                                 android:id="@+id/selected_photos_container"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_gravity="left"
+                                android:layout_gravity="left|center_vertical"
+                                android:animateLayoutChanges="true"
+                                android:gravity="left|center_vertical"
                                 android:orientation="horizontal"
-                                android:gravity="center"
-                                android:visibility="visible">
-
-
-                                <TextView
-                                    android:id="@+id/msg"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/_30sdp"
-                                    android:layout_gravity="center"
-                                    android:text="No images selected" />
-
-
-                            </LinearLayout>
+                                android:visibility="visible"></LinearLayout>
                         </HorizontalScrollView>
 
                         <com.rey.material.widget.ImageButton
-                            android:id="@+id/get_images"
+                            android:id="@+id/camera"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:layout_marginRight="@dimen/_15sdp"
-                            android:layout_gravity="center"
-                            android:background="@drawable/camera_icon" />
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/camera_icon"
+                            android:textColor="#000000" />
+
                     </LinearLayout>
 
                     <android.support.design.widget.TextInputLayout
