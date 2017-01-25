@@ -33,7 +33,7 @@
 
 
         <activity
-            android:name=".SplashActivity"
+            android:name=".LoginOtpActivity1"
             android:screenOrientation="sensorPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

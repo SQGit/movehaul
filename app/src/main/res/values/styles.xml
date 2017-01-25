@@ -86,7 +86,11 @@
         <item name="android:cursorVisible">false</item>
         <item name="android:maxLength">1</item>
         <item name="android:minEms">2</item>
-        <item name="android:inputType">textPassword</item>
+        <item name="android:background">@drawable/btns1</item>
+        <item name="android:layout_marginTop">@dimen/_25sdp</item>
+        <item name="android:paddingBottom">@dimen/_40sdp</item>
+        <item name="android:textSize">@dimen/_21sdp</item>
+        <item name="android:inputType">numberPassword</item>
         <item name="android:focusable">true</item>
         <item name="android:focusableInTouchMode">true</item>
     </style>

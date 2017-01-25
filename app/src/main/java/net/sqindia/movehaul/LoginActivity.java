@@ -210,7 +210,7 @@ public class LoginActivity extends Activity {
                             snackbar.show();
                         } else if (msg.contains("Error Occured[object Object]")) {
 
-                            Intent i = new Intent(LoginActivity.this, LoginOtpActivity.class);
+                            Intent i = new Intent(LoginActivity.this, LoginOtpActivity1.class);
                             i.putExtra("for", "phone");
                             i.putExtra("data", str_mobile);
                             startActivity(i);
