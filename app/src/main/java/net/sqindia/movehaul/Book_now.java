@@ -893,7 +893,7 @@ public class Book_now extends Activity {
         protected String doInBackground(String... strings) {
             String json = "", jsonStr = "";
 
-            if (selectedPhotos.size() > 0) {
+            if (goods_imgs.size() > 0) {
 
                 Log.e("tag","p : "+pickup_location);
                 Log.e("tag","pqr :" +drop_location);
@@ -925,7 +925,11 @@ public class Book_now extends Activity {
                     try {
                         Log.e("tag0", "img: if "+str_profile_img);
                         MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-                        entity.addPart("bookinggoods", new FileBody(new File(str_profile_img), "image/jpeg"));
+
+
+                        for( Uri images : goods_imgs)
+                            entity.addPart("bookinggoods", new FileBody(new File(images.toString()), "image/jpeg"));
+
                         httppost.setEntity(entity);
 
                         try {

@@ -3,6 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/bg"
+    android:id="@+id/top"
     android:orientation="vertical">
 
     <LinearLayout
@@ -78,7 +79,63 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <View
+                                android:layout_width="fill_parent"
+                                android:layout_height="@dimen/_1sdp"
+                                android:layout_gravity="bottom"
+                                android:background="#E1E1E1" />
+
+                            <android.support.design.widget.TextInputLayout
+                                android:id="@+id/float_date"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/_3sdp"
+                                android:layout_marginTop="@dimen/_3sdp"
+                                android:paddingLeft="@dimen/_5sdp"
+                                android:textColorHint="@color/colorAccent">
+
+                                <EditText
+                                    android:id="@+id/editTextDate"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:enabled="false"
+                                    android:hint="Date"
+                                    android:maxLines="1"
+                                    android:paddingTop="@dimen/_10sdp"
+                                    android:textColor="#000000"
+                                    android:textSize="@dimen/_15sdp" />
+                            </android.support.design.widget.TextInputLayout>
+
+                            <ImageView
+                                android:id="@+id/iv_btn_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="end|center_vertical"
+                                android:paddingLeft="@dimen/_80sdp"
+                                android:paddingRight="@dimen/_10sdp"
+                                android:paddingTop="@dimen/_10sdp"
+                                android:src="@drawable/date_icon" />
+
+                        </FrameLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginLeft="@dimen/_10sdp"
                         android:layout_weight="1"
                         android:orientation="vertical">
 
@@ -130,60 +187,7 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        android:layout_marginRight="@dimen/_10sdp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
 
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <View
-                                android:layout_width="fill_parent"
-                                android:layout_height="@dimen/_1sdp"
-                                android:layout_gravity="bottom"
-                                android:background="#E1E1E1" />
-
-                            <android.support.design.widget.TextInputLayout
-                                android:id="@+id/float_date"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="@dimen/_3sdp"
-                                android:layout_marginTop="@dimen/_3sdp"
-                                android:paddingLeft="@dimen/_5sdp"
-                                android:textColorHint="@color/colorAccent">
-
-                                <EditText
-                                    android:id="@+id/editTextDate"
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="wrap_content"
-                                    android:background="@null"
-                                    android:enabled="false"
-                                    android:hint="Date"
-                                    android:maxLines="1"
-                                    android:paddingTop="@dimen/_10sdp"
-                                    android:textColor="#000000"
-                                    android:textSize="@dimen/_15sdp" />
-                            </android.support.design.widget.TextInputLayout>
-
-                            <ImageView
-                                android:id="@+id/iv_btn_date"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="end|center_vertical"
-                                android:paddingLeft="@dimen/_80sdp"
-                                android:paddingRight="@dimen/_10sdp"
-                                android:paddingTop="@dimen/_10sdp"
-                                android:src="@drawable/date_icon" />
-
-                        </FrameLayout>
-
-
-                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout

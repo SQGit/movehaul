@@ -1,7 +1,6 @@
 package net.sqindia.movehaul;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -16,8 +15,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
@@ -34,14 +31,11 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.gun0912.tedpicker.*;
 import com.rey.material.widget.Button;
 import com.sloop.fonts.FontsManager;
 
@@ -65,58 +59,65 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
-
-import nl.changer.polypicker.*;
-import nl.changer.polypicker.Config;
-import nl.changer.polypicker.ImagePickerActivity;
-import nl.changer.polypicker.utils.ImageInternalFetcher;
 
 /**
  * Created by sqindia on 26-10-2016.
  */
 
 public class Book_later extends Activity {
+    final static int DATE_PICKER_ID1 = 1111;
+    private static final int INTENT_REQUEST_GET_IMAGES = 13;
+    private static final int INTENT_REQUEST_GET_N_IMAGES = 14;
     Dialog dialog1;
-
     LinearLayout lt_goodsType, lt_truckType;
     com.rey.material.widget.LinearLayout btn_back;
     ImageView btn_time, btn_date;
     EditText et_time, et_date, et_goodsType, et_truckType, et_deliveryAddress, et_description;
     TextInputLayout flt_time, flt_date, flt_goodsType, flt_truckType, flt_deliveryAddress, flt_description;
-    Button btn_post,btn_ok;
-    final static int DATE_PICKER_ID1 = 1111;
+    Button btn_post, btn_ok;
     int year;
-    String pickup_location,drop_location,pick_lati,pick_long,drop_lati,drop_long;
-    String truck, goods,id,token,str_time;
+    String pickup_location, drop_location, pick_lati, pick_long, drop_lati, drop_long;
+    String truck, goods, id, token, str_time;
     int month;
     int day;
     ImageView btn_close;
     Typeface type;
     ArrayList<String> mdatas;
-    private static final int INTENT_REQUEST_GET_IMAGES = 13;
-    private static final int INTENT_REQUEST_GET_N_IMAGES = 14;
-    private ViewGroup mSelectedImagesContainer;
     HashSet<Uri> mMedia = new HashSet<Uri>();
     ArrayList<Uri> image_path = new ArrayList<>();
     String[] imagearray;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-    ArrayList<Uri>  image_uris;
-    TextView jobtv1,jobtv2,jobtv3,jobtv4,msg,tv_snack;
+    ArrayList<Uri> image_uris;
+    TextView jobtv1, jobtv2, jobtv3, jobtv4, msg, tv_snack;
     Snackbar snackbar;
     ProgressDialog mProgressDialog;
     Typeface tf;
-    ArrayList<Uri>  goods_imgs;
+    ArrayList<Uri> goods_imgs;
     ArrayList<String> ar_goods_type = new ArrayList<>();
     ArrayList<String> ar_truck_type = new ArrayList<>();
     ArrayList<String> ar_truck_sstype = new ArrayList<>();
     ArrayList<String> ar_truck_imgs = new ArrayList<>();
-    HashMap<String,String> hash_subtype ;
-    HashMap<String,String> hash_truck_imgs = new HashMap<String,String>();
-    int min,max,i;
-    String str_delivery_address,str_pickup,str_drop,str_goods_type,str_truck_type,str_desc,str_goods_pic,str_profile_img,book_time;
+    HashMap<String, String> hash_subtype;
+    HashMap<String, String> hash_truck_imgs = new HashMap<String, String>();
+    int min, max, i;
+    String date,time;
+    String str_delivery_address, str_pickup, str_drop, str_goods_type, str_truck_type, str_desc, str_goods_pic, str_profile_img, book_time;
     ArrayList<String> selectedPhotos = new ArrayList<>();
+    private ViewGroup mSelectedImagesContainer;
+    private DatePickerDialog.OnDateSetListener pickerListener1 = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int selectedYear,
+                              int selectedMonth, int selectedDay) {
+
+            //view.setMinDate(System.currentTimeMillis() - 1000);
+            year = selectedYear;
+            month = selectedMonth;
+            day = selectedDay;
+            date = day+"/"+month+1+"/"+year;
+            et_date.setText(new StringBuilder().append(day).append("/").append(month + 1).append("/").append(year).append(""));
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,7 +129,7 @@ public class Book_later extends Activity {
         mdatas = new ArrayList<>();
         btn_time = (ImageView) findViewById(R.id.iv_btn_time);
         btn_date = (ImageView) findViewById(R.id.iv_btn_date);
-       // msg=(TextView) findViewById(R.id.msg);
+        // msg=(TextView) findViewById(R.id.msg);
         mSelectedImagesContainer = (ViewGroup) findViewById(R.id.selected_photos_container);
         et_time = (EditText) findViewById(R.id.editTextTime);
         et_goodsType = (EditText) findViewById(R.id.editTextGoodsType);
@@ -159,6 +160,7 @@ public class Book_later extends Activity {
         flt_truckType.setTypeface(type);
         flt_description.setTypeface(type);
 
+        // Log.e("tag","s:"+System.currentTimeMillis());
 
         View getImages = findViewById(R.id.camera);
         mSelectedImagesContainer = (ViewGroup) findViewById(R.id.selected_photos_container);
@@ -169,12 +171,12 @@ public class Book_later extends Activity {
 
         id = sharedPreferences.getString("id", "");
         token = sharedPreferences.getString("token", "");
-        pickup_location = sharedPreferences.getString("pickup","");
-        drop_location = sharedPreferences.getString("drop","");
-        pick_lati = sharedPreferences.getString("pickup_lati","");
-        pick_long = sharedPreferences.getString("pickup_long","");
-        drop_lati = sharedPreferences.getString("drop_lati","");
-        drop_long = sharedPreferences.getString("drop_long","");
+        pickup_location = sharedPreferences.getString("pickup", "");
+        drop_location = sharedPreferences.getString("drop", "");
+        pick_lati = sharedPreferences.getString("pickup_lati", "");
+        pick_long = sharedPreferences.getString("pickup_long", "");
+        drop_lati = sharedPreferences.getString("drop_lati", "");
+        drop_long = sharedPreferences.getString("drop_long", "");
 
 
         min = 2;
@@ -191,48 +193,41 @@ public class Book_later extends Activity {
         tv_snack.setTypeface(tf);
 
 
-        mProgressDialog = new ProgressDialog(Book_later.this,R.style.AppCompatAlertDialogStyle);
+        mProgressDialog = new ProgressDialog(Book_later.this, R.style.AppCompatAlertDialogStyle);
         mProgressDialog.setTitle("Loading..");
         mProgressDialog.setMessage("Please wait");
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.setCancelable(false);
 
 
-
         if (!net.sqindia.movehaul.Config.isConnected(Book_later.this)) {
             snackbar.show();
             tv_snack.setText("Please Connect Internet and Try again");
-        }
-        else{
+        } else {
             new fetch_goods().execute();
-           new fetch_trucks().execute();
+            new fetch_trucks().execute();
         }
-
-
-
 
 
         getImages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Log.e("tag","s:"+goods_imgs.size());
-                Log.e("tag","i:"+image_uris.size());
+                Log.e("tag", "s:" + goods_imgs.size());
+                Log.e("tag", "i:" + image_uris.size());
 
-                if(goods_imgs.isEmpty()){
-                    min =2;
-                    max =4;
-                }
-                else if(goods_imgs.size()==3){
-                    min =1;
-                    max =1;
-                }
-                else if(goods_imgs.size()==2){
-                    min =1;
-                    max =2;
-                } else  {
-                    min =1;
-                    max =3;
+                if (goods_imgs.isEmpty()) {
+                    min = 2;
+                    max = 4;
+                } else if (goods_imgs.size() == 3) {
+                    min = 1;
+                    max = 1;
+                } else if (goods_imgs.size() == 2) {
+                    min = 1;
+                    max = 2;
+                } else {
+                    min = 1;
+                    max = 3;
                 }
 
                 com.gun0912.tedpicker.Config config = new com.gun0912.tedpicker.Config();
@@ -270,50 +265,56 @@ public class Book_later extends Activity {
             public void onClick(View view) {
                 //dialog1.show();
 
+              //  Log.e("tag","d:"+date);
+               // Log.e("tag","d:"+time);
+
+              //  Log.e("tag","f;"+date +" T "+time);
 
                 //  str_pickup = "pickup loc";
                 //  str_drop = "drop_loc";
                 //   str_desc = "desc...";
+                if (!(et_date.getText().toString().trim().isEmpty())) {
+                    if (!(et_time.getText().toString().trim().isEmpty())) {
+                        if (!(et_deliveryAddress.getText().toString().trim().isEmpty())) {
+                            if (!(et_goodsType.getText().toString().trim().isEmpty())) {
+                                if (!(et_truckType.getText().toString().trim().isEmpty())) {
+                                    if (!(et_description.getText().toString().trim().isEmpty())) {
 
-                if(!(et_deliveryAddress.getText().toString().trim().isEmpty())){
-                    if(!(et_goodsType.getText().toString().trim().isEmpty())){
-                        if(!(et_truckType.getText().toString().trim().isEmpty())){
-                            if (!(et_description.getText().toString().trim().isEmpty())) {
+                                        str_delivery_address = et_deliveryAddress.getText().toString();
+                                        str_goods_type = et_goodsType.getText().toString();
+                                        str_truck_type = et_truckType.getText().toString();
+                                        str_desc = et_description.getText().toString();
+                                        str_time = date +" T "+time;
 
-                                str_delivery_address = et_deliveryAddress.getText().toString();
-                                str_goods_type = et_goodsType.getText().toString();
-                                str_truck_type = et_truckType.getText().toString();
-                                str_desc = et_description.getText().toString();
+                                        Log.e("tag", "aa " + str_goods_type + str_truck_type);
 
-                                Log.e("tag","aa "+str_goods_type+str_truck_type);
+                                        new book_later_task().execute();
+                                    } else {
+                                        et_description.setError("Enter Description");
+                                        et_description.requestFocus();
+                                    }
 
-                                new book_now_task().execute();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Choose Truck Type", Toast.LENGTH_LONG).show();
+                                }
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Choose Goods Type", Toast.LENGTH_LONG).show();
                             }
-                            else{
-                                et_description.setError("Enter Description");
-                                et_description.requestFocus();
-                            }
-
+                        } else {
+                            et_deliveryAddress.setError("Enter Delivery Address");
+                            et_deliveryAddress.requestFocus();
                         }
-                        else{
-                            Toast.makeText(getApplicationContext(),"Choose Truck Type",Toast.LENGTH_LONG).show();
-                        }
-                    }
-                    else{
-                        Toast.makeText(getApplicationContext(),"Choose Goods Type",Toast.LENGTH_LONG).show();
-                    }
-                }
-                else{
-                    et_deliveryAddress.setError("Enter Delivery Address");
-                    et_deliveryAddress.requestFocus();
-                }
 
-
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Please Select Time", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Please Choose Date First", Toast.LENGTH_LONG).show();
+                }
 
 
             }
         });
-
 
 
         btn_time.setOnClickListener(new View.OnClickListener() {
@@ -326,7 +327,11 @@ public class Book_later extends Activity {
                 mTimePicker = new TimePickerDialog(Book_later.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        updateTime(selectedHour,selectedMinute);
+
+                        Log.e("tag","time:"+selectedHour+selectedMinute);
+
+                        time =selectedHour+":"+selectedMinute;
+                        updateTime(selectedHour, selectedMinute);
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 mTimePicker.setTitle("Select Time");
@@ -340,13 +345,15 @@ public class Book_later extends Activity {
         year = c1.get(Calendar.YEAR);
         month = c1.get(Calendar.MONTH);
         day = c1.get(Calendar.DAY_OF_MONTH);
+
+
         btn_date.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 showDialog(DATE_PICKER_ID1);
             }
         });
+
 
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -356,12 +363,7 @@ public class Book_later extends Activity {
                 finish();
             }
         });
-        btn_post.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog1.show();
-            }
-        });
+
         dialog1 = new Dialog(Book_later.this);
         dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
@@ -396,7 +398,6 @@ public class Book_later extends Activity {
 
     }
 
-
     // Used to convert 24hr format to 12hr format with AM/PM values
     private void updateTime(int hours, int mins) {
 
@@ -426,35 +427,28 @@ public class Book_later extends Activity {
         et_time.setText(aTime);
     }
 
-
-
     @Override
 
     protected Dialog onCreateDialog(int id) {
 
         switch (id) {
             case DATE_PICKER_ID1:
-                return new DatePickerDialog(this, pickerListener1, year, month, day);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(this, pickerListener1, year, month, day + 1);
+
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() + 100000);
+
+
+                // return new DatePickerDialog(this, pickerListener1, year, month, day);
+                return datePickerDialog;
+
         }
         return null;
     }
 
-    private DatePickerDialog.OnDateSetListener pickerListener1 = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int selectedYear,
-                              int selectedMonth, int selectedDay) {
-
-            year = selectedYear;
-            month = selectedMonth;
-            day = selectedDay;
-            et_date.setText(new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(""));
-        }
-    };
-
-
-    private void goods_type(){
+    private void goods_type() {
         // Log.e("tag","ss: "+ar_goods_type.size());
-        Dialog_Region dialog_region = new Dialog_Region(Book_later.this,ar_goods_type);
+        Dialog_Region dialog_region = new Dialog_Region(Book_later.this, ar_goods_type);
         dialog_region.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.choose));
         dialog_region.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         //dialog_region.getWindow().setStatusBarColor(getResources().getColor(R.color.aaa));
@@ -462,8 +456,8 @@ public class Book_later extends Activity {
         dialog_region.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
-                if(!(sharedPreferences.getString("goods","").equals(""))){
-                    et_goodsType.setText(sharedPreferences.getString("goods",""));
+                if (!(sharedPreferences.getString("goods", "").equals(""))) {
+                    et_goodsType.setText(sharedPreferences.getString("goods", ""));
                 }
             }
         });
@@ -473,15 +467,15 @@ public class Book_later extends Activity {
         // Log.e("tag","ss "+ar_truck_type.size());
         // Log.e("tag","sss "+hash_subtype.size());
         // Log.e("tag","ssss "+hash_truck_imgs.size());
-        Dialog_Region1 dialog_region1 = new Dialog_Region1(Book_later.this,ar_truck_type,hash_subtype,hash_truck_imgs,ar_truck_sstype,ar_truck_imgs);
+        Dialog_Region1 dialog_region1 = new Dialog_Region1(Book_later.this, ar_truck_type, hash_subtype, hash_truck_imgs, ar_truck_sstype, ar_truck_imgs);
         //dialog_region1.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.choose));
         dialog_region1.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         dialog_region1.show();
         dialog_region1.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
-                if(!(sharedPreferences.getString("sub_truck_type","").equals(""))){
-                    et_truckType.setText(sharedPreferences.getString("sub_truck_type",""));
+                if (!(sharedPreferences.getString("sub_truck_type", "").equals(""))) {
+                    et_truckType.setText(sharedPreferences.getString("sub_truck_type", ""));
                 }
             }
         });
@@ -506,16 +500,14 @@ public class Book_later extends Activity {
     }
 
 
-
-
     @Override
     protected void onActivityResult(int requestCode, int resuleCode, Intent intent) {
         super.onActivityResult(requestCode, resuleCode, intent);
 
-        if (requestCode == INTENT_REQUEST_GET_IMAGES && resuleCode == Activity.RESULT_OK ) {
+        if (requestCode == INTENT_REQUEST_GET_IMAGES && resuleCode == Activity.RESULT_OK) {
 
             image_uris = intent.getParcelableArrayListExtra(com.gun0912.tedpicker.ImagePickerActivity.EXTRA_IMAGE_URIS);
-            Log.e("tag","12345"+image_uris);
+            Log.e("tag", "12345" + image_uris);
 
             if (image_uris != null) {
                 showMedia();
@@ -527,33 +519,26 @@ public class Book_later extends Activity {
         // Remove all views before
         // adding the new ones.
 
-        if(goods_imgs.isEmpty()){
+        if (goods_imgs.isEmpty()) {
             goods_imgs = image_uris;
-        }
-        else {
+        } else {
 
-            if(goods_imgs.size()>3){
-                for(int i=0;i<image_uris.size();i++) {
+            if (goods_imgs.size() > 3) {
+                for (int i = 0; i < image_uris.size(); i++) {
                     goods_imgs.add(image_uris.get(i));
                 }
-            }
-            else if(goods_imgs.size()>2){
+            } else if (goods_imgs.size() > 2) {
 
-                for(int i=0;i<image_uris.size();i++) {
+                for (int i = 0; i < image_uris.size(); i++) {
                     goods_imgs.add(image_uris.get(i));
                 }
-            }
-            else{
+            } else {
 
-                for(int i=0;i<image_uris.size();i++) {
+                for (int i = 0; i < image_uris.size(); i++) {
                     goods_imgs.add(image_uris.get(i));
                 }
             }
         }
-
-
-
-
 
 
         mSelectedImagesContainer.removeAllViews();
@@ -565,13 +550,12 @@ public class Book_later extends Activity {
         int htpx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
 
 
-
-        for(i=0;i<goods_imgs.size();i++){
+        for (i = 0; i < goods_imgs.size(); i++) {
 
             final View imageHolder = LayoutInflater.from(this).inflate(R.layout.image_item, null);
             final ImageView thumbnail = (ImageView) imageHolder.findViewById(R.id.media_image);
 
-            Log.e("tag","s:"+goods_imgs.get(i).toString());
+            Log.e("tag", "s:" + goods_imgs.get(i).toString());
 
             final String pa = goods_imgs.get(i).toString();
 
@@ -583,15 +567,14 @@ public class Book_later extends Activity {
             thumbnail.setLayoutParams(new FrameLayout.LayoutParams(wdpx, htpx));
 
 
-
             imageHolder.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
 
                     mSelectedImagesContainer.removeView(view);
 
-                    for(int ik =0;ik<goods_imgs.size();ik++) {
-                        if(goods_imgs.get(ik).toString().equals(pa)) {
+                    for (int ik = 0; ik < goods_imgs.size(); ik++) {
+                        if (goods_imgs.get(ik).toString().equals(pa)) {
                             goods_imgs.remove(ik);
                         }
                     }
@@ -617,29 +600,31 @@ public class Book_later extends Activity {
     }
 
 
-
-
-
     class fetch_goods extends AsyncTask<String, Void, String> {
         protected void onPreExecute() {
             super.onPreExecute();
-            mProgressDialog.show();        }
+            mProgressDialog.show();
+        }
+
         protected String doInBackground(String... params) {
             String json = "", jsonStr = "";
             try {
                 String virtual_url = net.sqindia.movehaul.Config.WEB_URL + "customer/goodstype";
                 //  Log.e("tag","url: "+virtual_url);
-                JSONObject jsonobject = HttpUtils.getData(virtual_url,id,token);
+                JSONObject jsonobject = HttpUtils.getData(virtual_url, id, token);
                 // Log.e("tag_", "0" + jsonobject.toString());
                 if (jsonobject.toString() == "sam") {
                     //  Log.e("tag_", "1" + jsonobject.toString());
                 }
                 json = jsonobject.toString();
-                return json;} catch (Exception e) {
+                return json;
+            } catch (Exception e) {
                 //  Log.e("InputStream", "" + e.getLocalizedMessage());
-                jsonStr = ""; }
+                jsonStr = "";
+            }
             return jsonStr;
         }
+
         @Override
         protected void onPostExecute(String jsonStr) {
             // Log.e("tag", "<-----rerseres---->" + jsonStr);
@@ -651,27 +636,35 @@ public class Book_later extends Activity {
                 //  String count = jo.getString("count");
                 if (status.equals("true")) {
                     JSONArray goods_data = jo.getJSONArray("goods_type");
-                    if(goods_data.length()>0) {
+                    if (goods_data.length() > 0) {
                         for (int i = 0; i < goods_data.length(); i++) {
                             String datas = goods_data.getString(i);
                             // Log.e("tag","s: "+datas);
                             ar_goods_type.add(datas);
-                        }                    }                    else{                    }                }
-                else {                }
+                        }
+                    } else {
+                    }
+                } else {
+                }
             } catch (JSONException e) {
                 // TODO Auto-generated catch block
-                e.printStackTrace();}     }
+                e.printStackTrace();
+            }
+        }
     }
+
     class fetch_trucks extends AsyncTask<String, Void, String> {
         protected void onPreExecute() {
             super.onPreExecute();
-            mProgressDialog.show();       }
+            mProgressDialog.show();
+        }
+
         protected String doInBackground(String... params) {
             String json = "", jsonStr = "";
             try {
                 String virtual_url = net.sqindia.movehaul.Config.WEB_URL + "customer/trucktype";
                 //Log.e("tag","url: "+virtual_url);
-                JSONObject jsonobject = HttpUtils.getData(virtual_url,id,token);
+                JSONObject jsonobject = HttpUtils.getData(virtual_url, id, token);
                 // Log.e("tag_", "0" + jsonobject.toString());
                 if (jsonobject.toString() == "sam") {
                     //     Log.e("tag_", "1" + jsonobject.toString());
@@ -680,9 +673,11 @@ public class Book_later extends Activity {
                 return json;
             } catch (Exception e) {
                 //  Log.e("InputStream", "" + e.getLocalizedMessage());
-                jsonStr = "";           }
+                jsonStr = "";
+            }
             return jsonStr;
         }
+
         @Override
         protected void onPostExecute(String jsonStr) {
             //   Log.e("tag", "<-----rerseres---->" + jsonStr);
@@ -694,8 +689,8 @@ public class Book_later extends Activity {
                 //  String count = jo.getString("count");
                 if (status.equals("true")) {
                     JSONArray truck_data = jo.getJSONArray("truck_type");
-                    if(truck_data.length()>0) {
-                        hash_subtype = new HashMap<String,String>();
+                    if (truck_data.length() > 0) {
+                        hash_subtype = new HashMap<String, String>();
                         for (int i = 0; i < truck_data.length(); i++) {
                             String datas = truck_data.getString(i);
                             JSONObject subs = new JSONObject(datas);
@@ -705,27 +700,30 @@ public class Book_later extends Activity {
                             ar_truck_type.add(subs.getString("truck_type"));
                             ar_truck_sstype.add(subs.getString("truck_sub_type"));
                             ar_truck_imgs.add(subs.getString("truck_image"));
-                            hash_subtype.put(subs.getString("truck_sub_type"),subs.getString("truck_type"));
-                            hash_truck_imgs.put(subs.getString("truck_image"),subs.getString("truck_type"));
+                            hash_subtype.put(subs.getString("truck_sub_type"), subs.getString("truck_type"));
+                            hash_truck_imgs.put(subs.getString("truck_image"), subs.getString("truck_type"));
                             //   Log.e("tag","hash:: "+hash_subtype.get(ar_truck_type.get(i)));
                             //     Log.e("tag","siz: "+hash_subtype.size());
                             // hash_truck_imgs.put(subs.getString("truck_type"),subs.getString("truck_image"));
                         }
                         // Log.e("tag","sizA: "+hash_subtype.size());
                         //ar_truck_type = new ArrayList<String>(new LinkedHashSet<String>(ar_truck_type));
-                    }                else{                    }
-                }                else {                }
+                    } else {
+                    }
+                } else {
+                }
 
             } catch (JSONException e) {
                 // TODO Auto-generated catch block
-                e.printStackTrace();            }        }
+                e.printStackTrace();
+            }
+        }
 
     }
 
-    public class book_now_task extends AsyncTask<String, Void, String>   {
+    public class book_later_task extends AsyncTask<String, Void, String> {
         @Override
-        protected void onPreExecute()
-        {
+        protected void onPreExecute() {
             super.onPreExecute();
             Log.e("tag", "reg_preexe");
             mProgressDialog.show();
@@ -735,10 +733,10 @@ public class Book_later extends Activity {
         protected String doInBackground(String... strings) {
             String json = "", jsonStr = "";
 
-            if (selectedPhotos.size() > 0) {
+            if (goods_imgs.size() > 0) {
 
-                Log.e("tag","p : "+pickup_location);
-                Log.e("tag","pqr :" +drop_location);
+                Log.e("tag", "p : " + pickup_location);
+                Log.e("tag", "pqr :" + drop_location);
 
 
                 try {
@@ -750,41 +748,42 @@ public class Book_later extends Activity {
                     httppost.setHeader("sessiontoken", token);
                     httppost.setHeader("pickup_location", pickup_location);
                     httppost.setHeader("drop_location", drop_location);
-                    httppost.setHeader("delivery_address",str_delivery_address);
+                    httppost.setHeader("delivery_address", str_delivery_address);
                     httppost.setHeader("goods_type", str_goods_type);
-                    httppost.setHeader("truck_type",str_truck_type);
-                    httppost.setHeader("description",str_desc);
-                    httppost.setHeader("booking_time",str_time);
-                    httppost.setHeader("pickup_latitude",pick_lati);
-                    httppost.setHeader("pickup_longitude",pick_long);
-                    httppost.setHeader("drop_latitude",drop_lati);
-                    httppost.setHeader("drop_longitude",drop_long);
+                    httppost.setHeader("truck_type", str_truck_type);
+                    httppost.setHeader("description", str_desc);
+                    httppost.setHeader("booking_time", str_time);
+                    httppost.setHeader("pickup_latitude", pick_lati);
+                    httppost.setHeader("pickup_longitude", pick_long);
+                    httppost.setHeader("drop_latitude", drop_lati);
+                    httppost.setHeader("drop_longitude", drop_long);
 
                     HttpResponse response = null;
                     HttpEntity r_entity = null;
 
 
                     try {
-                        Log.e("tag0", "img: if "+str_profile_img);
+                        Log.e("tag0", "img: if " + str_profile_img);
                         MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-                        entity.addPart("bookinggoods", new FileBody(new File(str_profile_img), "image/jpeg"));
+
+
+                        for( Uri images : goods_imgs)
+                            entity.addPart("bookinggoods", new FileBody(new File(images.toString()), "image/jpeg"));
+
                         httppost.setEntity(entity);
 
                         try {
                             response = httpclient.execute(httppost);
-                        }
-                        catch (Exception e){
-                            Log.e("tag","ds:"+e.toString());
+                        } catch (Exception e) {
+                            Log.e("tag", "ds:" + e.toString());
                         }
 
 
                         try {
                             r_entity = response.getEntity();
+                        } catch (Exception e) {
+                            Log.e("tag", "dsa:" + e.toString());
                         }
-                        catch (Exception e){
-                            Log.e("tag","dsa:"+e.toString());
-                        }
-
 
 
                         int statusCode = response.getStatusLine().getStatusCode();
@@ -810,33 +809,30 @@ public class Book_later extends Activity {
                 }
                 return null;
 
-            }
+            } else {
+                Log.e("tag", "no poto");
 
-            else {
-                Log.e("tag","no poto");
-
-                String  s = "";
+                String s = "";
                 JSONObject jsonObject = new JSONObject();
                 try {
 
 
-                    jsonObject.put("pickup_location", sharedPreferences.getString("pickup",""));
-                    jsonObject.put("drop_location", sharedPreferences.getString("drop",""));
+                    jsonObject.put("pickup_location", sharedPreferences.getString("pickup", ""));
+                    jsonObject.put("drop_location", sharedPreferences.getString("drop", ""));
                     jsonObject.put("delivery_address", str_delivery_address);
                     jsonObject.put("goods_type", str_goods_type);
                     jsonObject.put("truck_type", str_truck_type);
                     jsonObject.put("description", str_desc);
-                    jsonObject.put("booking_time",str_time);
-                    jsonObject.put("pickup_latitude",pick_lati);
-                    jsonObject.put("pickup_longitude",pick_long);
-                    jsonObject.put("drop_latitude",drop_lati);
-                    jsonObject.put("drop_longitude",drop_long);
-
+                    jsonObject.put("booking_time", str_time);
+                    jsonObject.put("pickup_latitude", pick_lati);
+                    jsonObject.put("pickup_longitude", pick_long);
+                    jsonObject.put("drop_latitude", drop_lati);
+                    jsonObject.put("drop_longitude", drop_long);
 
 
                     json = jsonObject.toString();
 
-                    return s = HttpUtils.makeRequest1(net.sqindia.movehaul.Config.WEB_URL + "customer/booking",json,id,token);
+                    return s = HttpUtils.makeRequest1(net.sqindia.movehaul.Config.WEB_URL + "customer/booking", json, id, token);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -862,11 +858,11 @@ public class Book_later extends Activity {
                     if (status.equals("true")) {
                         Log.e("tag", "Location Updated");
 
-                        editor.putString("job_id",bookingid);
-                        editor.putString("book_time",book_time);
+                        editor.putString("job_id", bookingid);
+                        editor.putString("book_time", book_time);
                         editor.commit();
 
-                        Intent goReve = new Intent(getApplicationContext(),Job_review.class);
+                        Intent goReve = new Intent(getApplicationContext(), Job_review.class);
                         startActivity(goReve);
                         finish();
 
@@ -874,13 +870,13 @@ public class Book_later extends Activity {
 
                         Log.e("tag", "Location not updated");
                         //has to check internet and location...
-                        Toast.makeText(getApplicationContext(),"Network Errror. Please Try Again Later",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
 
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("tag", "nt" + e.toString());
-                    Toast.makeText(getApplicationContext(),"Network Errror. Please Try Again Later",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
                 }
             } else {
                 // Toast.makeText(getApplicationContext(),"Network Errror1",Toast.LENGTH_LONG).show();
