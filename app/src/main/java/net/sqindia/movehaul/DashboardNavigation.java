@@ -147,7 +147,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     String id, token, mPickup_lat, mPickup_long, mDrop_lat, mDrop_long;
     TextInputLayout flt_uname, flt_email;
     ArrayList<String> selectedPhotos = new ArrayList<>();
-    ImageView iv_location;
+    ImageView iv_location,iv_zoomin,iv_zoomout;
     int diff;
     /*    BroadcastReceiver appendChatScreenMsgReceiver = new BroadcastReceiver() {
             @Override
@@ -323,10 +323,29 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         mapFragment.getMapAsync(this);
 
 
+
         // DashboardNavigation.this.registerReceiver(this.appendChatScreenMsgReceiver, new IntentFilter("appendChatScreenMsg"));
 
         lt_top = (LinearLayout) findViewById(R.id.top_layout);
         lt_bottom = (LinearLayout) findViewById(R.id.bottom_layout);
+
+        iv_zoomin = (ImageView) findViewById(R.id.zoomin);
+        iv_zoomout = (ImageView) findViewById(R.id.zoomout);
+
+
+        iv_zoomin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mMap.animateCamera(CameraUpdateFactory.zoomIn());
+            }
+        });
+
+        iv_zoomout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mMap.animateCamera(CameraUpdateFactory.zoomOut());
+            }
+        });
 
 
         Calendar c = Calendar.getInstance();
@@ -410,6 +429,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         btn_update.setTypeface(tf);
 
 
+
+
         btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -471,7 +492,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             public void onClick(View view) {
 
                 if (exit_status == 0) {
-                    editor.putString("login", "");
+                    //editor.putString("login", "");
                     editor.clear();
                     editor.commit();
                     dialog1.dismiss();
@@ -542,6 +563,10 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
                         switch (item.getItemId()) {
                             case R.id.support: {
+
+                                Intent i = new Intent(DashboardNavigation.this, WebViewAct.class);
+                                startActivity(i);
+
                                 return true;
                             }
                             case R.id.feedback: {
@@ -811,6 +836,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     }
 
 
+
+
     public void show_disable() {
 
         //Activity context = DashboardNavigation.this;
@@ -935,6 +962,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
                     mMap.setMyLocationEnabled(true);
                     mMap.getUiSettings().setMyLocationButtonEnabled(true);
+                    mMap.getUiSettings().setZoomControlsEnabled(true);
+                    mMap.getUiSettings().setZoomGesturesEnabled(true);
                     mMap.animateCamera(CameraUpdateFactory
                             .newCameraPosition(cameraPosition));
                     mMap.addMarker(new MarkerOptions().position(latLong).icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_point)));
@@ -1070,9 +1099,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 mCenterLatLong = cameraPosition.target;
                 // mMap.clear();
 
-                lt_first.setVisibility(View.GONE);
-                lt_second.setVisibility(View.GONE);
-                lt_last.setVisibility(View.GONE);
+
 
                 try {
 
@@ -1081,7 +1108,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     mLocation.setLongitude(mCenterLatLong.longitude);
                     LatLng latLng = new LatLng(mCenterLatLong.latitude, mCenterLatLong.longitude);
                     mMap.clear();
-
+                  //  mMap.getUiSettings().setZoomControlsEnabled(true);
+                  //  mMap.getUiSettings().setZoomGesturesEnabled(true);
                     mMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_point)));
                     str_lati = String.valueOf(mCenterLatLong.latitude);
                     str_longi = String.valueOf(mCenterLatLong.longitude);
@@ -1095,6 +1123,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                             Log.e("tagmap", "Camera postion change map click");
 
                             mMap.clear();
+                           // mMap.getUiSettings().setZoomControlsEnabled(true);
+                           // mMap.getUiSettings().setZoomGesturesEnabled(true);
                             CameraPosition cameraPosition = new CameraPosition.Builder()
                                     .target(latLng).zoom(15f).build();
                             mMap.animateCamera(CameraUpdateFactory
@@ -1223,7 +1253,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
         // check if map is created successfully or not
         if (mMap != null) {
-            mMap.getUiSettings().setZoomControlsEnabled(false);
+           // mMap.getUiSettings().setZoomControlsEnabled(false);
             LatLng latLong;
 
             Log.e("tagmap", "change_map_map_not_null");
@@ -1237,6 +1267,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
             mMap.setMyLocationEnabled(true);
             mMap.getUiSettings().setMyLocationButtonEnabled(true);
+          //  mMap.getUiSettings().setZoomControlsEnabled(true);
+          //  mMap.getUiSettings().setZoomGesturesEnabled(true);
             mMap.animateCamera(CameraUpdateFactory
                     .newCameraPosition(cameraPosition));
             mMap.addMarker(new MarkerOptions().position(latLong).icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_point)));
@@ -1253,6 +1285,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     mMap.clear();
                     CameraPosition cameraPosition = new CameraPosition.Builder()
                             .target(latLng).zoom(15f).build();
+                   // mMap.getUiSettings().setZoomControlsEnabled(true);
+                   // mMap.getUiSettings().setZoomGesturesEnabled(true);
                     mMap.animateCamera(CameraUpdateFactory
                             .newCameraPosition(cameraPosition));
                     mMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_point)));
@@ -1423,6 +1457,17 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             }
         }
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

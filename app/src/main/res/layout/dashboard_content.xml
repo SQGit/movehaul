@@ -68,7 +68,7 @@
     <FrameLayout
         android:id="@+id/frame"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="match_parent">
 
 
         <fragment xmlns:android="http://schemas.android.com/apk/res/android"
@@ -78,19 +78,50 @@
             class="net.sqindia.movehaul.MySupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/_40sdp"
             tools:context=".DasboardNavigation" />
 
-
-        <ImageView
-            android:id="@+id/imageview_location"
-            style="@style/Material.Drawable.Ripple.Touch"
-            android:layout_width="wrap_content"
+        <FrameLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
-            android:layout_marginBottom="@dimen/_40sdp"
-            android:layout_marginRight="@dimen/_3sdp"
-            android:padding="@dimen/_14sdp"
-            android:src="@mipmap/mapslc" />
+            android:layout_marginBottom="@dimen/_45sdp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:gravity="bottom|left"
+                android:background="@color/light_grey"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/_25sdp"
+                    android:id="@+id/zoomin"
+
+                    android:layout_height="@dimen/_25sdp"
+                    android:background="@mipmap/add" />
+
+                <ImageView
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:id="@+id/zoomout"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@mipmap/minus" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imageview_location"
+                style="@style/Material.Drawable.Ripple.Touch"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_gravity="bottom|right"
+                android:padding="@dimen/_5sdp"
+                android:background="@color/light_grey"
+                android:src="@mipmap/mapslc" />
+
+        </FrameLayout>
 
 
         <LinearLayout
