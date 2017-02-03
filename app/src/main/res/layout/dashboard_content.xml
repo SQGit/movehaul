@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/top"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg"
     android:orientation="vertical">
+
+
+
 
     <LinearLayout
         android:id="@+id/top_layout"
@@ -64,11 +69,12 @@
         </FrameLayout>
 
     </LinearLayout>
-
     <FrameLayout
         android:id="@+id/frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+
 
 
         <fragment xmlns:android="http://schemas.android.com/apk/res/android"
@@ -83,28 +89,39 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="bottom|right"
             android:layout_marginBottom="@dimen/_45sdp">
+
+
+            <ImageView
+                android:id="@+id/map_point"
+                style="@style/Material.Drawable.Ripple.Touch"
+                android:layout_width="@dimen/_42sdp"
+                android:layout_height="@dimen/_42sdp"
+                android:layout_marginBottom="@dimen/_14sdp"
+                android:layout_gravity="center"
+
+                android:src="@mipmap/map_point" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:gravity="bottom|left"
+                android:layout_gravity="bottom|left"
                 android:background="@color/light_grey"
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="@dimen/_25sdp"
+                    android:layout_width="@dimen/_30sdp"
                     android:id="@+id/zoomin"
-
-                    android:layout_height="@dimen/_25sdp"
+                    android:layout_height="@dimen/_30sdp"
                     android:background="@mipmap/add" />
 
                 <ImageView
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
                     android:id="@+id/zoomout"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:background="@mipmap/minus" />

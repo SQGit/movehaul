@@ -24,7 +24,8 @@ public class WebViewAct extends Activity {
         web = (WebView) findViewById(R.id.webviews);
         web.setWebViewClient(new myWebClient());
         web.getSettings().setJavaScriptEnabled(true);
-        web.loadUrl("http://104.197.80.225:8080/movehaul/");
+       // web.loadUrl("http://104.197.80.225:8080/movehaul/");
+       web.loadUrl("http://www.passafaila.com/razorpay/");
     }
 
     public class myWebClient extends WebViewClient

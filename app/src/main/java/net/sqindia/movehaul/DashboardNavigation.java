@@ -110,7 +110,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     public static boolean mMapIsTouched = false;
     private static String TAG = "tag_MAP LOCATION";
     final private int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124;
-    public LinearLayout lt_top, lt_bottom;
     protected String mAddressOutput;
     protected String mAreaOutput;
     protected String mCityOutput;
@@ -123,7 +122,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     Button btn_book_now, btn_book_later;
     TextView tv_name, tv_email, tv_myTrips, tv_jobReview, tv_payments, tv_tracking, tv_offers, tv_emergencyContacts;
     AutoCompleteTextView starting, destination;
-    TextInputLayout flt_pickup, flt_droplocation;
+    TextInputLayout flt_pickup, flt_drop_location;
     ImageView btn_menu, rightmenu;
     android.widget.LinearLayout droplv, pickuplv;
     Dialog dialog1, dialog2;
@@ -141,7 +140,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     LinearLayout lt_first, lt_last;
     FrameLayout lt_second, lt_frame;
     SupportMapFragment mapFragment;
-    // TouchableMapFragment mapFragment;
     ImageView btn_editProfile, btn_close, btn_editProfile_img;
     EditText et_username, et_email;
     String id, token, mPickup_lat, mPickup_long, mDrop_lat, mDrop_long;
@@ -149,38 +147,19 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     ArrayList<String> selectedPhotos = new ArrayList<>();
     ImageView iv_location,iv_zoomin,iv_zoomout;
     int diff;
-    /*    BroadcastReceiver appendChatScreenMsgReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-
-
-                if (mMapIsTouched) {
-                    Log.e("tagmap", "istouched");
-                    lt_top.setVisibility(View.GONE);
-                    lt_bottom.setVisibility(View.GONE);
-                } else {
-                    Log.e("tagmap", "nottouched");
-                    lt_top.setVisibility(View.VISIBLE);
-                    lt_bottom.setVisibility(View.VISIBLE);
-                }
-
-
-            }
-        };*/
     private GoogleMap mMap;
     private LatLng mCenterLatLong;
     private AddressResultReceiver mResultReceiver;
-    private boolean flag;
 
     private void insertDummyContactWrapper() {
         List<String> permissionsNeeded = new ArrayList<String>();
 
-        final List<String> permissionsList = new ArrayList<String>();
-        if (!addPermission(permissionsList, Manifest.permission.ACCESS_FINE_LOCATION))
+        final List<String> permissionsList = new ArrayList<>();
+        if (addPermission(permissionsList, Manifest.permission.ACCESS_FINE_LOCATION))
             permissionsNeeded.add("GPS");
-        if (!addPermission(permissionsList, Manifest.permission.CAMERA))
+        if (addPermission(permissionsList, Manifest.permission.CAMERA))
             permissionsNeeded.add("Read Contacts");
-        if (!addPermission(permissionsList, Manifest.permission.WRITE_EXTERNAL_STORAGE))
+        if (addPermission(permissionsList, Manifest.permission.WRITE_EXTERNAL_STORAGE))
             permissionsNeeded.add("Write Contacts");
 
         if (permissionsList.size() > 0) {
@@ -203,22 +182,19 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
                         REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
             }
-            return;
         }
 
-        // insertDummyContact();
     }
 
     private boolean addPermission(List<String> permissionsList, String permission) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
                 permissionsList.add(permission);
-                // Check for Rationale Option
                 if (!shouldShowRequestPermissionRationale(permission))
-                    return false;
+                    return true;
             }
         }
-        return true;
+        return false;
     }
 
 
@@ -227,20 +203,16 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         switch (requestCode) {
             case REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS: {
                 Map<String, Integer> perms = new HashMap<String, Integer>();
-                // Initial
+
                 perms.put(Manifest.permission.ACCESS_FINE_LOCATION, PackageManager.PERMISSION_GRANTED);
                 perms.put(Manifest.permission.CAMERA, PackageManager.PERMISSION_GRANTED);
                 perms.put(Manifest.permission.WRITE_EXTERNAL_STORAGE, PackageManager.PERMISSION_GRANTED);
-                // Fill with results
+
                 for (int i = 0; i < permissions.length; i++)
                     perms.put(permissions[i], grantResults[i]);
-                // Check for ACCESS_FINE_LOCATION
                 if (perms.get(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                         && perms.get(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
                         && perms.get(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    // All Permissions Granted
-
-                   // recreate();
 
                     Intent intent = getIntent();
                     finish();
@@ -248,7 +220,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
 
                 } else {
-                    // Permission Denied
                     insertDummyContactWrapper();
                     Toast.makeText(DashboardNavigation.this, "Some Permission is Denied", Toast.LENGTH_SHORT)
                             .show();
@@ -289,7 +260,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         starting = (AutoCompleteTextView) findViewById(R.id.editText_pickUp);
         destination = (AutoCompleteTextView) findViewById(R.id.editText_dropLocation);
         flt_pickup = (TextInputLayout) findViewById(R.id.float_pickup);
-        flt_droplocation = (TextInputLayout) findViewById(R.id.float_drop);
+        flt_drop_location = (TextInputLayout) findViewById(R.id.float_drop);
         droplv = (android.widget.LinearLayout) findViewById(R.id.layout_drop);
         pickuplv = (android.widget.LinearLayout) findViewById(R.id.layout_pickuptype);
         btn_menu = (ImageView) findViewById(R.id.img_menu);
@@ -306,7 +277,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
         Typeface type = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
         flt_pickup.setTypeface(type);
-        flt_droplocation.setTypeface(type);
+        flt_drop_location.setTypeface(type);
         service_id = sharedPreferences.getString("id", "");
         service_token = sharedPreferences.getString("token", "");
         customer_mobile = sharedPreferences.getString("customer_mobile", "");
@@ -318,16 +289,12 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 
-        // mapFragment = (TouchableMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 
         mapFragment.getMapAsync(this);
 
 
 
-        // DashboardNavigation.this.registerReceiver(this.appendChatScreenMsgReceiver, new IntentFilter("appendChatScreenMsg"));
 
-        lt_top = (LinearLayout) findViewById(R.id.top_layout);
-        lt_bottom = (LinearLayout) findViewById(R.id.bottom_layout);
 
         iv_zoomin = (ImageView) findViewById(R.id.zoomin);
         iv_zoomout = (ImageView) findViewById(R.id.zoomout);
@@ -336,6 +303,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         iv_zoomin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 mMap.animateCamera(CameraUpdateFactory.zoomIn());
             }
         });
@@ -492,7 +460,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             public void onClick(View view) {
 
                 if (exit_status == 0) {
-                    //editor.putString("login", "");
                     editor.clear();
                     editor.commit();
                     dialog1.dismiss();
@@ -658,7 +625,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                             .target(latLang).zoom(15f).build();
                     mMap.animateCamera(CameraUpdateFactory
                             .newCameraPosition(cameraPosition));
-                    mMap.addMarker(new MarkerOptions().position(latLang).icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_point)));
+                    //mMap.addMarker(new MarkerOptions().position(latLang));
 
                 }
 
@@ -966,7 +933,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     mMap.getUiSettings().setZoomGesturesEnabled(true);
                     mMap.animateCamera(CameraUpdateFactory
                             .newCameraPosition(cameraPosition));
-                    mMap.addMarker(new MarkerOptions().position(latLong).icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_point)));
+                    //mMap.addMarker(new MarkerOptions().position(latLong));
 
                 }
 
@@ -1091,6 +1058,9 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         mMap = googleMap;
 
 
+        mMap.getUiSettings().setMapToolbarEnabled(false);
+
+
         mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
 
             @Override
@@ -1110,7 +1080,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     mMap.clear();
                   //  mMap.getUiSettings().setZoomControlsEnabled(true);
                   //  mMap.getUiSettings().setZoomGesturesEnabled(true);
-                    mMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_point)));
+                   // mMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.defaultMarker(0)));
                     str_lati = String.valueOf(mCenterLatLong.latitude);
                     str_longi = String.valueOf(mCenterLatLong.longitude);
 
@@ -1129,7 +1099,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                                     .target(latLng).zoom(15f).build();
                             mMap.animateCamera(CameraUpdateFactory
                                     .newCameraPosition(cameraPosition));
-                            mMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_point)));
+                           // mMap.addMarker(new MarkerOptions().position(latLng));
                             str_lati = String.valueOf(mCenterLatLong.latitude);
                             str_longi = String.valueOf(mCenterLatLong.longitude);
 
@@ -1190,7 +1160,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            return;
         }
 //        mMap.setMyLocationEnabled(true);
 //        mMap.getUiSettings().setMyLocationButtonEnabled(true);
@@ -1271,7 +1240,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
           //  mMap.getUiSettings().setZoomGesturesEnabled(true);
             mMap.animateCamera(CameraUpdateFactory
                     .newCameraPosition(cameraPosition));
-            mMap.addMarker(new MarkerOptions().position(latLong).icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_point)));
+           // mMap.addMarker(new MarkerOptions().position(latLong).icon(BitmapDescriptorFactory.defaultMarker(0)));
 
             // mLocationMarkerText.setText("Lat : " + location.getLatitude() + "," + "Long : " + location.getLongitude());
             startIntentService(location);
@@ -1289,8 +1258,9 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                    // mMap.getUiSettings().setZoomGesturesEnabled(true);
                     mMap.animateCamera(CameraUpdateFactory
                             .newCameraPosition(cameraPosition));
-                    mMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_point)));
+                  //  mMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_point)));
 
+                   // mMap.addMarker(new MarkerOptions().position(latLng));
                 }
             });
 
