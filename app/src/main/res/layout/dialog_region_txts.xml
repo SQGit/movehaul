@@ -11,8 +11,9 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/image"
+            android:layout_gravity="center"
             android:src="@mipmap/unselecting_tick"/>
 
         <com.rey.material.widget.TextView
@@ -20,9 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_5sdp"
             android:layout_weight="1"
-            android:gravity="left"
+            android:gravity="left|center_vertical"
             android:paddingBottom="@dimen/_8sdp"
             android:paddingTop="@dimen/_8sdp"
             android:text="Country"

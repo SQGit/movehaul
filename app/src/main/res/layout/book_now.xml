@@ -18,337 +18,369 @@
             android:layout_height="wrap_content"></include>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/text_book_now"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Book Now"
-                android:textColor="#F65F52"
-                android:textSize="@dimen/_19sdp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
-
-            <include
-                layout="@layout/red_underline"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"></include>
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_height="match_parent">
 
-        <ScrollView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:fadeScrollbars="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="fill_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
                     android:orientation="vertical">
 
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/float_deliveryaddress"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_3sdp"
-                        android:textColorHint="@color/colorAccent">
-
-                        <EditText
-                            android:id="@+id/editTextDelieveryAddress"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:drawableLeft="@drawable/delivery_addr"
-                            android:hint="Delivery Address"
-                            android:imeOptions="actionDone"
-                            android:inputType="text"
-                            android:maxLines="1"
-                            android:paddingTop="@dimen/_10sdp"
-                            android:textColor="#000000"
-                            android:textSize="@dimen/_15sdp" />
-                    </android.support.design.widget.TextInputLayout>
-
-                    <View
-                        android:layout_width="fill_parent"
-                        android:layout_height="@dimen/_1sdp"
-                        android:layout_marginBottom="@dimen/_5sdp"
-                        android:background="#E1E1E1" />
-
-                    <FrameLayout
-                        android:id="@+id/frame_goodstype"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:clickable="true">
-
-                        <android.support.design.widget.TextInputLayout
-                            android:id="@+id/float_goodstype"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/_3sdp"
-                            android:layout_marginTop="@dimen/_1sdp"
-                            android:textColorHint="@color/colorAccent">
-
-                            <EditText
-                                android:id="@+id/editTextGoodsType"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@null"
-                                android:clickable="false"
-                                android:drawableLeft="@drawable/goods_type"
-                                android:enabled="false"
-                                android:hint="Goods Type"
-                                android:inputType="text"
-                                android:maxLines="1"
-                                android:paddingTop="@dimen/_10sdp"
-                                android:textColor="#000000"
-                                android:textSize="@dimen/_15sdp" />
-                        </android.support.design.widget.TextInputLayout>
-
-                        <View
-                            android:layout_width="fill_parent"
-                            android:layout_height="@dimen/_1sdp"
-                            android:layout_gravity="bottom"
-                            android:background="#E1E1E1" />
-
-                        <LinearLayout
-                            android:id="@+id/layout_goodstype"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical">
-
-                        </LinearLayout>
-                    </FrameLayout>
-
-
-                    <FrameLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:clickable="true">
-
-                        <android.support.design.widget.TextInputLayout
-                            android:id="@+id/float_trucktype"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/_3sdp"
-                            android:layout_marginTop="@dimen/_1sdp"
-                            android:textColorHint="@color/colorAccent">
-
-                            <EditText
-                                android:id="@+id/editTextTruck_type"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@null"
-                                android:clickable="false"
-                                android:drawableLeft="@drawable/select_truck_type"
-                                android:enabled="false"
-                                android:hint="Truck Type"
-                                android:maxLines="1"
-                                android:paddingTop="@dimen/_10sdp"
-                                android:textColor="#000000"
-                                android:textSize="@dimen/_15sdp" />
-                        </android.support.design.widget.TextInputLayout>
-
-                        <View
-                            android:layout_width="fill_parent"
-                            android:layout_height="@dimen/_1sdp"
-                            android:layout_gravity="bottom"
-                            android:background="#E1E1E1" />
-
-                        <LinearLayout
-                            android:id="@+id/layout_truckType"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical"></LinearLayout>
-                    </FrameLayout>
-
-
                     <TextView
+                        android:id="@+id/text_book_now"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_marginRight="@dimen/_10sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:text="@string/underline"
+                        android:text="Book Now"
                         android:textColor="#F65F52"
-                        android:textSize="@dimen/_12sdp" />
+                        android:textSize="@dimen/_19sdp"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
-                    <!--<LinearLayout
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+
+                    <include
+                        layout="@layout/red_underline"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_70sdp"
-                        android:orientation="horizontal">
+                        android:layout_height="wrap_content"></include>
+                </LinearLayout>
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ScrollView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:fadeScrollbars="false">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_20sdp"
+                        android:orientation="vertical">
 
                         <LinearLayout
-                            android:id="@+id/selected_photos_container2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="left"
-                            android:layout_weight="1"
-                            android:gravity="left"
-                            android:orientation="horizontal"
-                            android:visibility="visible">
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:orientation="vertical">
+
+                            <android.support.design.widget.TextInputLayout
+                                android:id="@+id/float_deliveryaddress"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/_3sdp"
+                                android:textColorHint="@color/colorAccent">
+
+                                <EditText
+                                    android:id="@+id/editTextDelieveryAddress"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:drawableLeft="@drawable/delivery_addr"
+                                    android:hint="Delivery Address"
+                                    android:imeOptions="actionDone"
+                                    android:inputType="text"
+                                    android:maxLines="1"
+                                    android:paddingTop="@dimen/_10sdp"
+                                    android:textColor="#000000"
+                                    android:textSize="@dimen/_15sdp" />
+                            </android.support.design.widget.TextInputLayout>
+
+                            <View
+                                android:layout_width="fill_parent"
+                                android:layout_height="@dimen/_1sdp"
+                                android:layout_marginBottom="@dimen/_5sdp"
+                                android:background="#E1E1E1" />
+
+                            <FrameLayout
+                                android:id="@+id/frame_goodstype"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:clickable="true">
+
+                                <android.support.design.widget.TextInputLayout
+                                    android:id="@+id/float_goodstype"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="@dimen/_3sdp"
+                                    android:layout_marginTop="@dimen/_1sdp"
+                                    android:textColorHint="@color/colorAccent">
+
+                                    <EditText
+                                        android:id="@+id/editTextGoodsType"
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@null"
+                                        android:clickable="false"
+                                        android:drawableLeft="@drawable/goods_type"
+                                        android:enabled="false"
+                                        android:hint="Goods Type"
+                                        android:inputType="text"
+                                        android:maxLines="1"
+                                        android:paddingTop="@dimen/_10sdp"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/_15sdp" />
+                                </android.support.design.widget.TextInputLayout>
+
+                                <View
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="@dimen/_1sdp"
+                                    android:layout_gravity="bottom"
+                                    android:background="#E1E1E1" />
+
+                                <LinearLayout
+                                    android:id="@+id/layout_goodstype"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
+
+                                </LinearLayout>
+                            </FrameLayout>
+
+
+                            <FrameLayout
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:clickable="true">
+
+                                <android.support.design.widget.TextInputLayout
+                                    android:id="@+id/float_trucktype"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="@dimen/_3sdp"
+                                    android:layout_marginTop="@dimen/_1sdp"
+                                    android:textColorHint="@color/colorAccent">
+
+                                    <EditText
+                                        android:id="@+id/editTextTruck_type"
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@null"
+                                        android:clickable="false"
+                                        android:drawableLeft="@drawable/select_truck_type"
+                                        android:enabled="false"
+                                        android:hint="Truck Type"
+                                        android:maxLines="1"
+                                        android:paddingTop="@dimen/_10sdp"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/_15sdp" />
+                                </android.support.design.widget.TextInputLayout>
+
+                                <View
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="@dimen/_1sdp"
+                                    android:layout_gravity="bottom"
+                                    android:background="#E1E1E1" />
+
+                                <LinearLayout
+                                    android:id="@+id/layout_truckType"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical"></LinearLayout>
+                            </FrameLayout>
 
 
                             <TextView
-                                android:id="@+id/msg"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginLeft="@dimen/_30sdp"
-                                android:text="no images selected" />
+                                android:layout_gravity="end"
+                                android:layout_marginRight="@dimen/_10sdp"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:text="@string/underline"
+                                android:textColor="#F65F52"
+                                android:textSize="@dimen/_12sdp" />
+
+                            <!--<LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_70sdp"
+                                android:orientation="horizontal">
 
 
-                        </LinearLayout>
-                        &lt;!&ndash; </HorizontalScrollView>&ndash;&gt;
-
-                        <com.rey.material.widget.ImageButton
-                            android:id="@+id/get_images"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="@dimen/_10sdp"
-                            android:layout_marginRight="@dimen/_15sdp"
-                            android:background="@drawable/camera_icon" />
-                    </LinearLayout>-->
+                                <LinearLayout
+                                    android:id="@+id/selected_photos_container2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="left"
+                                    android:layout_weight="1"
+                                    android:gravity="left"
+                                    android:orientation="horizontal"
+                                    android:visibility="visible">
 
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_70sdp"
-                        android:orientation="horizontal">
+                                    <TextView
+                                        android:id="@+id/msg"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginLeft="@dimen/_30sdp"
+                                        android:text="no images selected" />
 
 
-                        <HorizontalScrollView
-                            android:id="@+id/hori_scroll_view"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:foregroundGravity="left|center_vertical">
+                                </LinearLayout>
+                                &lt;!&ndash; </HorizontalScrollView>&ndash;&gt;
+
+                                <com.rey.material.widget.ImageButton
+                                    android:id="@+id/get_images"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="@dimen/_10sdp"
+                                    android:layout_marginRight="@dimen/_15sdp"
+                                    android:background="@drawable/camera_icon" />
+                            </LinearLayout>-->
+
 
                             <LinearLayout
-                                android:id="@+id/selected_photos_container"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="left|center_vertical"
-                                android:animateLayoutChanges="true"
-                                android:gravity="left|center_vertical"
-                                android:orientation="horizontal"
-                                android:visibility="visible"></LinearLayout>
-                        </HorizontalScrollView>
+                                android:layout_height="@dimen/_70sdp"
+                                android:orientation="horizontal">
 
-                        <com.rey.material.widget.ImageButton
-                            android:id="@+id/camera"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_10sdp"
-                            android:layout_marginRight="@dimen/_15sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/camera_icon"
-                            android:textColor="#000000" />
+
+                                <HorizontalScrollView
+                                    android:id="@+id/hori_scroll_view"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:foregroundGravity="left|center_vertical">
+
+                                    <LinearLayout
+                                        android:id="@+id/selected_photos_container"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_gravity="left|center_vertical"
+                                        android:animateLayoutChanges="true"
+                                        android:gravity="left|center_vertical"
+                                        android:orientation="horizontal"
+                                        android:visibility="visible"></LinearLayout>
+                                </HorizontalScrollView>
+
+                                <com.rey.material.widget.ImageButton
+                                    android:id="@+id/camera"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="@dimen/_10sdp"
+                                    android:layout_marginRight="@dimen/_15sdp"
+                                    android:background="@drawable/camera_icon"
+                                    android:textColor="#000000" />
+
+                            </LinearLayout>
+
+
+                            <android.support.design.widget.TextInputLayout
+                                android:id="@+id/float_description"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/_3sdp"
+                                android:textColorHint="@color/colorAccent">
+
+                                <EditText
+                                    android:id="@+id/editTextDescription"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:drawableLeft="@drawable/description_icon"
+                                    android:hint="Description"
+                                    android:inputType="text"
+                                    android:maxLines="1"
+                                    android:paddingTop="@dimen/_10sdp"
+                                    android:textColor="#000000"
+                                    android:textSize="@dimen/_15sdp" />
+                            </android.support.design.widget.TextInputLayout>
+
+                            <View
+                                android:layout_width="fill_parent"
+                                android:layout_height="@dimen/_1sdp"
+                                android:layout_marginBottom="@dimen/_5sdp"
+                                android:background="#E1E1E1" />
+                        </LinearLayout>
 
                     </LinearLayout>
+                </ScrollView>
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/_15sdp">
 
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/float_description"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_3sdp"
-                        android:textColorHint="@color/colorAccent">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:gravity="bottom">
 
-                        <EditText
-                            android:id="@+id/editTextDescription"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:drawableLeft="@drawable/description_icon"
-                            android:hint="Description"
-                            android:inputType="text"
-                            android:maxLines="1"
-                            android:paddingTop="@dimen/_10sdp"
-                            android:textColor="#000000"
-                            android:textSize="@dimen/_15sdp" />
-                    </android.support.design.widget.TextInputLayout>
+                    <include
+                        layout="@layout/down_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"></include>
 
-                    <View
-                        android:layout_width="fill_parent"
-                        android:layout_height="@dimen/_1sdp"
-                        android:layout_marginBottom="@dimen/_5sdp"
-                        android:background="#E1E1E1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:gravity="center|bottom"
+                    android:padding="@dimen/_3sdp">
+
+                    <com.rey.material.widget.Button
+                        android:id="@+id/btn_post"
+                        style="@style/Material.Drawable.Ripple.Touch"
+                        android:layout_width="@dimen/_140sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:background="@drawable/submit"
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_3sdp"
+                        android:text="Post"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        android:textSize="@dimen/_19sdp" />
                 </LinearLayout>
 
             </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
+        </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="@dimen/_15sdp">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:gravity="bottom">
+            android:id="@+id/filter_dialog"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#edffffff"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:orientation="vertical">
+
 
             <include
-                layout="@layout/down_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"></include>
+
+                layout="@layout/dialog_choose_type" />
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:gravity="center|bottom"
-            android:padding="@dimen/_3sdp">
+    </FrameLayout>
 
-            <com.rey.material.widget.Button
-                android:id="@+id/btn_post"
-                style="@style/Material.Drawable.Ripple.Touch"
-                android:layout_width="@dimen/_140sdp"
-                android:layout_height="@dimen/_40sdp"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:background="@drawable/submit"
-                android:gravity="center"
-                android:paddingBottom="@dimen/_5sdp"
-                android:paddingRight="@dimen/_3sdp"
-                android:text="Post"
-                android:textAllCaps="false"
-                android:textColor="#FFFFFF"
-                android:textSize="@dimen/_19sdp" />
-        </LinearLayout>
 
-    </LinearLayout>
 </LinearLayout>

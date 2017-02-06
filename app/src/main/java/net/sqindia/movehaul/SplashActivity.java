@@ -1,5 +1,7 @@
 package net.sqindia.movehaul;
 
+import android.*;
+import android.Manifest;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
@@ -8,14 +10,20 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -32,11 +40,14 @@ import android.widget.LinearLayout;
 import com.rey.material.widget.Button;
 import com.sloop.fonts.FontsManager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by sqindia on 21-10-2016.
  */
 public class SplashActivity extends Activity {
-    Button btn_register, btn_login;
+    Button btn_register, btn_login, btn_call;
     ImageView truck_icon, logo_icon, bg_icon;
     LinearLayout lt_bottom;
     int is = 0;
@@ -48,6 +59,7 @@ public class SplashActivity extends Activity {
     SharedPreferences.Editor editor;
     TranslateAnimation anim_btn_b2t, anim_btn_t2b, anim_truck_c2r;
     Animation fadeIn, fadeOut;
+    final private int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124;
 
     LayoutInflater mInflater;
 
@@ -88,6 +100,10 @@ public class SplashActivity extends Activity {
         bg_icon = (ImageView) findViewById(R.id.bg_icon);
         logo_icon = (ImageView) findViewById(R.id.logo_ico);
         lt_bottom = (LinearLayout) findViewById(R.id.layout_bottom);
+
+        btn_call = (Button) findViewById(R.id.button_call);
+        btn_call.setVisibility(View.GONE);
+
         snackbar = Snackbar.make(lt_top, "No internet connection!", Snackbar.LENGTH_INDEFINITE)
                 .setAction("Open Settings", new View.OnClickListener() {
                     @Override
@@ -133,7 +149,6 @@ public class SplashActivity extends Activity {
         logo_icon.setAnimation(fadeIn);
 
 
-
         anim_btn_b2t = new TranslateAnimation(0, 0, height + lt_bottom.getHeight(), lt_bottom.getHeight());
         anim_btn_b2t.setDuration(1400);
         lt_bottom.setAnimation(anim_btn_b2t);
@@ -146,6 +161,46 @@ public class SplashActivity extends Activity {
         anim_truck_c2r = new TranslateAnimation(0, width, 0, 0);
         anim_truck_c2r.setDuration(2000);
         anim_truck_c2r.setFillAfter(false);
+
+        PhoneCallListener phoneListener = new PhoneCallListener();
+        TelephonyManager telephonyManager = (TelephonyManager) SplashActivity.this.getSystemService(Context.TELEPHONY_SERVICE);
+        telephonyManager.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
+
+        btn_call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:121"));
+                if (ActivityCompat.checkSelfPermission(SplashActivity.this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+
+
+                    final List<String> permissionsList = new ArrayList<>();
+                   permissionsList.add(Manifest.permission.CALL_PHONE);
+
+
+                    String message = "You need to grant access to Call Phones";
+
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+                        requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
+                                REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
+                    }
+
+                    return;
+                }
+                startActivity(callIntent);
+
+            }
+        });
 
 
         final Handler handler = new Handler();
@@ -212,8 +267,10 @@ public class SplashActivity extends Activity {
         super.onRestart();
         if (!config.isConnected(SplashActivity.this)) {
             snackbar.show();
+            btn_call.setVisibility(View.VISIBLE);
         } else {
            snackbar.dismiss();
+            btn_call.setVisibility(View.GONE);
 
             if (sharedPreferences.getString("login", "").equals("success")) {
 
@@ -310,6 +367,7 @@ public class SplashActivity extends Activity {
             } else if (s.equals("false")) {
                // av_loader.setVisibility(View.GONE);
                 snackbar.show();
+                btn_call.setVisibility(View.VISIBLE);
             }
         }
 
@@ -320,4 +378,46 @@ public class SplashActivity extends Activity {
         super.onBackPressed();
         finishAffinity();
     }
+
+    private class PhoneCallListener extends PhoneStateListener {
+
+        private boolean isPhoneCalling = false;
+
+        String LOG_TAG = "tag_LOGGING 123";
+
+        @Override
+        public void onCallStateChanged(int state, String incomingNumber) {
+
+            if (TelephonyManager.CALL_STATE_RINGING == state) {
+                // phone ringing
+                Log.i(LOG_TAG, "Rining, number: " + incomingNumber);
+            }
+
+            if (TelephonyManager.CALL_STATE_OFFHOOK == state) {
+                // active
+                Log.i(LOG_TAG, "Offline");
+
+                isPhoneCalling = true;
+            }
+
+            if (TelephonyManager.CALL_STATE_IDLE == state) {
+                // run when class initial and phone call ended,
+                // need detect flag from CALL_STATE_OFFHOOK
+                Log.i(LOG_TAG, "IDLE");
+
+
+                if (isPhoneCalling) {
+
+                    Intent i = new Intent(getApplicationContext(), SplashActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                    isPhoneCalling = false;
+                }
+
+            }
+        }
+    }
+
+
+
 }

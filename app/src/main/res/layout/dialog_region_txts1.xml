@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+
     android:orientation="vertical">
 
     <LinearLayout
@@ -18,16 +19,14 @@
         <com.rey.material.widget.TextView
             android:id="@+id/textview_header"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_5sdp"
             android:layout_weight="1"
-            android:gravity="left"
-            android:paddingBottom="@dimen/_8sdp"
-            android:paddingTop="@dimen/_8sdp"
+            android:gravity="left|center_vertical"
+            android:layout_gravity="center|center_vertical"
             android:text="Country"
             android:textColor="@color/textColor"
-            android:textSize="@dimen/_16sdp" />
+            android:textSize="@dimen/_19sdp" />
 
 
         <ImageView
