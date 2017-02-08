@@ -20,11 +20,14 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
+import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -102,8 +105,12 @@ public class Book_later extends Activity {
     HashMap<String, String> hash_truck_imgs = new HashMap<String, String>();
     int min, max, i;
     String date,time;
-    String str_delivery_address, str_pickup, str_drop, str_goods_type, str_truck_type, str_desc, str_goods_pic, str_profile_img, book_time;
+    String str_delivery_address, str_trk, str_drop, str_goods_type, str_truck_type, str_desc, str_goods_pic, str_profile_img, book_time;
     ArrayList<String> selectedPhotos = new ArrayList<>();
+
+    ImageView iv_truck,iv_bus;
+    LinearLayout lt_filter_dialog;
+
     private ViewGroup mSelectedImagesContainer;
     private DatePickerDialog.OnDateSetListener pickerListener1 = new DatePickerDialog.OnDateSetListener() {
         @Override
@@ -150,6 +157,9 @@ public class Book_later extends Activity {
         flt_truckType = (TextInputLayout) findViewById(R.id.float_trucktype);
         flt_deliveryAddress = (TextInputLayout) findViewById(R.id.float_deliveryaddress);
         flt_description = (TextInputLayout) findViewById(R.id.float_description);
+
+        iv_truck = (ImageView) findViewById(R.id.image_truck);
+        iv_bus = (ImageView) findViewById(R.id.image_bus);
 
 
         Typeface type = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
@@ -258,6 +268,44 @@ public class Book_later extends Activity {
                 truck_type();
             }
         });
+
+
+
+
+
+        final int height = getDeviceHeight(Book_later.this);
+        lt_filter_dialog = (LinearLayout) findViewById(R.id.filter_dialog);
+        iv_bus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TranslateAnimation anim_btn_t2b = new TranslateAnimation(0, 0, 0,height);
+                anim_btn_t2b.setDuration(500);
+                lt_filter_dialog.setVisibility(View.GONE);
+                lt_filter_dialog.setAnimation(anim_btn_t2b);
+                et_truckType.setCompoundDrawablesWithIntrinsicBounds( R.drawable.bus_type, 0, 0, 0);
+                flt_truckType.setHint("Bus Type");
+                str_trk = "Bus";
+            }
+        });
+
+
+        iv_truck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lt_filter_dialog.setVisibility(View.GONE);
+                TranslateAnimation anim_btn_t2b = new TranslateAnimation(0, 0, 0,height);
+                anim_btn_t2b.setDuration(500);
+                lt_filter_dialog.setAnimation(anim_btn_t2b);
+                et_truckType.setCompoundDrawablesWithIntrinsicBounds( R.drawable.select_truck_type, 0, 0, 0);
+                flt_truckType.setHint("Truck Type");
+                str_trk = "Truck";
+            }
+        });
+
+
+
+
+
 
 
         btn_post.setOnClickListener(new View.OnClickListener() {
@@ -446,14 +494,22 @@ public class Book_later extends Activity {
         return null;
     }
 
+
+    public static int getDeviceHeight(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        int height = display.getHeight();
+        return height;
+    }
+
+
     private void goods_type() {
-        // Log.e("tag","ss: "+ar_goods_type.size());
-        Dialog_Region dialog_region = new Dialog_Region(Book_later.this, ar_goods_type);
-        dialog_region.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.choose));
-        dialog_region.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        //dialog_region.getWindow().setStatusBarColor(getResources().getColor(R.color.aaa));
-        dialog_region.show();
-        dialog_region.setOnDismissListener(new DialogInterface.OnDismissListener() {
+
+        Dialog_GoodsType dialog_goodsType = new Dialog_GoodsType(Book_later.this, ar_goods_type);
+        dialog_goodsType.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.choose));
+        dialog_goodsType.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        dialog_goodsType.show();
+        dialog_goodsType.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
                 if (!(sharedPreferences.getString("goods", "").equals(""))) {
@@ -464,14 +520,12 @@ public class Book_later extends Activity {
     }
 
     private void truck_type() {
-        // Log.e("tag","ss "+ar_truck_type.size());
-        // Log.e("tag","sss "+hash_subtype.size());
-        // Log.e("tag","ssss "+hash_truck_imgs.size());
-        Dialog_Region1 dialog_region1 = new Dialog_Region1(Book_later.this, ar_truck_type, hash_subtype, hash_truck_imgs, ar_truck_sstype, ar_truck_imgs);
-        //dialog_region1.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.choose));
-        dialog_region1.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        dialog_region1.show();
-        dialog_region1.setOnDismissListener(new DialogInterface.OnDismissListener() {
+
+        Dialog_VehicleType dialog_vehicleType = new Dialog_VehicleType(Book_later.this, ar_truck_type, hash_subtype, hash_truck_imgs, ar_truck_sstype, ar_truck_imgs);
+        dialog_vehicleType.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.choose));
+        dialog_vehicleType.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        dialog_vehicleType.show();
+        dialog_vehicleType.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
                 if (!(sharedPreferences.getString("sub_truck_type", "").equals(""))) {

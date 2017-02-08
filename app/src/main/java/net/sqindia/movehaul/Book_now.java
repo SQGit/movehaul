@@ -1,40 +1,37 @@
 package net.sqindia.movehaul;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
+import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -106,12 +103,12 @@ public class Book_now extends Activity {
     ProgressDialog mProgressDialog;
     LinearLayout ll;
     ArrayList<String> selectedPhotos = new ArrayList<>();
-    String str_delivery_address,str_pickup,str_drop,str_goods_type,str_truck_type,str_desc,str_goods_pic,str_profile_img,book_time;
+    String str_delivery_address,str_trk,str_drop,str_goods_type,str_truck_type,str_desc,str_goods_pic,str_profile_img,book_time;
     LinearLayout.LayoutParams lp;
     ArrayList<Uri>  image_uris;
-
+    ImageView iv_truck,iv_bus;
     ArrayList<Uri>  goods_imgs;
-
+    LinearLayout lt_filter_dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,6 +132,9 @@ public class Book_now extends Activity {
         lt_goodsType = (LinearLayout) findViewById(R.id.layout_goodstype);
         lt_truckType = (LinearLayout) findViewById(R.id.layout_truckType);
 
+        iv_truck = (ImageView) findViewById(R.id.image_truck);
+        iv_bus = (ImageView) findViewById(R.id.image_bus);
+
         btn_back = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_back);
         btn_post = (Button) findViewById(R.id.btn_post);
         flt_delivery_address.setTypeface(tf);
@@ -150,6 +150,9 @@ public class Book_now extends Activity {
       //  View getImages = findViewById(R.id.get_images);
         View getImages = findViewById(R.id.camera);
         mSelectedImagesContainer = (ViewGroup) findViewById(R.id.selected_photos_container);
+
+
+
 
 
         //ll = (LinearLayout)findViewById(R.id.selected_photos_container);
@@ -226,8 +229,6 @@ public class Book_now extends Activity {
         Log.e("tag","tis:"+str_time);
 
 
-
-
         lt_goodsType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -241,6 +242,47 @@ public class Book_now extends Activity {
 
             }
         });
+
+
+
+        final int height = getDeviceHeight(Book_now.this);
+        lt_filter_dialog = (LinearLayout) findViewById(R.id.filter_dialog);
+        iv_bus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TranslateAnimation anim_btn_t2b = new TranslateAnimation(0, 0, 0,height);
+                anim_btn_t2b.setDuration(500);
+                lt_filter_dialog.setVisibility(View.GONE);
+                lt_filter_dialog.setAnimation(anim_btn_t2b);
+                et_trucktype.setCompoundDrawablesWithIntrinsicBounds( R.drawable.bus_type, 0, 0, 0);
+                flt_trucktype.setHint("Bus Type");
+                str_trk = "Bus";
+            }
+        });
+
+
+        iv_truck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lt_filter_dialog.setVisibility(View.GONE);
+                TranslateAnimation anim_btn_t2b = new TranslateAnimation(0, 0, 0,height);
+                anim_btn_t2b.setDuration(500);
+                lt_filter_dialog.setAnimation(anim_btn_t2b);
+                et_trucktype.setCompoundDrawablesWithIntrinsicBounds( R.drawable.select_truck_type, 0, 0, 0);
+                flt_trucktype.setHint("Truck Type");
+                str_trk = "Truck";
+            }
+        });
+
+
+
+
+
+
+
+
+
+
 
 
         getImages.setOnClickListener(new View.OnClickListener() {
@@ -309,8 +351,8 @@ public class Book_now extends Activity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Book_now.this, DashboardNavigation.class);
-                startActivity(i);
+               /* Intent i = new Intent(Book_now.this, DashboardNavigation.class);
+                startActivity(i);*/
                 finish();
             }
         });
@@ -326,7 +368,7 @@ public class Book_now extends Activity {
 
                 if(!(et_delivery_address.getText().toString().trim().isEmpty())){
                     if(!(et_goodstype.getText().toString().trim().isEmpty())){
-                        if(!(et_trucktype.getText().toString().trim().isEmpty())){
+                        if(!(et_trucktype.getText().toString().trim().isEmpty()) && !et_trucktype.getText().toString().contains("Bus Type") && !et_trucktype.getText().toString().contains("Truck Type") ){
                             if (!(et_description.getText().toString().trim().isEmpty())) {
 
                                 str_delivery_address = et_delivery_address.getText().toString();
@@ -345,7 +387,7 @@ public class Book_now extends Activity {
 
                         }
                         else{
-                            Toast.makeText(getApplicationContext(),"Choose Truck Type",Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),"Choose "+str_trk+" Type",Toast.LENGTH_LONG).show();
                         }
                     }
                     else{
@@ -413,13 +455,11 @@ public class Book_now extends Activity {
 
 
     private void goods_type(){
-       // Log.e("tag","ss: "+ar_goods_type.size());
-        Dialog_Region dialog_region = new Dialog_Region(Book_now.this,ar_goods_type);
-        dialog_region.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.choose));
-        dialog_region.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        //dialog_region.getWindow().setStatusBarColor(getResources().getColor(R.color.aaa));
-        dialog_region.show();
-        dialog_region.setOnDismissListener(new DialogInterface.OnDismissListener() {
+        Dialog_GoodsType dialog_goodsType = new Dialog_GoodsType(Book_now.this,ar_goods_type);
+        dialog_goodsType.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.choose));
+        dialog_goodsType.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        dialog_goodsType.show();
+        dialog_goodsType.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
                 if(!(sharedPreferences.getString("goods","").equals(""))){
@@ -430,14 +470,11 @@ public class Book_now extends Activity {
     }
 
     private void truck_type() {
-       // Log.e("tag","ss "+ar_truck_type.size());
-       // Log.e("tag","sss "+hash_subtype.size());
-       // Log.e("tag","ssss "+hash_truck_imgs.size());
-        Dialog_Region1 dialog_region1 = new Dialog_Region1(Book_now.this,ar_truck_type,hash_subtype,hash_truck_imgs,ar_truck_sstype,ar_truck_imgs);
-        //dialog_region1.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.choose));
-        dialog_region1.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        dialog_region1.show();
-        dialog_region1.setOnDismissListener(new DialogInterface.OnDismissListener() {
+        Dialog_VehicleType dialog_vehicleType = new Dialog_VehicleType(Book_now.this,ar_truck_type,hash_subtype,hash_truck_imgs,ar_truck_sstype,ar_truck_imgs);
+        dialog_vehicleType.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.choose));
+        dialog_vehicleType.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        dialog_vehicleType.show();
+        dialog_vehicleType.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
                 if(!(sharedPreferences.getString("sub_truck_type","").equals(""))){
@@ -450,8 +487,8 @@ public class Book_now extends Activity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(Book_now.this, DashboardNavigation.class);
-        startActivity(i);
+       /* Intent i = new Intent(Book_now.this, DashboardNavigation.class);
+        startActivity(i);*/
         finish();
     }
 
@@ -477,6 +514,14 @@ public class Book_now extends Activity {
     }*/
 
 
+
+
+    public static int getDeviceHeight(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        int height = display.getHeight();
+        return height;
+    }
 
 
 
@@ -783,7 +828,7 @@ public class Book_now extends Activity {
         }
         @Override
         protected void onPostExecute(String jsonStr) {
-         //   Log.e("tag", "<-----rerseres---->" + jsonStr);
+            Log.e("tag", "<-----rerseres---->" + jsonStr);
             super.onPostExecute(jsonStr);
             mProgressDialog.dismiss();
             try {

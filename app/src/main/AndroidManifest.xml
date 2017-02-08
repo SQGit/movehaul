@@ -7,19 +7,18 @@
         android:name="android.hardware.camera.autofocus"
         android:required="false" />
 
-
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.RECEIVE_SMS">
-        <uses-permission android:name="android.permission.CALL_PHONE"/>
+        <uses-permission android:name="android.permission.CALL_PHONE" />
 
     </uses-permission>
     <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.SEND_SMS">
-    </uses-permission>
+    <uses-permission android:name="android.permission.SEND_SMS"></uses-permission>
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
@@ -120,11 +119,12 @@
             android:name="net.sqindia.movehaul.FetchAddressIntentService"
             android:exported="false" />
 
-        <activity android:name="com.gun0912.tedpicker.ImagePickerActivity"
-            android:screenOrientation="portrait" android:theme="@style/ted_pick_theme"
-            />
+        <activity
+            android:name="com.gun0912.tedpicker.ImagePickerActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ted_pick_theme" />
 
-            />
+        />
 
     </application>
 

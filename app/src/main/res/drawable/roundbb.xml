@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape android:shape="oval" >
+            <solid android:color="@color/pink" />
+
+
+            <padding
+            android:bottom="@dimen/_27sdp"
+            android:left="@dimen/_16sdp"
+            android:right="@dimen/_16sdp"
+            android:top="@dimen/_27sdp" />
+        </shape>
+
+    </item>
+
+
+    <item
+
+        android:drawable="@drawable/busn"
+        android:gravity="center" />
+
+</layer-list>

@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -21,20 +22,19 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.bumptech.glide.Glide;
+import com.rey.material.widget.RelativeLayout;
 import com.rey.material.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 
 
 /**
  * Created by Salman on 7/28/2016.
  */
 
-public class Dialog_Region1 extends Dialog {
+public class Dialog_VehicleType extends Dialog {
 
     public Activity activity;
     TextView tv_header;
@@ -44,7 +44,7 @@ public class Dialog_Region1 extends Dialog {
     ArrayList<String> state_lists = new ArrayList<>();
     ArrayList<String> ar_sub_type = new ArrayList<>();
     ListAdapter adapter1, adapter2, adapter3;
-
+    android.widget.RelativeLayout rll;
     Context context;
     Cursor cursor;
     String query, str_country, str_state, str_zip;
@@ -58,18 +58,18 @@ public class Dialog_Region1 extends Dialog {
     ArrayList<String> ar_truck_imgs = new ArrayList<>();
     ArrayList<String> ar_truck_iimgs;
 
+
     ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
 
         @Override
         public void onPageSelected(int position) {
             if (position == 0) {
                 //iv_truck_ico.setImageDrawable(activity.getResources().getDrawable(R.drawable.truck_1));
-                image.setVisibility(View.GONE);
+               // image.setVisibility(View.GONE);
             } else {
                 Log.e("tag","from listner"+hash_subtype.size());
                 ar_sub_type.clear();
                 String shard = sharedPreferences.getString("truck_type","");
-
 
 
                 for (int i=0;i<hash_subtype.size();i++) {
@@ -99,8 +99,7 @@ public class Dialog_Region1 extends Dialog {
 
                 adapter2.notifyDataSetChanged();
 
-                iv_truck_ico.setVisibility(View.GONE);
-                image.setVisibility(View.VISIBLE);
+
 
             }
         }
@@ -110,11 +109,13 @@ public class Dialog_Region1 extends Dialog {
         public void onPageScrollStateChanged(int arg0) {  }
     };
     private ViewPager viewPager;
+   // private WrappingViewPager viewpager;
+
     private int[] layouts;
     private MyViewPagerAdapter myViewPagerAdapter;
 
 
-    public Dialog_Region1(Activity activity, ArrayList<String> ar_trucks, HashMap<String, String> hash_subtype, HashMap<String, String> hash_subimg, ArrayList<String> ar_trucksss,ArrayList<String> truck_imgs) {
+    public Dialog_VehicleType(Activity activity, ArrayList<String> ar_trucks, HashMap<String, String> hash_subtype, HashMap<String, String> hash_subimg, ArrayList<String> ar_trucksss, ArrayList<String> truck_imgs) {
         super(activity);
         this.activity = activity;
         this.ar_truck_type = ar_trucks;
@@ -128,7 +129,9 @@ public class Dialog_Region1 extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_regions);
+        setContentView(R.layout.dialog_vehicletype);
+
+        rll = (android.widget.RelativeLayout) findViewById(R.id.rl);
 
         tf = Typeface.createFromAsset(activity.getAssets(), "fonts/lato.ttf");
 
@@ -143,9 +146,17 @@ public class Dialog_Region1 extends Dialog {
         editor = sharedPreferences.edit();
 
 
+
         myViewPagerAdapter = new MyViewPagerAdapter();
         viewPager.setAdapter(myViewPagerAdapter);
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
+
+
+
+
+
+
+
 
 
         viewPager.setOnTouchListener(new View.OnTouchListener() {
@@ -170,6 +181,7 @@ public class Dialog_Region1 extends Dialog {
         public MyViewPagerAdapter() {
         }
 
+
         @Override
         public Object instantiateItem(ViewGroup container, final int position) {
 
@@ -177,6 +189,10 @@ public class Dialog_Region1 extends Dialog {
 
             View view = layoutInflater.inflate(layouts[position], container, false);
             container.addView(view);
+
+
+
+
 
             if (position == 0) {
 
@@ -187,21 +203,27 @@ public class Dialog_Region1 extends Dialog {
                 ar_truck_iimgs = new ArrayList<String>(listToSetimg);
 
                 lview_cont = (ListView) view.findViewById(R.id.lview);
-                adapter1 = new ListAdapter(activity.getApplicationContext(), R.layout.dialog_region_txts1, ar_truck_types,0);
+                adapter1 = new ListAdapter(activity.getApplicationContext(), R.layout.dialog_truck_type, ar_truck_types,0);
                 lview_cont.setAdapter(adapter1);
+
+
 
             } else {
 
                 Log.e("tag","from_pager");
                 lview_state = (ListView) view.findViewById(R.id.lview);
-                adapter2 = new ListAdapter(activity.getApplicationContext(), R.layout.dialog_region_txts1, ar_sub_type,1);
+                adapter2 = new ListAdapter(activity.getApplicationContext(), R.layout.dialog_vehicle_types, ar_sub_type,1);
                 lview_state.setAdapter(adapter2);
+
+
 
             }
 
 
             return view;
         }
+
+
 
         @Override
         public int getCount() {
@@ -227,6 +249,7 @@ public class Dialog_Region1 extends Dialog {
         ArrayList<String> data_lists;
         int resourceid;
         int page;
+        View div_view;
 
         public ListAdapter(Context context, int textViewResourceId, ArrayList<String> objects,int page) {
             super(context, textViewResourceId, objects);
@@ -235,13 +258,7 @@ public class Dialog_Region1 extends Dialog {
             this.resourceid = textViewResourceId;
             this.page = page;
 
-
         }
-
-      /*  @Override
-        public int getCount() {
-            return ar_truck_type.size();
-        }*/
 
         @Override
         public View getDropDownView(int posi, View convertView, ViewGroup parent) {
@@ -257,40 +274,37 @@ public class Dialog_Region1 extends Dialog {
         public View getCustomView(final int posi, View row, ViewGroup parent) {
 
             Typeface tf = Typeface.createFromAsset(cc.getAssets(), "fonts/lato.ttf");
-
             LayoutInflater inflater = (LayoutInflater) cc.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
             final View arow = inflater.inflate(resourceid, parent, false);
 
             final TextView label = (TextView) arow.findViewById(R.id.textview_header);
 
-            image = (ImageView) arow.findViewById(R.id.image);
-            iv_truck_ico = (ImageView) arow.findViewById(R.id.image_icon);
+            div_view = arow.findViewById(R.id.divider_view);
 
             label.setTypeface(tf);
 
             if(page==0) {
-
+                iv_truck_ico = (ImageView) arow.findViewById(R.id.image_icon);
                 iv_truck_ico.setImageDrawable(cc.getResources().getDrawable(R.drawable.truck_1));
-                image.setVisibility(View.GONE);
-               // Log.e("tag",posi+"\t"+Config.WEB_URL+"vehicledetails/"+ar_truck_iimgs.get(posi));
                 Glide.with(cc).load(Config.WEB_URL+"truck_types/"+ar_truck_iimgs.get(posi)).into(iv_truck_ico);
 
             }
             else{
-                iv_truck_ico.setVisibility(View.GONE);
-                image.setVisibility(View.VISIBLE);
+                image = (ImageView) arow.findViewById(R.id.image);
             }
 
 
             if(page ==0){
                 label.setText(data_lists.get(posi));
-                Log.e("tag", "s: " + data_lists.get(posi));
+              //  Log.e("tag", "s: " + data_lists.get(posi));
             }
             else{
                 label.setText(data_lists.get(posi));
-                Log.e("tag", "sd: " + data_lists.get(posi));
+              //  Log.e("tag", "sd: " + data_lists.get(posi));
             }
+
+            if( posi == data_lists.size()-1)
+                div_view.setVisibility(View.GONE);
 
 
             arow.setOnClickListener(new View.OnClickListener() {
@@ -334,6 +348,8 @@ public class Dialog_Region1 extends Dialog {
             return arow;
         }
     }
+
+
 
 
 }

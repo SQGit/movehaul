@@ -9,11 +9,8 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -30,7 +27,7 @@ import java.util.ArrayList;
  * Created by Salman on 7/28/2016.
  */
 
-public class Dialog_Region extends Dialog {
+public class Dialog_GoodsType extends Dialog {
 
     public Activity activity;
     TextView tv_header;
@@ -40,7 +37,7 @@ public class Dialog_Region extends Dialog {
     ArrayList<String> state_lists = new ArrayList<>();
     ArrayList<String> zip_lists = new ArrayList<>();
     ListAdapter adapter1, adapter2, adapter3;
-
+    View div_view;
     Context context;
     Cursor cursor;
     String query, str_country, str_state, str_zip;
@@ -88,7 +85,7 @@ public class Dialog_Region extends Dialog {
     //private MyViewPagerAdapter myViewPagerAdapter;
 
 
-    public Dialog_Region(Activity activity,    ArrayList<String> ar_goods) {
+    public Dialog_GoodsType(Activity activity, ArrayList<String> ar_goods) {
         super(activity);
         this.activity = activity;
         this.ar_goods_type = ar_goods;
@@ -120,7 +117,7 @@ public class Dialog_Region extends Dialog {
 
 
         lview_cont = (ListView) findViewById(R.id.lview);
-        adapter1 = new ListAdapter(activity.getApplicationContext(), R.layout.dialog_region_txts, ar_goods_type);
+        adapter1 = new ListAdapter(activity.getApplicationContext(), R.layout.dialog_vehicle_types, ar_goods_type);
         lview_cont.setAdapter(adapter1);
 
 
@@ -180,7 +177,7 @@ public class Dialog_Region extends Dialog {
             if (position == 0) {
 
                 lview_cont = (ListView) view.findViewById(R.id.lview);
-                adapter1 = new ListAdapter(activity.getApplicationContext(), R.layout.dialog_region_txts, country_lists);
+                adapter1 = new ListAdapter(activity.getApplicationContext(), R.layout.dialog_vehicle_types, country_lists);
                 lview_cont.setAdapter(adapter1);
 
 
@@ -190,14 +187,14 @@ public class Dialog_Region extends Dialog {
 
 
                 lview_state = (ListView) view.findViewById(R.id.lview);
-                adapter2 = new ListAdapter(activity.getApplicationContext(), R.layout.dialog_region_txts, state_lists);
+                adapter2 = new ListAdapter(activity.getApplicationContext(), R.layout.dialog_vehicle_types, state_lists);
                 lview_state.setAdapter(adapter2);
 
 
             } else {
 
                 lview_zip = (ListView) view.findViewById(R.id.lview);
-                adapter3 = new ListAdapter(activity.getApplicationContext(), R.layout.dialog_region_txts, zip_lists);
+                adapter3 = new ListAdapter(activity.getApplicationContext(), R.layout.dialog_vehicle_types, zip_lists);
                 lview_zip.setAdapter(adapter3);
 
             }
@@ -262,6 +259,11 @@ public class Dialog_Region extends Dialog {
             View arow = inflater.inflate(resourceid, parent, false);
 
             final TextView label = (TextView) arow.findViewById(R.id.textview_header);
+
+            div_view = arow.findViewById(R.id.divider_view);
+
+            if(posi == ar_goods_type.size()-1)
+                div_view.setVisibility(View.GONE);
 
             final ImageView image = (ImageView) arow.findViewById(R.id.image);
 
