@@ -1,6 +1,7 @@
 package net.sqindia.movehaul;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -451,6 +452,37 @@ public class Book_now extends Activity {
         });
 
     }
+
+
+    /*private void openBottomSheetPlaceOrder() {
+        LayoutInflater layoutInflater = LayoutInflater.from(Book_now.this);
+        View promptView = layoutInflater.inflate(R.layout.placed_order, null);
+        alertD = new AlertDialog.Builder(Book_now.this).create();
+        alertD.setCancelable(true);
+        Window window = alertD.getWindow();
+        window.getAttributes().windowAnimations = R.style.MaterialDialogSheetAnimation;
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        TextView thanks = (TextView) promptView.findViewById(R.id.thanks_id);
+        ImageView close = (ImageView) promptView.findViewById(R.id.close);
+        FontsManager.initFormAssets(promptView.getContext(), "fonts/opensans.ttf");
+        FontsManager.changeFonts(this);
+        Typeface tf = Typeface.createFromAsset(this.getAssets(), "fonts/opensans.ttf");
+        thanks.setTypeface(tf);
+        alertD.setView(promptView);
+        alertD.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                alertD.dismiss();
+            }
+        });
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertD.dismiss();
+            }
+        });
+        alertD.show();
+    }*/
 
 
 

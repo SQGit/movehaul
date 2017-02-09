@@ -268,6 +268,7 @@ public class SplashActivity extends Activity {
         if (!config.isConnected(SplashActivity.this)) {
             snackbar.show();
             btn_call.setVisibility(View.VISIBLE);
+            lt_bottom.setVisibility(View.VISIBLE);
         } else {
            snackbar.dismiss();
             btn_call.setVisibility(View.GONE);
@@ -368,6 +369,7 @@ public class SplashActivity extends Activity {
                // av_loader.setVisibility(View.GONE);
                 snackbar.show();
                 btn_call.setVisibility(View.VISIBLE);
+                lt_bottom.setVisibility(View.VISIBLE);
             }
         }
 

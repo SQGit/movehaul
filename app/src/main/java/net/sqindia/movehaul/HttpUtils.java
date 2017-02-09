@@ -371,27 +371,16 @@ public class HttpUtils {
     }
 
 
-    public static JSONObject getData3(String url, String country, String state) {
+    public static JSONObject getData3(String url) {
         InputStream is = null;
         String json, result = "";
         JSONObject jArray = null;
-
         // Download JSON data from URL
         try {
-
-
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("country", country);
-            jsonObject.accumulate("state", state);
-            json = jsonObject.toString();
-
 
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(url);
             httppost.setHeader("Accept", "application/json");
-            httppost.setHeader("Content-type", "application/json");
-            httppost.setHeader("apikey", "1eo7u4tig9704k2humvdywwnb4hnl2xa1jbrh7go");
-            httppost.setEntity(new StringEntity(json));
             HttpResponse response = httpclient.execute(httppost);
             HttpEntity entity = response.getEntity();
             is = entity.getContent();
