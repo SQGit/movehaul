@@ -2,6 +2,7 @@ package net.sqindia.movehaul;
 
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -69,6 +71,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.GroundOverlay;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.gun0912.tedpicker.ImagePickerActivity;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.TextView;
 import com.sloop.fonts.FontsManager;
@@ -110,12 +113,14 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     public static boolean mMapIsTouched = false;
     private static String TAG = "tag_MAP LOCATION";
     final private int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124;
+    private static final int INTENT_REQUEST_GET_IMAGES = 13;
     protected String mAddressOutput;
     protected String mAreaOutput;
     protected String mCityOutput;
     protected String mStreetOutput;
     protected GoogleApiClient mGoogleApiClient;
     Context mContext;
+    ArrayList<Uri> image_uris;
     Toolbar toolbar;
     DrawerLayout drawer;
     NavigationView navigationView;
@@ -185,6 +190,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         }
 
     }
+
+
 
     private boolean addPermission(List<String> permissionsList, String permission) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -292,7 +299,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
         mapFragment.getMapAsync(this);
 
-
+        image_uris = new ArrayList<>();
 
 
 
@@ -420,6 +427,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             @Override
             public void onClick(View view) {
                 dialog2.dismiss();
+
             }
         });
 
@@ -485,6 +493,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             @Override
             public void onClick(View view) {
                 dialog2.show();
+                drawer.closeDrawer(Gravity.LEFT);
                 et_username.setText(customer_name);
                 et_email.setText(customer_email);
             }
@@ -492,11 +501,27 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         btn_editProfile_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PhotoPickerIntent intent = new PhotoPickerIntent(DashboardNavigation.this);
+               /* PhotoPickerIntent intent = new PhotoPickerIntent(DashboardNavigation.this);
                 intent.setPhotoCount(1);
                 intent.setColumn(3);
                 intent.setShowCamera(true);
-                startActivityForResult(intent, REQUEST_PROFILE);
+                startActivityForResult(intent, REQUEST_PROFILE);*/
+
+
+                com.gun0912.tedpicker.Config config = new com.gun0912.tedpicker.Config();
+                config.setSelectionMin(1);
+                config.setSelectionLimit(1);
+                config.setCameraHeight(R.dimen.app_camera_height);
+
+                config.setCameraBtnBackground(R.drawable.round_dr_red);
+
+                config.setToolbarTitleRes(R.string.custom_title);
+                config.setSelectedBottomHeight(R.dimen.bottom_height);
+
+                ImagePickerActivity.setConfig(config);
+                Intent intent = new Intent(DashboardNavigation.this, com.gun0912.tedpicker.ImagePickerActivity.class);
+                startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
+
             }
         });
 
@@ -968,7 +993,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             // the user pressed the back button.
         }
 
-        List<String> photos = null;
+ /*       List<String> photos = null;
         if (resultCode == RESULT_OK && requestCode == REQUEST_PROFILE) {
             if (data != null) {
                 photos = data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS);
@@ -982,7 +1007,19 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             //Picasso.with(ProfileActivity.this).load(new File(str_profile_img)).into(iv_profile);
             new profile_update().execute();
             // Glide.with(DashboardNavigation.this).load(new File(str_profile_img)).into(btn_editProfile_img);
+        }*/
+
+        if (requestCode == INTENT_REQUEST_GET_IMAGES && resultCode == Activity.RESULT_OK) {
+
+            image_uris = data.getParcelableArrayListExtra(com.gun0912.tedpicker.ImagePickerActivity.EXTRA_IMAGE_URIS);
+            Log.e("tag", "12345" + image_uris);
+
+            if (image_uris != null) {
+                str_profile_img = image_uris.get(0).toString();
+                new profile_update().execute();
+            }
         }
+
     }
 
     @Override

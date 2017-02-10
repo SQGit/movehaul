@@ -95,4 +95,15 @@
         <item name="android:focusableInTouchMode">true</item>
     </style>
 
+    <style name="MaterialDialogSheetAnimation">
+
+
+        <item name="android:windowEnterAnimation">@anim/in</item>
+        <item name="android:windowExitAnimation">@anim/out</item>
+
+    </style>
+
+
+
+
 </resources>

@@ -286,7 +286,7 @@ public class Dialog_VehicleType extends Dialog {
             if(page==0) {
                 iv_truck_ico = (ImageView) arow.findViewById(R.id.image_icon);
                 iv_truck_ico.setImageDrawable(cc.getResources().getDrawable(R.drawable.truck_1));
-                Glide.with(cc).load(Config.WEB_URL+"truck_types/"+ar_truck_iimgs.get(posi)).into(iv_truck_ico);
+                Glide.with(cc).load(Config.WEB_URL+"vehicle_types/"+ar_truck_iimgs.get(posi)).into(iv_truck_ico);
 
             }
             else{
