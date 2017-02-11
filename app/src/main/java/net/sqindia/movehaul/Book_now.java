@@ -186,6 +186,7 @@ public class Book_now extends Activity {
         flt_description.setTypeface(tf);
 
         flt_description.setEnabled(false);
+        btn_post.setEnabled(false);
 
         min = 2;
         max = 4;
@@ -324,6 +325,7 @@ public class Book_now extends Activity {
                 fl_goods.setVisibility(View.GONE);
                 lt_images.setVisibility(View.GONE);
                 flt_description.setEnabled(true);
+                btn_post.setEnabled(true);
             }
         });
 
@@ -341,6 +343,7 @@ public class Book_now extends Activity {
                 fl_goods.setVisibility(View.VISIBLE);
                 lt_images.setVisibility(View.VISIBLE);
                 flt_description.setEnabled(true);
+                btn_post.setEnabled(true);
             }
         });
 
