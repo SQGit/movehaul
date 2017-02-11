@@ -332,6 +332,9 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
         snackbar = Snackbar
                 .make(findViewById(R.id.top), "Network Error! Please Try Again Later.", Snackbar.LENGTH_SHORT);
+
+
+
         snackbar.setActionTextColor(Color.RED);
 
         View sbView = snackbar.getView();
@@ -1013,9 +1016,10 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
             image_uris = data.getParcelableArrayListExtra(com.gun0912.tedpicker.ImagePickerActivity.EXTRA_IMAGE_URIS);
             Log.e("tag", "12345" + image_uris);
-
+            selectedPhotos.clear();
             if (image_uris != null) {
                 str_profile_img = image_uris.get(0).toString();
+                selectedPhotos.add(str_profile_img);
                 new profile_update().execute();
             }
         }
@@ -1406,6 +1410,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                         String email = jo.getString("customer_email");
 
 
+                        selectedPhotos.clear();
                         Glide.with(DashboardNavigation.this).load(Config.WEB_URL + "customer_details/" + img).into(btn_editProfile_img);
 
                         editor.putString("customer_image", img);
