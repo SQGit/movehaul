@@ -19,7 +19,6 @@ import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -32,7 +31,6 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -105,15 +103,16 @@ public class Book_now extends Activity {
     HashMap<String, String> hash_subtype1;
     HashMap<String, String> hash_truck_imgs1 = new HashMap<String, String>();
     ProgressDialog mProgressDialog;
-    LinearLayout ll;
+    LinearLayout lt_images;
     ArrayList<String> selectedPhotos = new ArrayList<>();
-    String str_delivery_address, str_trk, str_drop, str_goods_type, str_truck_type, str_desc, str_goods_pic, str_profile_img, book_time;
+    String str_delivery_address, str_trk, str_v_type, str_goods_type, str_truck_type, str_desc, str_goods_pic, str_profile_img, book_time;
     LinearLayout.LayoutParams lp;
     ArrayList<Uri> image_uris;
     ImageView iv_truck, iv_bus;
     ArrayList<Uri> goods_imgs;
     LinearLayout lt_filter_dialog;
     String vehicle_type;
+    FrameLayout fl_goods;
     private ViewGroup mSelectedImagesContainer;
 
     public static int getDeviceHeight(Context context) {
@@ -186,6 +185,8 @@ public class Book_now extends Activity {
         flt_trucktype.setTypeface(tf);
         flt_description.setTypeface(tf);
 
+        flt_description.setEnabled(false);
+
         min = 2;
         max = 4;
         goods_imgs = new ArrayList<>();
@@ -199,6 +200,9 @@ public class Book_now extends Activity {
         //ll = (LinearLayout)findViewById(R.id.selected_photos_container);
         //ll.setOrientation(LinearLayout.HORIZONTAL);
         // lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        fl_goods = (FrameLayout) findViewById(R.id.frame_goodstype);
+        lt_images = (LinearLayout) findViewById(R.id.layout_photos);
 
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Book_now.this);
@@ -292,8 +296,7 @@ public class Book_now extends Activity {
                     Log.e("tag","si2z"+ar_truck_type1.size());*/
                     truck_type(ar_truck_type1, hash_subtype1, hash_truck_imgs1, ar_truck_sstype1, ar_truck_imgs1);
 
-                }
-                else{
+                } else {
                     truck_type(ar_truck_type, hash_subtype, hash_truck_imgs, ar_truck_sstype, ar_truck_imgs);
 
                 }
@@ -304,6 +307,9 @@ public class Book_now extends Activity {
 
         final int height = getDeviceHeight(Book_now.this);
         lt_filter_dialog = (LinearLayout) findViewById(R.id.filter_dialog);
+
+        lt_filter_dialog.setVisibility(View.VISIBLE);
+
         iv_bus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -314,6 +320,10 @@ public class Book_now extends Activity {
                 et_trucktype.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bus_type, 0, 0, 0);
                 flt_trucktype.setHint("Bus Type");
                 str_trk = "Bus";
+
+                fl_goods.setVisibility(View.GONE);
+                lt_images.setVisibility(View.GONE);
+                flt_description.setEnabled(true);
             }
         });
 
@@ -328,6 +338,9 @@ public class Book_now extends Activity {
                 et_trucktype.setCompoundDrawablesWithIntrinsicBounds(R.drawable.select_truck_type, 0, 0, 0);
                 flt_trucktype.setHint("Truck Type");
                 str_trk = "Truck";
+                fl_goods.setVisibility(View.VISIBLE);
+                lt_images.setVisibility(View.VISIBLE);
+                flt_description.setEnabled(true);
             }
         });
 
@@ -412,28 +425,38 @@ public class Book_now extends Activity {
                 //   str_desc = "desc...";
 
                 if (!(et_delivery_address.getText().toString().trim().isEmpty())) {
-                    if (!(et_goodstype.getText().toString().trim().isEmpty())) {
-                        if (!(et_trucktype.getText().toString().trim().isEmpty()) && !et_trucktype.getText().toString().contains("Bus Type") && !et_trucktype.getText().toString().contains("Truck Type")) {
-                            if (!(et_description.getText().toString().trim().isEmpty())) {
+                    if (!(et_trucktype.getText().toString().trim().isEmpty()) && !et_trucktype.getText().toString().contains("Bus Type") && !et_trucktype.getText().toString().contains("Truck Type")) {
+                        if (!(et_description.getText().toString().trim().isEmpty())) {
+
+                            if(str_trk.equals("Truck")) {
+                                if (!(et_goodstype.getText().toString().trim().isEmpty())) {
+                                    str_delivery_address = et_delivery_address.getText().toString();
+                                    str_goods_type = et_goodstype.getText().toString();
+                                    str_truck_type = et_trucktype.getText().toString();
+                                    str_desc = et_description.getText().toString();
+                                    new book_now_task().execute();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Choose Goods Type", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                            else{
 
                                 str_delivery_address = et_delivery_address.getText().toString();
-                                str_goods_type = et_goodstype.getText().toString();
                                 str_truck_type = et_trucktype.getText().toString();
                                 str_desc = et_description.getText().toString();
-
-                                Log.e("tag", "aa " + str_goods_type + str_truck_type);
-
                                 new book_now_task().execute();
-                            } else {
-                                et_description.setError("Enter Description");
-                                et_description.requestFocus();
+
                             }
 
+
                         } else {
-                            Toast.makeText(getApplicationContext(), "Choose " + str_trk + " Type", Toast.LENGTH_LONG).show();
+                            et_description.setError("Enter Description");
+                            et_description.requestFocus();
+
                         }
                     } else {
-                        Toast.makeText(getApplicationContext(), "Choose Goods Type", Toast.LENGTH_LONG).show();
+
+                        Toast.makeText(getApplicationContext(), "Choose " + str_trk + " Type", Toast.LENGTH_LONG).show();
                     }
                 } else {
                     et_delivery_address.setError("Enter Delivery Address");
@@ -506,11 +529,11 @@ public class Book_now extends Activity {
         });
     }
 
-    private void truck_type(ArrayList<String> ar_truck_typea, HashMap<String,String> hash_subtypea,HashMap<String,String>  hash_truck_imgsa,ArrayList<String>  ar_truck_sstypea,  ArrayList<String> ar_truck_imgsa) {
+    private void truck_type(ArrayList<String> ar_truck_typea, HashMap<String, String> hash_subtypea, HashMap<String, String> hash_truck_imgsa, ArrayList<String> ar_truck_sstypea, ArrayList<String> ar_truck_imgsa) {
         Dialog_VehicleType dialog_vehicleType = new Dialog_VehicleType(Book_now.this, ar_truck_typea, hash_subtypea, hash_truck_imgsa, ar_truck_sstypea, ar_truck_imgsa);
         dialog_vehicleType.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.choose));
         dialog_vehicleType.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-      // dialog_vehicleType.getWindow().getAttributes().height= 120;
+        // dialog_vehicleType.getWindow().getAttributes().height= 120;
         dialog_vehicleType.getWindow().getAttributes().windowAnimations = R.style.MaterialDialogSheetAnimation;
         dialog_vehicleType.show();
         dialog_vehicleType.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -518,6 +541,7 @@ public class Book_now extends Activity {
             public void onDismiss(DialogInterface dialogInterface) {
                 if (!(sharedPreferences.getString("sub_truck_type", "").equals(""))) {
                     et_trucktype.setText(sharedPreferences.getString("sub_truck_type", ""));
+                    str_v_type = sharedPreferences.getString("truck_type", "");
                 }
             }
         });
@@ -531,17 +555,6 @@ public class Book_now extends Activity {
         finish();
     }
 
-   /* private void getImagesView() {
-
-        Intent intent = new Intent(getApplicationContext(), ImagePickerActivity.class);
-        Config config = new Config.Builder()
-                .setTabBackgroundColor(R.color.white)    // set tab background color. Default white.
-                .setSelectionLimit(5)    // set photo selection limit. Default unlimited selection.
-                .build();
-        ImagePickerActivity.setConfig(config);
-        startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
-
-    }*/
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -566,123 +579,6 @@ public class Book_now extends Activity {
             }
         }
     }
-
-
-
-
-
-
-/*
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-        msg.setVisibility(View.GONE);
-        List<String> photos = null;
-
-
-
-        if (resultCode == RESULT_OK && requestCode == REQUEST_VEC_FRONT) {
-            if (intent != null) {
-                photos = intent.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS);
-            }
-            selectedPhotos.clear();
-            if (photos != null) {
-                selectedPhotos.addAll(photos);
-            }
-            Log.d("tag", "img: " + selectedPhotos.get(0));
-            str_goods_pic = selectedPhotos.get(0);
-
-
-            ImageView img_view = new ImageView(this);
-
-            File imgFile = new  File(str_goods_pic);
-
-           //Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-            //img_view.setImageBitmap(myBitmap);
-            str_profile_img = selectedPhotos.get(0);
-
-            Glide.with(Book_now.this).load(new File(selectedPhotos.get(0))).into(img_view);
-            ll.removeAllViews();
-            ll.addView(img_view);
-
-
-           *//* for (int i = 0; i < 3; i++) {
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT);
-
-                LinearLayout layout = new LinearLayout(getApplicationContext());
-                LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT);
-                layout.setOrientation(LinearLayout.VERTICAL);
-                layout.setLayoutParams(params);
-                ImageView img_views = new ImageView(this);
-                //img_views.setImageDrawable(getResources().getDrawable(R.drawable.truck_icon));
-                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                img_views.setImageBitmap(myBitmap);
-
-                layout.addView(img_views);
-                ll.addView(layout);
-            }*//*
-
-
-        }
-
-
-        if (requestCode == INTENT_REQUEST_GET_IMAGES && requestCode == Activity.RESULT_OK ) {
-
-             image_uris = intent.getParcelableArrayListExtra(ImagePickerActivity.EXTRA_IMAGE_URIS);
-            Log.e("tag","choosen");
-            showMedia();
-            //do something
-        }
-
-
-
-
-
-
-
-
-       *//* if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == INTENT_REQUEST_GET_IMAGES || requestCode == INTENT_REQUEST_GET_N_IMAGES) {
-                Parcelable[] parcelableUris = intent.getParcelableArrayExtra(ImagePickerActivity.EXTRA_IMAGE_URIS);
-
-                if (parcelableUris == null) {
-                    return;
-                }
-
-                // Java doesn't allow array casting, this is a little hack
-                Uri[] uris = new Uri[parcelableUris.length];
-                System.arraycopy(parcelableUris, 0, uris, 0, parcelableUris.length);
-
-                if (uris != null) {
-
-                    for (Uri uri : uris) {
-                        Log.e("tag", " uri: " + uri);
-                       String path = uri.toString();
-                        mMedia.add(uri);
-                        mdatas.add(String.valueOf(uri));
-                        //path=String.valueOf(uri);
-                        Log.d("tag", "choosed file" + mMedia);
-                        StringBuilder builder = new StringBuilder();
-                        for (Uri value : mMedia) {
-                            builder.append(value + "#####");
-
-                        }
-                        String text = builder.toString();
-                        imagearray=text.split("\\#\\#\\#\\#\\#");
-
-
-
-
-                    }
-                    showMedia();
-                }
-            }
-        }*//*
-    }*/
 
 
     private void showMedia() {
@@ -846,7 +742,7 @@ public class Book_now extends Activity {
                 //  Log.e("InputStream", "" + e.getLocalizedMessage());
                 jsonStr = "";
             }
-           return jsonStr;
+            return jsonStr;
         }
 
         @Override
@@ -895,61 +791,6 @@ public class Book_now extends Activity {
         }
 
     }
-    /*private void showMedia() {
-        // Remove all views before
-        // adding the new ones.
-        mSelectedImagesContainer.removeAllViews();
-
-
-        Iterator<Uri> iterator = mMedia.iterator();
-        ImageInternalFetcher imageFetcher = new ImageInternalFetcher(this, 500);
-        while (iterator.hasNext()) {
-            Uri uri = iterator.next();
-
-            // showImage(uri);
-            Log.i("tah", " uri: " + uri);
-            if (mMedia.size() >= 1) {
-                mSelectedImagesContainer.setVisibility(View.VISIBLE);
-            }
-
-            View imageHolder = LayoutInflater.from(this).inflate(R.layout.media_layout, null);
-            ImageView thumbnail = (ImageView) imageHolder.findViewById(R.id.media_image);
-
-            if (!uri.toString().contains("content://")) {
-                uri = Uri.fromFile(new File(uri.toString()));
-            }
-
-            imageFetcher.loadImage(uri, thumbnail);
-
-            mSelectedImagesContainer.addView(imageHolder);
-            imageHolder.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mSelectedImagesContainer.removeView(v);
-
-                }
-            });
-
-
-*//*
-            imageHolder.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    Log.i("tah", " uri: " +v);
-                    mSelectedImagesContainer.removeView(v);
-                    return true;
-                }
-            });*//*
-
-
-            int wdpx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250, getResources().getDisplayMetrics());
-            int htpx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250, getResources().getDisplayMetrics());
-            //thumbnail.setLayoutParams(new FrameLayout.LayoutParams(wdpx, htpx));
-            thumbnail.getLayoutParams().width = 250;
-            thumbnail.getLayoutParams().height = 250;
-            thumbnail.setAdjustViewBounds(true);
-        }
-    }*/
 
 
     public class book_now_task extends AsyncTask<String, Void, String> {
@@ -980,8 +821,14 @@ public class Book_now extends Activity {
                     httppost.setHeader("pickup_location", pickup_location);
                     httppost.setHeader("drop_location", drop_location);
                     httppost.setHeader("delivery_address", str_delivery_address);
-                    httppost.setHeader("goods_type", str_goods_type);
-                    httppost.setHeader("truck_type", str_truck_type);
+                    if(str_trk.equals("Truck")){
+                    httppost.setHeader("goods_type", str_goods_type);}
+                    else{
+                        httppost.setHeader("goods_type", "passenger");
+                    }
+                    httppost.setHeader("vehicle_type", str_trk);
+                    httppost.setHeader("vehicle_main_type", str_v_type);
+                    httppost.setHeader("vehicle_sub_type", str_truck_type);
                     httppost.setHeader("description", str_desc);
                     httppost.setHeader("booking_time", str_time);
                     httppost.setHeader("pickup_latitude", pick_lati);
@@ -997,9 +844,12 @@ public class Book_now extends Activity {
                         Log.e("tag0", "img: if " + str_profile_img);
                         MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
 
+                        Log.e("tag", "siz:" + goods_imgs.size());
 
-                        for (Uri images : goods_imgs)
+                        for (Uri images : goods_imgs) {
+                            Log.e("tag", "ss:" + images.toString());
                             entity.addPart("bookinggoods", new FileBody(new File(images.toString()), "image/jpeg"));
+                        }
 
                         httppost.setEntity(entity);
 
@@ -1051,8 +901,14 @@ public class Book_now extends Activity {
                     jsonObject.put("pickup_location", sharedPreferences.getString("pickup", ""));
                     jsonObject.put("drop_location", sharedPreferences.getString("drop", ""));
                     jsonObject.put("delivery_address", str_delivery_address);
-                    jsonObject.put("goods_type", str_goods_type);
-                    jsonObject.put("truck_type", str_truck_type);
+                    if(str_trk.equals("Truck")){
+                    jsonObject.put("goods_type", str_goods_type);}
+                    else{
+                        jsonObject.put("goods_type", "passenger");
+                    }
+                    jsonObject.put("vehicle_type", str_trk);
+                    jsonObject.put("vehicle_main_type", str_v_type);
+                    jsonObject.put("vehicle_sub_type", str_truck_type);
                     jsonObject.put("description", str_desc);
                     jsonObject.put("booking_time", str_time);
                     jsonObject.put("pickup_latitude", pick_lati);

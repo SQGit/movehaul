@@ -323,7 +323,7 @@ public class MyTrips extends AppCompatActivity {
                                 String driver_name = jos.getString("driver_name");
                                 String driver_phone = jos.getString("driver_mobile_pri");
                                 String booking_time = jos.getString("booking_time");
-                                String truck_type = jos.getString("truck_type");
+                                String truck_type = jos.getString("vehicle_sub_type5");
                                 String job_cost = jos.getString("job_cost");
                                 String driver_image = jos.getString("driver_image");
                                 String booking_id = jos.getString("booking_id");

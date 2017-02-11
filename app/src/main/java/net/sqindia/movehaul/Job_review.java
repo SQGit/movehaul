@@ -224,7 +224,7 @@ public class Job_review extends Activity {
                                 String goods_type = jos.getString("goods_type");
                                 String description = jos.getString("description");
                                 String booking_time = jos.getString("booking_time");
-                                String truck_type = jos.getString("truck_type");
+                                String truck_type = jos.getString("vehicle_sub_type");
 
                                 //2016\/12\/08 T 18:12
 
