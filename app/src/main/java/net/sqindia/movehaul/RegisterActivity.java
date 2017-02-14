@@ -26,7 +26,6 @@ import com.sloop.fonts.FontsManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import okhttp3.OkHttpClient;
 
 /**
  * Created by sqindia on 21-10-2016.
@@ -41,7 +40,6 @@ public class RegisterActivity extends Activity {
     EditText et_name, et_email, et_mobile;
     String str_email, str_mobile, str_name;
     TextInputLayout til_name, til_email, til_mobile;
-    OkHttpClient ok_client;
     Snackbar snackbar;
     Config config;
     Typeface tf;

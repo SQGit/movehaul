@@ -316,12 +316,12 @@ public class Book_now extends Activity {
             public void onClick(View view) {
                 TranslateAnimation anim_btn_t2b = new TranslateAnimation(0, 0, 0, height);
                 anim_btn_t2b.setDuration(500);
-                lt_filter_dialog.setVisibility(View.GONE);
+
                 lt_filter_dialog.setAnimation(anim_btn_t2b);
                 et_trucktype.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bus_type, 0, 0, 0);
                 flt_trucktype.setHint("Bus Type");
                 str_trk = "Bus";
-
+                lt_filter_dialog.setVisibility(View.GONE);
                 fl_goods.setVisibility(View.GONE);
                 lt_images.setVisibility(View.GONE);
                 flt_description.setEnabled(true);
@@ -390,23 +390,6 @@ public class Book_now extends Activity {
                 startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
 
 
-                /*com.gun0912.tedpicker.Config config = new com.gun0912.tedpicker.Config();
-                config.setSelectionMin(2);
-                config.setSelectionLimit(4);
-                com.gun0912.tedpicker.ImagePickerActivity.setConfig(config);*/
-
-               /* Config config = new Config();
-                config.setCameraHeight(R.dimen.app_camera_height);
-                config.setToolbarTitleRes(R.string.custom_title);
-                config.setSelectionMin(2);
-                config.setSelectionLimit(4);
-                config.setSelectedBottomHeight(R.dimen.bottom_height);
-                ImagePickerActivity.setConfig(config);*/
-
-               /* Intent intent  = new Intent(Book_now.this, ImagePickerActivity.class);
-                startActivityForResult(intent,INTENT_REQUEST_GET_IMAGES);*/
-
-                // getImagesView();
             }
         });
         btn_back.setOnClickListener(new View.OnClickListener() {
@@ -420,12 +403,7 @@ public class Book_now extends Activity {
         btn_post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //dialog1.show();
 
-
-                //  str_pickup = "pickup loc";
-                //  str_drop = "drop_loc";
-                //   str_desc = "desc...";
 
                 if (!(et_delivery_address.getText().toString().trim().isEmpty())) {
                     if (!(et_trucktype.getText().toString().trim().isEmpty()) && !et_trucktype.getText().toString().contains("Bus Type") && !et_trucktype.getText().toString().contains("Truck Type")) {
@@ -786,6 +764,9 @@ public class Book_now extends Activity {
                     }
                 } else {
                 }
+                Log.e("tag","trk_siz_img"+ar_truck_imgs.size());
+                Log.e("tag","bus_siz"+ar_truck_type1.size());
+                Log.e("tag","bus_siz_img"+ar_truck_imgs1.size());
 
             } catch (JSONException e) {
                 // TODO Auto-generated catch block
@@ -849,9 +830,14 @@ public class Book_now extends Activity {
 
                         Log.e("tag", "siz:" + goods_imgs.size());
 
-                        for (Uri images : goods_imgs) {
+                       /* for (Uri images : goods_imgs) {
                             Log.e("tag", "ss:" + images.toString());
                             entity.addPart("bookinggoods", new FileBody(new File(images.toString()), "image/jpeg"));
+                        }*/
+
+                        for(int i =0;i<=1;i++) {
+
+                            entity.addPart("bookinggoods", new FileBody(new File(goods_imgs.get(i).toString()), "image/jpeg"));
                         }
 
                         httppost.setEntity(entity);

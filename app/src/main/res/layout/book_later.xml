@@ -318,6 +318,11 @@
                                     android:orientation="vertical"></LinearLayout>
                             </FrameLayout>
 
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:id="@+id/layout_photos"
+                                android:orientation="vertical"
+                                android:layout_height="wrap_content">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -326,10 +331,7 @@
                                 android:layout_marginTop="@dimen/_5sdp"
                                 android:text="@string/underline"
                                 android:textColor="#F65F52"
-
                                 android:textSize="@dimen/_12sdp" />
-
-
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_70sdp"
@@ -364,6 +366,7 @@
                                     android:background="@drawable/camera_icon"
                                     android:textColor="#000000" />
 
+                            </LinearLayout>
                             </LinearLayout>
 
                             <android.support.design.widget.TextInputLayout
@@ -450,6 +453,7 @@
             android:layout_height="match_parent"
             android:background="#edffffff"
             android:layout_marginTop="@dimen/_15sdp"
+            android:visibility="gone"
             android:orientation="vertical">
 
 

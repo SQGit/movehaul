@@ -58,12 +58,16 @@ public class HttpUtils {
             }
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+            Log.e("tag","er:"+e.toString());
         } catch (ClientProtocolException e) {
             e.printStackTrace();
+            Log.e("tag","er:"+e.toString());
         } catch (UnknownHostException e) {
             e.printStackTrace();
+            Log.e("tag","er:"+e.toString());
         } catch (IOException e) {
             e.printStackTrace();
+            Log.e("tag","er:"+e.toString());
         }
         return "";
     }

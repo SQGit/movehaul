@@ -100,8 +100,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import me.iwf.photopicker.PhotoPickerActivity;
-import me.iwf.photopicker.utils.PhotoPickerIntent;
 
 
 public class DashboardNavigation extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, com.google.android.gms.location.LocationListener, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {

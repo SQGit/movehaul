@@ -287,6 +287,7 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
         protected void onPreExecute() {
             super.onPreExecute();
             Log.e("tag", "reg_preexe");
+            mProgressDialog.show();
         }
 
         @Override
@@ -324,6 +325,8 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+
+            mProgressDialog.dismiss();
             Log.e("tag", "tag" + s);
 
 
