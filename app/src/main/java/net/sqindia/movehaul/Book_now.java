@@ -253,7 +253,7 @@ public class Book_now extends Activity {
 
         Calendar c = Calendar.getInstance();
         // System.out.println("Current time => "+c.getTime());
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         String formattedDate = df.format(c.getTime());
         // formattedDate have current date/time
         // Toast.makeText(this, formattedDate, Toast.LENGTH_SHORT).show();
@@ -830,15 +830,14 @@ public class Book_now extends Activity {
 
                         Log.e("tag", "siz:" + goods_imgs.size());
 
-                       /* for (Uri images : goods_imgs) {
-                            Log.e("tag", "ss:" + images.toString());
+                        for (Uri images : goods_imgs)
                             entity.addPart("bookinggoods", new FileBody(new File(images.toString()), "image/jpeg"));
-                        }*/
 
-                        for(int i =0;i<=1;i++) {
+
+                      /*  for(int i =0;i<=1;i++) {
 
                             entity.addPart("bookinggoods", new FileBody(new File(goods_imgs.get(i).toString()), "image/jpeg"));
-                        }
+                        }*/
 
                         httppost.setEntity(entity);
 

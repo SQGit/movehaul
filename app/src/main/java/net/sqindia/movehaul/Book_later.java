@@ -386,6 +386,7 @@ public class Book_later extends Activity {
                                         str_truck_type = et_truckType.getText().toString();
                                         str_desc = et_description.getText().toString();
                                         str_time = date + " T " + time;
+                                        Log.e("tag","e:"+str_time);
                                         new book_later_task().execute();
 
                                     }
@@ -431,7 +432,7 @@ public class Book_later extends Activity {
 
                         Log.e("tag", "time:" + selectedHour + selectedMinute);
 
-                        time = selectedHour + ":" + selectedMinute;
+                        time = selectedHour + ":" + selectedMinute + ":00";
                         updateTime(selectedHour, selectedMinute);
                     }
                 }, hour, minute, true);//Yes 24 hour time
@@ -898,12 +899,13 @@ public class Book_later extends Activity {
                         MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
 
 
-                        //for (Uri images : goods_imgs)
+                        for (Uri images : goods_imgs)
+                            entity.addPart("bookinggoods", new FileBody(new File(images.toString()), "image/jpeg"));
 
-                        for(int i =0;i<=1;i++) {
+                        /*for(int i =0;i<=1;i++) {
 
                             entity.addPart("bookinggoods", new FileBody(new File(goods_imgs.get(i).toString()), "image/jpeg"));
-                        }
+                        }*/
 
                         httppost.setEntity(entity);
 
