@@ -200,8 +200,12 @@ public class Dialog_VehicleType extends Dialog {
                 ArrayList<String> ar_truck_types = new ArrayList<String>(listToSet);
 
                 HashSet<String> listToSetimg = new HashSet<String>(ar_truck_imgs);
+                Log.e("tag","ss"+listToSetimg.size());
                 ar_truck_iimgs = new ArrayList<String>(listToSetimg);
-
+                Log.e("tag","im"+ar_truck_iimgs.size());
+                for(int i=0;i<ar_truck_iimgs.size();i++){
+                    Log.e("tag","aa:"+ar_truck_iimgs.get(i));
+                }
                 lview_cont = (ListView) view.findViewById(R.id.lview);
                 adapter1 = new ListAdapter(activity.getApplicationContext(), R.layout.dialog_truck_type, ar_truck_types,0);
                 lview_cont.setAdapter(adapter1);
@@ -271,7 +275,7 @@ public class Dialog_VehicleType extends Dialog {
         }
 
 
-        public View getCustomView(final int posi, View row, ViewGroup parent) {
+        public View getCustomView(int posi, View row, ViewGroup parent) {
 
             Typeface tf = Typeface.createFromAsset(cc.getAssets(), "fonts/lato.ttf");
             LayoutInflater inflater = (LayoutInflater) cc.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -285,7 +289,8 @@ public class Dialog_VehicleType extends Dialog {
 
             if(page==0) {
                 iv_truck_ico = (ImageView) arow.findViewById(R.id.image_icon);
-                iv_truck_ico.setImageDrawable(cc.getResources().getDrawable(R.drawable.truck_1));
+                //iv_truck_ico.setImageDrawable(cc.getResources().getDrawable(R.drawable.truck_1));
+                Log.e("tag", posi+" w: "+Config.WEB_URL+"vehicle_types/"+ar_truck_iimgs.get(posi));
                 Glide.with(cc).load(Config.WEB_URL+"vehicle_types/"+ar_truck_iimgs.get(posi)).into(iv_truck_ico);
 
             }
@@ -296,11 +301,11 @@ public class Dialog_VehicleType extends Dialog {
 
             if(page ==0){
                 label.setText(data_lists.get(posi));
-              //  Log.e("tag", "s: " + data_lists.get(posi));
+                Log.e("tag", "s: " + data_lists.get(posi));
             }
             else{
                 label.setText(data_lists.get(posi));
-              //  Log.e("tag", "sd: " + data_lists.get(posi));
+                Log.e("tag", "sd: " + data_lists.get(posi));
             }
 
             if( posi == data_lists.size()-1)
@@ -332,7 +337,7 @@ public class Dialog_VehicleType extends Dialog {
                         handler.postDelayed(runnable, 500);
                         image = (ImageView) arow.findViewById(R.id.image);
                         image.setImageDrawable(cc.getResources().getDrawable(R.mipmap.select_tick));
-                        Log.e("tag","po: "+posi);
+                       // Log.e("tag","po: "+posi);
                     }
 
 

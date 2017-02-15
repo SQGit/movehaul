@@ -295,6 +295,9 @@ public class Book_now extends Activity {
                     ar_truck_imgs = ar_truck_imgs1;
                     Log.e("tag","siz"+ar_truck_type.size());
                     Log.e("tag","si2z"+ar_truck_type1.size());*/
+
+
+
                     truck_type(ar_truck_type1, hash_subtype1, hash_truck_imgs1, ar_truck_sstype1, ar_truck_imgs1);
 
                 } else {
