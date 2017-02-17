@@ -129,7 +129,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Drop"
+                        android:text="Drop Off"
                         android:textColor="@color/redColor"
                         android:textSize="@dimen/_12sdp" />
 
@@ -173,7 +173,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Delivery Address"
+                        android:text="Nearby Landmark"
+                        android:id="@+id/textview_da_header"
                         android:textColor="@color/redColor"
                         android:textSize="@dimen/_12sdp" />
 
@@ -314,7 +315,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Truck Type"
+                        android:text="Vehicle Type"
                         android:textColor="@color/redColor"
                         android:textSize="@dimen/_12sdp" />
 
@@ -333,6 +334,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:id="@+id/image_type"
                     android:padding="@dimen/_10sdp"
                     android:src="@drawable/select_truck_type" />
             </LinearLayout>

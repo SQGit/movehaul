@@ -110,13 +110,11 @@ public class Book_later extends Activity {
     String date, time;
     FrameLayout fl_goods;
     LinearLayout lt_images;
-    String str_delivery_address,str_v_type, str_trk, str_drop, str_goods_type, str_truck_type, str_desc, str_goods_pic, str_profile_img, book_time;
+    String str_delivery_address,str_v_type,  str_drop, str_goods_type, str_truck_type, str_desc, str_goods_pic, str_profile_img, book_time;
     ArrayList<String> selectedPhotos = new ArrayList<>();
     HashMap<String, String> hash_subtype1;
     HashMap<String, String> hash_truck_imgs1 = new HashMap<String, String>();
-
-    ImageView iv_truck, iv_bus;
-    LinearLayout lt_filter_dialog;
+    String vec_type;
 
     private ViewGroup mSelectedImagesContainer;
     private DatePickerDialog.OnDateSetListener pickerListener1 = new DatePickerDialog.OnDateSetListener() {
@@ -133,12 +131,7 @@ public class Book_later extends Activity {
         }
     };
 
-    public static int getDeviceHeight(Context context) {
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        int height = display.getHeight();
-        return height;
-    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,8 +165,10 @@ public class Book_later extends Activity {
         flt_deliveryAddress = (TextInputLayout) findViewById(R.id.float_deliveryaddress);
         flt_description = (TextInputLayout) findViewById(R.id.float_description);
 
-        iv_truck = (ImageView) findViewById(R.id.image_truck);
-        iv_bus = (ImageView) findViewById(R.id.image_bus);
+
+        Intent get_data = getIntent();
+
+        vec_type = get_data.getStringExtra("vec_type");
 
 
         Typeface type = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
@@ -284,7 +279,7 @@ public class Book_later extends Activity {
             public void onClick(View view) {
 
 
-                if (str_trk.equals("Bus")) {
+                if (vec_type.equals("Bus")) {
                    /* ar_truck_imgs.clear();
                     ar_truck_type.clear();
                     hash_subtype.clear();
@@ -310,49 +305,29 @@ public class Book_later extends Activity {
         });
 
 
-        final int height = getDeviceHeight(Book_later.this);
-        lt_filter_dialog = (LinearLayout) findViewById(R.id.filter_dialog);
-
-        lt_filter_dialog.setVisibility(View.VISIBLE);
-
-        iv_bus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                TranslateAnimation anim_btn_t2b = new TranslateAnimation(0, 0, 0, height);
-                anim_btn_t2b.setDuration(500);
-                lt_filter_dialog.setAnimation(anim_btn_t2b);
-                et_truckType.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bus_type, 0, 0, 0);
-                flt_truckType.setHint("Bus Type");
-                str_trk = "Bus";
-
-                lt_filter_dialog.setVisibility(View.GONE);
-                fl_goods.setVisibility(View.GONE);
-                lt_images.setVisibility(View.GONE);
-                flt_description.setEnabled(true);
-                btn_post.setEnabled(true);
-
-            }
-        });
 
 
-        iv_truck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                lt_filter_dialog.setVisibility(View.GONE);
-                TranslateAnimation anim_btn_t2b = new TranslateAnimation(0, 0, 0, height);
-                anim_btn_t2b.setDuration(500);
-                lt_filter_dialog.setAnimation(anim_btn_t2b);
-                et_truckType.setCompoundDrawablesWithIntrinsicBounds(R.drawable.select_truck_type, 0, 0, 0);
-                flt_truckType.setHint("Truck Type");
-                str_trk = "Truck";
+        if (vec_type.equals("Bus")) {
+            et_truckType.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bus_type, 0, 0, 0);
+            flt_truckType.setHint("Bus Type");
 
-                lt_filter_dialog.setVisibility(View.GONE);
-                fl_goods.setVisibility(View.VISIBLE);
-                lt_images.setVisibility(View.VISIBLE);
-                flt_description.setEnabled(true);
-                btn_post.setEnabled(true);
-            }
-        });
+            fl_goods.setVisibility(View.GONE);
+            lt_images.setVisibility(View.GONE);
+            flt_description.setEnabled(true);
+            btn_post.setEnabled(true);
+        }
+
+
+
+        if (vec_type.equals("Bus")) {
+            et_truckType.setCompoundDrawablesWithIntrinsicBounds(R.drawable.select_truck_type, 0, 0, 0);
+            flt_truckType.setHint("Truck Type");
+
+            fl_goods.setVisibility(View.VISIBLE);
+            lt_images.setVisibility(View.VISIBLE);
+            flt_description.setEnabled(true);
+            btn_post.setEnabled(true);
+        }
 
 
         btn_post.setOnClickListener(new View.OnClickListener() {
@@ -369,7 +344,7 @@ public class Book_later extends Activity {
                                     if (!(et_goodsType.getText().toString().trim().isEmpty())) {
 
 
-                                        if (str_trk.equals("Truck")) {
+                                        if (vec_type.equals("Truck")) {
                                             str_delivery_address = et_deliveryAddress.getText().toString();
                                             str_goods_type = et_goodsType.getText().toString();
                                             str_truck_type = et_truckType.getText().toString();
@@ -398,7 +373,7 @@ public class Book_later extends Activity {
                                 }
                             } else {
 
-                                Toast.makeText(getApplicationContext(), "Choose " + str_trk + " Type", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Choose " + vec_type + " Type", Toast.LENGTH_LONG).show();
                             }
 
 
@@ -874,13 +849,13 @@ public class Book_later extends Activity {
                     httppost.setHeader("drop_location", drop_location);
                     httppost.setHeader("delivery_address", str_delivery_address);
 
-                    if(str_trk.equals("Truck")){
+                    if(vec_type.equals("Truck")){
                         httppost.setHeader("goods_type", str_goods_type);}
                     else{
                         httppost.setHeader("goods_type", "passenger");
                     }
                     //httppost.setHeader("truck_type", str_truck_type);
-                    httppost.setHeader("vehicle_type", str_trk);
+                    httppost.setHeader("vehicle_type", vec_type);
                     httppost.setHeader("vehicle_main_type", str_v_type);
                     httppost.setHeader("vehicle_sub_type", str_truck_type);
                     httppost.setHeader("description", str_desc);
@@ -957,13 +932,13 @@ public class Book_later extends Activity {
                     jsonObject.put("pickup_location", sharedPreferences.getString("pickup", ""));
                     jsonObject.put("drop_location", sharedPreferences.getString("drop", ""));
                     jsonObject.put("delivery_address", str_delivery_address);
-                    if(str_trk.equals("Truck")){
+                    if(vec_type.equals("Truck")){
                         jsonObject.put("goods_type", str_goods_type);}
                     else{
                         jsonObject.put("goods_type", "passenger");
                     }
                  //   jsonObject.put("truck_type", str_truck_type);
-                    jsonObject.put("vehicle_type", str_trk);
+                    jsonObject.put("vehicle_type", vec_type);
                     jsonObject.put("vehicle_main_type", str_v_type);
                     jsonObject.put("vehicle_sub_type", str_truck_type);
 

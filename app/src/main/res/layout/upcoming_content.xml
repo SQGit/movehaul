@@ -6,7 +6,7 @@
     android:descendantFocusability="blocksDescendants"
     android:orientation="vertical"
     android:paddingBottom="@dimen/_5sdp"
-android:visibility="gone"
+    android:visibility="gone"
 
     >
 
@@ -96,6 +96,7 @@ android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_1sdp"
                 android:focusable="false"
+                android:id="@+id/image_bg"
                 android:src="@drawable/truck_ad" />
 
 
@@ -207,8 +208,8 @@ android:visibility="gone"
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imageview_content_profile"
-                    android:layout_width="@dimen/_35sdp"
-                    android:layout_height="@dimen/_35sdp"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
                     android:layout_gravity="center"
                     android:focusable="false"
                     android:padding="@dimen/_2sdp"

@@ -447,21 +447,7 @@
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/filter_dialog"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#edffffff"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:visibility="gone"
-            android:orientation="vertical">
 
-
-            <include
-
-                layout="@layout/dialog_choose_type" />
-
-        </LinearLayout>
 
     </FrameLayout>
 </LinearLayout>

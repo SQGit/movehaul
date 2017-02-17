@@ -95,7 +95,6 @@
                                     android:layout_height="wrap_content"
                                     android:background="@null"
                                     android:drawableLeft="@drawable/delivery_addr"
-                                    android:hint="Delivery Address"
                                     android:imeOptions="actionDone"
                                     android:inputType="text"
                                     android:maxLines="1"
@@ -325,21 +324,7 @@
         </LinearLayout>
 
 
-        <LinearLayout
-            android:id="@+id/filter_dialog"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#ffffff"
-            android:visibility="gone"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:orientation="vertical">
 
-
-            <include
-
-                layout="@layout/dialog_choose_type" />
-
-        </LinearLayout>
 
     </FrameLayout>
 

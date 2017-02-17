@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 
 import com.ramotion.foldingcell.FoldingCell;
 import com.rey.material.widget.LinearLayout;
@@ -53,6 +54,7 @@ public class MyTrips extends AppCompatActivity {
     ArrayList<MV_Datas> ar_job_history;
     ProgressDialog mProgressDialog;
     android.widget.TextView tv_cr_date, tv_cr_time, tv_cr_pickup, tv_cr_drop, tv_cr_tr_type, tv_cr_dr_name, tv_cr_dr_phone, tv_cr_job_cost;
+    ImageView iv_type;
     ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
 
         @Override
@@ -115,6 +117,8 @@ public class MyTrips extends AppCompatActivity {
         tiv = (TabIndicatorView) findViewById(R.id.tab_indicator);
 
         tf = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
+
+
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MyTrips.this);
         editor = sharedPreferences.edit();
@@ -190,6 +194,8 @@ public class MyTrips extends AppCompatActivity {
                 tv_cr_dr_phone = (android.widget.TextView) view.findViewById(R.id.cr_dr_phone);
                 tv_cr_job_cost = (android.widget.TextView) view.findViewById(R.id.cr_job_cost);
 
+                iv_type  = (ImageView) view.findViewById(R.id.imageView5);
+
 
                 tv_cr_date.setText(mv_datas.getDate());
                 tv_cr_time.setText(mv_datas.getTime());
@@ -199,6 +205,15 @@ public class MyTrips extends AppCompatActivity {
                 tv_cr_dr_name.setText(mv_datas.getName());
                 tv_cr_dr_phone.setText(mv_datas.getDriver_number());
                 tv_cr_job_cost.setText(mv_datas.getJob_cost());
+
+                if(mv_datas.getVec_type().equals("Bus")){
+                    iv_type.setImageResource(R.drawable.bus_type);
+                }
+                else{
+                    iv_type.setImageResource(R.drawable.select_truck_type);
+                }
+
+
 
 
             } else if (position == 1) {
@@ -324,6 +339,7 @@ public class MyTrips extends AppCompatActivity {
                                 String driver_phone = jos.getString("driver_mobile_pri");
                                 String booking_time = jos.getString("booking_time");
                                 String truck_type = jos.getString("vehicle_sub_type");
+                                String vehicle_type = jos.getString("vehicle_type");
                                 String job_cost = jos.getString("job_cost");
                                 String driver_image = jos.getString("driver_image");
                                 String booking_id = jos.getString("booking_id");
@@ -347,6 +363,7 @@ public class MyTrips extends AppCompatActivity {
                                 mv_datas.setDrop(drop_location);
                                 mv_datas.setJob_cost(job_cost);
                                 mv_datas.setBooking_id(booking_id);
+                                mv_datas.setVec_type(vehicle_type);
 
                                 ar_job_history.add(mv_datas);
 

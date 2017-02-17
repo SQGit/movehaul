@@ -52,18 +52,20 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
     private View.OnClickListener defaultRequestBtnClickListener;
     private int[] layouts;
     private MyViewPagerAdapter myViewPagerAdapter;
-    com.rey.material.widget.TextView tv_title_truck,tv_title_driver_name,tv_title_bidding,        tv_content_bidding,tv_content_driver_name,tv_content_damage_control,tv_content_truck;
+    com.rey.material.widget.TextView tv_title_truck,tv_title_truck_txt,tv_title_driver_name,tv_title_bidding,        tv_content_bidding,tv_content_driver_name,tv_content_damage_control,tv_content_truck;
     MV_Datas mv_datas;
     String tr_front,tr_side,tr_back;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     String bidding;
+    int doid ;
 
-    public DriversListAdapter(Context context, Activity acti, ArrayList<MV_Datas> objects) {
+    public DriversListAdapter(Context context, Activity acti, ArrayList<MV_Datas> objects, int ss) {
         super(context, 0, objects);
         this.act = acti;
         this.context = context;
         this.ar_drv_list = objects;
+        this.doid = ss;
 
     }
 
@@ -113,11 +115,18 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
             cell.fold(true);
         }
 
-        layouts = new int[]{
-                R.layout.truck_side,
-                R.layout.truck_front,
-                R.layout.truck_back,};
+        if(doid == 0){
+            layouts = new int[]{
+                    R.layout.truck_front,
+                    R.layout.truck_back,};
+        }
+        else {
 
+            layouts = new int[]{
+                    R.layout.truck_front,
+                    R.layout.truck_back,
+                    R.layout.truck_side};
+        }
 
 
 
@@ -149,6 +158,14 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
         tv_title_bidding = (com.rey.material.widget.TextView) cell.findViewById(R.id.textview_title_bidding);
         tv_title_truck = (com.rey.material.widget.TextView) cell.findViewById(R.id.textview_title_truck_type);
         tv_title_driver_name = (com.rey.material.widget.TextView) cell.findViewById(R.id.textview_title_driver_name);
+        tv_title_truck_txt = (com.rey.material.widget.TextView) cell.findViewById(R.id.textview_title_truck_type_txt);
+
+        if(doid == 0){
+            tv_title_truck_txt.setText("Bus");
+        }
+        else{
+            tv_title_truck_txt.setText("Truck");
+        }
 
 
 
@@ -156,6 +173,7 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
         tv_content_driver_name = (com.rey.material.widget.TextView) cell.findViewById(R.id.textview_content_driver_name);
         tv_content_damage_control = (com.rey.material.widget.TextView) cell.findViewById(R.id.textview_content_damage_control);
         tv_content_truck = (com.rey.material.widget.TextView) cell.findViewById(R.id.textview_content_truck_type);
+
         iv_driver_image = (ImageView) cell.findViewById(R.id.driver_image);
 
 
@@ -192,9 +210,21 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
             public void onClick(View view) {
                 Log.e("tag", "clik");
                 dialog2.show();
-                tr_front = mv_datas.getTruck_front();
-                tr_back  = mv_datas.getTruck_back();
-                tr_side  = mv_datas.getTruck_side();
+
+
+
+                if(doid ==0) {
+                    tr_front = mv_datas.getTruck_front();
+                    tr_back = mv_datas.getTruck_back();
+                    Log.e("tag","bb:|+"+tr_back);
+                }
+                else{
+                    tr_front = mv_datas.getTruck_front();
+                    tr_back = mv_datas.getTruck_back();
+                    tr_side  = mv_datas.getTruck_side();
+                }
+
+
             }
         });
 
@@ -229,13 +259,23 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
             @Override
             public void onClick(View view) {
 
-                if (viewPager.getCurrentItem() == 0) {
-                    viewPager.setCurrentItem(2);
-                } else if (viewPager.getCurrentItem() == 1) {
-                    viewPager.setCurrentItem(0);
-                } else {
-                    viewPager.setCurrentItem(1);
+                if(doid ==0) {
+                    if (viewPager.getCurrentItem() == 0) {
+                        viewPager.setCurrentItem(1);
+                    }  else {
+                        viewPager.setCurrentItem(0);
+                    }
                 }
+                else{
+                    if (viewPager.getCurrentItem() == 0) {
+                        viewPager.setCurrentItem(2);
+                    } else if (viewPager.getCurrentItem() == 1) {
+                        viewPager.setCurrentItem(0);
+                    } else {
+                        viewPager.setCurrentItem(1);
+                    }
+                }
+
             }
         });
 
@@ -243,12 +283,21 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
             @Override
             public void onClick(View view) {
 
-                if (viewPager.getCurrentItem() == 0) {
-                    viewPager.setCurrentItem(1);
-                } else if (viewPager.getCurrentItem() == 1) {
-                    viewPager.setCurrentItem(2);
-                } else {
-                    viewPager.setCurrentItem(0);
+                if(doid ==0) {
+                    if (viewPager.getCurrentItem() == 0) {
+                        viewPager.setCurrentItem(1);
+                    }  else {
+                        viewPager.setCurrentItem(0);
+                    }
+                }
+                else{
+                    if (viewPager.getCurrentItem() == 0) {
+                        viewPager.setCurrentItem(1);
+                    } else if (viewPager.getCurrentItem() == 1) {
+                        viewPager.setCurrentItem(2);
+                    } else {
+                        viewPager.setCurrentItem(0);
+                    }
                 }
 
             }
@@ -354,15 +403,29 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
             View view = layoutInflater.inflate(layouts[position], container, false);
             container.addView(view);
 
-            if (position == 0) {
-                ImageView iv_trk = (ImageView) view.findViewById(R.id.image);
-                Glide.with(act).load(Config.WEB_URL+"vehicle_details/"+tr_front).into(iv_trk);
-            } else if (position == 1) {
-                ImageView iv_trk = (ImageView) view.findViewById(R.id.image);
-                Glide.with(act).load(Config.WEB_URL+"vehicle_details/"+tr_side).into(iv_trk);
-            } else {
-                ImageView iv_trk = (ImageView) view.findViewById(R.id.image);
-                Glide.with(act).load(Config.WEB_URL+"vehicle_details/"+tr_back).into(iv_trk);
+            if(doid ==1) {
+                if (position == 0) {
+                    ImageView iv_trk = (ImageView) view.findViewById(R.id.image);
+                    Glide.with(act).load(Config.WEB_URL + "vehicle_details/" + tr_front).into(iv_trk);
+                } else if (position == 1) {
+                    ImageView iv_trk = (ImageView) view.findViewById(R.id.image);
+                    Glide.with(act).load(Config.WEB_URL + "vehicle_details/" + tr_side).into(iv_trk);
+                } else {
+                    ImageView iv_trk = (ImageView) view.findViewById(R.id.image);
+                    Glide.with(act).load(Config.WEB_URL + "vehicle_details/" + tr_back).into(iv_trk);
+                }
+            }
+            else{
+
+                if (position == 0) {
+                    ImageView iv_trk = (ImageView) view.findViewById(R.id.image);
+                    Glide.with(act).load(Config.WEB_URL + "vehicle_details/" + tr_front).into(iv_trk);
+                }  else {
+                    ImageView iv_trk = (ImageView) view.findViewById(R.id.image);
+                    Glide.with(act).load(Config.WEB_URL + "vehicle_details/" + tr_back).into(iv_trk);
+                }
+
+
             }
 
             return view;

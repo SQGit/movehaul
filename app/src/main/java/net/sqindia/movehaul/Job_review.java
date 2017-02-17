@@ -1,7 +1,6 @@
 package net.sqindia.movehaul;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +14,7 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rey.material.widget.Button;
@@ -34,7 +34,7 @@ import java.util.concurrent.TimeUnit;
 public class Job_review extends Activity {
     LinearLayout btn_back;
     Button btn_continue;
-    TextView tv_timer;
+    TextView tv_timer,tv_da_header;
     public Vibrator vibrator;
 
     Snackbar snackbar;
@@ -43,6 +43,8 @@ public class Job_review extends Activity {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     String id,token;
+    String vec_type;
+    ImageView iv_type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,9 @@ public class Job_review extends Activity {
         tv_date = (TextView) findViewById(R.id.textview_date);
         tv_time = (TextView) findViewById(R.id.textview_time);
         tv_truck = (TextView) findViewById(R.id.textview_truck);
+        iv_type  = (ImageView) findViewById(R.id.image_type);
+
+        tv_da_header = (TextView) findViewById(R.id.textview_da_header);
 
 
         snackbar = Snackbar
@@ -129,6 +134,7 @@ public class Job_review extends Activity {
             public void onClick(View view) {
                 //vibrator.cancel();
                 Intent i = new Intent(Job_review.this,DriversList.class);
+                i.putExtra("vec_type",vec_type);
                 startActivity(i);
                 //finish();
 
@@ -138,8 +144,8 @@ public class Job_review extends Activity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               /* Intent i = new Intent(Job_review.this,DashboardNavigation.class);
-                startActivity(i);*/
+                Intent i = new Intent(Job_review.this,DashboardNavigation.class);
+                startActivity(i);
                 finish();
             }
         });
@@ -159,9 +165,9 @@ public class Job_review extends Activity {
     }
     @Override
     public void onBackPressed() {
-       /* super.onBackPressed();
+       // super.onBackPressed();
         Intent i = new Intent(Job_review.this,DashboardNavigation.class);
-        startActivity(i);*/
+        startActivity(i);
         finish();
     }
 
@@ -224,9 +230,10 @@ public class Job_review extends Activity {
                                 String goods_type = jos.getString("goods_type");
                                 String description = jos.getString("description");
                                 String booking_time = jos.getString("booking_time");
-                                String truck_type = jos.getString("vehicle_sub_type");
+                                vec_type = jos.getString("vehicle_type");
+                                String vehicle_main_type = jos.getString("vehicle_main_type");
+                                String vehicle_sub_type = jos.getString("vehicle_sub_type");
 
-                                //2016\/12\/08 T 18:12
 
                                 String[] parts = booking_time.trim().split("T");
                                 String part1 = parts[0]; // 004
@@ -236,12 +243,23 @@ public class Job_review extends Activity {
                                 Log.e("tag","2st"+part2);
                                 Log.e("tag","2stasd"+goods_type);
 
+                                if(vec_type.equals("Bus")){
+                                    tv_da_header.setText("Nearby Landmark");
+                                    iv_type.setImageResource(R.drawable.bus_type);
+                                    //iv_type.setBackgroundResource(R.drawable.bus_type);
+                                }
+                                else{
+                                    tv_da_header.setText("Nearby Landmark");
+                                    iv_type.setImageResource(R.drawable.select_truck_type);
+                                   // iv_type.setBackgroundResource(R.drawable.select_truck_type);
+                                }
+
                                 tv_pickup.setText(pickup_location);
                                 tv_drop.setText(drop_location);
                                 tv_delivery.setText(delivery_address);
                                 tv_date.setText(part1);
                                 tv_time.setText(part2);
-                                tv_truck.setText(truck_type);
+                                tv_truck.setText(vehicle_main_type+" - "+vehicle_sub_type);
 
 
 

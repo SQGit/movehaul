@@ -26,7 +26,16 @@ public class MV_Datas {
     String job_cost;
     String pickup;
     String drop;
+    String vec_type;
 
+
+    public String getVec_type() {
+        return vec_type;
+    }
+
+    public void setVec_type(String vec_type) {
+        this.vec_type = vec_type;
+    }
 
     public String getDrop() {
         return drop;

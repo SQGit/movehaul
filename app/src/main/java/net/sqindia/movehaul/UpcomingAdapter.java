@@ -34,7 +34,7 @@ public class UpcomingAdapter extends ArrayAdapter<MV_Datas> {
     MV_Datas mv_datas;
     TextView tv_title_date,tv_title_booking_id,tv_title_pickup,tv_title_drop;
     TextView tv_content_booking_id,tv_content_cost,tv_content_pickup,tv_content_drop,tv_content_dr_name,tv_content_dr_phone,tv_content_date,tv_content_time;
-    ImageView iv_content_prof;
+    ImageView iv_content_prof,iv_content_bg;
 
 
     public UpcomingAdapter(Context context,Activity acti, ArrayList<MV_Datas> objects) {
@@ -81,11 +81,12 @@ public class UpcomingAdapter extends ArrayAdapter<MV_Datas> {
             tv_content_cost = (TextView) cell.findViewById(R.id.textview_content_cost);
             tv_content_pickup = (TextView) cell.findViewById(R.id.textview_content_pickup);
             tv_content_drop = (TextView) cell.findViewById(R.id.textview_content_drop);
-            tv_content_dr_name = (TextView) cell.findViewById(R.id.textview_content_driver_name);
+            tv_content_dr_name = (TextView) cell.findViewById(R.id.textview_content_name);
             tv_content_dr_phone = (TextView) cell.findViewById(R.id.textview_content_phone);
             tv_content_date = (TextView) cell.findViewById(R.id.textview_content_date);
             tv_content_time = (TextView) cell.findViewById(R.id.textview_content_time);
             iv_content_prof = (ImageView) cell.findViewById(R.id.imageview_content_profile);
+            iv_content_bg = (ImageView) cell.findViewById(R.id.image_bg);
 
             cell.setTag(viewHolder);
         } else {
@@ -116,15 +117,22 @@ public class UpcomingAdapter extends ArrayAdapter<MV_Datas> {
         tv_content_cost.setText(mv_datas.getJob_cost());
         tv_content_pickup.setText(mv_datas.getPickup());
         tv_content_drop.setText(mv_datas.getDrop());
-//        tv_content_dr_name.setText(mv_datas.getName());
+        tv_content_dr_name.setText(mv_datas.getName());
         tv_content_dr_phone.setText(mv_datas.getDriver_number());
         tv_content_date.setText(mv_datas.getDate());
         tv_content_time.setText(mv_datas.getTime());
 
+        if(mv_datas.getVec_type().equals("Bus")){
+            iv_content_bg.setImageResource(R.drawable.bus_profile_bg);
+        }
+        else{
+            iv_content_bg.setImageResource(R.drawable.truck_ad);
+        }
+
         Log.e("tag","d: "+mv_datas.getDriver_image());
         Log.e("tag","d: "+mv_datas.getName());
 
-        Glide.with(act).load(Config.WEB_URL+"customer_details/"+mv_datas.getDriver_image()).into(iv_content_prof);
+        Glide.with(act).load(Config.WEB_URL+"driver_details/"+mv_datas.getDriver_image()).into(iv_content_prof);
 
 
 

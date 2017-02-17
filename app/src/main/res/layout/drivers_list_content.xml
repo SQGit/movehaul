@@ -131,7 +131,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/_3sdp"
-                        android:text="Truck"
+                        android:text="Vehicle Type"
                         android:textColor="@color/redColor"
                         android:textSize="@dimen/_13sdp" />
 

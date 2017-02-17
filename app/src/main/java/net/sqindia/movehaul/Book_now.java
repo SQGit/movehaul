@@ -18,14 +18,11 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
-import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -60,7 +57,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.HashSet;
 
 /**
  * Created by sqindia on 25-10-2016.
@@ -68,11 +64,9 @@ import java.util.HashSet;
 
 public class Book_now extends Activity {
 
-    private static final int REQUEST_VEC_FRONT = 1;
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
-    private static final int INTENT_REQUEST_GET_N_IMAGES = 14;
     public int i;
-    String truck, goods, id, token, str_time;
+    String id, token, str_time;
     LinearLayout lt_goodsType, lt_truckType;
     EditText et_delivery_address, et_goodstype, et_trucktype, et_description;
     TextInputLayout flt_delivery_address, flt_goodstype, flt_trucktype, flt_description;
@@ -80,12 +74,9 @@ public class Book_now extends Activity {
     Button btn_post, btn_ok;
     Dialog dialog1;
     ImageView btn_close;
-    TextView jobtv1, jobtv2, jobtv3, jobtv4, msg, tv_snack;
+    TextView jobtv1, jobtv2, jobtv3, jobtv4, tv_snack;
     String pickup_location, drop_location, pick_lati, pick_long, drop_lati, drop_long;
     ArrayList<String> mdatas;
-    HashSet<Uri> mMedia = new HashSet<Uri>();
-    ArrayList<Uri> image_path = new ArrayList<>();
-    String[] imagearray;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     Snackbar snackbar;
@@ -104,54 +95,12 @@ public class Book_now extends Activity {
     HashMap<String, String> hash_truck_imgs1 = new HashMap<String, String>();
     ProgressDialog mProgressDialog;
     LinearLayout lt_images;
-    ArrayList<String> selectedPhotos = new ArrayList<>();
-    String str_delivery_address, str_trk, str_v_type, str_goods_type, str_truck_type, str_desc, str_goods_pic, str_profile_img, book_time;
-    LinearLayout.LayoutParams lp;
+    String str_delivery_address, str_v_type, str_goods_type, str_truck_type, str_desc, str_goods_pic, str_profile_img, book_time;
     ArrayList<Uri> image_uris;
-    ImageView iv_truck, iv_bus;
     ArrayList<Uri> goods_imgs;
-    LinearLayout lt_filter_dialog;
-    String vehicle_type;
     FrameLayout fl_goods;
+    String vec_type;
     private ViewGroup mSelectedImagesContainer;
-
-    public static int getDeviceHeight(Context context) {
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        int height = display.getHeight();
-        return height;
-    }
-
-
-    /*private void openBottomSheetPlaceOrder() {
-        LayoutInflater layoutInflater = LayoutInflater.from(Book_now.this);
-        View promptView = layoutInflater.inflate(R.layout.placed_order, null);
-        alertD = new AlertDialog.Builder(Book_now.this).create();
-        alertD.setCancelable(true);
-        Window window = alertD.getWindow();
-        window.getAttributes().windowAnimations = R.style.MaterialDialogSheetAnimation;
-        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        TextView thanks = (TextView) promptView.findViewById(R.id.thanks_id);
-        ImageView close = (ImageView) promptView.findViewById(R.id.close);
-        FontsManager.initFormAssets(promptView.getContext(), "fonts/opensans.ttf");
-        FontsManager.changeFonts(this);
-        Typeface tf = Typeface.createFromAsset(this.getAssets(), "fonts/opensans.ttf");
-        thanks.setTypeface(tf);
-        alertD.setView(promptView);
-        alertD.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                alertD.dismiss();
-            }
-        });
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertD.dismiss();
-            }
-        });
-        alertD.show();
-    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,14 +108,18 @@ public class Book_now extends Activity {
         setContentView(R.layout.book_now);
         FontsManager.initFormAssets(this, "fonts/lato.ttf");
         FontsManager.changeFonts(this);
+
+        Intent get_data = getIntent();
+
+        vec_type = get_data.getStringExtra("vec_type");
+
+
         mdatas = new ArrayList<>();
         tf = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
         et_delivery_address = (EditText) findViewById(R.id.editTextDelieveryAddress);
         et_goodstype = (EditText) findViewById(R.id.editTextGoodsType);
         et_trucktype = (EditText) findViewById(R.id.editTextTruck_type);
         et_description = (EditText) findViewById(R.id.editTextDescription);
-        //msg=(TextView) findViewById(R.id.msg);
-        //mSelectedImagesContainer = (ViewGroup) findViewById(R.id.selected_photos_container);
         flt_delivery_address = (TextInputLayout) findViewById(R.id.float_deliveryaddress);
         flt_goodstype = (TextInputLayout) findViewById(R.id.float_goodstype);
         flt_trucktype = (TextInputLayout) findViewById(R.id.float_trucktype);
@@ -175,8 +128,6 @@ public class Book_now extends Activity {
         lt_goodsType = (LinearLayout) findViewById(R.id.layout_goodstype);
         lt_truckType = (LinearLayout) findViewById(R.id.layout_truckType);
 
-        iv_truck = (ImageView) findViewById(R.id.image_truck);
-        iv_bus = (ImageView) findViewById(R.id.image_bus);
 
         btn_back = (com.rey.material.widget.LinearLayout) findViewById(R.id.layout_back);
         btn_post = (Button) findViewById(R.id.btn_post);
@@ -185,22 +136,15 @@ public class Book_now extends Activity {
         flt_trucktype.setTypeface(tf);
         flt_description.setTypeface(tf);
 
-        flt_description.setEnabled(false);
-        btn_post.setEnabled(false);
 
         min = 2;
         max = 4;
         goods_imgs = new ArrayList<>();
         image_uris = new ArrayList<>();
 
-        //  View getImages = findViewById(R.id.get_images);
         View getImages = findViewById(R.id.camera);
         mSelectedImagesContainer = (ViewGroup) findViewById(R.id.selected_photos_container);
 
-
-        //ll = (LinearLayout)findViewById(R.id.selected_photos_container);
-        //ll.setOrientation(LinearLayout.HORIZONTAL);
-        // lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
         fl_goods = (FrameLayout) findViewById(R.id.frame_goodstype);
         lt_images = (LinearLayout) findViewById(R.id.layout_photos);
@@ -221,8 +165,7 @@ public class Book_now extends Activity {
 
         Log.e("tag", "id: " + id);
         Log.e("tag", "tok: " + token);
-
-
+        Log.e("tag", "type: " + vec_type);
         Log.e("tag", "pick: " + pickup_location);
         Log.e("tag", "drop: " + drop_location);
         Log.e("tag", "pi_l: " + pick_lati + ":::" + pick_long);
@@ -252,22 +195,15 @@ public class Book_now extends Activity {
 
 
         Calendar c = Calendar.getInstance();
-        // System.out.println("Current time => "+c.getTime());
         SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         String formattedDate = df.format(c.getTime());
-        // formattedDate have current date/time
-        // Toast.makeText(this, formattedDate, Toast.LENGTH_SHORT).show();
-        //2016-12-10 12:33:15
-        //  Log.e("tag","tim: |"+df.format(c.getTime()));
 
         String[] parts = formattedDate.split(" ");
         String part1 = parts[0]; // 004
         String part2 = parts[1]; // 034556
         book_time = parts[1];
-        // Log.e("tag","ti:"+part1);
 
         str_time = part1 + " T " + part2;
-        Log.e("tag", "tis:" + str_time);
 
 
         lt_goodsType.setOnClickListener(new View.OnClickListener() {
@@ -279,91 +215,33 @@ public class Book_now extends Activity {
         lt_truckType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-                if (str_trk.equals("Bus")) {
-                   /* ar_truck_imgs.clear();
-                    ar_truck_type.clear();
-                    hash_subtype.clear();
-                    hash_truck_imgs.clear();
-                    ar_truck_sstype.clear();
-
-                    ar_truck_type = ar_truck_type1;
-                    hash_subtype = hash_subtype1;
-                    hash_truck_imgs = hash_truck_imgs1;
-                    ar_truck_sstype = ar_truck_sstype1;
-                    ar_truck_imgs = ar_truck_imgs1;
-                    Log.e("tag","siz"+ar_truck_type.size());
-                    Log.e("tag","si2z"+ar_truck_type1.size());*/
-
-
-
+                if (vec_type.equals("Bus")) {
                     truck_type(ar_truck_type1, hash_subtype1, hash_truck_imgs1, ar_truck_sstype1, ar_truck_imgs1);
-
                 } else {
                     truck_type(ar_truck_type, hash_subtype, hash_truck_imgs, ar_truck_sstype, ar_truck_imgs);
-
                 }
-
             }
         });
 
 
-        final int height = getDeviceHeight(Book_now.this);
-        lt_filter_dialog = (LinearLayout) findViewById(R.id.filter_dialog);
-
-        lt_filter_dialog.setVisibility(View.VISIBLE);
-
-        iv_bus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                TranslateAnimation anim_btn_t2b = new TranslateAnimation(0, 0, 0, height);
-                anim_btn_t2b.setDuration(500);
-
-                lt_filter_dialog.setAnimation(anim_btn_t2b);
-                et_trucktype.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bus_type, 0, 0, 0);
-                flt_trucktype.setHint("Bus Type");
-                str_trk = "Bus";
-                lt_filter_dialog.setVisibility(View.GONE);
-                fl_goods.setVisibility(View.GONE);
-                lt_images.setVisibility(View.GONE);
-                flt_description.setEnabled(true);
-                btn_post.setEnabled(true);
-            }
-        });
-
-
-        iv_truck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                lt_filter_dialog.setVisibility(View.GONE);
-                TranslateAnimation anim_btn_t2b = new TranslateAnimation(0, 0, 0, height);
-                anim_btn_t2b.setDuration(500);
-                lt_filter_dialog.setAnimation(anim_btn_t2b);
-                et_trucktype.setCompoundDrawablesWithIntrinsicBounds(R.drawable.select_truck_type, 0, 0, 0);
-                flt_trucktype.setHint("Truck Type");
-                str_trk = "Truck";
-                fl_goods.setVisibility(View.VISIBLE);
-                lt_images.setVisibility(View.VISIBLE);
-                flt_description.setEnabled(true);
-                btn_post.setEnabled(true);
-            }
-        });
+        if (vec_type.equals("Bus")) {
+            et_trucktype.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bus_type, 0, 0, 0);
+            flt_trucktype.setHint("Bus Type");
+            flt_delivery_address.setHint("Nearby Landmark");
+            fl_goods.setVisibility(View.GONE);
+            lt_images.setVisibility(View.GONE);
+        } else if (vec_type.equals("Truck")) {
+            et_trucktype.setCompoundDrawablesWithIntrinsicBounds(R.drawable.select_truck_type, 0, 0, 0);
+            flt_trucktype.setHint("Truck Type");
+            flt_delivery_address.setHint("Nearby Landmark");
+            fl_goods.setVisibility(View.VISIBLE);
+            lt_images.setVisibility(View.VISIBLE);
+        }
 
 
         getImages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-               /* PhotoPickerIntent intent = new PhotoPickerIntent(Book_now.this);
-                intent.setPhotoCount(1);
-                intent.setColumn(4);
-                intent.setShowCamera(true);
-                startActivityForResult(intent, REQUEST_VEC_FRONT);*/
-
-                Log.e("tag", "s:" + goods_imgs.size());
-                Log.e("tag", "i:" + image_uris.size());
-
                 if (goods_imgs.isEmpty()) {
                     min = 2;
                     max = 4;
@@ -398,8 +276,6 @@ public class Book_now extends Activity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               /* Intent i = new Intent(Book_now.this, DashboardNavigation.class);
-                startActivity(i);*/
                 finish();
             }
         });
@@ -410,20 +286,19 @@ public class Book_now extends Activity {
 
                 if (!(et_delivery_address.getText().toString().trim().isEmpty())) {
                     if (!(et_trucktype.getText().toString().trim().isEmpty()) && !et_trucktype.getText().toString().contains("Bus Type") && !et_trucktype.getText().toString().contains("Truck Type")) {
-                        if (!(et_description.getText().toString().trim().isEmpty())) {
+                      //  if (!(et_description.getText().toString().trim().isEmpty())) {
 
-                            if(str_trk.equals("Truck")) {
+                            if (vec_type.equals("Truck")) {
                                 if (!(et_goodstype.getText().toString().trim().isEmpty())) {
                                     str_delivery_address = et_delivery_address.getText().toString();
                                     str_goods_type = et_goodstype.getText().toString();
                                     str_truck_type = et_trucktype.getText().toString();
-                                    str_desc = et_description.getText().toString();
+                                   // str_desc = et_description.getText().toString();
                                     new book_now_task().execute();
                                 } else {
                                     Toast.makeText(getApplicationContext(), "Choose Goods Type", Toast.LENGTH_LONG).show();
                                 }
-                            }
-                            else{
+                            } else {
 
                                 str_delivery_address = et_delivery_address.getText().toString();
                                 str_truck_type = et_trucktype.getText().toString();
@@ -433,17 +308,17 @@ public class Book_now extends Activity {
                             }
 
 
-                        } else {
+                      /*  } else {
                             et_description.setError("Enter Description");
                             et_description.requestFocus();
 
-                        }
+                        }*/
                     } else {
 
-                        Toast.makeText(getApplicationContext(), "Choose " + str_trk + " Type", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Choose " + vec_type + " Type", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    et_delivery_address.setError("Enter Delivery Address");
+                    et_delivery_address.setError("EnterNearby Landmark");
                     et_delivery_address.requestFocus();
                 }
 
@@ -633,17 +508,6 @@ public class Book_now extends Activity {
                 }
             });
 
-      /*     imageHolder.setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View view) {
-                   Log.e("tag","as:"+pa);
-                   Log.e("tag","count_before"+mSelectedImagesContainer.getChildCount());
-
-                   max = mSelectedImagesContainer.getChildCount();
-                   Log.e("tag",max+"count_after"+mSelectedImagesContainer.getChildCount());
-               }
-           });*/
-
 
         }
 
@@ -660,16 +524,12 @@ public class Book_now extends Activity {
             String json = "", jsonStr = "";
             try {
                 String virtual_url = net.sqindia.movehaul.Config.WEB_URL + "customer/goodstype";
-                //  Log.e("tag","url: "+virtual_url);
                 JSONObject jsonobject = HttpUtils.getData(virtual_url, id, token);
-                // Log.e("tag_", "0" + jsonobject.toString());
                 if (jsonobject.toString() == "sam") {
-                    //  Log.e("tag_", "1" + jsonobject.toString());
                 }
                 json = jsonobject.toString();
                 return json;
             } catch (Exception e) {
-                //  Log.e("InputStream", "" + e.getLocalizedMessage());
                 jsonStr = "";
             }
             return jsonStr;
@@ -677,19 +537,16 @@ public class Book_now extends Activity {
 
         @Override
         protected void onPostExecute(String jsonStr) {
-            // Log.e("tag", "<-----rerseres---->" + jsonStr);
             super.onPostExecute(jsonStr);
             mProgressDialog.dismiss();
             try {
                 JSONObject jo = new JSONObject(jsonStr);
                 String status = jo.getString("status");
-                //  String count = jo.getString("count");
                 if (status.equals("true")) {
                     JSONArray goods_data = jo.getJSONArray("goods_type");
                     if (goods_data.length() > 0) {
                         for (int i = 0; i < goods_data.length(); i++) {
                             String datas = goods_data.getString(i);
-                            // Log.e("tag","s: "+datas);
                             ar_goods_type.add(datas);
                         }
                     } else {
@@ -712,18 +569,13 @@ public class Book_now extends Activity {
         protected String doInBackground(String... params) {
             String json = "", jsonStr = "";
             try {
-                //http://104.197.80.225:3030/customer/vehicletype
                 String virtual_url = net.sqindia.movehaul.Config.WEB_URL + "customer/vehicletype";
-                //Log.e("tag","url: "+virtual_url);
                 JSONObject jsonobject = HttpUtils.getData(virtual_url, id, token);
-                // Log.e("tag_", "0" + jsonobject.toString());
                 if (jsonobject.toString() == "sam") {
-                    //     Log.e("tag_", "1" + jsonobject.toString());
                 }
                 json = jsonobject.toString();
                 return json;
             } catch (Exception e) {
-                //  Log.e("InputStream", "" + e.getLocalizedMessage());
                 jsonStr = "";
             }
             return jsonStr;
@@ -767,9 +619,9 @@ public class Book_now extends Activity {
                     }
                 } else {
                 }
-                Log.e("tag","trk_siz_img"+ar_truck_imgs.size());
-                Log.e("tag","bus_siz"+ar_truck_type1.size());
-                Log.e("tag","bus_siz_img"+ar_truck_imgs1.size());
+                Log.e("tag", "trk_siz_img" + ar_truck_imgs.size());
+                Log.e("tag", "bus_siz" + ar_truck_type1.size());
+                Log.e("tag", "bus_siz_img" + ar_truck_imgs1.size());
 
             } catch (JSONException e) {
                 // TODO Auto-generated catch block
@@ -784,8 +636,12 @@ public class Book_now extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Log.e("tag", "reg_preexe");
+            Log.e("tag", "booking_task");
             mProgressDialog.show();
+
+            if((!(et_description.getText().toString().trim().isEmpty()))){
+                str_desc = et_description.getText().toString().trim();
+            }
         }
 
         @Override
@@ -794,12 +650,13 @@ public class Book_now extends Activity {
 
             if (goods_imgs.size() > 0) {
 
+
+
                 Log.e("tag", "p : " + pickup_location);
                 Log.e("tag", "pqr :" + drop_location);
 
 
                 try {
-                    //driver/driverupdate
                     String responseString = null;
                     HttpClient httpclient = new DefaultHttpClient();
                     HttpPost httppost = new HttpPost(net.sqindia.movehaul.Config.WEB_URL + "customer/booking");
@@ -808,15 +665,20 @@ public class Book_now extends Activity {
                     httppost.setHeader("pickup_location", pickup_location);
                     httppost.setHeader("drop_location", drop_location);
                     httppost.setHeader("delivery_address", str_delivery_address);
-                    if(str_trk.equals("Truck")){
-                    httppost.setHeader("goods_type", str_goods_type);}
-                    else{
+                    if (vec_type.equals("Truck")) {
+                        httppost.setHeader("goods_type", str_goods_type);
+                    } else {
                         httppost.setHeader("goods_type", "passenger");
                     }
-                    httppost.setHeader("vehicle_type", str_trk);
+                    httppost.setHeader("vehicle_type", vec_type);
                     httppost.setHeader("vehicle_main_type", str_v_type);
                     httppost.setHeader("vehicle_sub_type", str_truck_type);
-                    httppost.setHeader("description", str_desc);
+
+                    if (!(str_desc == null)) {
+                        httppost.setHeader("description", str_desc);
+                    }
+
+
                     httppost.setHeader("booking_time", str_time);
                     httppost.setHeader("pickup_latitude", pick_lati);
                     httppost.setHeader("pickup_longitude", pick_long);
@@ -836,11 +698,6 @@ public class Book_now extends Activity {
                         for (Uri images : goods_imgs)
                             entity.addPart("bookinggoods", new FileBody(new File(images.toString()), "image/jpeg"));
 
-
-                      /*  for(int i =0;i<=1;i++) {
-
-                            entity.addPart("bookinggoods", new FileBody(new File(goods_imgs.get(i).toString()), "image/jpeg"));
-                        }*/
 
                         httppost.setEntity(entity);
 
@@ -892,15 +749,21 @@ public class Book_now extends Activity {
                     jsonObject.put("pickup_location", sharedPreferences.getString("pickup", ""));
                     jsonObject.put("drop_location", sharedPreferences.getString("drop", ""));
                     jsonObject.put("delivery_address", str_delivery_address);
-                    if(str_trk.equals("Truck")){
-                    jsonObject.put("goods_type", str_goods_type);}
-                    else{
+
+                    if (vec_type.equals("Truck")) {
+                        jsonObject.put("goods_type", str_goods_type);
+                    } else {
                         jsonObject.put("goods_type", "passenger");
                     }
-                    jsonObject.put("vehicle_type", str_trk);
+
+                    jsonObject.put("vehicle_type", vec_type);
                     jsonObject.put("vehicle_main_type", str_v_type);
                     jsonObject.put("vehicle_sub_type", str_truck_type);
-                    jsonObject.put("description", str_desc);
+
+                    if (!(str_desc == null)) {
+                        jsonObject.put("description", str_desc);
+                    }
+
                     jsonObject.put("booking_time", str_time);
                     jsonObject.put("pickup_latitude", pick_lati);
                     jsonObject.put("pickup_longitude", pick_long);
