@@ -360,7 +360,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             public void onClick(View view) {
                 TranslateAnimation anim_btn_t2b = new TranslateAnimation(0, 0, 0, height);
                 anim_btn_t2b.setDuration(500);
-                vec_type = "Bus";
+                vec_type = "Road";
                 lt_filter_dialog.setAnimation(anim_btn_t2b);
                 lt_filter_dialog.setVisibility(View.GONE);
 
