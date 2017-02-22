@@ -44,7 +44,6 @@
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_below="@+id/header"
-        android:layout_marginLeft="@dimen/_20sdp"
         android:layout_height="wrap_content"
        />
 

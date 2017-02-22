@@ -22,6 +22,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.ramotion.foldingcell.FoldingCell;
 import com.rey.material.widget.LinearLayout;
 import com.rey.material.widget.ListView;
@@ -55,6 +56,7 @@ public class MyTrips extends AppCompatActivity {
     ProgressDialog mProgressDialog;
     android.widget.TextView tv_cr_date, tv_cr_time, tv_cr_pickup, tv_cr_drop, tv_cr_tr_type, tv_cr_dr_name, tv_cr_dr_phone, tv_cr_job_cost;
     ImageView iv_type;
+    ImageView iv_content_prof;
     ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
 
         @Override
@@ -109,7 +111,7 @@ public class MyTrips extends AppCompatActivity {
         });
 
         layouts = new int[]{
-                R.layout.current_trips,
+                R.layout.current_trips1,
                 R.layout.history_trips,
                 R.layout.upcoming_trips,};
 
@@ -193,6 +195,7 @@ public class MyTrips extends AppCompatActivity {
                 tv_cr_dr_name = (android.widget.TextView) view.findViewById(R.id.cr_dr_name);
                 tv_cr_dr_phone = (android.widget.TextView) view.findViewById(R.id.cr_dr_phone);
                 tv_cr_job_cost = (android.widget.TextView) view.findViewById(R.id.cr_job_cost);
+                iv_content_prof = (ImageView) view.findViewById(R.id.imageview_content_profile);
 
                 iv_type  = (ImageView) view.findViewById(R.id.imageView5);
 
@@ -205,6 +208,8 @@ public class MyTrips extends AppCompatActivity {
                 tv_cr_dr_name.setText(mv_datas.getName());
                 tv_cr_dr_phone.setText(mv_datas.getDriver_number());
                 tv_cr_job_cost.setText(mv_datas.getJob_cost());
+
+                Glide.with(MyTrips.this).load(Config.WEB_URL + "driver_details/" + mv_datas.getDriver_image()).into(iv_content_prof);
 
                 if(mv_datas.getVec_type().equals("Bus")){
                     iv_type.setImageResource(R.drawable.bus_type);
