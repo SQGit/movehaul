@@ -130,11 +130,14 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
-                if (et_otp4.getText().toString().length() == 1) {
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-                }
+                if( keyCode != KeyEvent.KEYCODE_BACK && keyCode != KeyEvent.KEYCODE_DEL ) {
 
+
+                    if (et_otp4.getText().toString().length() == 1) {
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.toggleSoftInput (0, 0);
+                    }
+                }
                 return false;
             }
         });
