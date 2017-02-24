@@ -4,6 +4,7 @@ package net.sqindia.movehaul;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -128,7 +129,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     TextInputLayout flt_pickup, flt_drop_location;
     ImageView btn_menu, rightmenu;
     android.widget.LinearLayout droplv, pickuplv;
-    Dialog dialog1, dialog2;
+    Dialog dialog1, dialog2,dg_road_confirm;
     Button btn_yes, btn_no, btn_update;
     int exit_status;
     SharedPreferences sharedPreferences;
@@ -150,12 +151,14 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     ArrayList<String> selectedPhotos = new ArrayList<>();
     ImageView iv_location, iv_zoomin, iv_zoomout;
     int diff;
+    ProgressDialog mProgressDialog;
     ImageView iv_truck, iv_bus,iv_road_assit;
     LinearLayout lt_filter_dialog;
     private GoogleMap mMap;
     Button btn_book_roadside;
     LinearLayout lt_road_side;
     private LatLng mCenterLatLong;
+    String str_time,str_pickup,str_drop,str_pickup_lati,str_pickup_longi,str_drop_lati,str_drop_longi;
     private AddressResultReceiver mResultReceiver;
 
     public static int getDeviceHeight(Context context) {
@@ -317,6 +320,23 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         iv_bus = (ImageView) findViewById(R.id.image_bus);
         iv_road_assit = (ImageView) findViewById(R.id.image_roadside_assistance);
 
+        mProgressDialog = new ProgressDialog(DashboardNavigation.this, R.style.AppCompatAlertDialogStyle);
+        mProgressDialog.setTitle("Loading..");
+        mProgressDialog.setMessage("Please wait");
+        mProgressDialog.setIndeterminate(false);
+        mProgressDialog.setCancelable(false);
+
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        String formattedDate = df.format(c.getTime());
+
+        String[] parts = formattedDate.split(" ");
+        String part1 = parts[0];
+        String part2 = parts[1];
+
+        current_time = parts[1];
+        str_time = part1 + " T " + part2;
+
         final int height = getDeviceHeight(DashboardNavigation.this);
 
         iv_bus.setOnClickListener(new View.OnClickListener() {
@@ -365,8 +385,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 lt_filter_dialog.setVisibility(View.GONE);
 
                 btn_book_roadside.setVisibility(View.VISIBLE);
-                btn_book_now.setEnabled(true);
-                btn_book_later.setEnabled(true);
+                btn_book_now.setEnabled(false);
+                btn_book_later.setEnabled(false);
                 pickuplv.setEnabled(true);
                 droplv.setEnabled(true);
             }
@@ -398,11 +418,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         });
 
 
-        Calendar c = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String formattedDate = df.format(c.getTime());
-        String[] parts = formattedDate.split(" ");
-        current_time = parts[1];
+
 
 
         snackbar = Snackbar
@@ -808,6 +824,63 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     Intent i = new Intent(DashboardNavigation.this, Book_later.class);
                     i.putExtra("vec_type",vec_type);
                     startActivity(i);
+                }
+
+            }
+        });
+
+
+
+
+            dg_road_confirm = new Dialog(DashboardNavigation.this);
+            dg_road_confirm.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dg_road_confirm.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+            dg_road_confirm.setCancelable(false);
+            dg_road_confirm.setContentView(R.layout.dialog_road_confirm);
+
+            btn_yes = (Button) dg_road_confirm.findViewById(R.id.button_yes);
+            tv_txt1 = (android.widget.TextView) dg_road_confirm.findViewById(R.id.textView_1);
+            tv_txt2 = (android.widget.TextView) dg_road_confirm.findViewById(R.id.textView_2);
+
+            tv_txt1.setTypeface(tf);
+            tv_txt2.setTypeface(tf);
+            btn_yes.setTypeface(tf);
+
+            btn_yes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dg_road_confirm.dismiss();
+                    TranslateAnimation anim_btn_b2t = new TranslateAnimation(0, 0, height, 0);
+                    anim_btn_b2t.setDuration(500);
+                    lt_filter_dialog.setAnimation(anim_btn_b2t);
+                    lt_filter_dialog.setVisibility(View.VISIBLE);
+
+                    destination.setText("");
+                }
+            });
+
+
+
+        btn_book_roadside.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (destination.getText().toString().isEmpty()) {
+                    // Toast.makeText(getApplicationContext(), "Choose Drop Location", Toast.LENGTH_LONG).show();
+                    snackbar.show();
+                    tv_snack.setText("Choose Drop Location");
+                } else {
+
+                    str_pickup =mStreetOutput + ", " + mCityOutput;
+                    str_drop =  destination.getText().toString();
+                    str_pickup_lati = mPickup_lat;
+                    str_pickup_longi =  mPickup_long;
+                    str_drop_lati = mDrop_lat;
+                    str_drop_longi = mDrop_long;
+
+                    new book_roadside().execute();
+
+
                 }
 
             }
@@ -1532,6 +1605,100 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 //  showToast(getString(R.string.address_found));
             }
         }
+    }
+
+
+
+    public class book_roadside extends AsyncTask<String, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Log.e("tag", "booking_task");
+            mProgressDialog.show();
+
+
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String json = "", jsonStr = "";
+
+                Log.e("tag", "no poto");
+
+                String s = "";
+                JSONObject jsonObject = new JSONObject();
+                try {
+
+
+                    jsonObject.put("pickup_location", str_pickup);
+                    jsonObject.put("drop_location", str_drop);
+                    jsonObject.put("goods_type", "vehicle");
+                    jsonObject.put("vehicle_type", vec_type);
+                    //jsonObject.put("vehicle_main_type", str_v_type);
+                    jsonObject.put("vehicle_sub_type", "road side assistance");
+                    jsonObject.put("booking_time", str_time);
+                    jsonObject.put("pickup_latitude", str_pickup_lati);
+                    jsonObject.put("pickup_longitude", str_pickup_longi);
+                    jsonObject.put("drop_latitude", str_drop_lati);
+                    jsonObject.put("drop_longitude", str_drop_longi );
+
+
+                    json = jsonObject.toString();
+
+                    return s = HttpUtils.makeRequest1(net.sqindia.movehaul.Config.WEB_URL + "customer/booking", json, id, token);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                return null;
+
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("tag", "tag" + s);
+            mProgressDialog.dismiss();
+
+            if (s != null) {
+                try {
+                    JSONObject jo = new JSONObject(s);
+                    String status = jo.getString("status");
+                    String msg = jo.getString("message");
+                    String bookingid = jo.getString("booking_id");
+                    Log.d("tag", "<-----Status----->" + status);
+                    if (status.equals("true")) {
+                        Log.e("tag", "Location Updated");
+
+                       /* editor.putString("job_id", bookingid);
+                        editor.putString("book_time", book_time);
+                        editor.commit();
+
+                        Intent goReve = new Intent(getApplicationContext(), Job_review.class);
+                        startActivity(goReve);
+                        finish();*/
+
+                        dg_road_confirm.show();
+
+                    } else if (status.equals("false")) {
+
+                        Log.e("tag", "Location not updated");
+                        //has to check internet and location...
+                        Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.e("tag", "nt" + e.toString());
+                    Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
+                }
+            } else {
+                // Toast.makeText(getApplicationContext(),"Network Errror1",Toast.LENGTH_LONG).show();
+            }
+
+        }
+
     }
 
 
