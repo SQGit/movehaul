@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -14,6 +16,9 @@ import android.widget.TextView;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.LinearLayout;
 import com.sloop.fonts.FontsManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by sqindia on 02-11-2016.
@@ -62,6 +67,8 @@ public class Payment_Details extends Activity {
                 Intent i = new Intent(Payment_Details.this,Payment_Card_Details.class);
                 startActivity(i);
                 finish();
+
+                //new login_customer().execute();
             }
         });
 
@@ -83,4 +90,60 @@ public class Payment_Details extends Activity {
         }
         return super.dispatchTouchEvent(ev);
     }
+
+
+    public class login_customer extends AsyncTask<String, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Log.e("tag", "reg_preexe");
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String json = "", jsonStr = "";
+            try {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.accumulate("amt", "91");
+                jsonObject.accumulate("payerName ", "salman");
+                jsonObject.accumulate("payerEmail ", "salman@sqindia.net");
+                jsonObject.accumulate("paymenttype  ", "VISA");
+                json = jsonObject.toString();
+                return jsonStr = HttpUtils.makeRequest("http://www.passafaila.com/remita/processpayment.php", json);
+            } catch (Exception e) {
+                Log.e("InputStream", e.getLocalizedMessage());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("tag", "tag" + s);
+
+            if (s != null) {
+                try {
+                    JSONObject jo = new JSONObject(s);
+                    String status = jo.getString("status");
+                    String msg = jo.getString("message");
+                    Log.d("tag", "<-----Status----->" + status);
+
+                    if (status.equals("true")) {
+
+                    } else if (status.equals("false")) {
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.e("tag", "nt" + e.toString());
+                }
+            } else {
+
+            }
+
+        }
+
+    }
+
+
 }

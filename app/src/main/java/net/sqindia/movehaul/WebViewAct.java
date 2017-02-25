@@ -3,6 +3,7 @@ package net.sqindia.movehaul;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -26,6 +27,9 @@ public class WebViewAct extends Activity {
         web.getSettings().setJavaScriptEnabled(true);
         web.loadUrl("http://104.197.80.225:8080/movehaul/");
       // web.loadUrl("http://my.opiniion.com/login");
+        Log.e("tag","webview");
+        //http://www.passafaila.com/remita/processpayment.php?amt=1&payerName=siva&payerEmail=siva@sqindia.net&payerPhone=9790280707&paymenttype=VISA
+        web.loadUrl("http://www.passafaila.com/remita/processpayment.php?amt=5&payerName=siva&payerEmail=siva@sqindia.net&payerPhone=9790280707&paymenttype=VISA");
     }
 
     public class myWebClient extends WebViewClient
@@ -33,17 +37,27 @@ public class WebViewAct extends Activity {
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             // TODO Auto-generated method stub
+            Log.e("tag","url1"+url);
             super.onPageStarted(view, url, favicon);
+
         }
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             // TODO Auto-generated method stub
-
+            Log.e("tag","url2"+url);
             view.loadUrl(url);
             return true;
 
         }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            Log.e("tag","url3"+url);
+            super.onPageFinished(view, url);
+
+        }
+
     }
 
 
@@ -56,4 +70,6 @@ public class WebViewAct extends Activity {
     }
         return super.onKeyDown(keyCode, event);
     }
+
+
 }
