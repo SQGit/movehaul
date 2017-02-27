@@ -35,7 +35,7 @@
 
 
         <activity
-            android:name=".SplashActivity"
+            android:name=".Payment_Details"
             android:screenOrientation="sensorPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -96,10 +96,10 @@
             android:name=".Tracking"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
-        <activity
+       <!-- <activity
             android:name=".Payment_Details"
             android:screenOrientation="sensorPortrait"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>-->
         <activity
             android:name=".Payment_Card_Details"
             android:screenOrientation="sensorPortrait"

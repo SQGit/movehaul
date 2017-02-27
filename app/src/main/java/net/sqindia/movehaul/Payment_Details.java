@@ -64,9 +64,13 @@ public class Payment_Details extends Activity {
         btn_continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Payment_Details.this,Payment_Card_Details.class);
+                /*Intent i = new Intent(Payment_Details.this,Payment_Card_Details.class);
                 startActivity(i);
-                finish();
+                finish();*/
+
+
+                Intent i = new Intent(Payment_Details.this, WebViewAct.class);
+                startActivity(i);
 
                 //new login_customer().execute();
             }

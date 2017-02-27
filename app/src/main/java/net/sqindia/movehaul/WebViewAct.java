@@ -16,6 +16,7 @@ public class WebViewAct extends Activity {
 
 
     WebView web;
+    int i =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +26,7 @@ public class WebViewAct extends Activity {
         web = (WebView) findViewById(R.id.webviews);
         web.setWebViewClient(new myWebClient());
         web.getSettings().setJavaScriptEnabled(true);
-        web.loadUrl("http://104.197.80.225:8080/movehaul/");
+       // web.loadUrl("http://104.197.80.225:8080/movehaul/");
       // web.loadUrl("http://my.opiniion.com/login");
         Log.e("tag","webview");
         //http://www.passafaila.com/remita/processpayment.php?amt=1&payerName=siva&payerEmail=siva@sqindia.net&payerPhone=9790280707&paymenttype=VISA
@@ -37,15 +38,19 @@ public class WebViewAct extends Activity {
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             // TODO Auto-generated method stub
-            Log.e("tag","url1"+url);
+            i=i+1;
+            Log.e("tag",i+" start: "+url);
             super.onPageStarted(view, url, favicon);
 
         }
 
+        //
+
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             // TODO Auto-generated method stub
-            Log.e("tag","url2"+url);
+            i=i+1;
+            Log.e("tag",i+ " load: "+url);
             view.loadUrl(url);
             return true;
 
@@ -53,7 +58,8 @@ public class WebViewAct extends Activity {
 
         @Override
         public void onPageFinished(WebView view, String url) {
-            Log.e("tag","url3"+url);
+            i=i+1;
+            Log.e("tag",i+" finish "+url);
             super.onPageFinished(view, url);
 
         }
