@@ -30,7 +30,7 @@ public class WebViewAct extends Activity {
       // web.loadUrl("http://my.opiniion.com/login");
         Log.e("tag","webview");
         //http://www.passafaila.com/remita/processpayment.php?amt=1&payerName=siva&payerEmail=siva@sqindia.net&payerPhone=9790280707&paymenttype=VISA
-        web.loadUrl("http://www.passafaila.com/remita/processpayment.php?amt=5&payerName=siva&payerEmail=siva@sqindia.net&payerPhone=9790280707&paymenttype=VISA");
+        web.loadUrl("http://www.passafaila.com/remita/processpayment.php?amt=5&payerName=siva&payerEmail=siva@sqindia.net&payerPhone=9790280707&paymenttype=MASTERCARD");
     }
 
     public class myWebClient extends WebViewClient

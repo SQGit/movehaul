@@ -11,6 +11,9 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CompoundButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.rey.material.widget.Button;
@@ -24,18 +27,22 @@ import org.json.JSONObject;
  * Created by sqindia on 02-11-2016.
  */
 
-public class Payment_Details extends Activity {
+public class Payment_Details1 extends Activity {
     Button btn_continue;
     LinearLayout btn_back;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     String tot_amt;
     TextView tv_payment;
+    private RadioGroup radioGroup;
+    private RadioButton visa,verve,wallet;
+    String payment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.payment_details);
+        setContentView(R.layout.payment_details1);
         FontsManager.initFormAssets(this, "fonts/lato.ttf");       //initialization
         FontsManager.changeFonts(this);
 
@@ -43,19 +50,57 @@ public class Payment_Details extends Activity {
         btn_back = (LinearLayout) findViewById(R.id.layout_back);
         tv_payment = (TextView) findViewById(R.id.textview_payment);
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Payment_Details.this);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Payment_Details1.this);
         editor = sharedPreferences.edit();
 
         tot_amt = sharedPreferences.getString("payment_amount","");
 
-        tv_payment.setText(tot_amt);
+        //tv_payment.setText(tot_amt);
+
+        radioGroup = (RadioGroup) findViewById(R.id.radioGroup2);
+
+
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+
+
+            @Override
+
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                // find which radio button is selected
+
+                if(checkedId == R.id.r_visa) {
+
+                  payment = "VISA";
+
+                } else if(checkedId == R.id.r_verve) {
+
+                    payment = "VERVE";
+
+                } else if(checkedId == R.id.r_wallet) {
+
+                    payment = "BANK_INTERNET";
+
+                }
+                else{
+                    payment = "MASTERCARD";
+                }
+
+            }
+
+
+
+        });
+
 
 
 
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Payment_Details.this, DriversList.class);
+                Intent i = new Intent(Payment_Details1.this, DriversList.class);
                 startActivity(i);
                 finish();
             }
@@ -64,15 +109,13 @@ public class Payment_Details extends Activity {
         btn_continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Payment_Details.this,Payment_Card_Details.class);
+
+
+
+                Intent i = new Intent(Payment_Details1.this, WebViewAct.class);
                 startActivity(i);
-                finish();
 
 
-                /*Intent i = new Intent(Payment_Details.this, WebViewAct.class);
-                startActivity(i);*/
-
-                //new login_customer().execute();
             }
         });
 
@@ -80,7 +123,7 @@ public class Payment_Details extends Activity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(Payment_Details.this,DashboardNavigation.class);
+        Intent i = new Intent(Payment_Details1.this,DashboardNavigation.class);
         startActivity(i);
         finish();
     }

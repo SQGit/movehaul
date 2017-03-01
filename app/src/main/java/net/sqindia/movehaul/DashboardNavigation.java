@@ -25,6 +25,7 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
@@ -44,6 +45,7 @@ import android.view.SubMenu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -75,6 +77,7 @@ import com.google.android.gms.maps.model.GroundOverlay;
 import com.google.android.gms.maps.model.LatLng;
 import com.gun0912.tedpicker.ImagePickerActivity;
 import com.rey.material.widget.Button;
+import com.rey.material.widget.RelativeLayout;
 import com.rey.material.widget.TextView;
 import com.sloop.fonts.FontsManager;
 
@@ -160,12 +163,24 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     private LatLng mCenterLatLong;
     String str_time,str_pickup,str_drop,str_pickup_lati,str_pickup_longi,str_drop_lati,str_drop_longi;
     private AddressResultReceiver mResultReceiver;
+    android.widget.RelativeLayout bottomSheetViewgroup;
+    BottomSheetBehavior bottomSheetBehavior;
+    LinearLayout lt_bt_veh_type,lt_bt_tow_type;
+    LinearLayout lt_bt_veh_car,lt_bt_veh_truck,lt_bt_veh_bus,lt_bt_veh_tow,lt_bt_veh_flatbed;
+
 
     public static int getDeviceHeight(Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
         int height = display.getHeight();
         return height;
+    }
+
+    public static int getDeviceWidth(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        int width = display.getWidth();
+        return width;
     }
 
     private void insertDummyContactWrapper() {
@@ -299,6 +314,29 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         customer_email = sharedPreferences.getString("customer_email", "");
         customer_name = sharedPreferences.getString("customer_name", "");
 
+        bottomSheetViewgroup
+                = (android.widget.RelativeLayout) findViewById(R.id.bottom_sheet);
+
+        bottomSheetBehavior =
+                BottomSheetBehavior.from(bottomSheetViewgroup);
+
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+
+        lt_bt_veh_type = (LinearLayout) findViewById(R.id.layout_vehicle_type);
+        lt_bt_tow_type = (LinearLayout) findViewById(R.id.layout_tow_type);
+
+        lt_bt_tow_type.setVisibility(View.GONE);
+
+        lt_bt_veh_car = (LinearLayout) findViewById(R.id.layout_bt_car);
+        lt_bt_veh_truck = (LinearLayout) findViewById(R.id.layout_bt_truck);
+        lt_bt_veh_bus = (LinearLayout) findViewById(R.id.layout_bt_bus);
+
+        lt_bt_veh_tow = (LinearLayout) findViewById(R.id.layout_bt_tow);
+        lt_bt_veh_flatbed = (LinearLayout) findViewById(R.id.layout_bt_flatbed);
+
+
+        Log.e("tag","ss:"+bottomSheetBehavior.getState());
+
         btn_book_roadside = (Button) findViewById(R.id.btn_book_assistance);
 
         btn_book_roadside.setVisibility(View.GONE);
@@ -338,6 +376,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         str_time = part1 + " T " + part2;
 
         final int height = getDeviceHeight(DashboardNavigation.this);
+        final int width = getDeviceWidth(DashboardNavigation.this);
 
         iv_bus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -434,7 +473,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
 
         snackbar_loc = Snackbar
-                .make(findViewById(R.id.drawer_layout), "Location Not Enabled", Snackbar.LENGTH_INDEFINITE)
+                .make(findViewById(R.id.cd_layout), "Location Not Enabled", Snackbar.LENGTH_INDEFINITE)
                 .setAction("Open Settings", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -865,7 +904,10 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             @Override
             public void onClick(View view) {
 
-                if (destination.getText().toString().isEmpty()) {
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                //bottomSheetBehavior.setPeekHeight(height/2);
+
+           /*     if (destination.getText().toString().isEmpty()) {
                     // Toast.makeText(getApplicationContext(), "Choose Drop Location", Toast.LENGTH_LONG).show();
                     snackbar.show();
                     tv_snack.setText("Choose Drop Location");
@@ -881,7 +923,39 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     new book_roadside().execute();
 
 
-                }
+                }*/
+
+            }
+        });
+
+        lt_bt_veh_car.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                TranslateAnimation anim_btn_b2t = new TranslateAnimation(width, 0, 0, 0);
+                anim_btn_b2t.setDuration(300);
+                lt_bt_tow_type.setAnimation(anim_btn_b2t);
+                lt_bt_tow_type.setVisibility(View.VISIBLE);
+
+                /*TranslateAnimation anim_btn_t2b = new TranslateAnimation(0, width, 0, 0);
+                anim_btn_t2b.setDuration(500);
+                lt_bt_veh_type.setAnimation(anim_btn_t2b);*/
+                lt_bt_veh_type.setVisibility(View.GONE);
+
+
+            }
+        });
+
+        lt_bt_veh_flatbed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+              /*  TranslateAnimation anim_btn_t2b = new TranslateAnimation(0, width, 0, 0);
+                anim_btn_t2b.setDuration(500);
+                lt_bt_veh_type.setAnimation(anim_btn_t2b);*/
+                lt_bt_veh_type.setVisibility(View.VISIBLE);
+                lt_bt_tow_type.setVisibility(View.GONE);
 
             }
         });
@@ -1455,9 +1529,18 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     @Override
     public void onBackPressed() {
         //super.onBackPressed();
-        dialog1.show();
-        exit_status = 1;
-        tv_txt3.setText("Exit");
+        if(lt_filter_dialog.getVisibility() == View.VISIBLE) {
+            dialog1.show();
+            exit_status = 1;
+            tv_txt3.setText("Exit");
+        }
+        else{
+            final int height = getDeviceHeight(DashboardNavigation.this);
+            TranslateAnimation anim_btn_b2t = new TranslateAnimation(0, 0, height, 0);
+            anim_btn_b2t.setDuration(500);
+            lt_filter_dialog.setAnimation(anim_btn_b2t);
+            lt_filter_dialog.setVisibility(View.VISIBLE);
+        }
     }
 
     public class profile_update extends AsyncTask<String, Void, String> {

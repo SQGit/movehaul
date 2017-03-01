@@ -24,10 +24,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:gravity="center"
             android:layout_marginTop="@dimen/_20sdp"
-            android:text="Lets Gets Started!!"
+            android:text="What Can We Do for You Today ?"
             android:textColor="@color/brown"
-            android:textSize="@dimen/_22sdp" />
+            android:textSize="@dimen/_19sdp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -37,7 +38,7 @@
             android:layout_marginRight="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:gravity="center"
-            android:text="Choose anyone of these vehicle types to apply their services"
+            android:text="Select your service request below"
             android:textColor="@color/dialog_text"
             android:textSize="@dimen/_15sdp" />
 
@@ -100,9 +101,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:paddingLeft="@dimen/_25sdp"
-            android:paddingRight="@dimen/_20sdp">
+            android:layout_marginTop="@dimen/_7sdp"
+            android:paddingLeft="@dimen/_15sdp"
+            android:paddingRight="@dimen/_10sdp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -114,9 +115,9 @@
                     android:id="@+id/iuy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Truck"
+                    android:text="Rent a Truck/Van"
                     android:textColor="@color/dialog_text"
-                    android:textSize="@dimen/_16sdp" />
+                    android:textSize="@dimen/_15sdp" />
             </LinearLayout>
 
             <LinearLayout
@@ -130,9 +131,10 @@
                     android:id="@+id/tyy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Bus"
+                    android:text="Charter your Bus Ride"
+                    android:gravity="center"
                     android:textColor="@color/dialog_text"
-                    android:textSize="@dimen/_16sdp" />
+                    android:textSize="@dimen/_15sdp" />
 
             </LinearLayout>
 
@@ -168,7 +170,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_7sdp"
                 android:gravity="center">
 
 
@@ -176,9 +178,9 @@
                     android:id="@+id/tyys"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Road Side Assistance"
+                    android:text="Request for Tow Truck"
                     android:textColor="@color/dialog_text"
-                    android:textSize="@dimen/_16sdp" />
+                    android:textSize="@dimen/_15sdp" />
 
             </LinearLayout>
 
