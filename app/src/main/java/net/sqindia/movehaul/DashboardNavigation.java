@@ -167,6 +167,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     BottomSheetBehavior bottomSheetBehavior;
     LinearLayout lt_bt_veh_type,lt_bt_tow_type;
     LinearLayout lt_bt_veh_car,lt_bt_veh_truck,lt_bt_veh_bus,lt_bt_veh_tow,lt_bt_veh_flatbed;
+    String cu_vec_type,dr_vec_type;
 
 
     public static int getDeviceHeight(Context context) {
@@ -904,10 +905,10 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             @Override
             public void onClick(View view) {
 
-                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
                 //bottomSheetBehavior.setPeekHeight(height/2);
 
-           /*     if (destination.getText().toString().isEmpty()) {
+                if (destination.getText().toString().isEmpty()) {
                     // Toast.makeText(getApplicationContext(), "Choose Drop Location", Toast.LENGTH_LONG).show();
                     snackbar.show();
                     tv_snack.setText("Choose Drop Location");
@@ -920,10 +921,12 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     str_drop_lati = mDrop_lat;
                     str_drop_longi = mDrop_long;
 
-                    new book_roadside().execute();
+                   // new book_roadside().execute();
+
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
 
-                }*/
+                }
 
             }
         });
@@ -931,32 +934,40 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         lt_bt_veh_car.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-                TranslateAnimation anim_btn_b2t = new TranslateAnimation(width, 0, 0, 0);
-                anim_btn_b2t.setDuration(300);
-                lt_bt_tow_type.setAnimation(anim_btn_b2t);
                 lt_bt_tow_type.setVisibility(View.VISIBLE);
-
-                /*TranslateAnimation anim_btn_t2b = new TranslateAnimation(0, width, 0, 0);
-                anim_btn_t2b.setDuration(500);
-                lt_bt_veh_type.setAnimation(anim_btn_t2b);*/
                 lt_bt_veh_type.setVisibility(View.GONE);
-
-
+                cu_vec_type = "car";
             }
         });
+        lt_bt_veh_bus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lt_bt_tow_type.setVisibility(View.VISIBLE);
+                lt_bt_veh_type.setVisibility(View.GONE);
+                cu_vec_type = "bus";
+        }});
+        lt_bt_veh_truck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lt_bt_tow_type.setVisibility(View.VISIBLE);
+                lt_bt_veh_type.setVisibility(View.GONE);
+                cu_vec_type = "truck";
+            }});
 
         lt_bt_veh_flatbed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-              /*  TranslateAnimation anim_btn_t2b = new TranslateAnimation(0, width, 0, 0);
-                anim_btn_t2b.setDuration(500);
-                lt_bt_veh_type.setAnimation(anim_btn_t2b);*/
-                lt_bt_veh_type.setVisibility(View.VISIBLE);
-                lt_bt_tow_type.setVisibility(View.GONE);
-
+                dr_vec_type = "flatbed";
+                new book_roadside().execute();
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+            }
+        });
+        lt_bt_veh_tow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dr_vec_type = "tow";
+                new book_roadside().execute();
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
             }
         });
 
@@ -1547,7 +1558,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Log.e("tag", "reg_preexe");
+            Log.e("tag","reg_preexe");
         }
 
         @Override
@@ -1715,10 +1726,9 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
                     jsonObject.put("pickup_location", str_pickup);
                     jsonObject.put("drop_location", str_drop);
-                    jsonObject.put("goods_type", "vehicle");
-                    jsonObject.put("vehicle_type", vec_type);
-                    //jsonObject.put("vehicle_main_type", str_v_type);
-                    jsonObject.put("vehicle_sub_type", "road side assistance");
+                    jsonObject.put("goods_type", "road");
+                    jsonObject.put("vehicle_type", dr_vec_type);
+                    jsonObject.put("vehicle_sub_type", cu_vec_type);
                     jsonObject.put("booking_time", str_time);
                     jsonObject.put("pickup_latitude", str_pickup_lati);
                     jsonObject.put("pickup_longitude", str_pickup_longi);
@@ -1749,18 +1759,17 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     JSONObject jo = new JSONObject(s);
                     String status = jo.getString("status");
                     String msg = jo.getString("message");
-                    String bookingid = jo.getString("booking_id");
+
                     Log.d("tag", "<-----Status----->" + status);
                     if (status.equals("true")) {
-                        Log.e("tag", "Location Updated");
-
-                       /* editor.putString("job_id", bookingid);
-                        editor.putString("book_time", book_time);
+                        Log.e("tag", msg);
+                        String bookingid = jo.getString("booking_id");
+                        editor.putString("job_id", bookingid);
                         editor.commit();
 
                         Intent goReve = new Intent(getApplicationContext(), Job_review.class);
                         startActivity(goReve);
-                        finish();*/
+                        finish();
 
                         dg_road_confirm.show();
 
