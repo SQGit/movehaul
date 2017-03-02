@@ -34,6 +34,7 @@ repositories {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
+    compile project(':remita')
     compile 'com.github.GcsSloop:FontsManager:v1.0.0'
     compile 'com.intuit.sdp:sdp-android:1.0.3'
     compile 'de.hdodenhof:circleimageview:2.1.0'
@@ -47,5 +48,9 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.6.0'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.github.ParkSangGwon:TedPicker:v1.0.10'
-
+    compile 'org.springframework.android:spring-android-rest-template:2.0.0.M3'
+    compile 'org.apache.commons:commons-lang3:3.4'
+    compile 'commons-codec:commons-codec:1.10'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.7.5'
+    compile 'com.google.code.gson:gson:2.4'
 }

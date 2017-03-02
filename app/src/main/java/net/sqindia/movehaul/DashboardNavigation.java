@@ -45,7 +45,6 @@ import android.view.SubMenu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -77,7 +76,6 @@ import com.google.android.gms.maps.model.GroundOverlay;
 import com.google.android.gms.maps.model.LatLng;
 import com.gun0912.tedpicker.ImagePickerActivity;
 import com.rey.material.widget.Button;
-import com.rey.material.widget.RelativeLayout;
 import com.rey.material.widget.TextView;
 import com.sloop.fonts.FontsManager;
 
@@ -85,17 +83,24 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -111,6 +116,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
     private static final int REQUEST_CODE_AUTOCOMPLETE1 = 2;
+    private static final int REQUEST_CODE_PAYMENT = 2;
     private static final int REQUEST_PROFILE = 5;
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
     public static boolean mMapIsTouched = false;
@@ -132,7 +138,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     TextInputLayout flt_pickup, flt_drop_location;
     ImageView btn_menu, rightmenu;
     android.widget.LinearLayout droplv, pickuplv;
-    Dialog dialog1, dialog2,dg_road_confirm;
+    Dialog dialog1, dialog2, dg_road_confirm;
     Button btn_yes, btn_no, btn_update;
     int exit_status;
     SharedPreferences sharedPreferences;
@@ -149,26 +155,25 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     SupportMapFragment mapFragment;
     ImageView btn_editProfile, btn_close, btn_editProfile_img;
     EditText et_username, et_email;
-    String id, token, mPickup_lat, mPickup_long, mDrop_lat, mDrop_long,vec_type;
+    String id, token, mPickup_lat, mPickup_long, mDrop_lat, mDrop_long, vec_type;
     TextInputLayout flt_uname, flt_email;
     ArrayList<String> selectedPhotos = new ArrayList<>();
     ImageView iv_location, iv_zoomin, iv_zoomout;
     int diff;
     ProgressDialog mProgressDialog;
-    ImageView iv_truck, iv_bus,iv_road_assit;
+    ImageView iv_truck, iv_bus, iv_road_assit;
     LinearLayout lt_filter_dialog;
-    private GoogleMap mMap;
     Button btn_book_roadside;
     LinearLayout lt_road_side;
-    private LatLng mCenterLatLong;
-    String str_time,str_pickup,str_drop,str_pickup_lati,str_pickup_longi,str_drop_lati,str_drop_longi;
-    private AddressResultReceiver mResultReceiver;
+    String str_time, str_pickup, str_drop, str_pickup_lati, str_pickup_longi, str_drop_lati, str_drop_longi;
     android.widget.RelativeLayout bottomSheetViewgroup;
     BottomSheetBehavior bottomSheetBehavior;
-    LinearLayout lt_bt_veh_type,lt_bt_tow_type;
-    LinearLayout lt_bt_veh_car,lt_bt_veh_truck,lt_bt_veh_bus,lt_bt_veh_tow,lt_bt_veh_flatbed;
-    String cu_vec_type,dr_vec_type;
-
+    LinearLayout lt_bt_veh_type, lt_bt_tow_type;
+    LinearLayout lt_bt_veh_car, lt_bt_veh_truck, lt_bt_veh_bus, lt_bt_veh_tow, lt_bt_veh_flatbed;
+    String cu_vec_type, dr_vec_type;
+    private GoogleMap mMap;
+    private LatLng mCenterLatLong;
+    private AddressResultReceiver mResultReceiver;
 
     public static int getDeviceHeight(Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -336,7 +341,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         lt_bt_veh_flatbed = (LinearLayout) findViewById(R.id.layout_bt_flatbed);
 
 
-        Log.e("tag","ss:"+bottomSheetBehavior.getState());
+        Log.e("tag", "ss:" + bottomSheetBehavior.getState());
 
         btn_book_roadside = (Button) findViewById(R.id.btn_book_assistance);
 
@@ -456,9 +461,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 mMap.animateCamera(CameraUpdateFactory.zoomOut());
             }
         });
-
-
-
 
 
         snackbar = Snackbar
@@ -832,7 +834,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                         editor.putString("drop_long", mDrop_long);
                         editor.commit();
                         Intent i = new Intent(DashboardNavigation.this, Book_now.class);
-                        i.putExtra("vec_type",vec_type);
+                        i.putExtra("vec_type", vec_type);
                         startActivity(i);
                     }
                 } else {
@@ -862,7 +864,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     editor.putString("drop_long", mDrop_long);
                     editor.commit();
                     Intent i = new Intent(DashboardNavigation.this, Book_later.class);
-                    i.putExtra("vec_type",vec_type);
+                    i.putExtra("vec_type", vec_type);
                     startActivity(i);
                 }
 
@@ -870,46 +872,50 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         });
 
 
+        dg_road_confirm = new Dialog(DashboardNavigation.this);
+        dg_road_confirm.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dg_road_confirm.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dg_road_confirm.setCancelable(false);
+        dg_road_confirm.setContentView(R.layout.dialog_road_confirm);
 
+        btn_yes = (Button) dg_road_confirm.findViewById(R.id.button_yes);
+        tv_txt1 = (android.widget.TextView) dg_road_confirm.findViewById(R.id.textView_1);
+        tv_txt2 = (android.widget.TextView) dg_road_confirm.findViewById(R.id.textView_2);
 
-            dg_road_confirm = new Dialog(DashboardNavigation.this);
-            dg_road_confirm.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dg_road_confirm.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-            dg_road_confirm.setCancelable(false);
-            dg_road_confirm.setContentView(R.layout.dialog_road_confirm);
+        tv_txt1.setTypeface(tf);
+        tv_txt2.setTypeface(tf);
+        btn_yes.setTypeface(tf);
 
-            btn_yes = (Button) dg_road_confirm.findViewById(R.id.button_yes);
-            tv_txt1 = (android.widget.TextView) dg_road_confirm.findViewById(R.id.textView_1);
-            tv_txt2 = (android.widget.TextView) dg_road_confirm.findViewById(R.id.textView_2);
+        btn_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dg_road_confirm.dismiss();
+                TranslateAnimation anim_btn_b2t = new TranslateAnimation(0, 0, height, 0);
+                anim_btn_b2t.setDuration(500);
+                lt_filter_dialog.setAnimation(anim_btn_b2t);
+                lt_filter_dialog.setVisibility(View.VISIBLE);
 
-            tv_txt1.setTypeface(tf);
-            tv_txt2.setTypeface(tf);
-            btn_yes.setTypeface(tf);
-
-            btn_yes.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dg_road_confirm.dismiss();
-                    TranslateAnimation anim_btn_b2t = new TranslateAnimation(0, 0, height, 0);
-                    anim_btn_b2t.setDuration(500);
-                    lt_filter_dialog.setAnimation(anim_btn_b2t);
-                    lt_filter_dialog.setVisibility(View.VISIBLE);
-
-                    destination.setText("");
-                }
-            });
-
+                destination.setText("");
+            }
+        });
 
 
         btn_book_roadside.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                //intent.putExtra("apiKey", "U1lTUC4xNUhPMTIkMTIzLjR8U1lTUA==");
+                // intent.putExtra("txnToken", "d3hyVTMxSmxpUXNxNjh6MTBqRXF4Wms3Vll1OTN4S1c2dkMrL2VjWkFpQm9BUzRNb2VGWFpRPT0=");
 
-                //bottomSheetBehavior.setPeekHeight(height/2);
+            /*    Intent intent = new Intent(DashboardNavigation.this, RemitaMainActivity.class);
+                intent.putExtra("amount", "250");
+                intent.putExtra("testMode", false);
+                intent.putExtra("apiKey", "U1lTUC4xNUhPMTIkMTIzLjR8U1lTUA==");
+                intent.putExtra("txnToken", "55316C54554334784E5568504D54496B4D54497A4C6A523855316C5455413D3D7C3932333737633266613035313135306337363534386636376266623131303165383831366464343834666234363064653062343731663538643461323835303537333638653232313135363366383334666337613166333265333336653834626539656566393465396363356131363739353463646239333434363164313732");
+                startActivityForResult(intent, 102);*/
 
-                if (destination.getText().toString().isEmpty()) {
-                    // Toast.makeText(getApplicationContext(), "Choose Drop Location", Toast.LENGTH_LONG).show();
+
+              /*  if (destination.getText().toString().isEmpty()) {
                     snackbar.show();
                     tv_snack.setText("Choose Drop Location");
                 } else {
@@ -926,10 +932,23 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
 
+                }*/
+                String amt = "322";
+                String amt1 = "arefadf";
+                String amt2 = "334aadf32";
+                try {
+                    String daa = getInternetData(amt, amt1, amt2);
+                    Log.e("tag", "asdf: " + daa);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+
+               // measdfi();
+
 
             }
         });
+
 
         lt_bt_veh_car.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -945,14 +964,16 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 lt_bt_tow_type.setVisibility(View.VISIBLE);
                 lt_bt_veh_type.setVisibility(View.GONE);
                 cu_vec_type = "bus";
-        }});
+            }
+        });
         lt_bt_veh_truck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 lt_bt_tow_type.setVisibility(View.VISIBLE);
                 lt_bt_veh_type.setVisibility(View.GONE);
                 cu_vec_type = "truck";
-            }});
+            }
+        });
 
         lt_bt_veh_flatbed.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1249,6 +1270,13 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             }
         }
 
+        if (resultCode == RESULT_OK && requestCode == 102) {
+            Log.e("tag", "cd:" + resultCode);
+            Log.e("tag", "rc:" + requestCode);
+            Log.e("tag", "dt:" + data.toString());
+        }
+
+
     }
 
     @Override
@@ -1540,12 +1568,11 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     @Override
     public void onBackPressed() {
         //super.onBackPressed();
-        if(lt_filter_dialog.getVisibility() == View.VISIBLE) {
+        if (lt_filter_dialog.getVisibility() == View.VISIBLE) {
             dialog1.show();
             exit_status = 1;
             tv_txt3.setText("Exit");
-        }
-        else{
+        } else {
             final int height = getDeviceHeight(DashboardNavigation.this);
             TranslateAnimation anim_btn_b2t = new TranslateAnimation(0, 0, height, 0);
             anim_btn_b2t.setDuration(500);
@@ -1554,11 +1581,108 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         }
     }
 
+    public String getInternetData(String amt, String ref, String narration) throws Exception {
+
+        //http://104.197.80.225:8080/remitaserver/?amount=%22350%22&transRef=%22asdf%22&narration=%22naraoid%22
+
+        BufferedReader in = null;
+        String data = null;
+
+        try {
+            HttpClient client = new DefaultHttpClient();
+            //client.getConnectionManager().getSchemeRegistry().register(getMockedScheme());
+
+            //  String uelk =  "http://104.197.80.225:8080/remitaserver/?amount=\""+amt+"\"&transRef=\""+ref+"\"&narration=\""+narration+"\"";
+
+            String aamt =  URLEncoder.encode(amt, "UTF-8");
+            String aref =  URLEncoder.encode(ref, "UTF-8");
+            String anarration =  URLEncoder.encode(narration, "UTF-8");
+
+            // Create http cliient object to send request to server
+
+            HttpClient Client = new DefaultHttpClient();
+
+            // Create URL string
+            String URL = "http://104.197.80.225:8080/remitaserver/?amount=" + aamt + "&transRef=" + aref + "&narration=" + anarration ;
+
+            //String uelk = "http://104.197.80.225:8080/remitaserver/?amount=\"" + amt + "\"&transRef=\"" + ref + "\"&narration=\"" + narration + "\"";
+
+            Log.e("tag", "s:" + URL);
+            URI website = new URI(URL);
+            HttpGet request = new HttpGet();
+            request.setURI(website);
+            HttpResponse response = client.execute(request);
+            response.getStatusLine().getStatusCode();
+
+            in = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+            StringBuffer sb = new StringBuffer("");
+            String l = "";
+            String nl = System.getProperty("line.separator");
+            while ((l = in.readLine()) != null) {
+                sb.append(l + nl);
+            }
+            in.close();
+            data = sb.toString();
+            Log.e("tagdaa: ", data);
+            return data;
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                    return data;
+                } catch (Exception e) {
+                    Log.e("tagGetMethodEx", e.getMessage());
+                }
+            }
+        }
+    }
+
+    public void measdfi() {
+
+        try {
+
+            // URLEncode user defined data
+
+            String amt =  URLEncoder.encode("350", "UTF-8");
+            String ref =  URLEncoder.encode("asdf", "UTF-8");
+            String narration =  URLEncoder.encode("32423asdf", "UTF-8");
+
+            // Create http cliient object to send request to server
+
+            HttpClient Client = new DefaultHttpClient();
+
+            // Create URL string
+            String URL = "http://104.197.80.225:8080/remitaserver/?amount=" + amt + "&transRef=" + ref + "&narration=" + narration ;
+
+            //Log.i("httpget", URL);
+
+            try {
+                String SetServerString = "";
+
+                // Create Request to server and get response
+
+                HttpGet httpget = new HttpGet(URL);
+                ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                SetServerString = Client.execute(httpget, responseHandler);
+
+
+                // Show response on activity
+
+                Log.e("tag", "asdg:" + SetServerString);
+            } catch (Exception ex) {
+
+                Log.e("tag", "errr:" + ex.toString());
+            }
+        } catch (Exception ex) {
+            Log.e("tag", "errhh:" + ex.toString());
+        }
+    }
+
     public class profile_update extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Log.e("tag","reg_preexe");
+            Log.e("tag", "reg_preexe");
         }
 
         @Override
@@ -1701,7 +1825,87 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         }
     }
 
+    public class payment_token extends AsyncTask<String, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mProgressDialog.show();
+        }
 
+        @Override
+        protected String doInBackground(String... strings) {
+            String json = "", s, jsonStr = "";
+            JSONObject jsonObject = new JSONObject();
+            try {
+
+
+                jsonObject.put("pickup_location", str_pickup);
+                jsonObject.put("drop_location", str_drop);
+                jsonObject.put("goods_type", "road");
+                jsonObject.put("vehicle_type", dr_vec_type);
+                jsonObject.put("vehicle_sub_type", cu_vec_type);
+                jsonObject.put("booking_time", str_time);
+                jsonObject.put("pickup_latitude", str_pickup_lati);
+                jsonObject.put("pickup_longitude", str_pickup_longi);
+                jsonObject.put("drop_latitude", str_drop_lati);
+                jsonObject.put("drop_longitude", str_drop_longi);
+
+
+                json = jsonObject.toString();
+
+                return s = HttpUtils.makeRequest1(net.sqindia.movehaul.Config.WEB_URL + "customer/booking", json, id, token);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("tag", "tag" + s);
+            mProgressDialog.dismiss();
+
+            if (s != null) {
+                try {
+                    JSONObject jo = new JSONObject(s);
+                    String status = jo.getString("status");
+                    String msg = jo.getString("message");
+
+                    Log.d("tag", "<-----Status----->" + status);
+                    if (status.equals("true")) {
+                        Log.e("tag", msg);
+                        String bookingid = jo.getString("booking_id");
+                        editor.putString("job_id", bookingid);
+                        editor.commit();
+
+                        Intent goReve = new Intent(getApplicationContext(), Job_review.class);
+                        startActivity(goReve);
+                        finish();
+
+                        dg_road_confirm.show();
+
+                    } else if (status.equals("false")) {
+
+                        Log.e("tag", "Location not updated");
+                        //has to check internet and location...
+                        Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.e("tag", "nt" + e.toString());
+                    Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
+                }
+            } else {
+                // Toast.makeText(getApplicationContext(),"Network Errror1",Toast.LENGTH_LONG).show();
+            }
+
+        }
+
+    }
 
     public class book_roadside extends AsyncTask<String, Void, String> {
         @Override
@@ -1717,33 +1921,32 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         protected String doInBackground(String... strings) {
             String json = "", jsonStr = "";
 
-                Log.e("tag", "no poto");
+            Log.e("tag", "no poto");
 
-                String s = "";
-                JSONObject jsonObject = new JSONObject();
-                try {
-
-
-                    jsonObject.put("pickup_location", str_pickup);
-                    jsonObject.put("drop_location", str_drop);
-                    jsonObject.put("goods_type", "road");
-                    jsonObject.put("vehicle_type", dr_vec_type);
-                    jsonObject.put("vehicle_sub_type", cu_vec_type);
-                    jsonObject.put("booking_time", str_time);
-                    jsonObject.put("pickup_latitude", str_pickup_lati);
-                    jsonObject.put("pickup_longitude", str_pickup_longi);
-                    jsonObject.put("drop_latitude", str_drop_lati);
-                    jsonObject.put("drop_longitude", str_drop_longi );
+            String s = "";
+            JSONObject jsonObject = new JSONObject();
+            try {
 
 
-                    json = jsonObject.toString();
+                jsonObject.put("pickup_location", str_pickup);
+                jsonObject.put("drop_location", str_drop);
+                jsonObject.put("goods_type", "road");
+                jsonObject.put("vehicle_type", dr_vec_type);
+                jsonObject.put("vehicle_sub_type", cu_vec_type);
+                jsonObject.put("booking_time", str_time);
+                jsonObject.put("pickup_latitude", str_pickup_lati);
+                jsonObject.put("pickup_longitude", str_pickup_longi);
+                jsonObject.put("drop_latitude", str_drop_lati);
+                jsonObject.put("drop_longitude", str_drop_longi);
 
-                    return s = HttpUtils.makeRequest1(net.sqindia.movehaul.Config.WEB_URL + "customer/booking", json, id, token);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                return null;
 
+                json = jsonObject.toString();
+
+                return s = HttpUtils.makeRequest1(net.sqindia.movehaul.Config.WEB_URL + "customer/booking", json, id, token);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
 
 
         }
