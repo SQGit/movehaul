@@ -78,6 +78,7 @@ import com.gun0912.tedpicker.ImagePickerActivity;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.TextView;
 import com.sloop.fonts.FontsManager;
+import com.systemspecs.remita.remitapaymentgateway.RemitaMainActivity;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -109,6 +110,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.locks.ReadWriteLock;
 
 
 public class DashboardNavigation extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, com.google.android.gms.location.LocationListener, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
@@ -116,7 +118,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
     private static final int REQUEST_CODE_AUTOCOMPLETE1 = 2;
-    private static final int REQUEST_CODE_PAYMENT = 2;
+    private static final int REQUEST_CODE_PAYMENT = 545;
     private static final int REQUEST_PROFILE = 5;
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
     public static boolean mMapIsTouched = false;
@@ -915,7 +917,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 startActivityForResult(intent, 102);*/
 
 
-              /*  if (destination.getText().toString().isEmpty()) {
+                if (destination.getText().toString().isEmpty()) {
                     snackbar.show();
                     tv_snack.setText("Choose Drop Location");
                 } else {
@@ -930,20 +932,9 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                    // new book_roadside().execute();
 
                     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-
-
-                }*/
-                String amt = "322";
-                String amt1 = "arefadf";
-                String amt2 = "334aadf32";
-                try {
-                    String daa = getInternetData(amt, amt1, amt2);
-                    Log.e("tag", "asdf: " + daa);
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
 
-               // measdfi();
+
 
 
             }
@@ -979,16 +970,40 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             @Override
             public void onClick(View view) {
                 dr_vec_type = "flatbed";
-                new book_roadside().execute();
+               // new book_roadside().execute();
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+
+                String amt = "322";
+                String amt1 = "arefadf";
+                String amt2 = "334aadf32";
+                //new payment_token(amt,amt1,amt2).execute();
+
+                Intent intent = new Intent(DashboardNavigation.this, RemitaMainActivity.class);
+                intent.putExtra("amount", "250");
+                intent.putExtra("testMode", true);
+                intent.putExtra("apiKey", "U1lTUC4xNUhPMTIkMTIzLjR8U1lTUA==");
+                intent.putExtra("txnToken", "55316C54554334784E5568504D54496B4D54497A4C6A523855316C5455413D3D7C3932333737633266613035313135306337363534386636376266623131303165383831366464343834666234363064653062343731663538643461323835303537333638653232313135363366383334666337613166333265333336653834626539656566393465396363356131363739353463646239333434363164313732");
+                startActivityForResult(intent, REQUEST_CODE_PAYMENT);
             }
         });
         lt_bt_veh_tow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dr_vec_type = "tow";
-                new book_roadside().execute();
+               // new book_roadside().execute();
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+
+                String amt = "322";
+                String amt1 = "arefadf";
+                String amt2 = "334aadf32";
+                //new payment_token(amt,amt1,amt2).execute();
+
+                Intent intent = new Intent(DashboardNavigation.this, RemitaMainActivity.class);
+                intent.putExtra("amount", "250");
+                intent.putExtra("testMode", true);
+                intent.putExtra("apiKey", "U1lTUC4xNUhPMTIkMTIzLjR8U1lTUA==");
+                intent.putExtra("txnToken", "55316C54554334784E5568504D54496B4D54497A4C6A523855316C5455413D3D7C3932333737633266613035313135306337363534386636376266623131303165383831366464343834666234363064653062343731663538643461323835303537333638653232313135363366383334666337613166333265333336653834626539656566393465396363356131363739353463646239333434363164313732");
+                startActivityForResult(intent, REQUEST_CODE_PAYMENT);
             }
         });
 
@@ -1270,7 +1285,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             }
         }
 
-        if (resultCode == RESULT_OK && requestCode == 102) {
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_PAYMENT) {
             Log.e("tag", "cd:" + resultCode);
             Log.e("tag", "rc:" + requestCode);
             Log.e("tag", "dt:" + data.toString());
@@ -1567,7 +1582,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
         if (lt_filter_dialog.getVisibility() == View.VISIBLE) {
             dialog1.show();
             exit_status = 1;
@@ -1581,102 +1595,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         }
     }
 
-    public String getInternetData(String amt, String ref, String narration) throws Exception {
-
-        //http://104.197.80.225:8080/remitaserver/?amount=%22350%22&transRef=%22asdf%22&narration=%22naraoid%22
-
-        BufferedReader in = null;
-        String data = null;
-
-        try {
-            HttpClient client = new DefaultHttpClient();
-            //client.getConnectionManager().getSchemeRegistry().register(getMockedScheme());
-
-            //  String uelk =  "http://104.197.80.225:8080/remitaserver/?amount=\""+amt+"\"&transRef=\""+ref+"\"&narration=\""+narration+"\"";
-
-            String aamt =  URLEncoder.encode(amt, "UTF-8");
-            String aref =  URLEncoder.encode(ref, "UTF-8");
-            String anarration =  URLEncoder.encode(narration, "UTF-8");
-
-            // Create http cliient object to send request to server
-
-            HttpClient Client = new DefaultHttpClient();
-
-            // Create URL string
-            String URL = "http://104.197.80.225:8080/remitaserver/?amount=" + aamt + "&transRef=" + aref + "&narration=" + anarration ;
-
-            //String uelk = "http://104.197.80.225:8080/remitaserver/?amount=\"" + amt + "\"&transRef=\"" + ref + "\"&narration=\"" + narration + "\"";
-
-            Log.e("tag", "s:" + URL);
-            URI website = new URI(URL);
-            HttpGet request = new HttpGet();
-            request.setURI(website);
-            HttpResponse response = client.execute(request);
-            response.getStatusLine().getStatusCode();
-
-            in = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-            StringBuffer sb = new StringBuffer("");
-            String l = "";
-            String nl = System.getProperty("line.separator");
-            while ((l = in.readLine()) != null) {
-                sb.append(l + nl);
-            }
-            in.close();
-            data = sb.toString();
-            Log.e("tagdaa: ", data);
-            return data;
-        } finally {
-            if (in != null) {
-                try {
-                    in.close();
-                    return data;
-                } catch (Exception e) {
-                    Log.e("tagGetMethodEx", e.getMessage());
-                }
-            }
-        }
-    }
-
-    public void measdfi() {
-
-        try {
-
-            // URLEncode user defined data
-
-            String amt =  URLEncoder.encode("350", "UTF-8");
-            String ref =  URLEncoder.encode("asdf", "UTF-8");
-            String narration =  URLEncoder.encode("32423asdf", "UTF-8");
-
-            // Create http cliient object to send request to server
-
-            HttpClient Client = new DefaultHttpClient();
-
-            // Create URL string
-            String URL = "http://104.197.80.225:8080/remitaserver/?amount=" + amt + "&transRef=" + ref + "&narration=" + narration ;
-
-            //Log.i("httpget", URL);
-
-            try {
-                String SetServerString = "";
-
-                // Create Request to server and get response
-
-                HttpGet httpget = new HttpGet(URL);
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                SetServerString = Client.execute(httpget, responseHandler);
-
-
-                // Show response on activity
-
-                Log.e("tag", "asdg:" + SetServerString);
-            } catch (Exception ex) {
-
-                Log.e("tag", "errr:" + ex.toString());
-            }
-        } catch (Exception ex) {
-            Log.e("tag", "errhh:" + ex.toString());
-        }
-    }
 
     public class profile_update extends AsyncTask<String, Void, String> {
         @Override
@@ -1826,81 +1744,57 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     }
 
     public class payment_token extends AsyncTask<String, Void, String> {
+
+        String amount,txn_ref,narrat,status;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             mProgressDialog.show();
         }
-
+        payment_token(String amt,String ref,String narration){
+            this.amount = amt;
+            this.txn_ref = ref;
+            this.narrat = narration;
+        }
         @Override
         protected String doInBackground(String... strings) {
-            String json = "", s, jsonStr = "";
-            JSONObject jsonObject = new JSONObject();
             try {
-
-
-                jsonObject.put("pickup_location", str_pickup);
-                jsonObject.put("drop_location", str_drop);
-                jsonObject.put("goods_type", "road");
-                jsonObject.put("vehicle_type", dr_vec_type);
-                jsonObject.put("vehicle_sub_type", cu_vec_type);
-                jsonObject.put("booking_time", str_time);
-                jsonObject.put("pickup_latitude", str_pickup_lati);
-                jsonObject.put("pickup_longitude", str_pickup_longi);
-                jsonObject.put("drop_latitude", str_drop_lati);
-                jsonObject.put("drop_longitude", str_drop_longi);
-
-
-                json = jsonObject.toString();
-
-                return s = HttpUtils.makeRequest1(net.sqindia.movehaul.Config.WEB_URL + "customer/booking", json, id, token);
-            } catch (JSONException e) {
+                String amt =  URLEncoder.encode(amount, "UTF-8");
+                String ref =  URLEncoder.encode(txn_ref, "UTF-8");
+                String narration =  URLEncoder.encode(narrat, "UTF-8");
+                String URL = "http://104.197.80.225:8080/remitaserver/?amount=" + amt + "&transRef=" + ref + "&narration=" + narration ;
+                return status = HttpUtils.makeRequest0(URL);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;
-
-
         }
-
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.e("tag", "tag" + s);
             mProgressDialog.dismiss();
-
             if (s != null) {
                 try {
                     JSONObject jo = new JSONObject(s);
-                    String status = jo.getString("status");
-                    String msg = jo.getString("message");
+                    String Txn_Ref = jo.getString("txn_token");
+                    Log.e("tag","ref:"+Txn_Ref);
 
-                    Log.d("tag", "<-----Status----->" + status);
-                    if (status.equals("true")) {
-                        Log.e("tag", msg);
-                        String bookingid = jo.getString("booking_id");
-                        editor.putString("job_id", bookingid);
-                        editor.commit();
+                    Intent intent = new Intent(DashboardNavigation.this, RemitaMainActivity.class);
+                    intent.putExtra("amount", "250");
+                    intent.putExtra("testMode", true);
+                    intent.putExtra("apiKey", "U1lTUC4xNUhPMTIkMTIzLjR8U1lTUA==");
+                    intent.putExtra("txnToken", "55316C54554334784E5568504D54496B4D54497A4C6A523855316C5455413D3D7C3932333737633266613035313135306337363534386636376266623131303165383831366464343834666234363064653062343731663538643461323835303537333638653232313135363366383334666337613166333265333336653834626539656566393465396363356131363739353463646239333434363164313732");
+                    startActivityForResult(intent, 102);
 
-                        Intent goReve = new Intent(getApplicationContext(), Job_review.class);
-                        startActivity(goReve);
-                        finish();
 
-                        dg_road_confirm.show();
-
-                    } else if (status.equals("false")) {
-
-                        Log.e("tag", "Location not updated");
-                        //has to check internet and location...
-                        Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
-
-                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("tag", "nt" + e.toString());
                     Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
                 }
             } else {
-                // Toast.makeText(getApplicationContext(),"Network Errror1",Toast.LENGTH_LONG).show();
+                 Toast.makeText(getApplicationContext(),"Network Errror1",Toast.LENGTH_LONG).show();
             }
 
         }

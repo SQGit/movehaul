@@ -45,6 +45,7 @@ public class Job_review extends Activity {
     String id,token;
     String vec_type;
     ImageView iv_type;
+    android.widget.LinearLayout lt_nearby;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +73,8 @@ public class Job_review extends Activity {
         tv_time = (TextView) findViewById(R.id.textview_time);
         tv_truck = (TextView) findViewById(R.id.textview_truck);
         iv_type  = (ImageView) findViewById(R.id.image_type);
+
+        lt_nearby = (android.widget.LinearLayout) findViewById(R.id.layout_landmark);
 
         tv_da_header = (TextView) findViewById(R.id.textview_da_header);
 
@@ -256,13 +259,16 @@ public class Job_review extends Activity {
 
                                 tv_pickup.setText(pickup_location);
                                 tv_drop.setText(drop_location);
-                                tv_delivery.setText(delivery_address);
+                                if(delivery_address.toString().equals("null")){
+                                    lt_nearby.setVisibility(View.GONE);
+                                }
+                                else{
+                                    tv_delivery.setText(delivery_address);
+                                }
+
                                 tv_date.setText(part1);
                                 tv_time.setText(part2);
                                 tv_truck.setText(vehicle_main_type+" - "+vehicle_sub_type);
-
-
-
 
                             }
                         }

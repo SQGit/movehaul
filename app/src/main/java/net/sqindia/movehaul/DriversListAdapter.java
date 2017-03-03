@@ -52,13 +52,14 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
     private View.OnClickListener defaultRequestBtnClickListener;
     private int[] layouts;
     private MyViewPagerAdapter myViewPagerAdapter;
-    com.rey.material.widget.TextView tv_title_truck,tv_title_truck_txt,tv_title_driver_name,tv_title_bidding,        tv_content_bidding,tv_content_driver_name,tv_content_damage_control,tv_content_truck;
+    com.rey.material.widget.TextView tv_title_truck,tv_title_truck_txt,tv_title_driver_name,tv_title_bidding,tv_content_bidding,tv_content_driver_name,tv_content_damage_control,tv_content_truck,tv_title_driver_name_txt,tv_content_driver_name_txt,tv_content_damage_control_txt,tv_content_truck_txt,tv_content_job_comp,tv_content_break_hist,tv_content_job_completed,tv_content_break_history;
     MV_Datas mv_datas;
     String tr_front,tr_side,tr_back;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     String bidding;
     int doid ;
+    Typeface tf;
 
     public DriversListAdapter(Context context, Activity acti, ArrayList<MV_Datas> objects, int ss) {
         super(context, 0, objects);
@@ -81,6 +82,7 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
         // if cell is exists - reuse it, if not - create the new one from resource
         cell = (FoldingCell) convertView;
         ViewHolder viewHolder;
+        tf = Typeface.createFromAsset(act.getAssets(), "fonts/lato.ttf");
 
         FontsManager.initFormAssets(act, "fonts/lato.ttf");       //initialization
         FontsManager.changeFonts(act);
@@ -94,12 +96,20 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
 
         if (cell == null) {
             viewHolder = new ViewHolder();
+
+            FontsManager.initFormAssets(act, "fonts/lato.ttf");       //initialization
+            FontsManager.changeFonts(act);
+
             LayoutInflater vi = LayoutInflater.from(getContext());
             cell = (FoldingCell) vi.inflate(R.layout.drivers_list_adapter, parent, false);
 
 
             cell.setTag(viewHolder);
         } else {
+
+            FontsManager.initFormAssets(act, "fonts/lato.ttf");       //initialization
+            FontsManager.changeFonts(act);
+
             // for existing cell set valid valid state(without animation)
             if (unfoldedIndexes.contains(position)) {
                 cell.unfold(true);
@@ -110,8 +120,16 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
         }
 
         if (unfoldedIndexes.contains(position)) {
+
+            FontsManager.initFormAssets(act, "fonts/lato.ttf");       //initialization
+            FontsManager.changeFonts(act);
+
             cell.unfold(true);
         } else {
+
+            FontsManager.initFormAssets(act, "fonts/lato.ttf");       //initialization
+            FontsManager.changeFonts(act);
+
             cell.fold(true);
         }
 
@@ -159,6 +177,13 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
         tv_title_truck = (com.rey.material.widget.TextView) cell.findViewById(R.id.textview_title_truck_type);
         tv_title_driver_name = (com.rey.material.widget.TextView) cell.findViewById(R.id.textview_title_driver_name);
         tv_title_truck_txt = (com.rey.material.widget.TextView) cell.findViewById(R.id.textview_title_truck_type_txt);
+        tv_title_driver_name_txt = (com.rey.material.widget.TextView) cell.findViewById(R.id.textview_title_driver_name_txt);
+
+        tv_title_bidding.setTypeface(tf);
+        tv_title_truck.setTypeface(tf);
+        tv_title_driver_name.setTypeface(tf);
+        tv_title_truck_txt.setTypeface(tf);
+        tv_title_driver_name_txt.setTypeface(tf);
 
         if(doid == 0){
             tv_title_truck_txt.setText("Bus");
@@ -170,9 +195,31 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
 
 
         tv_content_bidding = (com.rey.material.widget.TextView) cell.findViewById(R.id.textview_content_bidding);
+
         tv_content_driver_name = (com.rey.material.widget.TextView) cell.findViewById(R.id.textview_content_driver_name);
         tv_content_damage_control = (com.rey.material.widget.TextView) cell.findViewById(R.id.textview_content_damage_control);
         tv_content_truck = (com.rey.material.widget.TextView) cell.findViewById(R.id.textview_content_truck_type);
+
+        tv_content_driver_name_txt = (com.rey.material.widget.TextView) cell.findViewById(R.id.textview_content_driver_name_txt);
+        tv_content_damage_control_txt = (com.rey.material.widget.TextView) cell.findViewById(R.id.textview_content_damage_control_txt);
+        tv_content_truck_txt = (com.rey.material.widget.TextView) cell.findViewById(R.id.textview_content_truck_type_txt);
+
+        tv_content_job_comp = (com.rey.material.widget.TextView) cell.findViewById(R.id.textview_content_jobs_completed);
+        tv_content_break_hist = (com.rey.material.widget.TextView) cell.findViewById(R.id.textview_content_breakdown);
+        tv_content_job_completed = (com.rey.material.widget.TextView) cell.findViewById(R.id.textview_content_jobs_compl);
+        tv_content_break_history = (com.rey.material.widget.TextView) cell.findViewById(R.id.textview_content_break);
+
+        tv_content_bidding.setTypeface(tf);
+        tv_content_driver_name.setTypeface(tf);
+        tv_content_damage_control.setTypeface(tf);
+        tv_content_truck.setTypeface(tf);
+        tv_content_driver_name_txt.setTypeface(tf);
+        tv_content_damage_control_txt.setTypeface(tf);
+        tv_content_truck_txt.setTypeface(tf);
+        tv_content_job_comp.setTypeface(tf);
+        tv_content_break_hist.setTypeface(tf);
+        tv_content_job_completed.setTypeface(tf);
+        tv_content_break_history.setTypeface(tf);
 
         iv_driver_image = (ImageView) cell.findViewById(R.id.driver_image);
 

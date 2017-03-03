@@ -392,6 +392,54 @@
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/_12sdp" />
                 </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="@dimen/_2sdp"
+                        android:src="@drawable/select_truck_type" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Vehicle No."
+                            android:textColor="@color/redColor"
+                            android:textSize="@dimen/_11sdp" />
+
+                        <TextView
+                            android:id="@+id/cr_dr_reg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:maxLines="2"
+                            android:layout_gravity="center"
+                            android:text="KJA-193AA"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/_12sdp" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

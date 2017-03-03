@@ -284,13 +284,13 @@ public class Book_now extends Activity {
             public void onClick(View view) {
 
 
-                if (!(et_delivery_address.getText().toString().trim().isEmpty())) {
+               // if (!(et_delivery_address.getText().toString().trim().isEmpty())) {
                     if (!(et_trucktype.getText().toString().trim().isEmpty()) && !et_trucktype.getText().toString().contains("Bus Type") && !et_trucktype.getText().toString().contains("Truck Type")) {
                       //  if (!(et_description.getText().toString().trim().isEmpty())) {
 
                             if (vec_type.equals("Truck")) {
                                 if (!(et_goodstype.getText().toString().trim().isEmpty())) {
-                                    str_delivery_address = et_delivery_address.getText().toString();
+
                                     str_goods_type = et_goodstype.getText().toString();
                                     str_truck_type = et_trucktype.getText().toString();
                                    // str_desc = et_description.getText().toString();
@@ -300,7 +300,7 @@ public class Book_now extends Activity {
                                 }
                             } else {
 
-                                str_delivery_address = et_delivery_address.getText().toString();
+                               //str_delivery_address = et_delivery_address.getText().toString();
                                 str_truck_type = et_trucktype.getText().toString();
                                 str_desc = et_description.getText().toString();
                                 new book_now_task().execute();
@@ -317,10 +317,10 @@ public class Book_now extends Activity {
 
                         Toast.makeText(getApplicationContext(), "Choose " + vec_type + " Type", Toast.LENGTH_LONG).show();
                     }
-                } else {
+               /* } else {
                     et_delivery_address.setError("EnterNearby Landmark");
                     et_delivery_address.requestFocus();
-                }
+                }*/
 
 
             }
@@ -642,6 +642,9 @@ public class Book_now extends Activity {
             if((!(et_description.getText().toString().trim().isEmpty()))){
                 str_desc = et_description.getText().toString().trim();
             }
+
+            if((!(et_delivery_address.getText().toString().trim().isEmpty())))
+            str_delivery_address = et_delivery_address.getText().toString();
         }
 
         @Override
@@ -664,6 +667,7 @@ public class Book_now extends Activity {
                     httppost.setHeader("sessiontoken", token);
                     httppost.setHeader("pickup_location", pickup_location);
                     httppost.setHeader("drop_location", drop_location);
+                    if(str_delivery_address != null)
                     httppost.setHeader("delivery_address", str_delivery_address);
                     if (vec_type.equals("Truck")) {
                         httppost.setHeader("goods_type", str_goods_type);

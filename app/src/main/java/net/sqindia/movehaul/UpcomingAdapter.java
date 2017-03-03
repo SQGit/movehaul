@@ -2,6 +2,7 @@ package net.sqindia.movehaul;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,8 +34,10 @@ public class UpcomingAdapter extends ArrayAdapter<MV_Datas> {
     FoldingCell cell;
     MV_Datas mv_datas;
     TextView tv_title_date,tv_title_booking_id,tv_title_pickup,tv_title_drop;
-    TextView tv_content_booking_id,tv_content_cost,tv_content_pickup,tv_content_drop,tv_content_dr_name,tv_content_dr_phone,tv_content_date,tv_content_time;
+    TextView tv_content_booking_id,tv_content_cost,tv_content_pickup,tv_content_drop,tv_content_dr_name,tv_content_dr_phone,tv_content_date,tv_content_time,tv_title_pickup_txt,tv_title_drop_txt,tv_content_pickup_txt,tv_content_drop_txt,tv_content_date_txt,tv_content_time_txt;
     ImageView iv_content_prof,iv_content_bg;
+    Typeface tf;
+    Button btn_cancel;
 
 
     public UpcomingAdapter(Context context,Activity acti, ArrayList<MV_Datas> objects) {
@@ -57,6 +60,8 @@ public class UpcomingAdapter extends ArrayAdapter<MV_Datas> {
          cell = (FoldingCell) convertView;
         ViewHolder viewHolder;
 
+        tf = Typeface.createFromAsset(act.getAssets(), "fonts/lato.ttf");
+
        FontsManager.initFormAssets(act, "fonts/lato.ttf");       //initialization
        FontsManager.changeFonts(act);
 
@@ -74,7 +79,17 @@ public class UpcomingAdapter extends ArrayAdapter<MV_Datas> {
             tv_title_date = (TextView) cell.findViewById(R.id.textview_title_date);
             tv_title_booking_id = (TextView) cell.findViewById(R.id.textview_title_booking_id);
             tv_title_pickup = (TextView) cell.findViewById(R.id.textview_title_pickup);
+            tv_title_pickup_txt = (TextView) cell.findViewById(R.id.textview_title_pickup);
             tv_title_drop = (TextView) cell.findViewById(R.id.textview_title_drop);
+            tv_title_drop_txt = (TextView) cell.findViewById(R.id.textview_title_drop);
+
+            tv_title_date.setTypeface(tf);
+            tv_title_booking_id.setTypeface(tf);
+            tv_title_pickup.setTypeface(tf);
+            tv_title_pickup_txt.setTypeface(tf);
+            tv_title_drop.setTypeface(tf);
+            tv_title_drop_txt.setTypeface(tf);
+
 
 
             tv_content_booking_id = (TextView) cell.findViewById(R.id.textview_content_booking_id);
@@ -87,6 +102,27 @@ public class UpcomingAdapter extends ArrayAdapter<MV_Datas> {
             tv_content_time = (TextView) cell.findViewById(R.id.textview_content_time);
             iv_content_prof = (ImageView) cell.findViewById(R.id.imageview_content_profile);
             iv_content_bg = (ImageView) cell.findViewById(R.id.image_bg);
+
+            btn_cancel = (Button) cell.findViewById(R.id.button_cancel);
+
+            tv_content_pickup_txt = (TextView) cell.findViewById(R.id.textview_content_pickup_txt);
+            tv_content_drop_txt = (TextView) cell.findViewById(R.id.textview_content_drop_txt);
+            tv_content_date_txt = (TextView) cell.findViewById(R.id.textview_content_date_txt);
+            tv_content_time_txt = (TextView) cell.findViewById(R.id.textview_content_time_txt);
+
+            tv_content_booking_id.setTypeface(tf);
+            tv_content_cost.setTypeface(tf);
+            tv_content_pickup.setTypeface(tf);
+            tv_content_pickup_txt.setTypeface(tf);
+            tv_content_drop.setTypeface(tf);
+            tv_content_drop_txt.setTypeface(tf);
+            tv_content_dr_name.setTypeface(tf);
+            tv_content_dr_phone.setTypeface(tf);
+            tv_content_date.setTypeface(tf);
+            tv_content_date_txt.setTypeface(tf);
+            tv_content_time.setTypeface(tf);
+            tv_content_time_txt.setTypeface(tf);
+            btn_cancel.setTypeface(tf);
 
             cell.setTag(viewHolder);
         } else {
@@ -114,7 +150,7 @@ public class UpcomingAdapter extends ArrayAdapter<MV_Datas> {
 
 
         tv_content_booking_id.setText(mv_datas.getBooking_id());
-        tv_content_cost.setText(mv_datas.getJob_cost());
+        tv_content_cost.setText("$ "+mv_datas.getJob_cost());
         tv_content_pickup.setText(mv_datas.getPickup());
         tv_content_drop.setText(mv_datas.getDrop());
         tv_content_dr_name.setText(mv_datas.getName());

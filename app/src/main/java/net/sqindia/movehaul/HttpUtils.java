@@ -74,6 +74,58 @@ public class HttpUtils {
         return "";
     }
 
+
+
+    public static String makeRequest0(String url) {
+        Log.v(TAG, "URL-->" + url);
+       // Log.v(TAG, "input-->" + json);
+
+
+        try {
+            Log.v(TAG, "inside-->");
+
+
+
+            HttpPost httpPost = new HttpPost(url);
+            HttpGet httpGet = new HttpGet(url);
+          //  httpPost.setEntity(new StringEntity(json));
+           // httpPost.setHeader("Accept", "application/json");
+           // httpPost.setHeader("Content-type", "application/json");
+
+            HttpResponse httpResponse = new DefaultHttpClient().execute(httpGet);
+
+
+            // receive response as inputStream
+            InputStream inputStream = httpResponse.getEntity().getContent();
+            // convert inputstream to string
+            if (inputStream != null) {
+                String result = convertInputStreamToString(inputStream);
+                Log.e(TAG, "output-->" + result);
+                return result;
+            } else {
+                Log.e(TAG, "output-->" + inputStream);
+
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            Log.e("tag","er:"+e.toString());
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+            Log.e("tag","er:"+e.toString());
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+            Log.e("tag","er:"+e.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("tag","er:"+e.toString());
+        }
+        return "";
+    }
+
+
+
+
+
     public static String makeRequest1(String url, String json,String id,String token) {
         Log.v(TAG, "URL-->" + url);
         Log.v(TAG, "input-->" + json);

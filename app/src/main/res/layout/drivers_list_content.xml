@@ -3,13 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:visibility="gone"
-    android:background="@android:color/transparent"
+    android:background="@drawable/white_bg"
     android:descendantFocusability="blocksDescendants"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_143sdp"
+        android:layout_height="@dimen/_210sdp"
         android:layout_marginRight="-2dp"
         android:background="@drawable/white_bg"
         android:orientation="vertical">
@@ -17,7 +17,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <View
                 android:layout_width="match_parent"
@@ -60,8 +60,8 @@
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/driver_image"
-                        android:layout_width="@dimen/_50sdp"
-                        android:layout_height="@dimen/_50sdp"
+                        android:layout_width="@dimen/_60sdp"
+                        android:layout_height="@dimen/_60sdp"
                         android:layout_gravity="center"
                         android:layout_marginLeft="@dimen/_5sdp"
                         android:paddingBottom="@dimen/_6sdp"
@@ -93,8 +93,8 @@
                     android:orientation="vertical"
                     android:paddingTop="@dimen/_7sdp">
 
-                    <TextView
-                        android:id="@+id/textview_bxt"
+                    <com.rey.material.widget.TextView
+                        android:id="@+id/textview_content_driver_name_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Name"
@@ -109,8 +109,8 @@
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/_15sdp" />
 
-                    <TextView
-                        android:id="@+id/textview_bootxt"
+                    <com.rey.material.widget.TextView
+                        android:id="@+id/textview_content_damage_control_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/_3sdp"
@@ -126,8 +126,8 @@
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/_15sdp" />
 
-                    <TextView
-                        android:id="@+id/textview_book_txt"
+                    <com.rey.material.widget.TextView
+                        android:id="@+id/textview_content_truck_type_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/_3sdp"
@@ -154,8 +154,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|bottom"
+                android:layout_marginTop="@dimen/_70sdp"
                 android:focusable="false"
-                android:paddingBottom="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_5sdp"
                 android:paddingLeft="@dimen/_10sdp"
                 android:paddingRight="@dimen/_10sdp"
                 android:paddingTop="@dimen/_10sdp"
@@ -163,6 +164,84 @@
 
 
         </FrameLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:layout_marginLeft="@dimen/_18sdp"
+            android:layout_marginRight="@dimen/_18sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@color/gr2" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/_5sdp">
+
+            <com.rey.material.widget.TextView
+                android:id="@+id/textview_content_jobs_completed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Number of Jobs Completed"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/_12sdp" />
+
+            <com.rey.material.widget.TextView
+                android:id="@+id/textview_content_jobs_compl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_25sdp"
+                android:gravity="center"
+                android:paddingLeft="@dimen/_6sdp"
+                android:paddingRight="@dimen/_6sdp"
+                android:paddingTop="@dimen/_3sdp"
+                android:paddingBottom="@dimen/_3sdp"
+                android:background="@drawable/roou_s"
+                android:text="5"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/_15sdp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:layout_marginBottom="@dimen/_7sdp"
+          >
+
+            <com.rey.material.widget.TextView
+                android:id="@+id/textview_content_breakdown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="Vehicle Breakdown History"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/_12sdp" />
+
+            <com.rey.material.widget.TextView
+                android:id="@+id/textview_content_break"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginRight="@dimen/_25sdp"
+                android:gravity="center"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:background="@drawable/roou_s"
+                android:text="2"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/_15sdp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

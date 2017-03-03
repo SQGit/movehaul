@@ -6,7 +6,7 @@
         <shape>
             <!-- set the shadow color here -->
             <stroke
-                android:width="0.5dp"
+                android:width="0.9dp"
                 android:color="#E6A1A1A1" />
 
 
@@ -20,7 +20,6 @@
         <shape>
 
             <solid android:color="#99ffffff" />
-
             <corners android:radius="3dp" />
         </shape>
     </item>
