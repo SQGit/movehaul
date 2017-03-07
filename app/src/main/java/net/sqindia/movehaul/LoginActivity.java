@@ -69,8 +69,8 @@ public class LoginActivity extends Activity {
 
 
         mProgressDialog = new ProgressDialog(LoginActivity.this,R.style.AppCompatAlertDialogStyle);
-        mProgressDialog.setTitle("Loading..");
-        mProgressDialog.setMessage("Please wait");
+        mProgressDialog.setTitle(getString(R.string.lo));
+        mProgressDialog.setMessage(getString(R.string.los));
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.setCancelable(false);
 
@@ -78,7 +78,7 @@ public class LoginActivity extends Activity {
 
 
         snackbar = Snackbar
-                .make(findViewById(R.id.top), "Network Error! Please Try Again Later.", Snackbar.LENGTH_LONG);
+                .make(findViewById(R.id.top), R.string.no_internet, Snackbar.LENGTH_LONG);
         View sbView = snackbar.getView();
         tv_snack = (android.widget.TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         tv_snack.setTextColor(Color.WHITE);
@@ -86,7 +86,7 @@ public class LoginActivity extends Activity {
 
         if (!config.isConnected(LoginActivity.this)) {
             snackbar.show();
-            tv_snack.setText("Please Connect Internet and Try again");
+            tv_snack.setText(R.string.please_try_again);
         }
 
         btn_back.setOnClickListener(new View.OnClickListener() {
@@ -115,13 +115,13 @@ public class LoginActivity extends Activity {
                         new login_customer().execute();
                     } else {
                         snackbar.show();
-                        tv_snack.setText("Please Connect Internet and Try again");
+                        tv_snack.setText(R.string.please_try_again);
                     }
 
                 } else {
                    // et_mobile_no.setError("Enter valid phone number");
                     snackbar.show();
-                    tv_snack.setText("Enter valid phone Number");
+                    tv_snack.setText(R.string.wa);
                     et_mobile_no.requestFocus();
                 }
 
@@ -143,8 +143,8 @@ public class LoginActivity extends Activity {
         if (!config.isConnected(LoginActivity.this)) {
 
             snack_wifi = Snackbar
-                    .make(findViewById(R.id.top), "No internet connection!", Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Open Settings", new View.OnClickListener() {
+                    .make(findViewById(R.id.top), R.string.a, Snackbar.LENGTH_INDEFINITE)
+                    .setAction(R.string.ae, new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
@@ -206,7 +206,7 @@ public class LoginActivity extends Activity {
                     } else if (status.equals("false")) {
                         if (msg.contains("Register with MoveHaul first to Generate OTP")) {
 
-                            tv_snack.setText("Mobile Number is not registered with MoveHaul !");
+                            tv_snack.setText(R.string.asdw);
                             snackbar.show();
                         } else if (msg.contains("Error Occured[object Object]")) {
 

@@ -39,7 +39,7 @@ import org.json.JSONObject;
 
 public class LoginOtpActivity1 extends Activity implements View.OnFocusChangeListener, View.OnKeyListener, TextWatcher {
     //static EditText et_otp1, et_otp2, et_otp3, et_otp4;
-    private static LoginOtpActivity1 inst;
+    //private static LoginOtpActivity1 inst;
     LinearLayout btn_back;
     String str_otppin, str_for, str_data;
     Button btn_submit;
@@ -225,8 +225,8 @@ public class LoginOtpActivity1 extends Activity implements View.OnFocusChangeLis
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(LoginOtpActivity1.this, LoginActivity.class);
-        startActivity(i);
+        /*Intent i = new Intent(LoginOtpActivity1.this, LoginActivity.class);
+        startActivity(i);*/
         finish();
     }
 

@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
     android:orientation="vertical"
-
     android:paddingTop="@dimen/_5sdp">
 
     <ScrollView
@@ -180,7 +179,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Driver Name"
+                            android:text="@string/driver_name"
                             android:textColor="@color/redColor"
                             android:textSize="@dimen/_11sdp" />
 
@@ -223,7 +222,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Driver Ph.No."
+                            android:text="@string/driver_ph_no"
                             android:textColor="@color/redColor"
                             android:textSize="@dimen/_11sdp" />
 
@@ -278,7 +277,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Pickup"
+                        android:text="@string/pickupew"
                         android:textColor="@color/redColor"
                         android:textSize="@dimen/_11sdp" />
 
@@ -323,7 +322,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Drop"
+                        android:text="@string/drops"
                         android:textColor="@color/redColor"
                         android:textSize="@dimen/_11sdp" />
 
@@ -378,7 +377,7 @@
                         android:id="@+id/cr_delivery_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Vehicle Type"
+                        android:text="@string/vehicle_typeas"
                         android:textColor="@color/redColor"
                         android:textSize="@dimen/_11sdp" />
 
@@ -418,7 +417,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Vehicle No."
+                            android:text="@string/vehicle_nods"
                             android:textColor="@color/redColor"
                             android:textSize="@dimen/_11sdp" />
 
@@ -469,7 +468,7 @@
                 android:background="@color/redColor"
                 android:gravity="center"
                 android:padding="@dimen/_7sdp"
-                android:text="Cancel Job"
+                android:text="@string/cancel_job"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textSize="@dimen/_19sdp"

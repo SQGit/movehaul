@@ -24,7 +24,7 @@
             android:focusable="false"
             android:gravity="left"
             android:paddingTop="@dimen/_10sdp"
-            android:text="Truck"
+            android:text="@string/trucks"
             android:textColor="@color/textColor"
             android:textSize="@dimen/_14sdp" />
 
@@ -398,7 +398,7 @@
             android:focusable="false"
             android:gravity="left"
             android:paddingTop="@dimen/_10sdp"
-            android:text="Cost"
+            android:text="@string/cost"
             android:textColor="@color/textColor"
             android:textSize="@dimen/_14sdp" />
 
@@ -505,7 +505,7 @@
                             android:focusable="false"
                             android:gravity="center"
 
-                            android:text="Low Cost"
+                            android:text="@string/low_cost"
                             android:textColor="@color/textColor"
                             android:textSize="@dimen/_8sdp"
                             android:id="@+id/textView" />
@@ -532,7 +532,7 @@
                             android:focusable="false"
                             android:gravity="center"
 
-                            android:text="Medium Cost"
+                            android:text="@string/medium_cost"
                             android:textColor="@color/textColor"
                             android:textSize="@dimen/_8sdp" />
                     </LinearLayout>
@@ -553,7 +553,7 @@
                             android:focusable="false"
                             android:gravity="center"
 
-                            android:text="High Cost"
+                            android:text="@string/high_cost"
                             android:textColor="@color/textColor"
                             android:textSize="@dimen/_8sdp" />
                     </LinearLayout>
@@ -583,7 +583,7 @@
             android:focusable="false"
             android:gravity="left"
             android:paddingTop="@dimen/_10sdp"
-            android:text="Rating"
+            android:text="@string/rating"
             android:textColor="@color/textColor"
             android:textSize="@dimen/_14sdp" />
 
@@ -696,7 +696,7 @@
                             android:layout_gravity="left"
                             android:focusable="false"
                             android:gravity="center"
-                            android:text="Low Rating"
+                            android:text="@string/low_rating"
                             android:textColor="@color/textColor"
                             android:textSize="@dimen/_8sdp"
                             android:id="@+id/textView3" />
@@ -719,7 +719,7 @@
                             android:focusable="false"
                             android:gravity="center"
 
-                            android:text="Medium Rating"
+                            android:text="@string/medium_rating"
                             android:textColor="@color/textColor"
                             android:textSize="@dimen/_8sdp" />
                     </LinearLayout>
@@ -742,7 +742,7 @@
                             android:focusable="false"
                             android:gravity="center"
 
-                            android:text="High Rating"
+                            android:text="@string/high_rating"
                             android:textColor="@color/textColor"
                             android:textSize="@dimen/_8sdp" />
                     </LinearLayout>
@@ -775,7 +775,7 @@
         android:layout_gravity="center"
         android:paddingBottom="@dimen/_2sdp"
         android:paddingRight="@dimen/_3sdp"
-        android:text="Filter"
+        android:text="@string/filter"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
         android:textSize="@dimen/_16sdp" />

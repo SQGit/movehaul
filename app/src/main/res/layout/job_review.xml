@@ -36,7 +36,7 @@
                 android:id="@+id/text_jobReview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Job Review"
+                android:text="@string/job_reviews"
                 android:textColor="#F65F52"
                 android:textSize="@dimen/_19sdp" />
         </LinearLayout>
@@ -84,7 +84,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Pickup"
+                        android:text="@string/pickup"
                         android:textColor="@color/redColor"
                         android:textSize="@dimen/_12sdp" />
 
@@ -129,7 +129,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Drop Off"
+                        android:text="@string/drop_off"
                         android:textColor="@color/redColor"
                         android:textSize="@dimen/_12sdp" />
 
@@ -174,7 +174,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Nearby Landmark"
+                        android:text="@string/nearby_landmark"
                         android:id="@+id/textview_da_header"
                         android:textColor="@color/redColor"
                         android:textSize="@dimen/_12sdp" />
@@ -226,7 +226,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Date"
+                            android:text="@string/date"
                             android:textColor="@color/redColor"
                             android:textSize="@dimen/_12sdp" />
 
@@ -271,7 +271,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Time"
+                            android:text="@string/time"
                             android:textColor="@color/redColor"
                             android:textSize="@dimen/_12sdp" />
 
@@ -316,7 +316,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Vehicle Type"
+                        android:text="@string/vehicle_type"
                         android:textColor="@color/redColor"
                         android:textSize="@dimen/_12sdp" />
 
@@ -352,9 +352,10 @@
         android:paddingRight="@dimen/_14sdp">
 
         <TextView
+            android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Time Remaining : "
+            android:text="@string/time_remaining"
             android:textColor="@color/textColor"
             android:textSize="@dimen/_14sdp" />
 
@@ -406,7 +407,7 @@
                 android:layout_gravity="top"
                 android:paddingBottom="@dimen/_5sdp"
                 android:paddingRight="@dimen/_3sdp"
-                android:text="Continue"
+                android:text="@string/conts"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textSize="@dimen/_18sdp" />

@@ -42,6 +42,7 @@ import com.sloop.fonts.FontsManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by sqindia on 21-10-2016.
@@ -90,6 +91,9 @@ public class SplashActivity extends Activity {
         editor = sharedPreferences.edit();
         config = new Config();
 
+        Log.e("tag","lang:"+Locale.getDefault().getDisplayLanguage());
+        Log.e("tag","lang_code:"+Locale.getDefault().getLanguage());
+
         final float width = getDeviceWidth(this);
         final float height = getDeviceHeight(this);
 
@@ -104,8 +108,8 @@ public class SplashActivity extends Activity {
         btn_call = (Button) findViewById(R.id.button_call);
         btn_call.setVisibility(View.GONE);
 
-        snackbar = Snackbar.make(lt_top, "No internet connection!", Snackbar.LENGTH_INDEFINITE)
-                .setAction("Open Settings", new View.OnClickListener() {
+        snackbar = Snackbar.make(lt_top, R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.open_settings, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));

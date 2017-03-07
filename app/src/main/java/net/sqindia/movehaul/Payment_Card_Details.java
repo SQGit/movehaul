@@ -86,7 +86,8 @@ public class Payment_Card_Details extends Activity {
         token = sharedPreferences.getString("token", "");
 
 
-        type = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
+        ImageView btn_close;
+        TextView tv_dialog1, tv_dialog2, tv_dialog3, tv_dialog4;
         flt_cvv.setTypeface(type);
         flt_exp_date.setTypeface(type);
         flt_name.setTypeface(type);

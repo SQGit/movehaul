@@ -1,11 +1,13 @@
 package net.sqindia.movehaul;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -15,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
@@ -55,12 +58,19 @@ public class DriversList extends AppCompatActivity {
     TextView tv_snack, tv_pickup, tv_drop, tv_delivery, tv_date, tv_time, tv_truck;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-    String id, token;
+    //String id, token;
     DriversListAdapter drv_adapter;
     ArrayList<MV_Datas> ar_driver_data;
     MV_Datas mv_datas;
     String vec_type, service_url;
     int doid ;
+    ProgressDialog mProgressDialog;
+    private static final int REQUEST_CODE_PAYMENT = 545;
+    String bidding_id, booking_id, driver_id, transaction_id,id,token;
+    Dialog dialog1;
+    Button btn_paynow, btn_ok;
+    ImageView btn_close;
+    TextView tv_dialog1, tv_dialog2, tv_dialog3, tv_dialog4;
 
     public static int getDeviceHeight(Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -114,6 +124,12 @@ public class DriversList extends AppCompatActivity {
 
 
         final int height = getDeviceHeight(DriversList.this);
+
+        mProgressDialog = new ProgressDialog(DriversList.this);
+        mProgressDialog.setTitle("Loading..");
+        mProgressDialog.setMessage("Please wait");
+        mProgressDialog.setIndeterminate(false);
+        mProgressDialog.setCancelable(false);
 
 
         snackbar = Snackbar
@@ -239,7 +255,95 @@ public class DriversList extends AppCompatActivity {
             }
         });
 
+        dialog1 = new Dialog(DriversList.this);
+        dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog1.setCancelable(false);
+        dialog1.setContentView(R.layout.dialogue_job_posting);
+        btn_ok = (Button) dialog1.findViewById(R.id.button_ok);
+        btn_close = (ImageView) dialog1.findViewById(R.id.button_close);
+        tv_dialog1 = (TextView) dialog1.findViewById(R.id.textView_1);
+        tv_dialog2 = (TextView) dialog1.findViewById(R.id.textView_2);
+        tv_dialog3 = (TextView) dialog1.findViewById(R.id.textView_3);
+        tv_dialog4 = (TextView) dialog1.findViewById(R.id.textView_4);
+        tv_dialog1.setText("Your Trip has Been");
+        tv_dialog2.setText("Confirmed!!");
+        tv_dialog3.setText("Our Driver will");
+        tv_dialog4.setText("Contact you soon..");
+
+        tv_dialog1.setTypeface(tf);
+        tv_dialog2.setTypeface(tf);
+        tv_dialog3.setTypeface(tf);
+        tv_dialog4.setTypeface(tf);
+        btn_ok.setTypeface(tf);
+
+        btn_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog1.dismiss();
+
+                editor.putString("job_id","");
+                editor.commit();
+
+                Intent i = new Intent(DriversList.this, DashboardNavigation.class);
+                startActivity(i);
+                finish();
+            }
+        });
+        btn_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog1.dismiss();
+
+
+                editor.putString("job_id","");
+                editor.commit();
+
+                Intent i = new Intent(DriversList.this, DashboardNavigation.class);
+                startActivity(i);
+                finish();
+            }
+        });
+
     }
+
+
+    @Override
+    public  void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        Log.e("tagMyAdapter_class", "onActivityResult"+data.toString());
+
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_PAYMENT) {
+            Log.e("tag", "cd:" + resultCode);
+            Log.e("tag", "rc:" + requestCode);
+            Log.e("tag", "dt:" + data.toString());
+
+            /*final int height = getDeviceHeight(DashboardNavigation.this);
+            TranslateAnimation anim_btn_b2t = new TranslateAnimation(0, 0, height, 0);
+            anim_btn_b2t.setDuration(500);
+            lt_filter_dialog.setAnimation(anim_btn_b2t);
+            lt_filter_dialog.setVisibility(View.VISIBLE);
+            destination.setText("");*/
+
+
+            //
+
+            ///customer/emergencypayment
+
+            booking_id = sharedPreferences.getString("booking_id", "");
+            driver_id = sharedPreferences.getString("driver_id", "");
+            bidding_id = sharedPreferences.getString("bidding_id", "");
+            transaction_id = "oid3982asdfeo3";
+
+            new book_now_task().execute();
+
+
+        }
+
+
+    }
+
+
 
     public class get_drivers extends AsyncTask<String, Void, String> {
         @Override
@@ -406,6 +510,81 @@ public class DriversList extends AppCompatActivity {
         }
 
     }
+
+
+    public class book_now_task extends AsyncTask<String, Void, String> {
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            Log.e("tag", "reg_preexe");
+            mProgressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String json = "", jsonStr = "";
+
+
+            Log.e("tag","no poto");
+
+            String  s = "";
+            JSONObject jsonObject = new JSONObject();
+            try {
+
+
+                jsonObject.put("transaction_id",transaction_id);
+                jsonObject.put("booking_id", booking_id);
+                jsonObject.put("driver_id", driver_id);
+                jsonObject.put("bidding_id", bidding_id);
+
+
+                json = jsonObject.toString();
+
+                return s = HttpUtils.makeRequest1(net.sqindia.movehaul.Config.WEB_URL + "customer/payment",json,id,token);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("tag", "tag" + s);
+            mProgressDialog.dismiss();
+
+            if (s != null) {
+                try {
+                    JSONObject jo = new JSONObject(s);
+                    String status = jo.getString("status");
+                    Log.d("tag", "<-----Status----->" + status);
+                    if (status.equals("true")) {
+
+                        dialog1.show();
+                    } else if (status.equals("false")) {
+
+                        Log.e("tag", "Location not updated");
+                        //has to check internet and location...
+                        Toast.makeText(getApplicationContext(),"Network Errror. Please Try Again Later",Toast.LENGTH_LONG).show();
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.e("tag", "nt" + e.toString());
+                    Toast.makeText(getApplicationContext(),"Network Errror. Please Try Again Later",Toast.LENGTH_LONG).show();
+                }
+            } else {
+                Toast.makeText(getApplicationContext(),"Network Errror1",Toast.LENGTH_LONG).show();
+            }
+
+        }
+
+    }
+
 
 
 }

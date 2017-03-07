@@ -26,6 +26,7 @@ import com.bumptech.glide.Glide;
 import com.ramotion.foldingcell.FoldingCell;
 import com.rey.material.widget.Button;
 import com.sloop.fonts.FontsManager;
+import com.systemspecs.remita.remitapaymentgateway.RemitaMainActivity;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -60,6 +61,7 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
     String bidding;
     int doid ;
     Typeface tf;
+    private static final int REQUEST_CODE_PAYMENT = 545;
 
     public DriversListAdapter(Context context, Activity acti, ArrayList<MV_Datas> objects, int ss) {
         super(context, 0, objects);
@@ -384,7 +386,7 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
             public void onClick(View view) {
                 dialog1.dismiss();
 
-                mv_datas.getBooking_id();
+               mv_datas.getBooking_id();
                 mv_datas.getDriver_id();
 
                 editor.putString("payment_amount",bidding);
@@ -392,19 +394,35 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
                 editor.putString("driver_id",mv_datas.getDriver_id());
                 editor.putString("bidding_id",mv_datas.getBidding_id());
                 editor.commit();
-
+/*
                 Intent i = new Intent(DriversListAdapter.this.getContext(), Payment_Details.class);
-                getContext().startActivity(i);
+                getContext().startActivity(i);*/
 
+
+                Intent intent = new Intent(DriversListAdapter.this.getContext(), RemitaMainActivity.class);
+                intent.putExtra("amount", bidding);
+                intent.putExtra("testMode", true);
+                intent.putExtra("apiKey", "U1lTUC4xNUhPMTIkMTIzLjR8U1lTUA==");
+                intent.putExtra("txnToken", "55316C54554334784E5568504D54496B4D54497A4C6A523855316C5455413D3D7C3932333737633266613035313135306337363534386636376266623131303165383831366464343834666234363064653062343731663538643461323835303537333638653232313135363366383334666337613166333265333336653834626539656566393465396363356131363739353463646239333434363164313732");
+                ((Activity) context).startActivityForResult(intent, REQUEST_CODE_PAYMENT);
+                //getContext().startActivityForResult(intent, REQUEST_CODE_PAYMENT);
 
 
                 //finish();
             }
         });
 
+
+
         return cell;
 
     }
+
+    public  void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.e("MyAdapter", "onActivityResult");
+    }
+
+
 
     // simple methods for register cell state changes
     public void registerToggle(int position) {

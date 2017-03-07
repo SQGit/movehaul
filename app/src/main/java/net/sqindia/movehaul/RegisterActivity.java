@@ -64,8 +64,8 @@ public class RegisterActivity extends Activity {
 
 
         mProgressDialog = new ProgressDialog(RegisterActivity.this);
-        mProgressDialog.setTitle("Loading..");
-        mProgressDialog.setMessage("Please wait");
+        mProgressDialog.setTitle(getString(R.string.loading));
+        mProgressDialog.setMessage(getString(R.string.wait));
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.setCancelable(false);
 
@@ -89,7 +89,7 @@ public class RegisterActivity extends Activity {
 
 
         snackbar = Snackbar
-                .make(findViewById(R.id.top), "Network Error! Please Try Again Later", Snackbar.LENGTH_LONG);
+                .make(findViewById(R.id.top), R.string.no_internet, Snackbar.LENGTH_LONG);
         View sbView = snackbar.getView();
         tv_snack = (android.widget.TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         tv_snack.setTextColor(Color.WHITE);
@@ -98,7 +98,7 @@ public class RegisterActivity extends Activity {
 
         if (!config.isConnected(RegisterActivity.this)) {
             snackbar.show();
-            tv_snack.setText("Please Connect Internet and Try again");
+            tv_snack.setText(R.string.please_try_again);
         }
 
 
@@ -127,26 +127,26 @@ public class RegisterActivity extends Activity {
 
                             } else {
                                 snackbar.show();
-                                tv_snack.setText("Please Connect Internet and Try again");
+                                tv_snack.setText(R.string.please_try_again);
                             }
 
 
                         } else {
                             //et_mobile.setError("Enter valid phone number");
                             snackbar.show();
-                            tv_snack.setText("Enter valid phone number");
+                            tv_snack.setText(R.string.ent);
                             et_mobile.requestFocus();
                         }
                     } else {
                         //et_email.setError("Enter a valid email address!");
                         snackbar.show();
-                        tv_snack.setText("Enter valid email address!");
+                        tv_snack.setText(R.string.entr);
                         et_email.requestFocus();
                     }
                 } else {
                    // et_name.setError("Enter a Name!");
                     snackbar.show();
-                    tv_snack.setText("Enter User Name!");
+                    tv_snack.setText(R.string.uies);
                     et_name.requestFocus();
                 }
 
@@ -229,7 +229,7 @@ public class RegisterActivity extends Activity {
                     if (status.equals("true")) {
 
 
-                        String sus_txt = "Thank you for Signing Up MoveHaul.";
+                        String sus_txt = getString(R.string.s);
 
                         Toast.makeText(getApplicationContext(), sus_txt, Toast.LENGTH_LONG).show();
 
@@ -246,14 +246,14 @@ public class RegisterActivity extends Activity {
                           //  Toast.makeText(getApplicationContext(), "Mobile Number Already Registered", Toast.LENGTH_LONG).show();
 
                             snackbar.show();
-                            tv_snack.setText("Mobile Number Already Registered");
+                            tv_snack.setText(R.string.asd);
 
                         } else if (msg.contains("customer_email_UNIQUE")) {
                             et_email.requestFocus();
                            // Toast.makeText(getApplicationContext(), "Email Already Registered", Toast.LENGTH_LONG).show();
 
                             snackbar.show();
-                            tv_snack.setText("Email Already Registered");
+                            tv_snack.setText(R.string.aew);
                         }
                     }
                 } catch (JSONException e) {
@@ -261,12 +261,12 @@ public class RegisterActivity extends Activity {
                     Log.e("tag", "nt" + e.toString());
                     // Toast.makeText(getApplicationContext(), "Network Errror0", Toast.LENGTH_LONG).show();
                     snackbar.show();
-                    tv_snack.setText("No Network Please Try Again Later");
+                    tv_snack.setText(R.string.no_internet);
                 }
             } else {
                 //Toast.makeText(getApplicationContext(), "Network Errror1", Toast.LENGTH_LONG).show();
                 snackbar.show();
-                tv_snack.setText("No Network Please Try Again Later");
+                tv_snack.setText(R.string.no_internet);
             }
 
         }

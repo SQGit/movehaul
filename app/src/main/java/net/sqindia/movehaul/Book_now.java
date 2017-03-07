@@ -172,7 +172,7 @@ public class Book_now extends Activity {
         Log.e("tag", "dr_l: " + drop_lati + ":::" + drop_long);
 
         snackbar = Snackbar
-                .make(findViewById(R.id.top), "Network Error! Please Try Again Later.", Snackbar.LENGTH_LONG);
+                .make(findViewById(R.id.top), R.string.no_internet, Snackbar.LENGTH_LONG);
         View sbView = snackbar.getView();
         tv_snack = (android.widget.TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         tv_snack.setTextColor(Color.WHITE);
@@ -180,14 +180,14 @@ public class Book_now extends Activity {
 
 
         mProgressDialog = new ProgressDialog(Book_now.this, R.style.AppCompatAlertDialogStyle);
-        mProgressDialog.setTitle("Loading..");
-        mProgressDialog.setMessage("Please wait");
+        mProgressDialog.setTitle(R.string.loading);
+        mProgressDialog.setMessage(getString(R.string.wait));
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.setCancelable(false);
 
         if (!net.sqindia.movehaul.Config.isConnected(Book_now.this)) {
             snackbar.show();
-            tv_snack.setText("Please Connect Internet and Try again");
+            tv_snack.setText(R.string.please_try_again);
         } else {
             new fetch_goods().execute();
             new fetch_trucks().execute();
@@ -226,14 +226,14 @@ public class Book_now extends Activity {
 
         if (vec_type.equals("Bus")) {
             et_trucktype.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bus_type, 0, 0, 0);
-            flt_trucktype.setHint("Bus Type");
-            flt_delivery_address.setHint("Nearby Landmark");
+            flt_trucktype.setHint(getString(R.string.ad));
+            flt_delivery_address.setHint(getString(R.string.ava));
             fl_goods.setVisibility(View.GONE);
             lt_images.setVisibility(View.GONE);
         } else if (vec_type.equals("Truck")) {
             et_trucktype.setCompoundDrawablesWithIntrinsicBounds(R.drawable.select_truck_type, 0, 0, 0);
-            flt_trucktype.setHint("Truck Type");
-            flt_delivery_address.setHint("Nearby Landmark");
+            flt_trucktype.setHint(getString(R.string.adsf));
+            flt_delivery_address.setHint(getString(R.string.aev));
             fl_goods.setVisibility(View.VISIBLE);
             lt_images.setVisibility(View.VISIBLE);
         }
@@ -296,7 +296,7 @@ public class Book_now extends Activity {
                                    // str_desc = et_description.getText().toString();
                                     new book_now_task().execute();
                                 } else {
-                                    Toast.makeText(getApplicationContext(), "Choose Goods Type", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), R.string.cdaso, Toast.LENGTH_LONG).show();
                                 }
                             } else {
 
@@ -315,7 +315,7 @@ public class Book_now extends Activity {
                         }*/
                     } else {
 
-                        Toast.makeText(getApplicationContext(), "Choose " + vec_type + " Type", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.asda) + vec_type + getString(R.string.asdv), Toast.LENGTH_LONG).show();
                     }
                /* } else {
                     et_delivery_address.setError("EnterNearby Landmark");
@@ -815,13 +815,13 @@ public class Book_now extends Activity {
 
                         Log.e("tag", "Location not updated");
                         //has to check internet and location...
-                        Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),R.string.no_internet, Toast.LENGTH_LONG).show();
 
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("tag", "nt" + e.toString());
-                    Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),R.string.no_internet, Toast.LENGTH_LONG).show();
                 }
             } else {
                 // Toast.makeText(getApplicationContext(),"Network Errror1",Toast.LENGTH_LONG).show();

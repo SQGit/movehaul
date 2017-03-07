@@ -8,10 +8,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="#FFFFFF"
-        android:layout_height="match_parent">
+        android:orientation="vertical">
 
         <View
             android:layout_width="match_parent"
@@ -24,9 +24,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center"
             android:layout_marginTop="@dimen/_20sdp"
-            android:text="What Can We Do for You Today ?"
+            android:gravity="center"
+            android:text="@string/what_can_we_do_for_you_today"
             android:textColor="@color/brown"
             android:textSize="@dimen/_19sdp" />
 
@@ -38,7 +38,7 @@
             android:layout_marginRight="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:gravity="center"
-            android:text="Select your service request below"
+            android:text="@string/select_your_service_request_below"
             android:textColor="@color/dialog_text"
             android:textSize="@dimen/_15sdp" />
 
@@ -98,6 +98,7 @@
             </LinearLayout>
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -115,7 +116,7 @@
                     android:id="@+id/iuy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Rent a Truck/Van"
+                    android:text="@string/rent_a_truck_van"
                     android:textColor="@color/dialog_text"
                     android:textSize="@dimen/_15sdp" />
             </LinearLayout>
@@ -131,8 +132,8 @@
                     android:id="@+id/tyy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Charter your Bus Ride"
                     android:gravity="center"
+                    android:text="@string/charter_your_bus_ride"
                     android:textColor="@color/dialog_text"
                     android:textSize="@dimen/_15sdp" />
 
@@ -144,8 +145,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
-            android:paddingLeft="@dimen/_25sdp"
             android:orientation="vertical"
+            android:paddingLeft="@dimen/_25sdp"
             android:paddingRight="@dimen/_25sdp">
 
             <LinearLayout
@@ -169,8 +170,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginTop="@dimen/_7sdp"
+                android:layout_weight="1"
                 android:gravity="center">
 
 
@@ -178,7 +179,7 @@
                     android:id="@+id/tyys"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Request for Tow Truck"
+                    android:text="@string/request_for_towing"
                     android:textColor="@color/dialog_text"
                     android:textSize="@dimen/_15sdp" />
 

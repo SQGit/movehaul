@@ -36,7 +36,7 @@
                 android:id="@+id/text_register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Register"
+                android:text="@string/register_txt"
                 android:textColor="#F65F52"
                 android:textSize="@dimen/_19sdp" />
         </LinearLayout>
@@ -72,7 +72,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:hint="User Name"
+                android:hint="@string/user_name_txt"
                 android:inputType="text"
                 android:maxLines="1"
                 android:paddingTop="@dimen/_10sdp"
@@ -99,7 +99,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:hint="Email"
+                android:hint="@string/email"
                 android:inputType="textWebEmailAddress"
                 android:maxLines="1"
                 android:paddingTop="@dimen/_10sdp"
@@ -126,7 +126,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:hint="Mobile"
+                android:hint="@string/mobile"
                 android:inputType="phone"
                 android:maxLength="10"
                 android:maxLines="1"
@@ -158,7 +158,7 @@
             android:gravity="center"
             android:paddingBottom="@dimen/_5sdp"
             android:paddingRight="@dimen/_3sdp"
-            android:text="Submit"
+            android:text="@string/submit"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="@dimen/_19sdp" />
@@ -186,14 +186,14 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="By signing up you agree to the terms &amp; conditions"
+                android:text="@string/by_signing_up_you_agree_to_the_terms_amp_conditions"
                 android:textSize="@dimen/_10sdp" />
 
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="and privacy policy of Movehaul"
+                android:text="@string/and_privacy_policy_of_movehaul"
                 android:textSize="@dimen/_10sdp" />
         </LinearLayout>
     </LinearLayout>

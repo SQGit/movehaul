@@ -129,14 +129,14 @@ public class MyTrips extends AppCompatActivity {
         token = sharedPreferences.getString("token", "");
 
         mProgressDialog = new ProgressDialog(MyTrips.this);
-        mProgressDialog.setTitle("Loading..");
-        mProgressDialog.setMessage("Please wait");
+        mProgressDialog.setTitle(R.string.loading);
+        mProgressDialog.setMessage(getString(R.string.wait));
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.setCancelable(false);
 
 
         snackbar = Snackbar
-                .make(findViewById(R.id.top), "Network Error! Please Try Again Later.", Snackbar.LENGTH_LONG);
+                .make(findViewById(R.id.top), R.string.no_internet, Snackbar.LENGTH_LONG);
         View sbView = snackbar.getView();
         tv_snack = (android.widget.TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         tv_snack.setTextColor(Color.WHITE);
@@ -147,7 +147,7 @@ public class MyTrips extends AppCompatActivity {
 
         if (!net.sqindia.movehaul.Config.isConnected(MyTrips.this)) {
             snackbar.show();
-            tv_snack.setText("Please Connect Internet and Try again");
+            tv_snack.setText(R.string.please_try_again);
         } else {
             new get_history().execute();
 
@@ -276,11 +276,11 @@ public class MyTrips extends AppCompatActivity {
             String title;
 
             if (position == 0) {
-                title = "Current";
+                title = getString(R.string.curr);
             } else if (position == 1) {
-                title = "History";
+                title = getString(R.string.hist);
             } else {
-                title = "Upcoming";
+                title = getString(R.string.upco);
             }
 
             return title;

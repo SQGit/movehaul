@@ -205,7 +205,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         if (permissionsList.size() > 0) {
             if (permissionsNeeded.size() > 0) {
                 // Need Rationale
-                String message = "You need to grant access to " + permissionsNeeded.get(0);
+                String message = getString(R.string.ees) + permissionsNeeded.get(0);
                 for (int i = 1; i < permissionsNeeded.size(); i++)
                     message = message + ", " + permissionsNeeded.get(i);
 
@@ -260,7 +260,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
                 } else {
                     insertDummyContactWrapper();
-                    Toast.makeText(DashboardNavigation.this, "Some Permission is Denied", Toast.LENGTH_SHORT)
+                    Toast.makeText(DashboardNavigation.this, R.string.permis_si, Toast.LENGTH_SHORT)
                             .show();
                 }
             }
@@ -367,8 +367,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         iv_road_assit = (ImageView) findViewById(R.id.image_roadside_assistance);
 
         mProgressDialog = new ProgressDialog(DashboardNavigation.this, R.style.AppCompatAlertDialogStyle);
-        mProgressDialog.setTitle("Loading..");
-        mProgressDialog.setMessage("Please wait");
+        mProgressDialog.setTitle(R.string.loading);
+        mProgressDialog.setMessage(getString(R.string.wait));
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.setCancelable(false);
 
@@ -466,7 +466,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
 
         snackbar = Snackbar
-                .make(findViewById(R.id.top), "Network Error! Please Try Again Later.", Snackbar.LENGTH_SHORT);
+                .make(findViewById(R.id.top), R.string.no_internet, Snackbar.LENGTH_SHORT);
 
 
         snackbar.setActionTextColor(Color.RED);
@@ -478,8 +478,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
 
         snackbar_loc = Snackbar
-                .make(findViewById(R.id.cd_layout), "Location Not Enabled", Snackbar.LENGTH_INDEFINITE)
-                .setAction("Open Settings", new View.OnClickListener() {
+                .make(findViewById(R.id.cd_layout), R.string.loc, Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.open_settings, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         snackbar_loc.dismiss();
@@ -505,7 +505,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             buildGoogleApiClient();
         } else {
             snackbar.show();
-            tv_snack.setText("Location services not supporting in this device");
+            tv_snack.setText(R.string.alocl);
         }
 
 
@@ -550,10 +550,10 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                         customer_email = et_email.getText().toString();
                         new profile_update().execute();
                     } else {
-                        Toast.makeText(getApplicationContext(), "Enter User Email", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), R.string.aec, Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "Enter User Name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.aes, Toast.LENGTH_SHORT).show();
                 }
                 dialog2.dismiss();
             }
@@ -702,7 +702,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                             case R.id.logout: {
                                 dialog1.show();
                                 exit_status = 0;
-                                tv_txt3.setText("Logout");
+                                tv_txt3.setText(R.string.asdew);
                                 return true;
                             }
                             default: {
@@ -826,7 +826,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     if (destination.getText().toString().isEmpty()) {
                         // Toast.makeText(getApplicationContext(), "Choose Drop Location", Toast.LENGTH_LONG).show();
                         snackbar.show();
-                        tv_snack.setText("Choose Drop Location");
+                        tv_snack.setText(R.string.adsfb);
                     } else {
                         editor.putString("pickup", mStreetOutput + ", " + mCityOutput);
                         editor.putString("drop", destination.getText().toString());
@@ -841,7 +841,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     }
                 } else {
                     snackbar.show();
-                    tv_snack.setText("You already have current job. Please choose book later!");
+                    tv_snack.setText(R.string.asdf);
                 }
 
 
@@ -856,7 +856,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 if (destination.getText().toString().isEmpty()) {
                     // Toast.makeText(getApplicationContext(), "Choose Drop Location", Toast.LENGTH_LONG).show();
                     snackbar.show();
-                    tv_snack.setText("Choose Drop Location");
+                    tv_snack.setText(R.string.aewas);
                 } else {
                     editor.putString("pickup", mStreetOutput + ", " + mCityOutput);
                     editor.putString("drop", destination.getText().toString());
@@ -896,7 +896,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 anim_btn_b2t.setDuration(500);
                 lt_filter_dialog.setAnimation(anim_btn_b2t);
                 lt_filter_dialog.setVisibility(View.VISIBLE);
-
                 destination.setText("");
             }
         });
@@ -919,7 +918,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
                 if (destination.getText().toString().isEmpty()) {
                     snackbar.show();
-                    tv_snack.setText("Choose Drop Location");
+                    tv_snack.setText(R.string.drpa);
                 } else {
 
                     str_pickup =mStreetOutput + ", " + mCityOutput;
@@ -933,10 +932,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
                     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 }
-
-
-
-
             }
         });
 
@@ -970,40 +965,32 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             @Override
             public void onClick(View view) {
                 dr_vec_type = "flatbed";
-               // new book_roadside().execute();
+                lt_bt_tow_type.setVisibility(View.GONE);
+                lt_bt_veh_type.setVisibility(View.VISIBLE);
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+                new book_roadside().execute();
 
                 String amt = "322";
                 String amt1 = "arefadf";
                 String amt2 = "334aadf32";
                 //new payment_token(amt,amt1,amt2).execute();
 
-                Intent intent = new Intent(DashboardNavigation.this, RemitaMainActivity.class);
-                intent.putExtra("amount", "250");
-                intent.putExtra("testMode", true);
-                intent.putExtra("apiKey", "U1lTUC4xNUhPMTIkMTIzLjR8U1lTUA==");
-                intent.putExtra("txnToken", "55316C54554334784E5568504D54496B4D54497A4C6A523855316C5455413D3D7C3932333737633266613035313135306337363534386636376266623131303165383831366464343834666234363064653062343731663538643461323835303537333638653232313135363366383334666337613166333265333336653834626539656566393465396363356131363739353463646239333434363164313732");
-                startActivityForResult(intent, REQUEST_CODE_PAYMENT);
             }
         });
         lt_bt_veh_tow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dr_vec_type = "tow";
-               // new book_roadside().execute();
+                lt_bt_tow_type.setVisibility(View.GONE);
+                lt_bt_veh_type.setVisibility(View.VISIBLE);
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+                new book_roadside().execute();
 
                 String amt = "322";
                 String amt1 = "arefadf";
                 String amt2 = "334aadf32";
                 //new payment_token(amt,amt1,amt2).execute();
 
-                Intent intent = new Intent(DashboardNavigation.this, RemitaMainActivity.class);
-                intent.putExtra("amount", "250");
-                intent.putExtra("testMode", true);
-                intent.putExtra("apiKey", "U1lTUC4xNUhPMTIkMTIzLjR8U1lTUA==");
-                intent.putExtra("txnToken", "55316C54554334784E5568504D54496B4D54497A4C6A523855316C5455413D3D7C3932333737633266613035313135306337363534386636376266623131303165383831366464343834666234363064653062343731663538643461323835303537333638653232313135363366383334666337613166333265333336653834626539656566393465396363356131363739353463646239333434363164313732");
-                startActivityForResult(intent, REQUEST_CODE_PAYMENT);
             }
         });
 
@@ -1077,7 +1064,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             buildGoogleApiClient();
         } else {
             snackbar.show();
-            tv_snack.setText("Location services not supporting in this device");
+            tv_snack.setText(R.string.asdloc);
         }
 
     }
@@ -1144,7 +1131,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         } catch (GooglePlayServicesNotAvailableException e) {
             // Indicates that Google Play Services is not available and the problem is not easily
             // resolvable.
-            String message = "Google Play Services is not available: " +
+            String message = getString(R.string.goglso) +
                     GoogleApiAvailability.getInstance().getErrorString(e.errorCode);
 
             Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
@@ -1166,7 +1153,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         } catch (GooglePlayServicesNotAvailableException e) {
             // Indicates that Google Play Services is not available and the problem is not easily
             // resolvable.
-            String message = "Google Play Services is not available: " +
+            String message =getString(R.string.goglso) +
                     GoogleApiAvailability.getInstance().getErrorString(e.errorCode);
 
             Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
@@ -1289,6 +1276,24 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             Log.e("tag", "cd:" + resultCode);
             Log.e("tag", "rc:" + requestCode);
             Log.e("tag", "dt:" + data.toString());
+
+            /*final int height = getDeviceHeight(DashboardNavigation.this);
+            TranslateAnimation anim_btn_b2t = new TranslateAnimation(0, 0, height, 0);
+            anim_btn_b2t.setDuration(500);
+            lt_filter_dialog.setAnimation(anim_btn_b2t);
+            lt_filter_dialog.setVisibility(View.VISIBLE);
+            destination.setText("");*/
+
+
+          //
+
+            ///customer/emergencypayment
+
+
+
+                    new book_now_task().execute();
+
+
         }
 
 
@@ -1502,7 +1507,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             } else {
                 //finish();
                 snackbar.show();
-                tv_snack.setText("Install Google Play Services.");
+                tv_snack.setText(R.string.google_play);
             }
             return false;
         }
@@ -1574,7 +1579,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
         } else {
             Toast.makeText(getApplicationContext(),
-                    "Sorry! unable to create maps", Toast.LENGTH_SHORT)
+                    R.string.unabs, Toast.LENGTH_SHORT)
                     .show();
         }
 
@@ -1585,7 +1590,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         if (lt_filter_dialog.getVisibility() == View.VISIBLE) {
             dialog1.show();
             exit_status = 1;
-            tv_txt3.setText("Exit");
+            tv_txt3.setText(R.string.ext);
         } else {
             final int height = getDeviceHeight(DashboardNavigation.this);
             TranslateAnimation anim_btn_b2t = new TranslateAnimation(0, 0, height, 0);
@@ -1701,7 +1706,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                         //Glide.with(DashboardNavigation.this).load(new File(str_profile_img)).into(btn_editProfile_img);
 
                     } else {
-                        Toast.makeText(getApplicationContext(), "Network Errror", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), R.string.asder, Toast.LENGTH_LONG).show();
 
                     }
 
@@ -1791,10 +1796,10 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("tag", "nt" + e.toString());
-                    Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.ase, Toast.LENGTH_LONG).show();
                 }
             } else {
-                 Toast.makeText(getApplicationContext(),"Network Errror1",Toast.LENGTH_LONG).show();
+                 Toast.makeText(getApplicationContext(), R.string.aese,Toast.LENGTH_LONG).show();
             }
 
         }
@@ -1825,8 +1830,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 jsonObject.put("pickup_location", str_pickup);
                 jsonObject.put("drop_location", str_drop);
                 jsonObject.put("goods_type", "road");
-                jsonObject.put("vehicle_type", dr_vec_type);
-                jsonObject.put("vehicle_sub_type", cu_vec_type);
+                jsonObject.put("vehicle_type", dr_vec_type);//DRIVER ROAD ASSISTANCE TYPE
+                jsonObject.put("vehicle_sub_type", cu_vec_type);//CUSTOMER VEHICLE TYPE
                 jsonObject.put("booking_time", str_time);
                 jsonObject.put("pickup_latitude", str_pickup_lati);
                 jsonObject.put("pickup_longitude", str_pickup_longi);
@@ -1836,7 +1841,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
                 json = jsonObject.toString();
 
-                return s = HttpUtils.makeRequest1(net.sqindia.movehaul.Config.WEB_URL + "customer/booking", json, id, token);
+                return s = HttpUtils.makeRequest1(net.sqindia.movehaul.Config.WEB_URL + "customer/emergencybooking", json, id, token);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -1861,29 +1866,105 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     if (status.equals("true")) {
                         Log.e("tag", msg);
                         String bookingid = jo.getString("booking_id");
+                        String cost = jo.getString("price");
                         editor.putString("job_id", bookingid);
                         editor.commit();
 
-                        Intent goReve = new Intent(getApplicationContext(), Job_review.class);
-                        startActivity(goReve);
-                        finish();
+                        Intent intent = new Intent(DashboardNavigation.this, RemitaMainActivity.class);
+                        intent.putExtra("amount", cost);
+                        intent.putExtra("testMode", true);
+                        intent.putExtra("apiKey", "U1lTUC4xNUhPMTIkMTIzLjR8U1lTUA==");
+                        intent.putExtra("txnToken", "55316C54554334784E5568504D54496B4D54497A4C6A523855316C5455413D3D7C3932333737633266613035313135306337363534386636376266623131303165383831366464343834666234363064653062343731663538643461323835303537333638653232313135363366383334666337613166333265333336653834626539656566393465396363356131363739353463646239333434363164313732");
+                        startActivityForResult(intent, REQUEST_CODE_PAYMENT);
 
-                        dg_road_confirm.show();
 
                     } else if (status.equals("false")) {
 
                         Log.e("tag", "Location not updated");
                         //has to check internet and location...
-                        Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), R.string.eer, Toast.LENGTH_LONG).show();
 
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("tag", "nt" + e.toString());
-                    Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.era, Toast.LENGTH_LONG).show();
                 }
             } else {
                 // Toast.makeText(getApplicationContext(),"Network Errror1",Toast.LENGTH_LONG).show();
+            }
+
+        }
+
+    }
+
+
+    public class book_now_task extends AsyncTask<String, Void, String> {
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            Log.e("tag", "reg_preexe");
+            mProgressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String json = "", jsonStr = "";
+
+
+            Log.e("tag","no poto");
+
+            String  s = "";
+            JSONObject jsonObject = new JSONObject();
+            try {
+
+
+                jsonObject.put("transaction_id","Sha30sdwelsd");
+                jsonObject.put("booking_id", sharedPreferences.getString("job_id",""));
+
+
+
+                json = jsonObject.toString();
+
+                return s = HttpUtils.makeRequest1(net.sqindia.movehaul.Config.WEB_URL + "customer/emergencypayment",json,id,token);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("tag", "tag" + s);
+            mProgressDialog.dismiss();
+
+            if (s != null) {
+                try {
+                    JSONObject jo = new JSONObject(s);
+                    String status = jo.getString("status");
+                    Log.d("tag", "<-----Status----->" + status);
+                    if (status.equals("true")) {
+
+                        dg_road_confirm.show();
+                    } else if (status.equals("false")) {
+
+                        Log.e("tag", "Location not updated");
+                        //has to check internet and location...
+                        Toast.makeText(getApplicationContext(),"Network Errror. Please Try Again Later",Toast.LENGTH_LONG).show();
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.e("tag", "nt" + e.toString());
+                    Toast.makeText(getApplicationContext(),"Network Errror. Please Try Again Later",Toast.LENGTH_LONG).show();
+                }
+            } else {
+                Toast.makeText(getApplicationContext(),"Network Errror1",Toast.LENGTH_LONG).show();
             }
 
         }

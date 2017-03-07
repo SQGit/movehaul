@@ -34,7 +34,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Forgot Ph. No"
+                android:text="@string/forgot_ph_no"
                 android:textColor="#F65F52"
                 android:textSize="@dimen/_19sdp" />
         </LinearLayout>
@@ -70,7 +70,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:hint="Type Email"
+                android:hint="@string/enter_email"
                 android:inputType="textWebEmailAddress"
                 android:maxLines="1"
                 android:paddingTop="@dimen/_10sdp"
@@ -101,7 +101,7 @@
             android:gravity="center"
             android:paddingBottom="@dimen/_5sdp"
             android:paddingRight="@dimen/_3sdp"
-            android:text="Submit"
+            android:text="@string/submit"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="@dimen/_19sdp" />

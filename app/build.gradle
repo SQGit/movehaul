@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.1"
+    buildToolsVersion '25.0.0'
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
@@ -10,8 +10,8 @@ android {
         applicationId "net.sqindia.movehaul"
         minSdkVersion 17
         targetSdkVersion 24
-        versionCode 3
-        versionName "1.2"
+        versionCode 6
+        versionName "1.5"
         multiDexEnabled true
     }
     buildTypes {

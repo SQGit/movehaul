@@ -80,7 +80,7 @@ public class Job_review extends Activity {
 
 
         snackbar = Snackbar
-                .make(findViewById(R.id.top), "Network Error! Please Try Again Later.", Snackbar.LENGTH_LONG);
+                .make(findViewById(R.id.top), R.string.no_internet, Snackbar.LENGTH_LONG);
         View sbView = snackbar.getView();
         tv_snack = (android.widget.TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         tv_snack.setTextColor(Color.WHITE);
@@ -90,7 +90,7 @@ public class Job_review extends Activity {
 
         if (!net.sqindia.movehaul.Config.isConnected(Job_review.this)) {
             snackbar.show();
-            tv_snack.setText("Please Connect Internet and Try again");
+            tv_snack.setText(R.string.please_try_again);
         }
         else{
             new get_review().execute();
@@ -127,7 +127,7 @@ public class Job_review extends Activity {
 
             public void onFinish() {
                 //onClickVibrate();
-                tv_timer.setText("done!");
+                tv_timer.setText(R.string.dons);
                 btn_continue.setEnabled(true);
             }
         }.start();
@@ -247,12 +247,12 @@ public class Job_review extends Activity {
                                 Log.e("tag","2stasd"+goods_type);
 
                                 if(vec_type.equals("Bus")){
-                                    tv_da_header.setText("Nearby Landmark");
+                                    tv_da_header.setText(R.string.asdfaz);
                                     iv_type.setImageResource(R.drawable.bus_type);
                                     //iv_type.setBackgroundResource(R.drawable.bus_type);
                                 }
                                 else{
-                                    tv_da_header.setText("Nearby Landmark");
+                                    tv_da_header.setText(R.string.vads);
                                     iv_type.setImageResource(R.drawable.select_truck_type);
                                    // iv_type.setBackgroundResource(R.drawable.select_truck_type);
                                 }

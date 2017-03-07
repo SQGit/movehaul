@@ -157,7 +157,7 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:gravity="center"
-                    android:text="Book Now"
+                    android:text="@string/book_now"
                     android:textAllCaps="false"
                     android:textColor="@color/btn_bg_color"
                     android:textSize="@dimen/_18sdp"
@@ -178,8 +178,7 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:gravity="center"
-
-                    android:text="Book Later"
+                    android:text="@string/book_later"
                     android:textAllCaps="false"
                     android:textColor="@color/btn_bg_color"
                     android:textSize="@dimen/_18sdp"
@@ -279,12 +278,11 @@
                                     android:layout_height="wrap_content"
                                     android:background="@null"
                                     android:cursorVisible="false"
-                                    android:hint="Pickup Location"
+                                    android:hint="@string/pickup_location"
                                     android:maxLines="1"
                                     android:paddingTop="@dimen/_10sdp"
                                     android:singleLine="true"
                                     android:textColor="#000000"
-
                                     android:textSize="@dimen/_13sdp" />
                             </android.support.design.widget.TextInputLayout>
 
@@ -335,10 +333,9 @@
                                     android:layout_height="wrap_content"
                                     android:background="@null"
                                     android:enabled="false"
-                                    android:hint="Drop Location"
+                                    android:hint="@string/drop_location"
                                     android:maxLines="1"
                                     android:paddingTop="@dimen/_10sdp"
-
                                     android:singleLine="true"
                                     android:textColor="#000000"
                                     android:textSize="@dimen/_13sdp" />
@@ -386,12 +383,11 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:gravity="center"
-                android:text="Book Assistance"
+                android:text="@string/book_assistance"
                 android:textAllCaps="false"
                 android:textColor="@color/btn_bg_color"
                 android:textSize="@dimen/_18sdp"
                 android:textStyle="bold" />
-
 
 
         </LinearLayout>

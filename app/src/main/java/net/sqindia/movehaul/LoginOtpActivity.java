@@ -71,8 +71,8 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
         editor = sharedPreferences.edit();
 
         mProgressDialog = new ProgressDialog(LoginOtpActivity.this,R.style.AppCompatAlertDialogStyle);
-        mProgressDialog.setTitle("Loading..");
-        mProgressDialog.setMessage("Please wait");
+        mProgressDialog.setTitle(R.string.loading);
+        mProgressDialog.setMessage(getString(R.string.asdwasdf));
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.setCancelable(false);
 
@@ -97,7 +97,7 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
 
 
         snackbar = Snackbar
-                .make(findViewById(R.id.top), "Network Error! Please Try Again Later.", Snackbar.LENGTH_LONG);
+                .make(findViewById(R.id.top), R.string.no_internet, Snackbar.LENGTH_LONG);
         View sbView = snackbar.getView();
         tv_snack = (android.widget.TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         tv_snack.setTextColor(Color.WHITE);
@@ -105,7 +105,7 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
 
         if (!config.isConnected(LoginOtpActivity.this)) {
             snackbar.show();
-            tv_snack.setText("Please Connect Internet and Try again");
+            tv_snack.setText(R.string.please_try_again);
         }
 
 
@@ -370,11 +370,11 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
 
                         if(msg.contains("Authentication failed.Wrong Password")){
                             snackbar.show();
-                            tv_snack.setText("Authentication Failed, Enter Corrent OTP");
+                            tv_snack.setText(R.string.asdunt);
                         }
                         else{
                             snackbar.show();
-                            tv_snack.setText("Please Connect Internet and Try again");
+                            tv_snack.setText(R.string.please_try_again);
                         }
 
 
@@ -458,7 +458,7 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
                         // String sus_txt = "Thank you for Signing Up MoveHaul.";
 
                         //Toast.makeText(getApplicationContext(),sus_txt,Toast.LENGTH_LONG).show();
-                        tv_snack.setText("Otp Send to " + str_data);
+                        tv_snack.setText(getString(R.string.aoptp) + str_data);
                         snackbar.show();
 
 

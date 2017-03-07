@@ -35,7 +35,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Login"
+                android:text="@string/login"
                 android:textStyle="bold"
                 android:textColor="#F65F52"
                 android:textSize="@dimen/_19sdp" />
@@ -72,7 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:hint="Mobile No"
+                android:hint="@string/mobile_no"
                 android:inputType="phone"
                 android:maxLength="12"
                 android:maxLines="1"
@@ -101,7 +101,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/_10sdp"
-            android:text="Forgot Mobile No?"
+            android:text="@string/forgot_mobile_no"
             android:textSize="@dimen/_12sdp"
             android:textColor="#F65F52" />
 
@@ -115,7 +115,7 @@
             android:gravity="center"
             android:paddingBottom="@dimen/_5sdp"
             android:paddingRight="@dimen/_3sdp"
-            android:text="Submit"
+            android:text="@string/submit"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="@dimen/_19sdp" />
@@ -144,7 +144,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="@dimen/_5sdp"
-                android:text="By signing up you agree to the terms &amp; conditions \nand privacy policy of Movehaul"
+                android:text="@string/by_signing_up_you_agree_to_the_terms_amp_conditions_nand_privacy_policy_of_movehaul"
                 android:textSize="@dimen/_10sdp" />
 
 
