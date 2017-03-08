@@ -1617,15 +1617,28 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     //driver/driverupdate
                     String responseString = null;
                     HttpClient httpclient = new DefaultHttpClient();
+                    //HttpPost httppost = new HttpPost("https://demotest007.000webhostapp.com/webapi/Api/candidate_reg_image");
                     HttpPost httppost = new HttpPost(Config.WEB_URL + "customer/customerupdate");
                     httppost.setHeader("id", id);
                     httppost.setHeader("sessiontoken", token);
                     httppost.setHeader("customer_email", customer_email);
                     httppost.setHeader("customer_name", customer_name);
+
+                /*    httppost.setHeader("candidate_name", "jj");
+                    httppost.setHeader("fathers_name", "dgfh");
+                    httppost.setHeader("mobile_no", "67867967676");
+                    httppost.setHeader("date_of_birth", "9-2-92");
+                    httppost.setHeader("gender", "hghhv");
+                    httppost.setHeader("address", "jhvgjv");
+                    httppost.setHeader("voter_id", "hvhvhj");
+                    httppost.setHeader("aadhar_id", "hvhv");
+                    httppost.setHeader("party_name", "hvhv");*/
+
                     try {
 
                         MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
                         entity.addPart("customerimage", new FileBody(new File(str_profile_img), "image/jpeg"));
+                        //entity.addPart("candidate_profile", new FileBody(new File(str_profile_img), "image/jpeg"));
                         Log.e("tag", "img: if ");
                         httppost.setEntity(entity);
                         HttpResponse response = httpclient.execute(httppost);
@@ -1634,6 +1647,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                         Log.e("tag", response.getStatusLine().toString());
                         if (statusCode == 200) {
                             responseString = EntityUtils.toString(r_entity);
+
+                            Log.e("InputStream00", responseString);
                         } else {
                             responseString = "Error occurred! Http Status Code: "
                                     + statusCode;

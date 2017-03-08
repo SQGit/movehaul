@@ -44,7 +44,7 @@
             android:paddingLeft="@dimen/_55sdp"
             android:paddingRight="@dimen/_55sdp"
             android:paddingTop="@dimen/_10sdp"
-            android:text="Are you sure want to"
+            android:text="@string/are_you_sure_want_to"
             android:textColor="@color/dialog_text"
             android:textSize="@dimen/_14sdp" />
 
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="Exit?"
+            android:text="@string/exit"
             android:textColor="@color/dialog_text"
             android:textSize="@dimen/_14sdp" />
 
@@ -91,7 +91,7 @@
                     android:layout_gravity="center"
                     android:paddingBottom="@dimen/_5sdp"
                     android:paddingRight="@dimen/_3sdp"
-                    android:text="Yes"
+                    android:text="@string/yes"
                     android:textAllCaps="false"
                     android:textColor="#FFFFFF"
                     android:textSize="@dimen/_16sdp" />
@@ -113,7 +113,7 @@
                     android:gravity="center"
                     android:paddingBottom="@dimen/_5sdp"
                     android:paddingRight="@dimen/_3sdp"
-                    android:text="No"
+                    android:text="@string/no"
                     android:textAllCaps="false"
                     android:textColor="#FFFFFF"
                     android:textSize="@dimen/_16sdp" />

@@ -325,9 +325,7 @@ public class DriversList extends AppCompatActivity {
             lt_filter_dialog.setVisibility(View.VISIBLE);
             destination.setText("");*/
 
-
             //
-
             ///customer/emergencypayment
 
             booking_id = sharedPreferences.getString("booking_id", "");
@@ -336,8 +334,6 @@ public class DriversList extends AppCompatActivity {
             transaction_id = "oid3982asdfeo3";
 
             new book_now_task().execute();
-
-
         }
 
 

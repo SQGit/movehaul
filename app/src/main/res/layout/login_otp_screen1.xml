@@ -34,7 +34,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Login-OTP"
+                android:text="@string/login_otp"
                 android:textColor="#F65F52"
                 android:textSize="@dimen/_19sdp" />
         </LinearLayout>
@@ -60,14 +60,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Check Your Message (Or)"
+            android:text="@string/check_your_message_or"
             android:textSize="@dimen/_14sdp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
-            android:text="Email for OTP Code"
+            android:text="@string/email_for_otp_code"
             android:textSize="@dimen/_14sdp" />
 
     </LinearLayout>
@@ -223,7 +223,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textview_resendotp"
-            android:text="Resend OTP"
+            android:text="@string/resend_otp"
             android:padding="@dimen/_10sdp"
             android:textColor="#F65F52"
             android:textSize="@dimen/_14sdp" />
@@ -238,7 +238,7 @@
             android:gravity="center"
             android:paddingBottom="@dimen/_5sdp"
             android:paddingRight="@dimen/_3sdp"
-            android:text="Submit"
+            android:text="@string/submita"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="@dimen/_19sdp" />

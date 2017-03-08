@@ -97,7 +97,7 @@
                         android:id="@+id/textview_content_driver_name_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Name"
+                        android:text="@string/namead"
                         android:textColor="@color/redColor"
                         android:textSize="@dimen/_13sdp" />
 
@@ -114,7 +114,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/_3sdp"
-                        android:text="Damage Control"
+                        android:text="@string/damage_controlasdf"
                         android:textColor="@color/redColor"
                         android:textSize="@dimen/_13sdp" />
 
@@ -131,7 +131,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/_3sdp"
-                        android:text="Vehicle Type"
+                        android:text="@string/vehicle_typeasd"
                         android:textColor="@color/redColor"
                         android:textSize="@dimen/_13sdp" />
 
@@ -187,7 +187,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Number of Jobs Completed"
+                android:text="@string/number_of_jobs_completedv"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/_12sdp" />
 
@@ -224,7 +224,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:text="Vehicle Breakdown History"
+                android:text="@string/vehicle_breakdown_history"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/_12sdp" />
 

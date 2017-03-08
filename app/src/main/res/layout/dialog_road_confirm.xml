@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
-            android:text="Thanks for Booking Assistance!!"
+            android:text="@string/thanks_for_booking_assistance"
             android:textColor="@color/dialog_text"
             android:textSize="@dimen/_17sdp" />
 
@@ -44,7 +44,7 @@
             android:paddingLeft="@dimen/_35sdp"
             android:paddingRight="@dimen/_35sdp"
             android:paddingTop="@dimen/_10sdp"
-            android:text="Our Nearby Assistance Vechicle will reach you soon."
+            android:text="@string/our_nearby_assistance_vechicle_will_reach_you_soon"
             android:textColor="@color/dialog_text"
             android:textSize="@dimen/_14sdp" />
 
@@ -83,7 +83,7 @@
                     android:layout_gravity="center"
                     android:paddingBottom="@dimen/_5sdp"
                     android:paddingRight="@dimen/_3sdp"
-                    android:text="Ok"
+                    android:text="@string/ok"
                     android:textAllCaps="false"
                     android:textColor="#FFFFFF"
                     android:textSize="@dimen/_16sdp" />

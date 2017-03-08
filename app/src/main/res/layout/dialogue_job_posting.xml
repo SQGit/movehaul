@@ -28,7 +28,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Your Job Posted"
+            android:text="@string/your_job_posted"
             android:layout_marginTop="@dimen/_10sdp"
             android:id="@+id/textView_1"
             android:textSize="@dimen/_17sdp" />
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:id="@+id/textView_2"
-            android:text="Successfully!!"
+            android:text="@string/successfully"
             android:textSize="@dimen/_14sdp" />
         <TextView
             android:layout_width="wrap_content"
@@ -46,13 +46,13 @@
             android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/_10sdp"
             android:id="@+id/textView_3"
-            android:text="Wait for some time to"
+            android:text="@string/wait_for_some_time_to"
             android:textSize="@dimen/_14sdp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Select your Driver"
+            android:text="@string/select_your_driver"
             android:id="@+id/textView_4"
             android:textSize="@dimen/_14sdp" />
         <ImageView
@@ -72,7 +72,7 @@
             android:gravity="center"
             android:paddingBottom="@dimen/_5sdp"
             android:paddingRight="@dimen/_3sdp"
-            android:text="Ok"
+            android:text="@string/ok"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="@dimen/_16sdp" />
