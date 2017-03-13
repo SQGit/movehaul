@@ -8,4 +8,7 @@
     <dimen name="bottom_height">100dp</dimen>
     <dimen name="pin_label_margin">15dp</dimen>
 
+    <dimen name="frame_lt">@dimen/_70sdp</dimen>
+    <dimen name="frame_ltt">@dimen/_70sdp</dimen>
+
 </resources>

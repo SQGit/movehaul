@@ -8,82 +8,28 @@
     android:background="@drawable/bg"
     android:orientation="vertical">
 
-
-    <LinearLayout
-        android:id="@+id/top_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:id="@+id/first"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="end">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/top_design_small" />
-        </LinearLayout>
-
-        <FrameLayout
-            android:id="@+id/second"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:paddingBottom="@dimen/_10sdp">
-
-            <ImageView
-                android:id="@+id/img_menu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center_vertical"
-                android:layout_marginLeft="@dimen/_2sdp"
-                android:paddingBottom="@dimen/_2sdp"
-                android:paddingLeft="@dimen/_3sdp"
-                android:paddingRight="@dimen/_30sdp"
-                android:paddingTop="@dimen/_5sdp"
-                android:src="@drawable/left_nav_button" />
-
-
-            <ImageView
-                android:id="@+id/tv_hd_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|center|center_vertical"
-                android:gravity="center"
-                android:src="@drawable/logo" />
-
-            <ImageView
-                android:id="@+id/right_menu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end|center_vertical"
-                android:paddingLeft="@dimen/_3sdp"
-                android:paddingRight="@dimen/_5sdp"
-                android:src="@drawable/right_nav_menu" />
-
-        </FrameLayout>
-
-    </LinearLayout>
-
     <FrameLayout
-        android:id="@+id/frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
 
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            class="net.sqindia.movehaul.CustomMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".DasboardNavigation" />
 
-            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/map"
-                android:name="com.google.android.gms.maps.SupportMapFragment"
-                class="net.sqindia.movehaul.MySupportMapFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="@dimen/_40sdp"
-                tools:context=".DasboardNavigation" />
+
+
+        <FrameLayout
+            android:id="@+id/frame"
+            android:layout_marginTop="@dimen/_70sdp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -138,53 +84,88 @@
 
             </FrameLayout>
 
+            <RelativeLayout
+                android:id="@+id/bottom_frame_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom">
 
-            <LinearLayout
-                android:id="@+id/bottom_layout"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:background="#382F2F"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:weightSum="2">
+                <LinearLayout
+                    android:id="@+id/bottom_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="bottom"
+                    android:background="#382F2F"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
-                <com.rey.material.widget.Button
-                    android:id="@+id/btn_book_now"
-                    style="@style/Material.Drawable.Ripple.Touch"
+                    <com.rey.material.widget.Button
+                        android:id="@+id/btn_book_now"
+                        style="@style/Material.Drawable.Ripple.Touch"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:text="@string/book_now"
+                        android:textAllCaps="false"
+                        android:textColor="@color/btn_bg_color"
+                        android:textSize="@dimen/_18sdp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="@dimen/_2sdp"
+                        android:layout_height="@dimen/_19sdp"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:background="#FFFFFF"
+                        android:gravity="center" />
+
+                    <com.rey.material.widget.Button
+                        android:id="@+id/btn_book_later"
+                        style="@style/Material.Drawable.Ripple.Touch"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:text="@string/book_later"
+                        android:textAllCaps="false"
+                        android:textColor="@color/btn_bg_color"
+                        android:textSize="@dimen/_18sdp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/bottom_layout2"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@null"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="bottom"
+                    android:background="#382F2F"
                     android:gravity="center"
-                    android:text="@string/book_now"
-                    android:textAllCaps="false"
-                    android:textColor="@color/btn_bg_color"
-                    android:textSize="@dimen/_18sdp"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
-                <View
-                    android:layout_width="@dimen/_2sdp"
-                    android:layout_height="@dimen/_19sdp"
-                    android:layout_marginTop="@dimen/_2sdp"
-                    android:background="#FFFFFF"
-                    android:gravity="center" />
+                    <com.rey.material.widget.Button
+                        android:id="@+id/btn_book_assistance"
+                        style="@style/Material.Drawable.Ripple.Touch"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:text="@string/book_assistance"
+                        android:textAllCaps="false"
+                        android:textColor="@color/btn_bg_color"
+                        android:textSize="@dimen/_18sdp"
+                        android:textStyle="bold" />
 
-                <com.rey.material.widget.Button
-                    android:id="@+id/btn_book_later"
-                    style="@style/Material.Drawable.Ripple.Touch"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:gravity="center"
-                    android:text="@string/book_later"
-                    android:textAllCaps="false"
-                    android:textColor="@color/btn_bg_color"
-                    android:textSize="@dimen/_18sdp"
-                    android:textStyle="bold" />
 
-            </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -365,50 +346,83 @@
 
             </LinearLayout>
 
+
+            <LinearLayout
+                android:id="@+id/filter_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ffffff"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+
+                <include
+
+                    layout="@layout/dialog_choose_type" />
+
+            </LinearLayout>
+
+
+        </FrameLayout>
         <LinearLayout
-            android:id="@+id/bottom_layout2"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="#382F2F"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <com.rey.material.widget.Button
-                android:id="@+id/btn_book_assistance"
-                style="@style/Material.Drawable.Ripple.Touch"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@null"
-                android:gravity="center"
-                android:text="@string/book_assistance"
-                android:textAllCaps="false"
-                android:textColor="@color/btn_bg_color"
-                android:textSize="@dimen/_18sdp"
-                android:textStyle="bold" />
-
-
-        </LinearLayout>
-
-
-
-        <LinearLayout
-            android:id="@+id/filter_dialog"
+            android:id="@+id/top_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#ffffff"
-            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:id="@+id/first"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end">
 
-            <include
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/top_design_small" />
+            </LinearLayout>
 
-                layout="@layout/dialog_choose_type" />
+            <FrameLayout
+                android:id="@+id/second"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:paddingBottom="@dimen/_10sdp">
+
+                <ImageView
+                    android:id="@+id/img_menu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center_vertical"
+                    android:layout_marginLeft="@dimen/_2sdp"
+                    android:paddingBottom="@dimen/_2sdp"
+                    android:paddingLeft="@dimen/_3sdp"
+                    android:paddingRight="@dimen/_30sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:src="@drawable/left_nav_button" />
+
+
+                <ImageView
+                    android:id="@+id/tv_hd_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center|center_vertical"
+                    android:gravity="center"
+                    android:src="@drawable/logo" />
+
+                <ImageView
+                    android:id="@+id/right_menu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end|center_vertical"
+                    android:paddingLeft="@dimen/_3sdp"
+                    android:paddingRight="@dimen/_5sdp"
+                    android:src="@drawable/right_nav_menu" />
+
+            </FrameLayout>
 
         </LinearLayout>
-
 
     </FrameLayout>
 

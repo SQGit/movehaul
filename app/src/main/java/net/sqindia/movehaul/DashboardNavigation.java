@@ -41,6 +41,7 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.Window;
@@ -70,9 +71,7 @@ import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.GroundOverlay;
 import com.google.android.gms.maps.model.LatLng;
 import com.gun0912.tedpicker.ImagePickerActivity;
 import com.rey.material.widget.Button;
@@ -84,23 +83,17 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URI;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -108,12 +101,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.locks.ReadWriteLock;
 
 
-public class DashboardNavigation extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, com.google.android.gms.location.LocationListener, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
+public class DashboardNavigation extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, com.google.android.gms.location.LocationListener, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, MapWrapperLayout.OnDragListener {
 
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
@@ -154,7 +145,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     List<Address> addresses;
     LinearLayout lt_first, lt_last;
     FrameLayout lt_second, lt_frame;
-    SupportMapFragment mapFragment;
+    // SupportMapFragment mapFragment;
+    CustomMapFragment customMapFragment;
     ImageView btn_editProfile, btn_close, btn_editProfile_img;
     EditText et_username, et_email;
     String id, token, mPickup_lat, mPickup_long, mDrop_lat, mDrop_long, vec_type;
@@ -173,6 +165,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     LinearLayout lt_bt_veh_type, lt_bt_tow_type;
     LinearLayout lt_bt_veh_car, lt_bt_veh_truck, lt_bt_veh_bus, lt_bt_veh_tow, lt_bt_veh_flatbed;
     String cu_vec_type, dr_vec_type;
+    android.widget.RelativeLayout fl_bottom_frame;
+    LinearLayout lt_top;
     private GoogleMap mMap;
     private LatLng mCenterLatLong;
     private AddressResultReceiver mResultReceiver;
@@ -313,6 +307,9 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
         iv_location = (ImageView) findViewById(R.id.imageview_location);
 
+        fl_bottom_frame = (android.widget.RelativeLayout) findViewById(R.id.bottom_frame_layout);
+        lt_top = (LinearLayout) findViewById(R.id.top_layout);
+
         Typeface type = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
         flt_pickup.setTypeface(type);
         flt_drop_location.setTypeface(type);
@@ -352,7 +349,16 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         id = sharedPreferences.getString("id", "");
         token = sharedPreferences.getString("token", "");
 
-        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        // mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+
+
+        // Google map init block
+        customMapFragment = ((CustomMapFragment) getSupportFragmentManager().findFragmentById(R.id.map));
+        customMapFragment.setOnDragListener(DashboardNavigation.this);
+
+        customMapFragment.getMapAsync(this);
+
+        // GoogleMap map = customMapFragment.getMap();
 
         lt_filter_dialog = (LinearLayout) findViewById(R.id.filter_dialog);
         lt_filter_dialog.setVisibility(View.VISIBLE);
@@ -440,7 +446,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         });
 
 
-        mapFragment.getMapAsync(this);
+        // mapFragment.getMapAsync(this);
 
         image_uris = new ArrayList<>();
 
@@ -921,14 +927,14 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     tv_snack.setText(R.string.drpa);
                 } else {
 
-                    str_pickup =mStreetOutput + ", " + mCityOutput;
-                    str_drop =  destination.getText().toString();
+                    str_pickup = mStreetOutput + ", " + mCityOutput;
+                    str_drop = destination.getText().toString();
                     str_pickup_lati = mPickup_lat;
-                    str_pickup_longi =  mPickup_long;
+                    str_pickup_longi = mPickup_long;
                     str_drop_lati = mDrop_lat;
                     str_drop_longi = mDrop_long;
 
-                   // new book_roadside().execute();
+                    // new book_roadside().execute();
 
                     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 }
@@ -1086,7 +1092,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
         //Activity context = DashboardNavigation.this;
 //
-        // / /  //lt_top = (LinearLayout) findViewById(R.id.top_layout);
+
         //lt_bottom = (LinearLayout) findViewById(R.id.bottom_layout);
 
         if (mMapIsTouched) {
@@ -1153,7 +1159,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         } catch (GooglePlayServicesNotAvailableException e) {
             // Indicates that Google Play Services is not available and the problem is not easily
             // resolvable.
-            String message =getString(R.string.goglso) +
+            String message = getString(R.string.goglso) +
                     GoogleApiAvailability.getInstance().getErrorString(e.errorCode);
 
             Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
@@ -1203,7 +1209,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     CameraPosition cameraPosition = new CameraPosition.Builder()
                             .target(latLong).zoom(15f).build();
 
-                    mMap.setMyLocationEnabled(true);
+                    //  mMap.setMyLocationEnabled(true);
                     mMap.getUiSettings().setMyLocationButtonEnabled(true);
                     mMap.getUiSettings().setZoomControlsEnabled(true);
                     mMap.getUiSettings().setZoomGesturesEnabled(true);
@@ -1285,13 +1291,12 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             destination.setText("");*/
 
 
-          //
+            //
 
             ///customer/emergencypayment
 
 
-
-                    new book_now_task().execute();
+            new book_now_task().execute();
 
 
         }
@@ -1371,97 +1376,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         mMap = googleMap;
 
 
-        mMap.getUiSettings().setMapToolbarEnabled(false);
-
-
-        mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
-
-            @Override
-            public void onCameraChange(CameraPosition cameraPosition) {
-                Log.e("tagmap", "Camera postion change" + cameraPosition + "");
-                mCenterLatLong = cameraPosition.target;
-                // mMap.clear();
-
-
-                try {
-
-                    Location mLocation = new Location("");
-                    mLocation.setLatitude(mCenterLatLong.latitude);
-                    mLocation.setLongitude(mCenterLatLong.longitude);
-                    LatLng latLng = new LatLng(mCenterLatLong.latitude, mCenterLatLong.longitude);
-                    mMap.clear();
-                    //  mMap.getUiSettings().setZoomControlsEnabled(true);
-                    //  mMap.getUiSettings().setZoomGesturesEnabled(true);
-                    // mMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.defaultMarker(0)));
-                    str_lati = String.valueOf(mCenterLatLong.latitude);
-                    str_longi = String.valueOf(mCenterLatLong.longitude);
-
-
-                    startIntentService(mLocation);
-                    mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                        @Override
-                        public void onMapClick(LatLng latLng) {
-
-                            Log.e("tagmap", "Camera postion change map click");
-
-                            mMap.clear();
-                            // mMap.getUiSettings().setZoomControlsEnabled(true);
-                            // mMap.getUiSettings().setZoomGesturesEnabled(true);
-                            CameraPosition cameraPosition = new CameraPosition.Builder()
-                                    .target(latLng).zoom(15f).build();
-                            mMap.animateCamera(CameraUpdateFactory
-                                    .newCameraPosition(cameraPosition));
-                            // mMap.addMarker(new MarkerOptions().position(latLng));
-                            str_lati = String.valueOf(mCenterLatLong.latitude);
-                            str_longi = String.valueOf(mCenterLatLong.longitude);
-
-                        }
-                    });
-
-
-                    geocoder = new Geocoder(DashboardNavigation.this, Locale.getDefault());
-                    try {
-                        addresses = geocoder.getFromLocation(mCenterLatLong.latitude, mCenterLatLong.longitude, 1);
-                        str_locality = addresses.get(0).getLocality();
-                        str_address = addresses.get(0).getAddressLine(0);
-                        Log.e("tagplace0", "lati: " + str_lati + "longi: " + str_longi + "\nlocality: " + str_locality + "\taddr0: " + str_address +
-                                "\naddr1: " + addresses.get(0).getAddressLine(1) + "\n addr2: " + addresses.get(0).getAddressLine(2) + "\n adminarea: "
-                                + addresses.get(0).getAdminArea() + "\n feature name: " + addresses.get(0).getFeatureName() + "\n Sub loca: "
-                                + addresses.get(0).getSubLocality() + "\n subadmin: " + addresses.get(0).getSubAdminArea()
-                                + "\n premisis: " + addresses.get(0).getPremises() + "\n postal " + addresses.get(0).getPostalCode());
-
-                        mStreetOutput = str_address;
-                        mCityOutput = str_locality;
-                        mPickup_lat = str_lati;
-                        mPickup_long = str_longi;
-
-                    } catch (Exception e) {
-                        Log.e("tag", "er_geocoder: " + e.toString());
-                    }
-
-
-                    // new updateLocation().execute();
-
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Log.e("tag", "eroo:" + e.toString());
-                } finally {
-                    lt_first.setVisibility(View.VISIBLE);
-                    lt_second.setVisibility(View.VISIBLE);
-                    lt_last.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-
-
-        mMap.setOnGroundOverlayClickListener(new GoogleMap.OnGroundOverlayClickListener() {
-            @Override
-            public void onGroundOverlayClick(GroundOverlay groundOverlay) {
-                Log.e("tagmap", "worked");
-
-            }
-        });
+        // mMap.getUiSettings().setMapToolbarEnabled(false);
 
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -1546,7 +1461,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(latLong).zoom(15f).build();
 
-            mMap.setMyLocationEnabled(true);
+            // mMap.setMyLocationEnabled(true);
             mMap.getUiSettings().setMyLocationButtonEnabled(true);
             //  mMap.getUiSettings().setZoomControlsEnabled(true);
             //  mMap.getUiSettings().setZoomGesturesEnabled(true);
@@ -1557,7 +1472,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             // mLocationMarkerText.setText("Lat : " + location.getLatitude() + "," + "Long : " + location.getLongitude());
             startIntentService(location);
 
-            mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+        /*    mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                 @Override
                 public void onMapClick(LatLng latLng) {
 
@@ -1574,7 +1489,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
                     // mMap.addMarker(new MarkerOptions().position(latLng));
                 }
-            });
+            });*/
 
 
         } else {
@@ -1598,6 +1513,37 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             lt_filter_dialog.setAnimation(anim_btn_b2t);
             lt_filter_dialog.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void onDrag(MotionEvent motionEvent) {
+
+        Log.e("tag", "motion:" + motionEvent);
+
+        if (motionEvent.getAction() != MotionEvent.ACTION_UP) {
+            Log.e("tag", "motion_events" + "  motion_changes");
+            fl_bottom_frame.setVisibility(View.GONE);
+            lt_top.setVisibility(View.GONE);
+
+            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) lt_frame.getLayoutParams();
+            params.setMargins(0, 10, 0, 0);
+
+            lt_frame.setLayoutParams(params);
+
+        } else {
+            Log.e("tag", "motion_events" + "  not_changes");
+            fl_bottom_frame.setVisibility(View.VISIBLE);
+            lt_top.setVisibility(View.VISIBLE);
+
+            int valueInPixels = (int) getResources().getDimension(R.dimen._70sdp);
+
+            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) lt_frame.getLayoutParams();
+            params.setMargins(0, valueInPixels, 0, 0);
+
+            lt_frame.setLayoutParams(params);
+        }
+
+
     }
 
 
@@ -1765,30 +1711,34 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
     public class payment_token extends AsyncTask<String, Void, String> {
 
-        String amount,txn_ref,narrat,status;
+        String amount, txn_ref, narrat, status;
+
+        payment_token(String amt, String ref, String narration) {
+            this.amount = amt;
+            this.txn_ref = ref;
+            this.narrat = narration;
+        }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             mProgressDialog.show();
         }
-        payment_token(String amt,String ref,String narration){
-            this.amount = amt;
-            this.txn_ref = ref;
-            this.narrat = narration;
-        }
+
         @Override
         protected String doInBackground(String... strings) {
             try {
-                String amt =  URLEncoder.encode(amount, "UTF-8");
-                String ref =  URLEncoder.encode(txn_ref, "UTF-8");
-                String narration =  URLEncoder.encode(narrat, "UTF-8");
-                String URL = "http://104.197.80.225:8080/remitaserver/?amount=" + amt + "&transRef=" + ref + "&narration=" + narration ;
+                String amt = URLEncoder.encode(amount, "UTF-8");
+                String ref = URLEncoder.encode(txn_ref, "UTF-8");
+                String narration = URLEncoder.encode(narrat, "UTF-8");
+                String URL = "http://104.197.80.225:8080/remitaserver/?amount=" + amt + "&transRef=" + ref + "&narration=" + narration;
                 return status = HttpUtils.makeRequest0(URL);
             } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;
         }
+
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
@@ -1798,7 +1748,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 try {
                     JSONObject jo = new JSONObject(s);
                     String Txn_Ref = jo.getString("txn_token");
-                    Log.e("tag","ref:"+Txn_Ref);
+                    Log.e("tag", "ref:" + Txn_Ref);
 
                     Intent intent = new Intent(DashboardNavigation.this, RemitaMainActivity.class);
                     intent.putExtra("amount", "250");
@@ -1814,7 +1764,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     Toast.makeText(getApplicationContext(), R.string.ase, Toast.LENGTH_LONG).show();
                 }
             } else {
-                 Toast.makeText(getApplicationContext(), R.string.aese,Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), R.string.aese, Toast.LENGTH_LONG).show();
             }
 
         }
@@ -1916,8 +1866,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
     public class book_now_task extends AsyncTask<String, Void, String> {
         @Override
-        protected void onPreExecute()
-        {
+        protected void onPreExecute() {
             super.onPreExecute();
             Log.e("tag", "reg_preexe");
             mProgressDialog.show();
@@ -1928,26 +1877,24 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             String json = "", jsonStr = "";
 
 
-            Log.e("tag","no poto");
+            Log.e("tag", "no poto");
 
-            String  s = "";
+            String s = "";
             JSONObject jsonObject = new JSONObject();
             try {
 
 
-                jsonObject.put("transaction_id","Sha30sdwelsd");
-                jsonObject.put("booking_id", sharedPreferences.getString("job_id",""));
-
+                jsonObject.put("transaction_id", "Sha30sdwelsd");
+                jsonObject.put("booking_id", sharedPreferences.getString("job_id", ""));
 
 
                 json = jsonObject.toString();
 
-                return s = HttpUtils.makeRequest1(net.sqindia.movehaul.Config.WEB_URL + "customer/emergencypayment",json,id,token);
+                return s = HttpUtils.makeRequest1(net.sqindia.movehaul.Config.WEB_URL + "customer/emergencypayment", json, id, token);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             return null;
-
 
 
         }
@@ -1970,16 +1917,16 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
                         Log.e("tag", "Location not updated");
                         //has to check internet and location...
-                        Toast.makeText(getApplicationContext(),"Network Errror. Please Try Again Later",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
 
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("tag", "nt" + e.toString());
-                    Toast.makeText(getApplicationContext(),"Network Errror. Please Try Again Later",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
                 }
             } else {
-                Toast.makeText(getApplicationContext(),"Network Errror1",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Network Errror1", Toast.LENGTH_LONG).show();
             }
 
         }
