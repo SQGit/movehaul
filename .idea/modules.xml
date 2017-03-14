@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/movehaul.iml" filepath="$PROJECT_DIR$/movehaul.iml" />
-      <module fileurl="file://$PROJECT_DIR$/remita/remita.iml" filepath="$PROJECT_DIR$/remita/remita.iml" />
+      <module fileurl="file://$PROJECT_DIR$/remita_payment/remita_payment.iml" filepath="$PROJECT_DIR$/remita_payment/remita_payment.iml" />
     </modules>
   </component>
 </project>

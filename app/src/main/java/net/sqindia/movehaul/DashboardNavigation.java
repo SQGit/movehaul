@@ -71,8 +71,11 @@ import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.gun0912.tedpicker.ImagePickerActivity;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.TextView;
@@ -92,8 +95,13 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -101,14 +109,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 
 public class DashboardNavigation extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, com.google.android.gms.location.LocationListener, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, MapWrapperLayout.OnDragListener {
 
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
-    private static final int REQUEST_CODE_AUTOCOMPLETE1 = 2;
+    private static final int REQUEST_AC_PICKUP = 1;
+    private static final int REQUEST_AC_DROP = 2;
     private static final int REQUEST_CODE_PAYMENT = 545;
     private static final int REQUEST_PROFILE = 5;
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
@@ -130,7 +139,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     AutoCompleteTextView starting, destination;
     TextInputLayout flt_pickup, flt_drop_location;
     ImageView btn_menu, rightmenu;
-    android.widget.LinearLayout droplv, pickuplv;
+    android.widget.LinearLayout lt_drop, lt_pickup;
     Dialog dialog1, dialog2, dg_road_confirm;
     Button btn_yes, btn_no, btn_update;
     int exit_status;
@@ -167,6 +176,9 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     String cu_vec_type, dr_vec_type;
     android.widget.RelativeLayout fl_bottom_frame;
     LinearLayout lt_top;
+    boolean p_loc_comp;
+    double dl_pick_lati, dl_pick_longi, dl_drop_lati, dl_drop_longi;
+    ImageView iv_map_point;
     private GoogleMap mMap;
     private LatLng mCenterLatLong;
     private AddressResultReceiver mResultReceiver;
@@ -293,8 +305,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         destination = (AutoCompleteTextView) findViewById(R.id.editText_dropLocation);
         flt_pickup = (TextInputLayout) findViewById(R.id.float_pickup);
         flt_drop_location = (TextInputLayout) findViewById(R.id.float_drop);
-        droplv = (android.widget.LinearLayout) findViewById(R.id.layout_drop);
-        pickuplv = (android.widget.LinearLayout) findViewById(R.id.layout_pickuptype);
+        lt_drop = (android.widget.LinearLayout) findViewById(R.id.layout_drop);
+        lt_pickup = (android.widget.LinearLayout) findViewById(R.id.layout_pickuptype);
         btn_menu = (ImageView) findViewById(R.id.img_menu);
         rightmenu = (ImageView) findViewById(R.id.right_menu);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -309,6 +321,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
         fl_bottom_frame = (android.widget.RelativeLayout) findViewById(R.id.bottom_frame_layout);
         lt_top = (LinearLayout) findViewById(R.id.top_layout);
+        iv_map_point = (ImageView) findViewById(R.id.map_point);
 
         Typeface type = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
         flt_pickup.setTypeface(type);
@@ -365,8 +378,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
         btn_book_now.setEnabled(false);
         btn_book_later.setEnabled(false);
-        pickuplv.setEnabled(false);
-        droplv.setEnabled(false);
+        lt_pickup.setEnabled(false);
+        lt_drop.setEnabled(false);
 
         iv_truck = (ImageView) findViewById(R.id.image_truck);
         iv_bus = (ImageView) findViewById(R.id.image_bus);
@@ -404,8 +417,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 btn_book_roadside.setVisibility(View.GONE);
                 btn_book_now.setEnabled(true);
                 btn_book_later.setEnabled(true);
-                pickuplv.setEnabled(true);
-                droplv.setEnabled(true);
+                lt_pickup.setEnabled(true);
+                lt_drop.setEnabled(true);
             }
         });
 
@@ -422,8 +435,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 btn_book_roadside.setVisibility(View.GONE);
                 btn_book_now.setEnabled(true);
                 btn_book_later.setEnabled(true);
-                pickuplv.setEnabled(true);
-                droplv.setEnabled(true);
+                lt_pickup.setEnabled(true);
+                lt_drop.setEnabled(true);
             }
         });
 
@@ -440,8 +453,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 btn_book_roadside.setVisibility(View.VISIBLE);
                 btn_book_now.setEnabled(false);
                 btn_book_later.setEnabled(false);
-                pickuplv.setEnabled(true);
-                droplv.setEnabled(true);
+                lt_pickup.setEnabled(true);
+                lt_drop.setEnabled(true);
             }
         });
 
@@ -591,13 +604,13 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         btn_yes.setTypeface(tf);
         btn_no.setTypeface(tf);
 
-        pickuplv.setOnClickListener(new View.OnClickListener() {
+        lt_pickup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openAutocompleteActivity();
             }
         });
-        droplv.setOnClickListener(new View.OnClickListener() {
+        lt_drop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openAutocompleteActivity1();
@@ -777,15 +790,27 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             public void onClick(View view) {
 
 
-                Location loc = mMap.getMyLocation();
+                if (mMap != null) {
+                    Location myLocation = mMap.getMyLocation();
+
+                    if (myLocation != null) {
+                        LatLng myLatLng = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
+
+                        CameraPosition myPosition = new CameraPosition.Builder().target(myLatLng).zoom(17).bearing(90).tilt(30).build();
+                        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+                    }
+                }
 
 
-                if (loc != null) {
+                // Location loc = mMap.getMyLocation();
+
+
+               /* if (loc != null) {
                     LatLng latLang = new LatLng(loc.getLatitude(), loc
                             .getLongitude());
-                /*    cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLang, 17);
+                *//*    cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLang, 17);
                 mMap.animateCamera(cameraUpdate);
-*/
+*//*
                     mMap.clear();
                     CameraPosition cameraPosition = new CameraPosition.Builder()
                             .target(latLang).zoom(15f).build();
@@ -793,7 +818,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                             .newCameraPosition(cameraPosition));
                     //mMap.addMarker(new MarkerOptions().position(latLang));
 
-                }
+                }*/
 
 
             }
@@ -1032,6 +1057,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         }
     }
 
+
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
@@ -1128,7 +1154,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             // builder checks this and throws an exception if it is not the case.
             Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
                     .build(this);
-            startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
+            startActivityForResult(intent, REQUEST_AC_PICKUP);
         } catch (GooglePlayServicesRepairableException e) {
             // Indicates that Google Play Services is either not installed or not up to date. Prompt
             // the user to correct the issue.
@@ -1150,7 +1176,12 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             // builder checks this and throws an exception if it is not the case.
             Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
                     .build(this);
-            startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE1);
+            startActivityForResult(intent, REQUEST_AC_DROP);
+
+            lt_pickup.setEnabled(false);
+            p_loc_comp = true;
+
+
         } catch (GooglePlayServicesRepairableException e) {
             // Indicates that Google Play Services is either not installed or not up to date. Prompt
             // the user to correct the issue.
@@ -1174,7 +1205,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         super.onActivityResult(requestCode, resultCode, data);
 
         // Check that the result was from the autocomplete widget.
-        if (requestCode == REQUEST_CODE_AUTOCOMPLETE) {
+        if (requestCode == REQUEST_AC_PICKUP) {
             Log.e("tag", "request");
             if (resultCode == RESULT_OK) {
                 // Get the user's selected place from the Intent.
@@ -1184,8 +1215,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
                 starting.setText("");
                 starting.append(place.getAddress());
-                Log.e("tagplace", " place " + place.getAddress() + " attrib " + place.getAttributions() + " name " + place.getName() + " phone " + place.getPhoneNumber() + " latlon " + place.getLatLng().toString()
-                );
+                Log.e("tagplace", " place " + place.getAddress() + " attrib " + place.getAttributions() + " name " + place.getName() + " phone " + place.getPhoneNumber() + " latlon " + place.getLatLng().toString());
 
 
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -1203,6 +1233,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
                     mMap.clear();
                     latLong = place.getLatLng();
+                    dl_pick_lati = latLong.latitude;
+                    dl_pick_longi = latLong.longitude;
 
                     //latLong = new LatLng(location.getLatitude(), location.getLongitude());
 
@@ -1223,7 +1255,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             }
 
 
-        } else if (requestCode == REQUEST_CODE_AUTOCOMPLETE1) {
+        } else if (requestCode == REQUEST_AC_DROP) {
             Log.e("tag", "request_drop");
 
             if (resultCode == RESULT_OK) {
@@ -1239,6 +1271,13 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 Log.e("tag", "la00: " + place1.getLatLng());
                 mDrop_lat = String.valueOf(latLong.latitude);
                 mDrop_long = String.valueOf(latLong.longitude);
+
+                dl_drop_lati = latLong.latitude;
+                dl_drop_longi = latLong.longitude;
+
+
+                draw_line(latLong);
+
 
             }
 
@@ -1302,6 +1341,80 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         }
 
 
+    }
+
+    private void draw_line(LatLng latlong) {
+
+
+        mMap.clear();
+
+        mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+                .position(new LatLng(dl_pick_lati, dl_pick_longi)));
+
+        mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                .position(latlong));
+        CameraPosition cameraPosition = new CameraPosition.Builder().target(latlong).zoom(15f).build();
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+        iv_map_point.setVisibility(View.GONE);
+        /*Polyline line = mMap.addPolyline(new PolylineOptions()
+                .add(new LatLng(dl_pick_lati, dl_pick_longi), new LatLng(dl_drop_lati, dl_drop_longi))
+                .width(5)
+                .color(Color.RED));*/
+
+
+        // Getting URL to the Google Directions API
+
+        String str_origin = "origin=" + dl_pick_lati + "," + dl_pick_longi;
+        String str_dest = "destination=" + dl_drop_lati + "," + dl_drop_longi;
+        String sensor = "sensor=false";
+        String parameters = str_origin + "&" + str_dest + "&" + sensor;
+        String output = "json";
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
+        DownloadTask downloadTask = new DownloadTask();
+        downloadTask.execute(url);
+
+    }
+
+    /**
+     * A method to download json data from url
+     */
+    private String downloadUrl(String strUrl) throws IOException {
+        String data = "";
+        InputStream iStream = null;
+        HttpURLConnection urlConnection = null;
+        try {
+            URL url = new URL(strUrl);
+
+            // Creating an http connection to communicate with url
+            urlConnection = (HttpURLConnection) url.openConnection();
+
+            // Connecting to url
+            urlConnection.connect();
+
+            // Reading data from url
+            iStream = urlConnection.getInputStream();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(iStream));
+
+            StringBuffer sb = new StringBuffer();
+
+            String line = "";
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+
+            data = sb.toString();
+
+            br.close();
+
+        } catch (Exception e) {
+            Log.d("Exception sd sd url", e.toString());
+        } finally {
+            iStream.close();
+            urlConnection.disconnect();
+        }
+        return data;
     }
 
     @Override
@@ -1387,6 +1500,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
+        } else {
+            mMap.setMyLocationEnabled(true);
         }
 //        mMap.setMyLocationEnabled(true);
 //        mMap.getUiSettings().setMyLocationButtonEnabled(true);
@@ -1448,54 +1563,25 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         }
 
         // check if map is created successfully or not
-        if (mMap != null) {
-            // mMap.getUiSettings().setZoomControlsEnabled(false);
-            LatLng latLong;
-
-            Log.e("tagmap", "change_map_map_not_null");
-            mMap.clear();
-
-
-            latLong = new LatLng(location.getLatitude(), location.getLongitude());
-
-            CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(latLong).zoom(15f).build();
-
-            // mMap.setMyLocationEnabled(true);
-            mMap.getUiSettings().setMyLocationButtonEnabled(true);
-            //  mMap.getUiSettings().setZoomControlsEnabled(true);
-            //  mMap.getUiSettings().setZoomGesturesEnabled(true);
-            mMap.animateCamera(CameraUpdateFactory
-                    .newCameraPosition(cameraPosition));
-            // mMap.addMarker(new MarkerOptions().position(latLong).icon(BitmapDescriptorFactory.defaultMarker(0)));
-
-            // mLocationMarkerText.setText("Lat : " + location.getLatitude() + "," + "Long : " + location.getLongitude());
-            startIntentService(location);
-
-        /*    mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                @Override
-                public void onMapClick(LatLng latLng) {
-
-                    Log.e("tagmap", "change_map_map_click");
-
-                    mMap.clear();
-                    CameraPosition cameraPosition = new CameraPosition.Builder()
-                            .target(latLng).zoom(15f).build();
-                    // mMap.getUiSettings().setZoomControlsEnabled(true);
-                    // mMap.getUiSettings().setZoomGesturesEnabled(true);
-                    mMap.animateCamera(CameraUpdateFactory
-                            .newCameraPosition(cameraPosition));
-                    //  mMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_point)));
-
-                    // mMap.addMarker(new MarkerOptions().position(latLng));
-                }
-            });*/
-
-
-        } else {
-            Toast.makeText(getApplicationContext(),
-                    R.string.unabs, Toast.LENGTH_SHORT)
-                    .show();
+        if((starting.getText().toString().isEmpty())) {
+            if (mMap != null) {
+                LatLng latLong;
+                Log.e("tagmap", "change_map_map_not_null");
+                mMap.clear();
+                dl_pick_lati = location.getLatitude();
+                dl_pick_longi = location.getLongitude();
+                latLong = new LatLng(dl_pick_lati, dl_pick_longi);
+                CameraPosition cameraPosition = new CameraPosition.Builder()
+                        .target(latLong).zoom(15f).build();
+                mMap.getUiSettings().setMyLocationButtonEnabled(true);
+                mMap.animateCamera(CameraUpdateFactory
+                        .newCameraPosition(cameraPosition));
+                startIntentService(location);
+            } else {
+                Toast.makeText(getApplicationContext(),
+                        R.string.unabs, Toast.LENGTH_SHORT)
+                        .show();
+            }
         }
 
     }
@@ -1526,7 +1612,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             lt_top.setVisibility(View.GONE);
 
             FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) lt_frame.getLayoutParams();
-            params.setMargins(0, 10, 0, 0);
+            params.setMargins(0, 5, 0, 0);
 
             lt_frame.setLayoutParams(params);
 
@@ -1541,11 +1627,169 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             params.setMargins(0, valueInPixels, 0, 0);
 
             lt_frame.setLayoutParams(params);
+
+            if (!p_loc_comp) {
+                Log.e("tag", "after_drop");
+                change_map_camera();
+            } else {
+                Log.e("tag", "changen nothing");
+            }
         }
 
 
     }
 
+    public void change_map_camera() {
+
+        mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+
+            @Override
+            public void onCameraChange(CameraPosition cameraPosition) {
+                Log.e("tagmap", "Camera postion change" + cameraPosition + "");
+                mCenterLatLong = cameraPosition.target;
+                dl_pick_lati = mCenterLatLong.latitude;
+                dl_pick_longi = mCenterLatLong.longitude;
+
+
+                if (!p_loc_comp) {
+
+                    try {
+
+                        Location mLocation = new Location("");
+                        mLocation.setLatitude(dl_pick_lati);
+                        mLocation.setLongitude(dl_pick_longi);
+                        mMap.clear();
+                        str_lati = String.valueOf(mCenterLatLong.latitude);
+                        str_longi = String.valueOf(mCenterLatLong.longitude);
+                        startIntentService(mLocation);
+                        geocoder = new Geocoder(DashboardNavigation.this, Locale.getDefault());
+                        try {
+                            addresses = geocoder.getFromLocation(mCenterLatLong.latitude, mCenterLatLong.longitude, 1);
+                            str_locality = addresses.get(0).getLocality();
+                            str_address = addresses.get(0).getAddressLine(0);
+                            Log.e("tagplace0", "lati: " + str_lati + "longi: " + str_longi + "\nlocality: " + str_locality + "\taddr0: " + str_address +
+                                    "\naddr1: " + addresses.get(0).getAddressLine(1) + "\n addr2: " + addresses.get(0).getAddressLine(2) + "\n adminarea: "
+                                    + addresses.get(0).getAdminArea() + "\n feature name: " + addresses.get(0).getFeatureName() + "\n Sub loca: "
+                                    + addresses.get(0).getSubLocality() + "\n subadmin: " + addresses.get(0).getSubAdminArea()
+                                    + "\n premisis: " + addresses.get(0).getPremises() + "\n postal " + addresses.get(0).getPostalCode());
+                            mStreetOutput = str_address;
+                            mCityOutput = str_locality;
+                            mPickup_lat = str_lati;
+                            mPickup_long = str_longi;
+                        } catch (Exception e) {
+                            Log.e("tag", "er_geocoder: " + e.toString());
+                        }
+                        // new updateLocation().execute();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Log.e("tag", "eroo:" + e.toString());
+                    } finally {
+                        lt_first.setVisibility(View.VISIBLE);
+                        lt_second.setVisibility(View.VISIBLE);
+                        lt_last.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    Log.e("tag", "mapnotworks:");
+                }
+
+
+            }
+        });
+
+
+    }
+
+    // Fetches data from url passed
+    private class DownloadTask extends AsyncTask<String, Void, String> {
+
+        // Downloading data in non-ui thread
+        @Override
+        protected String doInBackground(String... url) {
+
+            // For storing data from web service
+            String data = "";
+
+            try {
+                // Fetching the data from web service
+                data = downloadUrl(url[0]);
+            } catch (Exception e) {
+                Log.d("Background Task", e.toString());
+            }
+            return data;
+        }
+
+        // Executes in UI thread, after the execution of
+        // doInBackground()
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            ParserTask parserTask = new ParserTask();
+
+            // Invokes the thread for parsing the JSON data
+            parserTask.execute(result);
+
+        }
+    }
+
+    private class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
+
+        // Parsing the data in non-ui thread
+        @Override
+        protected List<List<HashMap<String, String>>> doInBackground(String... jsonData) {
+
+            JSONObject jObject;
+            List<List<HashMap<String, String>>> routes = null;
+
+            try {
+                jObject = new JSONObject(jsonData[0]);
+                DirectionsJSONParser parser = new DirectionsJSONParser();
+
+                // Starts parsing data
+                routes = parser.parse(jObject);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return routes;
+        }
+
+        // Executes in UI thread, after the parsing process
+        @Override
+        protected void onPostExecute(List<List<HashMap<String, String>>> result) {
+            ArrayList<LatLng> points = null;
+            PolylineOptions lineOptions = null;
+            MarkerOptions markerOptions = new MarkerOptions();
+
+            // Traversing through all the routes
+            for (int i = 0; i < result.size(); i++) {
+                points = new ArrayList<LatLng>();
+                lineOptions = new PolylineOptions();
+
+                // Fetching i-th route
+                List<HashMap<String, String>> path = result.get(i);
+
+                // Fetching all the points in i-th route
+                for (int j = 0; j < path.size(); j++) {
+                    HashMap<String, String> point = path.get(j);
+
+                    double lat = Double.parseDouble(point.get("lat"));
+                    double lng = Double.parseDouble(point.get("lng"));
+                    LatLng position = new LatLng(lat, lng);
+
+                    points.add(position);
+                }
+
+                // Adding all the points in the route to LineOptions
+                lineOptions.addAll(points);
+                lineOptions.width(6);
+                lineOptions.color(getColor(R.color.redColor));
+
+            }
+
+            // Drawing polyline in the Google Map for the i-th route
+            mMap.addPolyline(lineOptions);
+        }
+    }
 
     public class profile_update extends AsyncTask<String, Void, String> {
         @Override
@@ -1701,6 +1945,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             mAreaOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_AREA);
             mCityOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_CITY);
             mStreetOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_STREET);
+            Log.e("tag", resultData.toString());
             displayAddressOutput();
             // Show a toast message if an address was found.
             if (resultCode == AppUtils.LocationConstants.SUCCESS_RESULT) {
@@ -1862,7 +2107,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         }
 
     }
-
 
     public class book_now_task extends AsyncTask<String, Void, String> {
         @Override

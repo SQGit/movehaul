@@ -2,6 +2,7 @@
 
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
     android:id="@+id/top"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -20,6 +21,7 @@
             class="net.sqindia.movehaul.CustomMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            map:cameraZoom="15"
             tools:context=".DasboardNavigation" />
 
 
