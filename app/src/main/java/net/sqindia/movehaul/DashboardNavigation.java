@@ -1,5 +1,8 @@
 package net.sqindia.movehaul;
 
+//customer\nearbydrivers
+      //  latitude,longitude,radius
+
 
 import android.Manifest;
 import android.app.Activity;

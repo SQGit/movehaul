@@ -155,6 +155,8 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
         });
 
 
+
+
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
