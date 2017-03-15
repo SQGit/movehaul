@@ -1397,7 +1397,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
                 .position(new LatLng(dl_pick_lati, dl_pick_longi)));
 
-        mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+        mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
                 .position(new LatLng(dl_drop_lati, dl_drop_longi)));
         CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(dl_drop_lati, dl_drop_longi)).zoom(15f).build();
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
