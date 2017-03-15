@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.LinearLayout;
 import com.sloop.fonts.FontsManager;
@@ -37,7 +38,7 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
     static EditText et_otp1, et_otp2, et_otp3, et_otp4;
     private static LoginOtpActivity inst;
     LinearLayout btn_back;
-    String str_otppin, str_for, str_data;
+    String str_otppin, str_for, str_data,fcm_id;
     Button btn_submit;
     TextView tv_resendotp,tv_snack;
     private View view;
@@ -76,14 +77,14 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.setCancelable(false);
 
-
+        fcm_id = FirebaseInstanceId.getInstance().getToken();
 
         Intent getIntent = getIntent();
 
         str_for = getIntent.getStringExtra("for");
         str_data = getIntent.getStringExtra("data");
 
-        Log.e("tag","dd"+str_data+ str_for);
+        Log.e("tag",fcm_id+" dd "+str_data+ str_for);
 
         btn_back = (LinearLayout) findViewById(R.id.layout_back);
 
@@ -306,11 +307,13 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
 
                     jsonObject.accumulate("customer_mobile", "+91"+str_data);
                     jsonObject.accumulate("customer_otp", str_otppin);
+                    jsonObject.accumulate("fcm_id", fcm_id);
                     url = "customer/mobilelogin";
                 } else {
 
                     jsonObject.accumulate("customer_email", str_data);
                     jsonObject.accumulate("customer_otp", str_otppin);
+                    jsonObject.accumulate("fcm_id", fcm_id);
                     url = "customer/emaillogin";
                 }
 

@@ -323,7 +323,7 @@ public class DriversList extends AppCompatActivity {
             anim_btn_b2t.setDuration(500);
             lt_filter_dialog.setAnimation(anim_btn_b2t);
             lt_filter_dialog.setVisibility(View.VISIBLE);
-            destination.setText("");*/
+            aet_drop.setText("");*/
 
             //
             ///customer/emergencypayment

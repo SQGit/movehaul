@@ -66,6 +66,7 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.ActivityRecognition;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -74,6 +75,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.gun0912.tedpicker.ImagePickerActivity;
@@ -136,7 +138,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     NavigationView navigationView;
     Button btn_book_now, btn_book_later;
     TextView tv_name, tv_email, tv_myTrips, tv_jobReview, tv_payments, tv_tracking, tv_offers, tv_emergencyContacts;
-    AutoCompleteTextView starting, destination;
+    AutoCompleteTextView aet_pickup, aet_drop;
     TextInputLayout flt_pickup, flt_drop_location;
     ImageView btn_menu, rightmenu;
     android.widget.LinearLayout lt_drop, lt_pickup;
@@ -301,8 +303,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         tv_tracking = (TextView) findViewById(R.id.textView_tracking);
         tv_offers = (TextView) findViewById(R.id.textView_offers);
         tv_emergencyContacts = (TextView) findViewById(R.id.textView_emergencycontacts);
-        starting = (AutoCompleteTextView) findViewById(R.id.editText_pickUp);
-        destination = (AutoCompleteTextView) findViewById(R.id.editText_dropLocation);
+        aet_pickup = (AutoCompleteTextView) findViewById(R.id.editText_pickUp);
+        aet_drop = (AutoCompleteTextView) findViewById(R.id.editText_dropLocation);
         flt_pickup = (TextInputLayout) findViewById(R.id.float_pickup);
         flt_drop_location = (TextInputLayout) findViewById(R.id.float_drop);
         lt_drop = (android.widget.LinearLayout) findViewById(R.id.layout_drop);
@@ -528,8 +530,35 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         }
 
 
+
+
+
+
+
         final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.app_name, R.string.app_name);
+                this, drawer, toolbar, R.string.app_name, R.string.app_name)
+
+        {
+            @Override
+            public void onDrawerStateChanged(int newState) {
+                if (newState == DrawerLayout.STATE_SETTLING ) {
+                    Log.e("tag_Drawer", "Drawer opened by dragging");
+
+                    if(fl_bottom_frame.getVisibility() == View.GONE) {
+                        fl_bottom_frame.setVisibility(View.VISIBLE);
+                        lt_top.setVisibility(View.VISIBLE);
+
+                        int valueInPixels = (int) getResources().getDimension(R.dimen._70sdp);
+                        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) lt_frame.getLayoutParams();
+                        params.setMargins(0, valueInPixels, 0, 0);
+                        lt_frame.setLayoutParams(params);
+                    }
+                }
+            }
+        };
+
+
+
         drawer.setDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
@@ -790,16 +819,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             public void onClick(View view) {
 
 
-                if (mMap != null) {
-                    Location myLocation = mMap.getMyLocation();
-
-                    if (myLocation != null) {
-                        LatLng myLatLng = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
-
-                        CameraPosition myPosition = new CameraPosition.Builder().target(myLatLng).zoom(17).bearing(90).tilt(30).build();
-                        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
-                    }
-                }
+              getMyLocation();
 
 
                 // Location loc = mMap.getMyLocation();
@@ -854,13 +874,13 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
                 if (diff >= 0) {
 
-                    if (destination.getText().toString().isEmpty()) {
+                    if (aet_drop.getText().toString().isEmpty()) {
                         // Toast.makeText(getApplicationContext(), "Choose Drop Location", Toast.LENGTH_LONG).show();
                         snackbar.show();
                         tv_snack.setText(R.string.adsfb);
                     } else {
                         editor.putString("pickup", mStreetOutput + ", " + mCityOutput);
-                        editor.putString("drop", destination.getText().toString());
+                        editor.putString("drop", aet_drop.getText().toString());
                         editor.putString("pickup_lati", mPickup_lat);
                         editor.putString("pickup_long", mPickup_long);
                         editor.putString("drop_lati", mDrop_lat);
@@ -884,13 +904,13 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             public void onClick(View view) {
              /*   Intent i = new Intent(DashboardNavigation.this, Book_later.class);
                 startActivity(i);*/
-                if (destination.getText().toString().isEmpty()) {
+                if (aet_drop.getText().toString().isEmpty()) {
                     // Toast.makeText(getApplicationContext(), "Choose Drop Location", Toast.LENGTH_LONG).show();
                     snackbar.show();
                     tv_snack.setText(R.string.aewas);
                 } else {
                     editor.putString("pickup", mStreetOutput + ", " + mCityOutput);
-                    editor.putString("drop", destination.getText().toString());
+                    editor.putString("drop", aet_drop.getText().toString());
                     editor.putString("pickup_lati", mPickup_lat);
                     editor.putString("pickup_long", mPickup_long);
                     editor.putString("drop_lati", mDrop_lat);
@@ -927,7 +947,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 anim_btn_b2t.setDuration(500);
                 lt_filter_dialog.setAnimation(anim_btn_b2t);
                 lt_filter_dialog.setVisibility(View.VISIBLE);
-                destination.setText("");
+                aet_drop.setText("");
             }
         });
 
@@ -947,13 +967,13 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 startActivityForResult(intent, 102);*/
 
 
-                if (destination.getText().toString().isEmpty()) {
+                if (aet_drop.getText().toString().isEmpty()) {
                     snackbar.show();
                     tv_snack.setText(R.string.drpa);
                 } else {
 
                     str_pickup = mStreetOutput + ", " + mCityOutput;
-                    str_drop = destination.getText().toString();
+                    str_drop = aet_drop.getText().toString();
                     str_pickup_lati = mPickup_lat;
                     str_pickup_longi = mPickup_long;
                     str_drop_lati = mDrop_lat;
@@ -1026,6 +1046,20 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         });
 
 
+    }
+
+    private void getMyLocation() {
+
+        if (mMap != null) {
+            Location myLocation = mMap.getMyLocation();
+
+            if (myLocation != null) {
+                LatLng myLatLng = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
+
+                CameraPosition myPosition = new CameraPosition.Builder().target(myLatLng).zoom(17).bearing(90).tilt(30).build();
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+            }
+        }
     }
 
     private void applyFontToMenuItem(MenuItem mi) {
@@ -1152,8 +1186,10 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         try {
             // The autocomplete activity requires Google Play Services to be available. The intent
             // builder checks this and throws an exception if it is not the case.
-            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
-                    .build(this);
+
+            AutocompleteFilter typeFilter = new AutocompleteFilter.Builder().setTypeFilter(Place.TYPE_COUNTRY).setCountry("IN").build();
+            //.setBoundsBias(new LatLngBounds(new LatLng(23.63936, 68.14712), new LatLng(28.20453, 97.34466)))
+            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).setFilter(typeFilter).build(this);
             startActivityForResult(intent, REQUEST_AC_PICKUP);
         } catch (GooglePlayServicesRepairableException e) {
             // Indicates that Google Play Services is either not installed or not up to date. Prompt
@@ -1174,11 +1210,11 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         try {
             // The autocomplete activity requires Google Play Services to be available. The intent
             // builder checks this and throws an exception if it is not the case.
-            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
-                    .build(this);
+            AutocompleteFilter typeFilter = new AutocompleteFilter.Builder().setTypeFilter(Place.TYPE_COUNTRY).setCountry("IN").build();
+            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).setFilter(typeFilter).build(this);
             startActivityForResult(intent, REQUEST_AC_DROP);
 
-            lt_pickup.setEnabled(false);
+          //  lt_pickup.setEnabled(false);
             p_loc_comp = true;
 
 
@@ -1213,8 +1249,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 // TODO call location based filter
                 LatLng latLong;
 
-                starting.setText("");
-                starting.append(place.getAddress());
+                aet_pickup.setText("");
+                aet_pickup.append(place.getAddress());
                 Log.e("tagplace", " place " + place.getAddress() + " attrib " + place.getAttributions() + " name " + place.getName() + " phone " + place.getPhoneNumber() + " latlon " + place.getLatLng().toString());
 
 
@@ -1232,9 +1268,16 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     mMap.getUiSettings().setZoomControlsEnabled(false);
 
                     mMap.clear();
+
+
                     latLong = place.getLatLng();
                     dl_pick_lati = latLong.latitude;
                     dl_pick_longi = latLong.longitude;
+
+                    Log.e("tag","d: :"+dl_drop_longi);
+
+                    if(p_loc_comp)
+                    draw_line(dl_pick_lati,dl_pick_longi,dl_drop_lati,dl_drop_longi);
 
                     //latLong = new LatLng(location.getLatitude(), location.getLongitude());
 
@@ -1242,8 +1285,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                             .target(latLong).zoom(15f).build();
 
                     //  mMap.setMyLocationEnabled(true);
-                    mMap.getUiSettings().setMyLocationButtonEnabled(true);
-                    mMap.getUiSettings().setZoomControlsEnabled(true);
+                    mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                    mMap.getUiSettings().setZoomControlsEnabled(false);
                     mMap.getUiSettings().setZoomGesturesEnabled(true);
                     mMap.animateCamera(CameraUpdateFactory
                             .newCameraPosition(cameraPosition));
@@ -1264,9 +1307,9 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 // TODO call location based filter
                 LatLng latLong;
                 latLong = place1.getLatLng();
-                destination.setText("");
+                aet_drop.setText("");
 
-                destination.append(place1.getAddress());
+                aet_drop.append(place1.getAddress());
                 Log.e("tag", "place111" + place1.getAddress());
                 Log.e("tag", "la00: " + place1.getLatLng());
                 mDrop_lat = String.valueOf(latLong.latitude);
@@ -1276,7 +1319,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 dl_drop_longi = latLong.longitude;
 
 
-                draw_line(latLong);
+                draw_line(dl_pick_lati,dl_pick_longi,dl_drop_lati,dl_drop_longi);
 
 
             }
@@ -1327,7 +1370,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             anim_btn_b2t.setDuration(500);
             lt_filter_dialog.setAnimation(anim_btn_b2t);
             lt_filter_dialog.setVisibility(View.VISIBLE);
-            destination.setText("");*/
+            aet_drop.setText("");*/
 
 
             //
@@ -1343,7 +1386,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
     }
 
-    private void draw_line(LatLng latlong) {
+    private void draw_line(double dl_pick_lati,double dl_pick_longi,double dl_drop_lati,double dl_drop_longi) {
 
 
         mMap.clear();
@@ -1352,8 +1395,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 .position(new LatLng(dl_pick_lati, dl_pick_longi)));
 
         mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
-                .position(latlong));
-        CameraPosition cameraPosition = new CameraPosition.Builder().target(latlong).zoom(15f).build();
+                .position(new LatLng(dl_drop_lati, dl_drop_longi)));
+        CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(dl_drop_lati, dl_drop_longi)).zoom(15f).build();
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
         iv_map_point.setVisibility(View.GONE);
@@ -1466,15 +1509,15 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     protected void displayAddressOutput() {
 
         // Log.e("tag00", "output11111" + mAddressOutput);
-        //starting.setText(mAddressOutput);
+        //aet_pickup.setText(mAddressOutput);
         try {
             if (mAreaOutput != null)
-                // starting.setText(mAreaOutput+ "");
+                // aet_pickup.setText(mAreaOutput+ "");
                 Log.e("tag11", "output" + mAddressOutput);
-            starting.setText("");
+            aet_pickup.setText("");
 
-            starting.setText(mAddressOutput);
-            //starting.setText(mAreaOutput);
+            aet_pickup.setText(mAddressOutput);
+            //aet_pickup.setText(mAreaOutput);
             //   Log.e("tag22", "output" + mAreaOutput);
 
         } catch (Exception e) {
@@ -1563,7 +1606,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         }
 
         // check if map is created successfully or not
-        if((starting.getText().toString().isEmpty())) {
+        if((aet_pickup.getText().toString().isEmpty())) {
             if (mMap != null) {
                 LatLng latLong;
                 Log.e("tagmap", "change_map_map_not_null");
@@ -1598,8 +1641,18 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             anim_btn_b2t.setDuration(500);
             lt_filter_dialog.setAnimation(anim_btn_b2t);
             lt_filter_dialog.setVisibility(View.VISIBLE);
+            aet_drop.setText("");
+            p_loc_comp = false;
+            mMap.clear();
+            getMyLocation();
+            iv_map_point.setVisibility(View.VISIBLE);
+            mResultReceiver = new AddressResultReceiver(new Handler());
+
+
         }
     }
+
+
 
     @Override
     public void onDrag(MotionEvent motionEvent) {
@@ -1608,31 +1661,31 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
         if (motionEvent.getAction() != MotionEvent.ACTION_UP) {
             Log.e("tag", "motion_events" + "  motion_changes");
-            fl_bottom_frame.setVisibility(View.GONE);
-            lt_top.setVisibility(View.GONE);
 
-            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) lt_frame.getLayoutParams();
-            params.setMargins(0, 5, 0, 0);
-
-            lt_frame.setLayoutParams(params);
+            if(!p_loc_comp) {
+                fl_bottom_frame.setVisibility(View.GONE);
+                lt_top.setVisibility(View.GONE);
+                FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) lt_frame.getLayoutParams();
+                params.setMargins(0, 5, 0, 0);
+                lt_frame.setLayoutParams(params);
+            }
 
         } else {
             Log.e("tag", "motion_events" + "  not_changes");
-            fl_bottom_frame.setVisibility(View.VISIBLE);
-            lt_top.setVisibility(View.VISIBLE);
 
-            int valueInPixels = (int) getResources().getDimension(R.dimen._70sdp);
-
-            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) lt_frame.getLayoutParams();
-            params.setMargins(0, valueInPixels, 0, 0);
-
-            lt_frame.setLayoutParams(params);
-
-            if (!p_loc_comp) {
-                Log.e("tag", "after_drop");
-                change_map_camera();
-            } else {
-                Log.e("tag", "changen nothing");
+            if(!p_loc_comp) {
+                fl_bottom_frame.setVisibility(View.VISIBLE);
+                lt_top.setVisibility(View.VISIBLE);
+                int valueInPixels = (int) getResources().getDimension(R.dimen._70sdp);
+                FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) lt_frame.getLayoutParams();
+                params.setMargins(0, valueInPixels, 0, 0);
+                lt_frame.setLayoutParams(params);
+                if (!p_loc_comp) {
+                    Log.e("tag", "after_drop");
+                    change_map_camera();
+                } else {
+                    Log.e("tag", "changen nothing");
+                }
             }
         }
 
@@ -1761,33 +1814,35 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             MarkerOptions markerOptions = new MarkerOptions();
 
             // Traversing through all the routes
-            for (int i = 0; i < result.size(); i++) {
-                points = new ArrayList<LatLng>();
-                lineOptions = new PolylineOptions();
+            if (!result.isEmpty()) {
+                for (int i = 0; i < result.size(); i++) {
+                    points = new ArrayList<LatLng>();
+                    lineOptions = new PolylineOptions();
 
-                // Fetching i-th route
-                List<HashMap<String, String>> path = result.get(i);
+                    // Fetching i-th route
+                    List<HashMap<String, String>> path = result.get(i);
 
-                // Fetching all the points in i-th route
-                for (int j = 0; j < path.size(); j++) {
-                    HashMap<String, String> point = path.get(j);
+                    // Fetching all the points in i-th route
+                    for (int j = 0; j < path.size(); j++) {
+                        HashMap<String, String> point = path.get(j);
 
-                    double lat = Double.parseDouble(point.get("lat"));
-                    double lng = Double.parseDouble(point.get("lng"));
-                    LatLng position = new LatLng(lat, lng);
+                        double lat = Double.parseDouble(point.get("lat"));
+                        double lng = Double.parseDouble(point.get("lng"));
+                        LatLng position = new LatLng(lat, lng);
 
-                    points.add(position);
+                        points.add(position);
+                    }
+
+                    // Adding all the points in the route to LineOptions
+                    lineOptions.addAll(points);
+                    lineOptions.width(6);
+                    lineOptions.color(getResources().getColor(R.color.redColor));
+
                 }
 
-                // Adding all the points in the route to LineOptions
-                lineOptions.addAll(points);
-                lineOptions.width(6);
-                lineOptions.color(getColor(R.color.redColor));
-
+                // Drawing polyline in the Google Map for the i-th route
+                mMap.addPolyline(lineOptions);
             }
-
-            // Drawing polyline in the Google Map for the i-th route
-            mMap.addPolyline(lineOptions);
         }
     }
 
@@ -1945,7 +2000,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             mAreaOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_AREA);
             mCityOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_CITY);
             mStreetOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_STREET);
-            Log.e("tag", resultData.toString());
+
             displayAddressOutput();
             // Show a toast message if an address was found.
             if (resultCode == AppUtils.LocationConstants.SUCCESS_RESULT) {

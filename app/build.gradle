@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
+
 android {
     compileSdkVersion 24
     buildToolsVersion '25.0.0'
@@ -43,7 +43,7 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.ramotion.foldingcell:folding-cell:1.0.1'
     compile 'com.google.maps.android:android-maps-utils:0.4+'
-    compile 'com.google.android.gms:play-services:9.0.0'
+    compile 'com.google.android.gms:play-services:10.2.0'
     compile 'com.github.bumptech.glide:glide:3.6.0'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.github.ParkSangGwon:TedPicker:v1.0.10'
@@ -53,4 +53,8 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.7.5'
     compile 'com.google.code.gson:gson:2.4'
     compile project(':remita_payment')
+
+    compile 'com.google.firebase:firebase-messaging:10.2.0'
 }
+
+apply plugin: 'com.google.gms.google-services'
