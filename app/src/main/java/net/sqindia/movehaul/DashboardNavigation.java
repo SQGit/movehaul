@@ -1190,7 +1190,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             // The autocomplete activity requires Google Play Services to be available. The intent
             // builder checks this and throws an exception if it is not the case.
 
-            AutocompleteFilter typeFilter = new AutocompleteFilter.Builder().setTypeFilter(Place.TYPE_COUNTRY).setCountry("IN").build();
+            AutocompleteFilter typeFilter = new AutocompleteFilter.Builder().setTypeFilter(Place.TYPE_COUNTRY).setCountry("US").build();
             //.setBoundsBias(new LatLngBounds(new LatLng(23.63936, 68.14712), new LatLng(28.20453, 97.34466)))
             Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).setFilter(typeFilter).build(this);
             startActivityForResult(intent, REQUEST_AC_PICKUP);
@@ -1213,7 +1213,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         try {
             // The autocomplete activity requires Google Play Services to be available. The intent
             // builder checks this and throws an exception if it is not the case.
-            AutocompleteFilter typeFilter = new AutocompleteFilter.Builder().setTypeFilter(Place.TYPE_COUNTRY).setCountry("IN").build();
+            AutocompleteFilter typeFilter = new AutocompleteFilter.Builder().setTypeFilter(Place.TYPE_COUNTRY).setCountry("US").build();
             Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).setFilter(typeFilter).build(this);
             startActivityForResult(intent, REQUEST_AC_DROP);
 
@@ -1367,6 +1367,16 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             Log.e("tag", "cd:" + resultCode);
             Log.e("tag", "rc:" + requestCode);
             Log.e("tag", "dt:" + data.toString());
+
+            Bundle bundle = data.getExtras();
+            String authorizid = bundle.getString("authoriztionId");
+            String remitaTransRef= bundle.getString("remitaTransRef");
+            String responceCode = bundle.getString("responseCode");
+
+            Log.e("tag","ss: "+authorizid);
+            Log.e("tag","ss1: "+remitaTransRef);
+            Log.e("tag","ss2: "+responceCode);
+
 
             /*final int height = getDeviceHeight(DashboardNavigation.this);
             TranslateAnimation anim_btn_b2t = new TranslateAnimation(0, 0, height, 0);
