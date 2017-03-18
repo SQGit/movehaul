@@ -11,7 +11,7 @@
     <string name="pin_label_text">entry pin</string>
     <string name="pin_content_desc">pin entry</string>
 
-    <string name="app_name">Movehaul</string>
+    <string name="app_name">MovHaul</string>
     <string name="customer_booking">Tap to Call Customer Care for booking</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
@@ -21,10 +21,10 @@
     <string name="mobile">Mobile</string>
     <string name="submit">Submit</string>
     <string name="by_signing_up_you_agree_to_the_terms_amp_conditions"><![CDATA[By signing up you agree to the terms & conditions]]></string>
-    <string name="and_privacy_policy_of_movehaul">and privacy policy of Movehaul</string>
+    <string name="and_privacy_policy_of_MovHaul">and privacy policy of MovHaul</string>
     <string name="mobile_no">Mobile No</string>
     <string name="forgot_mobile_no">Forgot Mobile No?</string>
-    <string name="by_signing_up_you_agree_to_the_terms_amp_conditions_nand_privacy_policy_of_movehaul"><![CDATA[By signing up you agree to the terms & conditions  and privacy policy of Movehaul]]></string>
+    <string name="by_signing_up_you_agree_to_the_terms_amp_conditions_nand_privacy_policy_of_MovHaul"><![CDATA[By signing up you agree to the terms & conditions  and privacy policy of MovHaul]]></string>
     <string name="forgot_ph_no">Forgot Ph. No</string>
     <string name="enter_email">Enter Email</string>
     <string name="pickup_location">Pickup Location</string>
@@ -50,7 +50,7 @@
     <string name="please_try_again">Please Connect Internet and Try again</string>
     <string name="ent">Enter valid phone number</string>
     <string name="entr">Enter valid email address!</string>
-    <string name="s">Thank you for Signing Up MoveHaul.</string>
+    <string name="s">Thank you for Signing Up MovHaul.</string>
     <string name="asd">Mobile Number Already Registered</string>
     <string name="aew">Email Already Registered</string>
     <string name="uies">Enter User Name!</string>
@@ -59,7 +59,7 @@
     <string name="wa">Enter valid phone Number</string>
     <string name="a">No internet connection!</string>
     <string name="ae">Open Settings</string>
-    <string name="asdw">Mobile Number is not registered with MoveHaul !</string>
+    <string name="asdw">Mobile Number is not registered with MovHaul !</string>
     <string name="asdwasdf">Please wait</string>
     <string name="aoptp">Otp Send to</string>
     <string name="asdunt">Authentication Failed, Enter Corrent OTP</string>

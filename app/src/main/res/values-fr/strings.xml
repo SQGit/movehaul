@@ -11,7 +11,7 @@
     <string name="pin_label_text">"broches d'entrée"</string>
     <string name="pin_content_desc">"entrée de la broche"</string>
 
-    <string name="app_name">"Movehaul"</string>
+    <string name="app_name">"MovHaul"</string>
     <string name="customer_booking">"Appuyez sur pour appeler le Service Client réservation"</string>
     <string name="login">"Connexion "</string>
     <string name="register">"S'inscrire"</string>
@@ -21,10 +21,10 @@
     <string name="mobile">"Portable"</string>
     <string name="submit">"Soumettre"</string>
     <string name="by_signing_up_you_agree_to_the_terms_amp_conditions">"En vous inscrivant, vous acceptez les termes et conditions"</string>
-    <string name="and_privacy_policy_of_movehaul">"et la politique de Movehaul de confidentialité"</string>
+    <string name="and_privacy_policy_of_MovHaul">"et la politique de MovHaul de confidentialité"</string>
     <string name="mobile_no">"Numéro de Portable"</string>
     <string name="forgot_mobile_no">"Mot Mobile Pas?"</string>
-    <string name="by_signing_up_you_agree_to_the_terms_amp_conditions_nand_privacy_policy_of_movehaul">"&lt;! [CDATA [En vous inscrivant vous acceptez les termes et conditions et la politique de Movehaul de confidentialité"</string>
+    <string name="by_signing_up_you_agree_to_the_terms_amp_conditions_nand_privacy_policy_of_MovHaul">"&lt;! [CDATA [En vous inscrivant vous acceptez les termes et conditions et la politique de MovHaul de confidentialité"</string>
     <string name="forgot_ph_no">"Mot Ph. No"</string>
     <string name="enter_email">"Entrez votre adresse email"</string>
     <string name="pickup_location">"Lieu de départ"</string>
@@ -50,7 +50,7 @@
     <string name="please_try_again">"S'il vous plaît Connectez Internet et Essayez à nouveau"</string>
     <string name="ent">"Entrez le numéro de téléphone valide"</string>
     <string name="entr">"Entrez l'adresse e-mail valide!"</string>
-    <string name="s">"Nous vous remercions de votre inscription MoveHaul."</string>
+    <string name="s">"Nous vous remercions de votre inscription MovHaul."</string>
     <string name="asd">"Mobile Number Déjà inscrit"</string>
     <string name="aew">"Adresse e-mail déjà enregistrée"</string>
     <string name="uies">"Introduire le nom d'utilisateur"</string>
@@ -59,7 +59,7 @@
     <string name="wa">"Entrez le numéro de téléphone valide"</string>
     <string name="a">"Pas de réseau"</string>
     <string name="ae">"Ouvrir les paramètres"</string>
-    <string name="asdw">"Nombre Mobile n'est pas inscrit sur MoveHaul!"</string>
+    <string name="asdw">"Nombre Mobile n'est pas inscrit sur MovHaul!"</string>
     <string name="asdwasdf">"Veuillez attendre"</string>
     <string name="aoptp">"Otp Envoyer à"</string>
     <string name="asdunt">"Échec de l'authentification, entrez Corrent OTP"</string>

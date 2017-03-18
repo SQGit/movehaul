@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="net.sqindia.movehaul">
+    package="net.sqindia.movhaul">
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature
@@ -35,7 +35,7 @@
 
 
         <activity
-            android:name=".SplashActivity"
+            android:name="net.sqindia.movhaul.SplashActivity"
             android:screenOrientation="sensorPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,81 +44,81 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RegisterActivity"
+            android:name="net.sqindia.movhaul.RegisterActivity"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity
-            android:name=".LoginActivity"
+            android:name="net.sqindia.movhaul.LoginActivity"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity
-            android:name=".LoginOtpActivity"
+            android:name="net.sqindia.movhaul.LoginOtpActivity"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity
-            android:name=".Forgot_Mobile"
+            android:name="net.sqindia.movhaul.Forgot_Mobile"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity
-            android:name=".DashboardNavigation"
+            android:name="net.sqindia.movhaul.DashboardNavigation"
             android:screenOrientation="sensorPortrait"
             android:theme="@style/AppThemes"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity
-            android:name=".Book_now"
+            android:name="net.sqindia.movhaul.Book_now"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity
-            android:name=".Book_later"
+            android:name="net.sqindia.movhaul.Book_later"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity
-            android:name=".MyTrips"
+            android:name="net.sqindia.movhaul.MyTrips"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity
-            android:name=".Job_review"
+            android:name="net.sqindia.movhaul.Job_review"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity
-            android:name=".DriversList"
+            android:name="net.sqindia.movhaul.DriversList"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity
-            android:name=".Payment"
+            android:name="net.sqindia.movhaul.Payment"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity
-            android:name=".EmergencyContacts"
+            android:name="net.sqindia.movhaul.EmergencyContacts"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity
-            android:name=".Tracking"
+            android:name="net.sqindia.movhaul.Tracking"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity
-            android:name=".Payment_Details"
+            android:name="net.sqindia.movhaul.Payment_Details"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity
-            android:name=".Payment_Card_Details"
+            android:name="net.sqindia.movhaul.Payment_Card_Details"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
 
         <activity
-            android:name=".WebViewAct"
+            android:name="net.sqindia.movhaul.WebViewAct"
             android:screenOrientation="sensorPortrait"
             android:theme="@style/actionb"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
 
 
-        <receiver android:name=".ReceiveSmsBroadcastReceiver">
+        <receiver android:name="net.sqindia.movhaul.ReceiveSmsBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
         <service
-            android:name="net.sqindia.movehaul.FetchAddressIntentService"
+            android:name="net.sqindia.movhaul.FetchAddressIntentService"
             android:exported="false" />
 
         <activity

@@ -144,7 +144,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="@dimen/_5sdp"
-                android:text="@string/by_signing_up_you_agree_to_the_terms_amp_conditions_nand_privacy_policy_of_movehaul"
+                android:text="@string/by_signing_up_you_agree_to_the_terms_amp_conditions_nand_privacy_policy_of_MovHaul"
                 android:textSize="@dimen/_10sdp" />
 
 

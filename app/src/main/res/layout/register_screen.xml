@@ -193,7 +193,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/and_privacy_policy_of_movehaul"
+                android:text="@string/and_privacy_policy_of_MovHaul"
                 android:textSize="@dimen/_10sdp" />
         </LinearLayout>
     </LinearLayout>

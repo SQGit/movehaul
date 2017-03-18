@@ -11,7 +11,7 @@
     <string name="pin_label_text">"நுழைவு முள்"</string>
     <string name="pin_content_desc">"முள் நுழைவு"</string>
 
-    <string name="app_name">"Movehaul"</string>
+    <string name="app_name">"MovHaul"</string>
     <string name="customer_booking">"புக்கிங் வாடிக்கையாளர் அழைக்க தட்டி"</string>
     <string name="login">"உள் நுழை"</string>
     <string name="register">"பதிவு செய்க"</string>
@@ -21,10 +21,10 @@
     <string name="mobile">"கைப்பேசி"</string>
     <string name="submit">"சமர்ப்பிக்கவும்"</string>
     <string name="by_signing_up_you_agree_to_the_terms_amp_conditions">"&lt;! [CDATA [பதிவு பெறுவதன் மூலம் நீங்கள் விதிமுறைகள் &amp; நிபந்தனைகளுக்கு உடன்பட"</string>
-    <string name="and_privacy_policy_of_movehaul">"Movehaul மற்றும் தனியுரிமை கொள்கை"</string>
+    <string name="and_privacy_policy_of_MovHaul">"MovHaul மற்றும் தனியுரிமை கொள்கை"</string>
     <string name="mobile_no">"கைப்பேசி:"</string>
     <string name="forgot_mobile_no">"மொபைல் இல்லை மறந்துவிட்டதா?"</string>
-    <string name="by_signing_up_you_agree_to_the_terms_amp_conditions_nand_privacy_policy_of_movehaul">"&lt;! [CDATA [பதிவு பெறுவதன் மூலம் நீங்கள் விதிமுறைகளும் நிபந்தனைகளும் மற்றும் Movehaul தனியுரிமை கொள்கையை ஏற்கிறேன்"</string>
+    <string name="by_signing_up_you_agree_to_the_terms_amp_conditions_nand_privacy_policy_of_MovHaul">"&lt;! [CDATA [பதிவு பெறுவதன் மூலம் நீங்கள் விதிமுறைகளும் நிபந்தனைகளும் மற்றும் MovHaul தனியுரிமை கொள்கையை ஏற்கிறேன்"</string>
     <string name="forgot_ph_no">"பிஎச் மறந்துவிட்டேன். இல்லை"</string>
     <string name="enter_email">"மின்னஞ்சல் உள்ளிடவும்"</string>
     <string name="pickup_location">"பெறுவதற்கான இடம்"</string>
@@ -50,7 +50,7 @@
     <string name="please_try_again">"இணைய இணைக்க, மீண்டும் முயற்சிக்கவும்"</string>
     <string name="ent">"சரியான தொலைபேசி எண்ணை உள்ளிடவும்"</string>
     <string name="entr">"சரியான மின்னஞ்சல் முகவரியை உள்ளிடவும்!"</string>
-    <string name="s">"MoveHaul உள்நுழைதல் அப் நன்றி."</string>
+    <string name="s">"MovHaul உள்நுழைதல் அப் நன்றி."</string>
     <string name="asd">"மொபைல் எண் ஏற்கனவே பதிவு"</string>
     <string name="aew">"மின்னஞ்சல் ஏற்கனவே பதிவு"</string>
     <string name="uies">"பாவனை பெயர்"</string>
@@ -59,7 +59,7 @@
     <string name="wa">"சரியான தொலைபேசி எண்ணை உள்ளிடவும்"</string>
     <string name="a">"இணைய இணைப்பு இல்லை."</string>
     <string name="ae">"அமைப்புகளைத் திற."</string>
-    <string name="asdw">"மொபைல் எண் MoveHaul பதிவு செய்யப்படவில்லை!"</string>
+    <string name="asdw">"மொபைல் எண் MovHaul பதிவு செய்யப்படவில்லை!"</string>
     <string name="asdwasdf">"காத்திருக்கவும் ..."</string>
     <string name="aoptp">"சிவகாசி அனுப்பு"</string>
     <string name="asdunt">"அங்கீகரிப்பதில் தோல்வி, Corrent சிவகாசி உள்ளிடவும்"</string>
