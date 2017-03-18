@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
 
-        applicationId "net.sqindia.movehaul"
+        applicationId "com.vineture.movhaul"
         minSdkVersion 17
         targetSdkVersion 24
         versionCode 6
@@ -52,9 +52,8 @@ dependencies {
     compile 'commons-codec:commons-codec:1.10'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.7.5'
     compile 'com.google.code.gson:gson:2.4'
-    compile project(':remita_payment')
-
     compile 'com.google.firebase:firebase-messaging:10.2.0'
+    compile project(':remita (1)')
 }
 
 apply plugin: 'com.google.gms.google-services'

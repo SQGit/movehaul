@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="net.sqindia.movhaul">
+    package="com.vineture.movhaul">
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature
@@ -35,7 +35,7 @@
 
 
         <activity
-            android:name="net.sqindia.movhaul.SplashActivity"
+            android:name="com.vineture.movhaul.SplashActivity"
             android:screenOrientation="sensorPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,81 +44,81 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="net.sqindia.movhaul.RegisterActivity"
+            android:name="com.vineture.movhaul.RegisterActivity"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity
-            android:name="net.sqindia.movhaul.LoginActivity"
+            android:name="com.vineture.movhaul.LoginActivity"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity
-            android:name="net.sqindia.movhaul.LoginOtpActivity"
+            android:name="com.vineture.movhaul.LoginOtpActivity"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity
-            android:name="net.sqindia.movhaul.Forgot_Mobile"
+            android:name="com.vineture.movhaul.Forgot_Mobile"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity
-            android:name="net.sqindia.movhaul.DashboardNavigation"
+            android:name="com.vineture.movhaul.DashboardNavigation"
             android:screenOrientation="sensorPortrait"
             android:theme="@style/AppThemes"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity
-            android:name="net.sqindia.movhaul.Book_now"
+            android:name="com.vineture.movhaul.Book_now"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity
-            android:name="net.sqindia.movhaul.Book_later"
+            android:name="com.vineture.movhaul.Book_later"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity
-            android:name="net.sqindia.movhaul.MyTrips"
+            android:name="com.vineture.movhaul.MyTrips"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity
-            android:name="net.sqindia.movhaul.Job_review"
+            android:name="com.vineture.movhaul.Job_review"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity
-            android:name="net.sqindia.movhaul.DriversList"
+            android:name="com.vineture.movhaul.DriversList"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity
-            android:name="net.sqindia.movhaul.Payment"
+            android:name="com.vineture.movhaul.Payment"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity
-            android:name="net.sqindia.movhaul.EmergencyContacts"
+            android:name="com.vineture.movhaul.EmergencyContacts"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity
-            android:name="net.sqindia.movhaul.Tracking"
+            android:name="com.vineture.movhaul.Tracking"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity
-            android:name="net.sqindia.movhaul.Payment_Details"
+            android:name="com.vineture.movhaul.Payment_Details"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity
-            android:name="net.sqindia.movhaul.Payment_Card_Details"
+            android:name="com.vineture.movhaul.Payment_Card_Details"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
 
         <activity
-            android:name="net.sqindia.movhaul.WebViewAct"
+            android:name="com.vineture.movhaul.WebViewAct"
             android:screenOrientation="sensorPortrait"
             android:theme="@style/actionb"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
 
 
-        <receiver android:name="net.sqindia.movhaul.ReceiveSmsBroadcastReceiver">
+        <receiver android:name="com.vineture.movhaul.ReceiveSmsBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
         <service
-            android:name="net.sqindia.movhaul.FetchAddressIntentService"
+            android:name="com.vineture.movhaul.FetchAddressIntentService"
             android:exported="false" />
 
         <activity
