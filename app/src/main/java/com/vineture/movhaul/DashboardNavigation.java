@@ -1189,9 +1189,9 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             // The autocomplete activity requires Google Play Services to be available. The intent
             // builder checks this and throws an exception if it is not the case.
 
-            AutocompleteFilter typeFilter = new AutocompleteFilter.Builder().setTypeFilter(Place.TYPE_COUNTRY).setCountry("US").build();
+         //   AutocompleteFilter typeFilter = new AutocompleteFilter.Builder().setTypeFilter(Place.TYPE_COUNTRY).setCountry("US").build();
             //.setBoundsBias(new LatLngBounds(new LatLng(23.63936, 68.14712), new LatLng(28.20453, 97.34466)))
-            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).setFilter(typeFilter).build(this);
+            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).build(this);
             startActivityForResult(intent, REQUEST_AC_PICKUP);
         } catch (GooglePlayServicesRepairableException e) {
             // Indicates that Google Play Services is either not installed or not up to date. Prompt
@@ -1212,8 +1212,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         try {
             // The autocomplete activity requires Google Play Services to be available. The intent
             // builder checks this and throws an exception if it is not the case.
-            AutocompleteFilter typeFilter = new AutocompleteFilter.Builder().setTypeFilter(Place.TYPE_COUNTRY).setCountry("US").build();
-            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).setFilter(typeFilter).build(this);
+           // AutocompleteFilter typeFilter = new AutocompleteFilter.Builder().setTypeFilter(Place.TYPE_COUNTRY).setCountry("US").build();
+            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).build(this);
             startActivityForResult(intent, REQUEST_AC_DROP);
 
           //  lt_pickup.setEnabled(false);
@@ -1674,12 +1674,14 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         if (motionEvent.getAction() != MotionEvent.ACTION_UP) {
             Log.e("tag", "motion_events" + "  motion_changes");
 
-            if(!p_loc_comp) {
-                fl_bottom_frame.setVisibility(View.GONE);
-                lt_top.setVisibility(View.GONE);
-                FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) lt_frame.getLayoutParams();
-                params.setMargins(0, 5, 0, 0);
-                lt_frame.setLayoutParams(params);
+            if (lt_filter_dialog.getVisibility() != View.VISIBLE) {
+                if (!p_loc_comp) {
+                    fl_bottom_frame.setVisibility(View.GONE);
+                    lt_top.setVisibility(View.GONE);
+                    FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) lt_frame.getLayoutParams();
+                    params.setMargins(0, 5, 0, 0);
+                    lt_frame.setLayoutParams(params);
+                }
             }
 
         } else {

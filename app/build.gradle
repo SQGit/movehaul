@@ -1,29 +1,41 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'movhaul_customer'
+            keyPassword 'mvhlcustomer'
+            storeFile file('F:/movhaul/keystorefile.jks')
+            storePassword 'mvhlcustomer'
+        }
+    }
     compileSdkVersion 24
     buildToolsVersion '25.0.0'
     useLibrary 'org.apache.http.legacy'
-
     defaultConfig {
-
         applicationId "com.vineture.movhaul"
         minSdkVersion 17
         targetSdkVersion 24
         versionCode 6
         versionName "1.5"
         multiDexEnabled true
+        signingConfig signingConfigs.config
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            zipAlignEnabled true
+        }
+        debug {
+            zipAlignEnabled true
         }
     }
     dexOptions {
         javaMaxHeapSize "4g"
     }
-
+    productFlavors {
+    }
 }
 
 repositories {
