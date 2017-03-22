@@ -126,6 +126,14 @@
             android:screenOrientation="portrait"
             android:theme="@style/ted_pick_theme" />
 
+
+
+        <service android:name=".DriverService" ></service>
+
+
+
+
+
         />
 
     </application>

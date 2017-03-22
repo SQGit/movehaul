@@ -65,7 +65,7 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.7.5'
     compile 'com.google.code.gson:gson:2.4'
     compile 'com.google.firebase:firebase-messaging:10.2.0'
-    compile project(':remita (1)')
+    compile project(':remita_21_03')
 }
 
 apply plugin: 'com.google.gms.google-services'

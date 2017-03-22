@@ -127,8 +127,8 @@ public class HttpUtils {
 
 
     public static String makeRequest1(String url, String json,String id,String token) {
-        Log.v(TAG, "URL-->" + url);
-        Log.v(TAG, "input-->" + json);
+        Log.e(TAG, "URL-->" + url);
+        Log.e(TAG, "input-->" + json);
 
 
         try {

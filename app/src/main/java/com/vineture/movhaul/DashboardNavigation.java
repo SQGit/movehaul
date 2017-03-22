@@ -8,6 +8,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,6 +24,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.ResultReceiver;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
@@ -86,6 +88,7 @@ import com.rey.material.widget.TextView;
 import com.sloop.fonts.FontsManager;
 import com.systemspecs.remita.remitapaymentgateway.RemitaMainActivity;
 
+import org.apache.commons.codec.language.DoubleMetaphone;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -96,6 +99,7 @@ import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -162,7 +166,13 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     CustomMapFragment customMapFragment;
     ImageView btn_editProfile, btn_close, btn_editProfile_img;
     EditText et_username, et_email;
-    String id, token, mPickup_lat, mPickup_long, mDrop_lat, mDrop_long, vec_type;
+    public static String id;
+    public static String token;
+    public String mPickup_lat;
+    public String mPickup_long;
+    public String mDrop_lat;
+    public String mDrop_long;
+    public String vec_type;
     TextInputLayout flt_uname, flt_email;
     ArrayList<String> selectedPhotos = new ArrayList<>();
     ImageView iv_location, iv_zoomin, iv_zoomout;
@@ -181,11 +191,13 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     android.widget.RelativeLayout fl_bottom_frame;
     LinearLayout lt_top;
     boolean p_loc_comp;
-    double dl_pick_lati, dl_pick_longi, dl_drop_lati, dl_drop_longi;
+    public double dl_pick_lati, dl_pick_longi, dl_drop_lati, dl_drop_longi;
     ImageView iv_map_point;
     private GoogleMap mMap;
     private LatLng mCenterLatLong;
     private AddressResultReceiver mResultReceiver;
+
+    public double dl_dr_lati,dl_dr_longi;
 
     public static int getDeviceHeight(Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -441,6 +453,13 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 btn_book_later.setEnabled(true);
                 lt_pickup.setEnabled(true);
                 lt_drop.setEnabled(true);
+
+
+              //  startService(new Intent(DashboardNavigation.this, DriverService.class));
+
+                new get_drivers().execute();
+
+
             }
         });
 
@@ -566,7 +585,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         navigationView.setNavigationItemSelectedListener(this);
 
         if (!(sharedPreferences.getString("customer_image", "").equals(""))) {
-            Glide.with(DashboardNavigation.this).load(Config.WEB_URL + "customer_details/" + sharedPreferences.getString("customer_image", "")).into(btn_editProfile_img);
+            Glide.with(DashboardNavigation.this).load(Config.WEB_URL_IMG + "customer_details/" + sharedPreferences.getString("customer_image", "")).into(btn_editProfile_img);
         }
 
 
@@ -1269,7 +1288,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 if (mMap != null) {
                     mMap.getUiSettings().setZoomControlsEnabled(false);
 
-                    mMap.clear();
+                   // mMap.clear();
 
 
                     latLong = place.getLatLng();
@@ -1401,7 +1420,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     private void draw_line(double dl_pick_lati,double dl_pick_longi,double dl_drop_lati,double dl_drop_longi) {
 
 
-        mMap.clear();
+       // mMap.clear();
 
         mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
                 .position(new LatLng(dl_pick_lati, dl_pick_longi)));
@@ -1622,7 +1641,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             if (mMap != null) {
                 LatLng latLong;
                 Log.e("tagmap", "change_map_map_not_null");
-                mMap.clear();
+                //mMap.clear();
                 dl_pick_lati = location.getLatitude();
                 dl_pick_longi = location.getLongitude();
                 latLong = new LatLng(dl_pick_lati, dl_pick_longi);
@@ -1655,7 +1674,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             lt_filter_dialog.setVisibility(View.VISIBLE);
             aet_drop.setText("");
             p_loc_comp = false;
-            mMap.clear();
+           // mMap.clear();
             getMyLocation();
             iv_map_point.setVisibility(View.VISIBLE);
             mResultReceiver = new AddressResultReceiver(new Handler());
@@ -1725,7 +1744,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                         Location mLocation = new Location("");
                         mLocation.setLatitude(dl_pick_lati);
                         mLocation.setLongitude(dl_pick_longi);
-                        mMap.clear();
+                       // mMap.clear();
                         str_lati = String.valueOf(mCenterLatLong.latitude);
                         str_longi = String.valueOf(mCenterLatLong.longitude);
                         startIntentService(mLocation);
@@ -1963,14 +1982,14 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
 
                         selectedPhotos.clear();
-                        Glide.with(DashboardNavigation.this).load(Config.WEB_URL + "customer_details/" + img).into(btn_editProfile_img);
+                        Glide.with(DashboardNavigation.this).load(Config.WEB_URL_IMG + "customer_details/" + img).into(btn_editProfile_img);
 
                         editor.putString("customer_image", img);
                         editor.putString("customer_name", name);
                         editor.putString("customer_email", email);
                         editor.commit();
 
-                        Log.e("tag", "img: " + Config.WEB_URL + "customer_details/" + img);
+                        Log.e("tag", "img: " + Config.WEB_URL_IMG + "customer_details/" + img);
                         Log.e("tag", "img: " + name);
                         Log.e("tag", "img: " + email);
 
@@ -2245,6 +2264,139 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         }
 
     }
+
+
+
+
+    public class FirstService extends Service {
+
+        private  String TAG = "tagss";
+
+        @Override
+        public IBinder onBind(Intent arg0) {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+
+
+        @Override
+        public void onStart(Intent intent, int startId) {
+            // TODO Auto-generated method stub
+            super.onStart(intent, startId);
+            Log.e(TAG, "FirstService started");
+            //this.stopSelf();
+        }
+
+        @Override
+        public void onDestroy() {
+            // TODO Auto-generated method stub
+            super.onDestroy();
+            Log.e(TAG, "FirstService destroyed");
+        }
+
+    }
+
+
+    public static void geee(){
+
+        //if(dl_pick_lati != 0.0)
+        //new get_drivers().execute();
+
+    }
+    public  void getDrv(){
+
+    }
+
+
+    public  class get_drivers extends AsyncTask<String, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+        @Override
+        protected String doInBackground(String... strings) {
+            String json = "", jsonStr = "";
+            String s = "";
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("latitude", String.valueOf(dl_pick_lati));
+                jsonObject.put("longitude",  String.valueOf(dl_pick_longi));
+                json = jsonObject.toString();
+
+                return s = HttpUtils.makeRequest1(com.vineture.movhaul.Config.WEB_URL + "customer/finddrivers", json, id, token);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+         //   Log.e("tag", "tag" + s);
+
+            if (s != null) {
+                try {
+                    JSONObject jo = new JSONObject(s);
+                    String status = jo.getString("status");
+                   // Log.d("tag", "<-----Status----->" + status);
+                    if (status.equals("true")) {
+
+                        Log.d("tag", "<-----true----->" + s);
+
+                        JSONArray jsoi = jo.getJSONArray("message");
+
+                        JSONObject jos = jsoi.getJSONObject(0);
+
+                        double latitude = Double.valueOf(jos.getString("driver_latitude"));
+                        double longitude =  Double.valueOf(jos.getString("driver_longitude"));
+
+                        new get_drivers().execute();
+
+                        if(dl_dr_lati != latitude){
+                            Log.e("tag","0la:"+latitude);
+                            Log.e("tag","1la:"+dl_dr_lati);
+                            dl_dr_lati = latitude;
+                            dl_dr_longi = longitude;
+
+
+                            mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.trk_img))
+                                    .position(new LatLng(dl_dr_lati, dl_dr_longi)));
+
+                        }
+                        else{
+                            Log.e("tag","qw_la0:"+latitude);
+                            Log.e("tag","qw_la1:"+dl_dr_lati);
+                        }
+
+                      //  new get_drivers().execute();10
+                    } else if (status.equals("false")) {
+
+                        Log.e("tag", "Location not updated");
+                        //has to check internet and location...
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.e("tag", "nt" + e.toString());
+                }
+            } else {
+            }
+
+        }
+
+    }
+
+
+
+
+
+
+
+
 
 
 }
