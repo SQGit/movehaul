@@ -457,7 +457,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
               //  startService(new Intent(DashboardNavigation.this, DriverService.class));
 
-                new get_drivers().execute();
+              //  new get_drivers().execute();
 
 
             }
