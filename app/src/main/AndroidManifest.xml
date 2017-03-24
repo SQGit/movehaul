@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.vineture.movhaul">
+    package="com.movhaul.customer">
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature
@@ -19,7 +19,7 @@
 
 
     <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.SEND_SMS"></uses-permission>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
@@ -35,7 +35,7 @@
 
 
         <activity
-            android:name="com.vineture.movhaul.SplashActivity"
+            android:name="com.movhaul.customer.SplashActivity"
             android:screenOrientation="sensorPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,81 +44,81 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.vineture.movhaul.RegisterActivity"
+            android:name="com.movhaul.customer.RegisterActivity"
             android:screenOrientation="sensorPortrait"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
         <activity
-            android:name="com.vineture.movhaul.LoginActivity"
+            android:name="com.movhaul.customer.LoginActivity"
             android:screenOrientation="sensorPortrait"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
         <activity
-            android:name="com.vineture.movhaul.LoginOtpActivity"
+            android:name="com.movhaul.customer.LoginOtpActivity"
             android:screenOrientation="sensorPortrait"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
         <activity
-            android:name="com.vineture.movhaul.Forgot_Mobile"
+            android:name="com.movhaul.customer.Forgot_Mobile"
             android:screenOrientation="sensorPortrait"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
         <activity
-            android:name="com.vineture.movhaul.DashboardNavigation"
+            android:name="com.movhaul.customer.DashboardNavigation"
             android:screenOrientation="sensorPortrait"
             android:theme="@style/AppThemes"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
         <activity
-            android:name="com.vineture.movhaul.Book_now"
+            android:name="com.movhaul.customer.Book_now"
             android:screenOrientation="sensorPortrait"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
         <activity
-            android:name="com.vineture.movhaul.Book_later"
+            android:name="com.movhaul.customer.Book_later"
             android:screenOrientation="sensorPortrait"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
         <activity
-            android:name="com.vineture.movhaul.MyTrips"
+            android:name="com.movhaul.customer.MyTrips"
             android:screenOrientation="sensorPortrait"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
         <activity
-            android:name="com.vineture.movhaul.Job_review"
+            android:name="com.movhaul.customer.Job_review"
             android:screenOrientation="sensorPortrait"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
         <activity
-            android:name="com.vineture.movhaul.DriversList"
+            android:name="com.movhaul.customer.DriversList"
             android:screenOrientation="sensorPortrait"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
         <activity
-            android:name="com.vineture.movhaul.Payment"
+            android:name="com.movhaul.customer.Payment"
             android:screenOrientation="sensorPortrait"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
         <activity
-            android:name="com.vineture.movhaul.EmergencyContacts"
+            android:name="com.movhaul.customer.EmergencyContacts"
             android:screenOrientation="sensorPortrait"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
         <activity
-            android:name="com.vineture.movhaul.Tracking"
+            android:name="com.movhaul.customer.Tracking"
             android:screenOrientation="sensorPortrait"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
         <activity
-            android:name="com.vineture.movhaul.Payment_Details"
+            android:name="com.movhaul.customer.Payment_Details"
             android:screenOrientation="sensorPortrait"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
         <activity
-            android:name="com.vineture.movhaul.Payment_Card_Details"
+            android:name="com.movhaul.customer.Payment_Card_Details"
             android:screenOrientation="sensorPortrait"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
 
         <activity
-            android:name="com.vineture.movhaul.WebViewAct"
+            android:name="com.movhaul.customer.WebViewAct"
             android:screenOrientation="sensorPortrait"
             android:theme="@style/actionb"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
 
 
-        <receiver android:name="com.vineture.movhaul.ReceiveSmsBroadcastReceiver">
+        <receiver android:name="com.movhaul.customer.ReceiveSmsBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
         <service
-            android:name="com.vineture.movhaul.FetchAddressIntentService"
+            android:name="com.movhaul.customer.FetchAddressIntentService"
             android:exported="false" />
 
         <activity
@@ -128,7 +128,7 @@
 
 
 
-        <service android:name=".DriverService" ></service>
+        <service android:name="com.movhaul.customer.DriverService" />
 
 
 

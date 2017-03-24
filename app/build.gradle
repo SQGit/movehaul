@@ -13,10 +13,10 @@ android {
     buildToolsVersion '25.0.0'
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
-        applicationId "com.vineture.movhaul"
+        applicationId "com.movhaul.customer"
         minSdkVersion 17
         targetSdkVersion 25
-        versionCode 6
+        versionCode 5
         versionName "1.5"
         multiDexEnabled true
         signingConfig signingConfigs.config
