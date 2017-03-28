@@ -288,8 +288,8 @@ public class Dialog_VehicleType extends Dialog {
             if(page==0) {
                 iv_truck_ico = (ImageView) arow.findViewById(com.movhaul.customer.R.id.image_icon);
                 //iv_truck_ico.setImageDrawable(cc.getResources().getDrawable(R.drawable.truck_1));
-                Log.e("tag", posi+" w: "+Config.WEB_URL+"vehicle_types/"+ar_truck_iimgs.get(posi));
-                Glide.with(cc).load(Config.WEB_URL+"vehicle_types/"+ar_truck_iimgs.get(posi)).into(iv_truck_ico);
+                Log.e("tag", posi+" w: "+Config.WEB_URL_IMG+"vehicle_types/"+ar_truck_iimgs.get(posi));
+                Glide.with(cc).load(Config.WEB_URL_IMG+"vehicle_types/"+ar_truck_iimgs.get(posi)).into(iv_truck_ico);
 
             }
             else{

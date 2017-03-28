@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/top"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:id="@+id/top"
     android:background="@drawable/bg"
     android:orientation="vertical">
 
@@ -36,9 +37,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/login"
-                android:textStyle="bold"
                 android:textColor="#F65F52"
-                android:textSize="@dimen/_19sdp" />
+                android:textSize="@dimen/_19sdp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -52,41 +53,66 @@
         </LinearLayout>
     </LinearLayout>
 
+
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center"
         android:layout_marginLeft="@dimen/_20sdp"
         android:layout_marginTop="@dimen/_20sdp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/float_mobile"
+        <com.hbb20.CountryCodePicker
+            android:id="@+id/ccp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:countryPreference="US,IN,NG"
+            app:textSize="@dimen/_10sdp"
+            app:arrowSize="@dimen/_15sdp"
+            app:defaultNameCode="US"
+            app:customMasterCountries="US,IN,NZ,NG,BD,PL,RO,ZW,JP"
+            android:layout_gravity="center" />
+
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_8sdp"
-            android:layout_marginTop="@dimen/_3sdp"
-            android:textColorHint="@color/colorAccent">
+            android:layout_marginLeft="@dimen/_4sdp"
+            android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/editTextMobileNo"
+
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/float_mobile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:hint="@string/mobile_no"
-                android:inputType="phone"
-                android:maxLength="12"
-                android:maxLines="1"
-                android:paddingTop="@dimen/_10sdp"
-                android:textColor="#000000"
-                android:textSize="@dimen/_13sdp" />
-        </android.support.design.widget.TextInputLayout>
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:textColorHint="@color/colorAccent">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_1sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
-            android:background="#E1E1E1" />
+                <EditText
+                    android:id="@+id/editTextMobileNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="@string/mobile_no"
+                    android:inputType="phone"
+                    android:maxLength="12"
+                    android:maxLines="1"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/_13sdp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:background="#E1E1E1" />
+        </LinearLayout>
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -102,8 +128,8 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/_10sdp"
             android:text="@string/forgot_mobile_no"
-            android:textSize="@dimen/_12sdp"
-            android:textColor="#F65F52" />
+            android:textColor="#F65F52"
+            android:textSize="@dimen/_12sdp" />
 
         <com.rey.material.widget.Button
             android:id="@+id/btn_submit"

@@ -100,6 +100,24 @@ public class SplashActivity extends Activity {
         editor = sharedPreferences.edit();
         config = new Config();
 
+        TelephonyManager tm = (TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
+        String countryCodeValue = tm.getNetworkCountryIso();
+
+       // String locale = getResources().getConfiguration().locale.getDisplayCountry();
+//
+       // String locale1 = getResources().getConfiguration().locale.getISO3Country();
+        //String locale2 = getResources().getConfiguration().locale.getDisplayName();
+
+        Log.e("tag","country: "+countryCodeValue);
+
+       // Log.e("tag","resourc: "+locale + locale2 +locale1);
+        Locale loc = Locale.getDefault();
+
+        Log.e("tag","resourc: "+ Locale.getDefault().getCountry());
+        Log.e("tag","resourc: "+ Locale.getDefault().getDisplayCountry());
+        Log.e("tag","resourc: "+ Locale.getDefault().getDisplayLanguage());
+        Log.e("tag","resourc: "+ Locale.getDefault().getDisplayName());
+
         Log.e("tag","lang:"+Locale.getDefault().getDisplayLanguage());
         Log.e("tag","lang_code:"+Locale.getDefault().getLanguage());
 
@@ -284,7 +302,7 @@ public class SplashActivity extends Activity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        if (!config.isConnected(SplashActivity.this)) {
+        if (!Config.isConnected(SplashActivity.this)) {
             snackbar.show();
             btn_call.setVisibility(View.VISIBLE);
             lt_bottom.setVisibility(View.VISIBLE);
@@ -337,7 +355,7 @@ public class SplashActivity extends Activity {
 
             try {
 
-                boolean isconnected = config.isConnected(SplashActivity.this);
+                boolean isconnected = Config.isConnected(SplashActivity.this);
 
                 if (isconnected) {
                     return "true";

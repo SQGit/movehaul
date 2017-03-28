@@ -250,7 +250,7 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
         tv_content_driver_name.setText(mv_datas.getName());
         tv_content_damage_control.setText(mv_datas.getDamage_control());
 
-        Glide.with(act).load(Config.WEB_URL+"driver_details/"+mv_datas.getDriver_image()).into(iv_driver_image);
+        Glide.with(act).load(Config.WEB_URL_IMG+"driver_details/"+mv_datas.getDriver_image()).into(iv_driver_image);
 
 
 
@@ -471,23 +471,23 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
             if(doid ==1) {
                 if (position == 0) {
                     ImageView iv_trk = (ImageView) view.findViewById(com.movhaul.customer.R.id.image);
-                    Glide.with(act).load(Config.WEB_URL + "vehicle_details/" + tr_front).into(iv_trk);
+                    Glide.with(act).load(Config.WEB_URL_IMG + "vehicle_details/" + tr_front).into(iv_trk);
                 } else if (position == 1) {
                     ImageView iv_trk = (ImageView) view.findViewById(com.movhaul.customer.R.id.image);
-                    Glide.with(act).load(Config.WEB_URL + "vehicle_details/" + tr_side).into(iv_trk);
+                    Glide.with(act).load(Config.WEB_URL_IMG + "vehicle_details/" + tr_side).into(iv_trk);
                 } else {
                     ImageView iv_trk = (ImageView) view.findViewById(com.movhaul.customer.R.id.image);
-                    Glide.with(act).load(Config.WEB_URL + "vehicle_details/" + tr_back).into(iv_trk);
+                    Glide.with(act).load(Config.WEB_URL_IMG + "vehicle_details/" + tr_back).into(iv_trk);
                 }
             }
             else{
 
                 if (position == 0) {
                     ImageView iv_trk = (ImageView) view.findViewById(com.movhaul.customer.R.id.image);
-                    Glide.with(act).load(Config.WEB_URL + "vehicle_details/" + tr_front).into(iv_trk);
+                    Glide.with(act).load(Config.WEB_URL_IMG + "vehicle_details/" + tr_front).into(iv_trk);
                 }  else {
                     ImageView iv_trk = (ImageView) view.findViewById(com.movhaul.customer.R.id.image);
-                    Glide.with(act).load(Config.WEB_URL + "vehicle_details/" + tr_back).into(iv_trk);
+                    Glide.with(act).load(Config.WEB_URL_IMG + "vehicle_details/" + tr_back).into(iv_trk);
                 }
 
 

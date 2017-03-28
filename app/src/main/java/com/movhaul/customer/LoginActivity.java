@@ -17,7 +17,9 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.hbb20.CountryCodePicker;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.LinearLayout;
 import com.sloop.fonts.FontsManager;
@@ -40,6 +42,7 @@ public class LoginActivity extends Activity {
     Config config;
     Typeface tf;
     ProgressDialog mProgressDialog;
+    CountryCodePicker ccp;
 
     @Override
     public void onBackPressed() {
@@ -60,10 +63,27 @@ public class LoginActivity extends Activity {
         tv_forgot_mobile = (TextView) findViewById(com.movhaul.customer.R.id.text_forgot_no);
         et_mobile_no = (EditText) findViewById(com.movhaul.customer.R.id.editTextMobileNo);
         flt_mobile_no = (TextInputLayout) findViewById(com.movhaul.customer.R.id.float_mobile);
+        ccp = (CountryCodePicker) findViewById(R.id.ccp);
+
+        //ccp.resetToDefaultCountry();
+        //ccp.setDefaultCountryUsingNameCode("JP");
+        ccp.setDefaultCountryUsingPhoneCode(+91);
+
 
         Typeface type = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
         et_mobile_no.setTypeface(tf);
         flt_mobile_no.setTypeface(type);
+        ccp.setTypeFace(type);
+
+
+
+
+        ccp.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
+            @Override
+            public void onCountrySelected() {
+                Toast.makeText(getApplicationContext(), "Updated " + ccp.getSelectedCountryName()+" " +ccp.getSelectedCountryCodeWithPlus(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         // show_wifi_not_connected();
 

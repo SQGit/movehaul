@@ -209,7 +209,7 @@ public class MyTrips extends AppCompatActivity {
                 tv_cr_dr_phone.setText(mv_datas.getDriver_number());
                 tv_cr_job_cost.setText(mv_datas.getJob_cost());
 
-                Glide.with(MyTrips.this).load(Config.WEB_URL + "driver_details/" + mv_datas.getDriver_image()).into(iv_content_prof);
+                Glide.with(MyTrips.this).load(Config.WEB_URL_IMG + "driver_details/" + mv_datas.getDriver_image()).into(iv_content_prof);
 
                 if(mv_datas.getVec_type().equals("Bus")){
                     iv_type.setImageResource(com.movhaul.customer.R.drawable.bus_type);
@@ -303,7 +303,7 @@ public class MyTrips extends AppCompatActivity {
             try {
                 JSONObject jsonObject = new JSONObject();
                 json = jsonObject.toString();
-                return jsonStr = HttpUtils.makeRequest1(Config.WEB_URL + "customer/jobhistory", json, id, token);
+                return jsonStr = HttpUtils.makeRequest1(Config.WEB_URL_IMG + "customer/jobhistory", json, id, token);
 
             } catch (Exception e) {
                 Log.e("InputStream", e.getLocalizedMessage());

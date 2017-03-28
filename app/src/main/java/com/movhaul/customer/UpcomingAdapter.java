@@ -167,7 +167,7 @@ public class UpcomingAdapter extends ArrayAdapter<MV_Datas> {
         Log.e("tag","d: "+mv_datas.getDriver_image());
         Log.e("tag","d: "+mv_datas.getName());
 
-        Glide.with(act).load(Config.WEB_URL+"driver_details/"+mv_datas.getDriver_image()).into(iv_content_prof);
+        Glide.with(act).load(Config.WEB_URL_IMG+"driver_details/"+mv_datas.getDriver_image()).into(iv_content_prof);
 
 
 
