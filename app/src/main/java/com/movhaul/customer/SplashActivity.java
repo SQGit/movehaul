@@ -100,15 +100,13 @@ public class SplashActivity extends Activity {
         editor = sharedPreferences.edit();
         config = new Config();
 
-        TelephonyManager tm = (TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
-        String countryCodeValue = tm.getNetworkCountryIso();
+
 
        // String locale = getResources().getConfiguration().locale.getDisplayCountry();
 //
        // String locale1 = getResources().getConfiguration().locale.getISO3Country();
         //String locale2 = getResources().getConfiguration().locale.getDisplayName();
 
-        Log.e("tag","country: "+countryCodeValue);
 
        // Log.e("tag","resourc: "+locale + locale2 +locale1);
         Locale loc = Locale.getDefault();

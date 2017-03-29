@@ -111,6 +111,11 @@
             android:theme="@style/actionb"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
 
+        <activity
+            android:name="com.movhaul.customer.MyJobs"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+
 
         <receiver android:name="com.movhaul.customer.ReceiveSmsBroadcastReceiver">
             <intent-filter>
@@ -129,6 +134,8 @@
 
 
         <service android:name="com.movhaul.customer.DriverService" />
+
+
 
 
 

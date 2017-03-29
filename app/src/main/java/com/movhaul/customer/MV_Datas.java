@@ -27,7 +27,15 @@ public class MV_Datas {
     String pickup;
     String drop;
     String vec_type;
+    String driver_count;
 
+    public String getDriver_count() {
+        return driver_count;
+    }
+
+    public void setDriver_count(String driver_count) {
+        this.driver_count = driver_count;
+    }
 
     public String getVec_type() {
         return vec_type;

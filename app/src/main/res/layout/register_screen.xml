@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/top"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:id="@+id/top"
     android:background="@drawable/bg"
     android:orientation="vertical">
 
@@ -22,8 +22,8 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -113,27 +113,54 @@
             android:layout_marginBottom="@dimen/_5sdp"
             android:background="#E1E1E1" />
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/float_mobile"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_8sdp"
-            android:layout_marginTop="@dimen/_3sdp"
-            android:textColorHint="@color/colorAccent">
 
-            <EditText
-                android:id="@+id/editTextMobile"
-                android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.hbb20.CountryCodePicker
+                android:id="@+id/ccp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:hint="@string/mobile"
-                android:inputType="phone"
-                android:maxLength="10"
-                android:maxLines="1"
-                android:paddingTop="@dimen/_10sdp"
-                android:textColor="#000000"
-                android:textSize="@dimen/_15sdp" />
-        </android.support.design.widget.TextInputLayout>
+                android:layout_gravity="center"
+                app:arrowSize="@dimen/_15sdp"
+                app:countryPreference="US,IN,NG"
+                app:customMasterCountries="US,IN,NZ,NG,PL,RO,FR,CY,CZ,CK"
+                app:keyboardAutoPopOnSearch="false"
+                app:defaultNameCode="us"
+                app:textSize="@dimen/_10sdp" />
+
+
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/float_mobile"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_5sdp"
+
+                    android:textColorHint="@color/colorAccent">
+
+                    <EditText
+                        android:id="@+id/editTextMobile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:hint="@string/mobile"
+                        android:inputType="phone"
+                        android:maxLength="12"
+                        android:maxLines="1"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/_15sdp" />
+                </android.support.design.widget.TextInputLayout>
+
+
+
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"

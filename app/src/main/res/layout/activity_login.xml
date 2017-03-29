@@ -69,6 +69,8 @@
             app:countryPreference="US,IN,NG"
             app:textSize="@dimen/_10sdp"
             app:arrowSize="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            app:keyboardAutoPopOnSearch="false"
             app:defaultNameCode="US"
             app:customMasterCountries="US,IN,NZ,NG,BD,PL,RO,ZW,JP"
             android:layout_gravity="center" />
@@ -87,7 +89,7 @@
                 android:id="@+id/float_mobile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_3sdp"
                 android:textColorHint="@color/colorAccent">
 
@@ -102,16 +104,19 @@
                     android:maxLines="1"
                     android:paddingTop="@dimen/_10sdp"
                     android:textColor="#000000"
-                    android:textSize="@dimen/_13sdp" />
+                    android:textSize="@dimen/_14sdp" />
             </android.support.design.widget.TextInputLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_1sdp"
-                android:layout_marginBottom="@dimen/_5sdp"
-                android:background="#E1E1E1" />
+
         </LinearLayout>
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:background="#E1E1E1" />
 
 
     <LinearLayout
@@ -146,6 +151,18 @@
             android:textColor="#FFFFFF"
             android:textSize="@dimen/_19sdp" />
     </LinearLayout>
+
+
+    <!--<TextView
+        android:id="@+id/text_email_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:text="@string/login_email"
+        android:textColor="#F65F52"
+        android:textSize="@dimen/_12sdp" />-->
 
     <LinearLayout
         android:layout_width="fill_parent"

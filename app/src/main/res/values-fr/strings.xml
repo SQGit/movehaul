@@ -23,9 +23,9 @@
     <string name="by_signing_up_you_agree_to_the_terms_amp_conditions">"En vous inscrivant, vous acceptez les termes et conditions"</string>
     <string name="and_privacy_policy_of_MovHaul">"et la politique de MovHaul de confidentialité"</string>
     <string name="mobile_no">"Numéro de Portable"</string>
-    <string name="forgot_mobile_no">"Mot Mobile Pas?"</string>
+    <string name="forgot_mobile_no">"Connexion par courrier électronique?"</string>
     <string name="by_signing_up_you_agree_to_the_terms_amp_conditions_nand_privacy_policy_of_MovHaul">"&lt;! [CDATA [En vous inscrivant vous acceptez les termes et conditions et la politique de MovHaul de confidentialité"</string>
-    <string name="forgot_ph_no">"Mot Ph. No"</string>
+    <string name="forgot_ph_no">"email Connexion"</string>
     <string name="enter_email">"Entrez votre adresse email"</string>
     <string name="pickup_location">"Lieu de départ"</string>
     <string name="drop_location">"Lieu de restitution"</string>

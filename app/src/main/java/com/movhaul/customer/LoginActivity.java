@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -35,7 +36,7 @@ public class LoginActivity extends Activity {
     Button btn_submit;
     TextView tv_forgot_mobile, tv_snack;
     LinearLayout btn_back;
-    String str_mobile;
+    String str_mobile,str_mobile_prefix;
     EditText et_mobile_no;
     TextInputLayout flt_mobile_no;
     Snackbar snackbar, snack_wifi;
@@ -43,6 +44,7 @@ public class LoginActivity extends Activity {
     Typeface tf;
     ProgressDialog mProgressDialog;
     CountryCodePicker ccp;
+
 
     @Override
     public void onBackPressed() {
@@ -65,25 +67,31 @@ public class LoginActivity extends Activity {
         flt_mobile_no = (TextInputLayout) findViewById(com.movhaul.customer.R.id.float_mobile);
         ccp = (CountryCodePicker) findViewById(R.id.ccp);
 
-        //ccp.resetToDefaultCountry();
-        //ccp.setDefaultCountryUsingNameCode("JP");
-        ccp.setDefaultCountryUsingPhoneCode(+91);
-
-
-        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
         et_mobile_no.setTypeface(tf);
-        flt_mobile_no.setTypeface(type);
-        ccp.setTypeFace(type);
+        flt_mobile_no.setTypeface(tf);
+        ccp.setTypeFace(tf);
 
-
+        try {
+            TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+            String countryCodeValue = tm.getNetworkCountryIso();
+            ccp.setCountryForNameCode(countryCodeValue);
+        } catch (Exception ex) {
+            Log.e("tag", "er:" + ex.toString());
+        } finally {
+            Log.e("tag", "flg" + ccp.getSelectedCountryCodeWithPlus());
+            str_mobile_prefix = ccp.getSelectedCountryCodeWithPlus();
+        }
 
 
         ccp.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
             @Override
             public void onCountrySelected() {
-                Toast.makeText(getApplicationContext(), "Updated " + ccp.getSelectedCountryName()+" " +ccp.getSelectedCountryCodeWithPlus(), Toast.LENGTH_SHORT).show();
+                str_mobile_prefix = ccp.getSelectedCountryCodeWithPlus();
+                Log.e("tag", "flg_ccp" + ccp.getSelectedCountryCodeWithPlus());
             }
         });
+
+
 
         // show_wifi_not_connected();
 
@@ -189,6 +197,7 @@ public class LoginActivity extends Activity {
             super.onPreExecute();
             Log.e("tag", "reg_preexe");
             mProgressDialog.show();
+            Log.e("tag","m:"+str_mobile_prefix+str_mobile);
         }
 
         @Override
@@ -196,7 +205,7 @@ public class LoginActivity extends Activity {
             String json = "", jsonStr = "";
             try {
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.accumulate("customer_mobile", "+91" + str_mobile);
+                jsonObject.accumulate("customer_mobile", str_mobile_prefix + str_mobile);
                 json = jsonObject.toString();
                 return jsonStr = HttpUtils.makeRequest(Config.WEB_URL + "customermobileotp", json);
             } catch (Exception e) {

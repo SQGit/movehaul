@@ -789,7 +789,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             public void onClick(View view) {
                 if (!(sharedPreferences.getString("job_id", "").equals(""))) {
 
-                    Intent i = new Intent(DashboardNavigation.this, Job_review.class);
+                    Intent i = new Intent(DashboardNavigation.this, MyJobs.class);
                     startActivity(i);
                     drawer.closeDrawer(Gravity.LEFT);
                 }

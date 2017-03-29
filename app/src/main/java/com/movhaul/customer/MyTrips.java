@@ -303,7 +303,7 @@ public class MyTrips extends AppCompatActivity {
             try {
                 JSONObject jsonObject = new JSONObject();
                 json = jsonObject.toString();
-                return jsonStr = HttpUtils.makeRequest1(Config.WEB_URL_IMG + "customer/jobhistory", json, id, token);
+                return jsonStr = HttpUtils.makeRequest1(Config.WEB_URL + "customer/jobhistory", json, id, token);
 
             } catch (Exception e) {
                 Log.e("InputStream", e.getLocalizedMessage());

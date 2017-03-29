@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hbb20.CountryCodePicker;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.LinearLayout;
 import com.sloop.fonts.FontsManager;
@@ -35,16 +37,15 @@ public class RegisterActivity extends Activity {
 
     LinearLayout btn_back;
     Button btn_submit;
-    TextView tv_register,tv_snack;
+    TextView tv_register, tv_snack;
     EditText et_name, et_email, et_mobile;
-    String str_email, str_mobile, str_name;
+    String str_email, str_mobile, str_name, str_mobile_prefix;
     TextInputLayout til_name, til_email, til_mobile;
     Snackbar snackbar;
     Config config;
     Typeface tf;
     ProgressDialog mProgressDialog;
-
-
+    CountryCodePicker ccp;
 
     @Override
     public void onBackPressed() {
@@ -68,7 +69,21 @@ public class RegisterActivity extends Activity {
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.setCancelable(false);
 
+        ccp = (CountryCodePicker) findViewById(R.id.ccp);
 
+        // ccp.setDefaultCountryUsingNameCode("in");
+
+
+        try {
+            TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+            String countryCodeValue = tm.getNetworkCountryIso();
+            ccp.setCountryForNameCode(countryCodeValue);
+        } catch (Exception ex) {
+            Log.e("tag", "er:" + ex.toString());
+        } finally {
+            Log.e("tag", "flg" + ccp.getSelectedCountryCodeWithPlus());
+            str_mobile_prefix = ccp.getSelectedCountryCodeWithPlus();
+        }
 
 
         btn_back = (LinearLayout) findViewById(com.movhaul.customer.R.id.layout_back);
@@ -84,7 +99,7 @@ public class RegisterActivity extends Activity {
         til_email.setTypeface(tf);
         til_mobile.setTypeface(tf);
         til_name.setTypeface(tf);
-
+        ccp.setTypeFace(tf);
 
 
         snackbar = Snackbar
@@ -99,6 +114,15 @@ public class RegisterActivity extends Activity {
             snackbar.show();
             tv_snack.setText(com.movhaul.customer.R.string.please_try_again);
         }
+
+
+        ccp.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
+            @Override
+            public void onCountrySelected() {
+                str_mobile_prefix = ccp.getSelectedCountryCodeWithPlus();
+                Log.e("tag", "flg_ccp" + ccp.getSelectedCountryCodeWithPlus());
+            }
+        });
 
 
         btn_submit.setOnClickListener(new View.OnClickListener() {
@@ -143,7 +167,7 @@ public class RegisterActivity extends Activity {
                         et_email.requestFocus();
                     }
                 } else {
-                   // et_name.setError("Enter a Name!");
+                    // et_name.setError("Enter a Name!");
                     snackbar.show();
                     tv_snack.setText(com.movhaul.customer.R.string.uies);
                     et_name.requestFocus();
@@ -188,6 +212,7 @@ public class RegisterActivity extends Activity {
             super.onPreExecute();
             Log.e("tag", "reg_preexe");
             mProgressDialog.show();
+            Log.e("tag","m:"+str_mobile_prefix+str_mobile);
 
         }
 
@@ -199,7 +224,7 @@ public class RegisterActivity extends Activity {
             try {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.accumulate("customer_name", str_name);
-                jsonObject.accumulate("customer_mobile", "+91" + str_mobile);
+                jsonObject.accumulate("customer_mobile", str_mobile_prefix + str_mobile);
                 jsonObject.accumulate("customer_email", str_email);
 
                 json = jsonObject.toString();
@@ -242,14 +267,14 @@ public class RegisterActivity extends Activity {
                         if (msg.contains("customer_mobile_UNIQUE")) {
 
                             et_mobile.requestFocus();
-                          //  Toast.makeText(getApplicationContext(), "Mobile Number Already Registered", Toast.LENGTH_LONG).show();
+                            //  Toast.makeText(getApplicationContext(), "Mobile Number Already Registered", Toast.LENGTH_LONG).show();
 
                             snackbar.show();
                             tv_snack.setText(com.movhaul.customer.R.string.asd);
 
                         } else if (msg.contains("customer_email_UNIQUE")) {
                             et_email.requestFocus();
-                           // Toast.makeText(getApplicationContext(), "Email Already Registered", Toast.LENGTH_LONG).show();
+                            // Toast.makeText(getApplicationContext(), "Email Already Registered", Toast.LENGTH_LONG).show();
 
                             snackbar.show();
                             tv_snack.setText(com.movhaul.customer.R.string.aew);
