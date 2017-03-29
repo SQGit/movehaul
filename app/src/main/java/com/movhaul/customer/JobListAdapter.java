@@ -110,7 +110,7 @@ public class JobListAdapter extends ArrayAdapter<MV_Datas> {
 
             }
         });
-//
+////
         viewHolder.tv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
