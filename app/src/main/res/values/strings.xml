@@ -191,5 +191,5 @@
     <string name="my_jobs">My Jobs</string>
     <string name="book_driver">Book Driver</string>
     <string name="drop">Drop</string>
-    <string name="delete_driver">Delete</string>
+    <string name="delete_driver">Delete Job</string>
 </resources>

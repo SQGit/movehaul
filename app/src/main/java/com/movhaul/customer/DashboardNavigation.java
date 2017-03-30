@@ -787,12 +787,12 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         tv_jobReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!(sharedPreferences.getString("job_id", "").equals(""))) {
+
 
                     Intent i = new Intent(DashboardNavigation.this, MyJobs.class);
                     startActivity(i);
                     drawer.closeDrawer(Gravity.LEFT);
-                }
+
 
             }
         });

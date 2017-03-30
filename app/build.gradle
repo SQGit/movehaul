@@ -18,6 +18,8 @@ android {
         targetSdkVersion 25
         versionCode 5
         versionName "1.5"
+        renderscriptTargetApi 18
+        renderscriptSupportModeEnabled true
         multiDexEnabled true
         signingConfig signingConfigs.config
     }
@@ -73,6 +75,13 @@ dependencies {
     compile project(':remita_21_03')
 
     compile 'com.hbb20:ccp:1.7.2'
+
+
+    compile 'com.daimajia.androidviewhover:library:1.0.4@aar'
+    compile 'com.daimajia.androidanimations:library:1.1.2@aar'
+
+    compile 'com.android.support:support-compat:25.1.1'
+    compile 'com.daimajia.easing:library:2.0@aar'
 
 }
 
