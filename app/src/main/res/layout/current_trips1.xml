@@ -30,17 +30,12 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:gravity="end"
                     android:orientation="horizontal"
-                    android:layout_marginTop="@dimen/_10sdp"
                     android:paddingRight="@dimen/_15sdp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="$"
-                        android:textColor="@color/redColor"
-                        android:textSize="@dimen/_21sdp" />
+
 
                     <TextView
                         android:id="@+id/cr_job_cost"
@@ -50,6 +45,13 @@
                         android:text="150"
                         android:textColor="@color/redColor"
                         android:textSize="@dimen/_21sdp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" Naira"
+                        android:textColor="@color/redColor"
+                        android:textSize="@dimen/_16sdp" />
 
                 </LinearLayout>
 

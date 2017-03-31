@@ -1,6 +1,7 @@
 package com.movhaul.customer;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.rey.material.widget.LinearLayout;
 import com.rey.material.widget.ListView;
 import com.sloop.fonts.FontsManager;
 
@@ -39,6 +41,7 @@ public class MyJobs extends Activity {
     ArrayList ar_job_lists;
     MV_Datas mv_datas;
     JobListAdapter job_list_adapter;
+    LinearLayout btn_back;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,6 +61,7 @@ public class MyJobs extends Activity {
 
 
         lv_jobs_list = (ListView) findViewById(com.movhaul.customer.R.id.listview_jobs);
+        btn_back = (LinearLayout) findViewById(com.movhaul.customer.R.id.layout_back);
 
         snackbar = Snackbar
                 .make(findViewById(com.movhaul.customer.R.id.top), "Network Error! Please Try Again Later.", Snackbar.LENGTH_LONG);
@@ -73,6 +77,15 @@ public class MyJobs extends Activity {
             new get_job_lists().execute();
 
         }
+
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MyJobs.this,DashboardNavigation.class);
+                startActivity(i);
+                finish();
+            }
+        });
     }
 
 

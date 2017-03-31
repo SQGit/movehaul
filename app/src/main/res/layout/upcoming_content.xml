@@ -85,7 +85,7 @@
                     android:layout_marginRight="@dimen/_20sdp"
                     android:focusable="false"
                     android:gravity="right"
-                    android:text="$ 150"
+                    android:text="150 naira"
                     android:textColor="@color/redColor"
                     android:textSize="@dimen/_15sdp" />
 

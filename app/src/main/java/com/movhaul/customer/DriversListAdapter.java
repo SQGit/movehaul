@@ -238,14 +238,14 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
         bidding = mv_datas.getBidding();
         Log.e("tag","ss: "+mv_datas.getBidding());
 
-        tv_title_bidding.setText("$ "+bidding);
+        tv_title_bidding.setText(bidding+" Naira");
         tv_title_truck.setText(mv_datas.getTruck_type());
         tv_title_driver_name.setText(mv_datas.getName());
 
 
 
 
-        tv_content_bidding.setText("$ "+bidding);
+        tv_content_bidding.setText(bidding+" Naira");
         tv_content_truck.setText(mv_datas.getTruck_type());
         tv_content_driver_name.setText(mv_datas.getName());
         tv_content_damage_control.setText(mv_datas.getDamage_control());

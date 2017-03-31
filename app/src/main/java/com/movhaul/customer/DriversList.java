@@ -318,6 +318,15 @@ public class DriversList extends AppCompatActivity {
             Log.e("tag", "rc:" + requestCode);
             Log.e("tag", "dt:" + data.toString());
 
+            Bundle bundle = data.getExtras();
+            String authorizid = bundle.getString("authoriztionId");
+            String remitaTransRef= bundle.getString("remitaTransRef");
+            String responceCode = bundle.getString("responseCode");
+
+            Log.e("tag","ss: "+authorizid);
+            Log.e("tag","ss1: "+remitaTransRef);
+            Log.e("tag","ss2: "+responceCode);
+
             /*final int height = getDeviceHeight(DashboardNavigation.this);
             TranslateAnimation anim_btn_b2t = new TranslateAnimation(0, 0, height, 0);
             anim_btn_b2t.setDuration(500);
@@ -331,7 +340,7 @@ public class DriversList extends AppCompatActivity {
             booking_id = sharedPreferences.getString("booking_id", "");
             driver_id = sharedPreferences.getString("driver_id", "");
             bidding_id = sharedPreferences.getString("bidding_id", "");
-            transaction_id = "oid3982asdfeo3";
+            transaction_id = remitaTransRef;
 
             new book_now_task().execute();
         }
@@ -529,7 +538,7 @@ public class DriversList extends AppCompatActivity {
             try {
 
 
-                jsonObject.put("transaction_id",transaction_id);
+                jsonObject.put("transaction_id","Trc0Bz39dox");
                 jsonObject.put("booking_id", booking_id);
                 jsonObject.put("driver_id", driver_id);
                 jsonObject.put("bidding_id", bidding_id);

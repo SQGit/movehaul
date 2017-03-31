@@ -102,9 +102,10 @@ public class Job_review extends Activity {
 
 
 
-        btn_continue.setEnabled(false);
+        btn_continue.setEnabled(true);
+        tv_timer.setText(com.movhaul.customer.R.string.dons);
 
-        new CountDownTimer(20000, 1000) { // adjust the milli seconds here
+        /*new CountDownTimer(10000, 5000) { // adjust the milli seconds here
 
             public void onTick(long millisUntilFinished) {
 
@@ -118,9 +119,9 @@ public class Job_review extends Activity {
                                 TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))==10)
                 {
 
-                    Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                    //Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                     // Vibrate for 500 milliseconds
-                    v.vibrate(5000);
+                    //v.vibrate(5000);
                 }
 
             }
@@ -130,7 +131,7 @@ public class Job_review extends Activity {
                 tv_timer.setText(com.movhaul.customer.R.string.dons);
                 btn_continue.setEnabled(true);
             }
-        }.start();
+        }.start();*/
 
         btn_continue.setOnClickListener(new View.OnClickListener() {
             @Override

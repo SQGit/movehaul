@@ -14,7 +14,7 @@
         android:paddingBottom="@dimen/_5sdp">
 
         <com.rey.material.widget.TextView
-            android:id="@+id/txtos"
+            android:id="@+id/text_book"
             android:layout_width="@dimen/_100sdp"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -25,7 +25,7 @@
             android:textSize="@dimen/_12sdp" />
 
         <com.rey.material.widget.TextView
-            android:id="@+id/txtbs"
+            android:id="@+id/text_delete"
             android:layout_width="@dimen/_100sdp"
             android:layout_height="wrap_content"
             android:background="@drawable/submit"

@@ -8,19 +8,18 @@
     android:paddingBottom="@dimen/_5sdp">
 
 
-
+<!--
     <com.daimajia.androidviewhover.BlurLayout
         android:id="@+id/blur_layout"
         android:layout_width="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
         android:layout_marginBottom="5dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content">-->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:background="@drawable/white_bg"
             android:orientation="horizontal">
 
@@ -42,6 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/fulllt"
+                android:paddingBottom="@dimen/_5sdp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -244,6 +244,19 @@
 
                 </LinearLayout>
 
+                <com.rey.material.widget.TextView
+                    android:id="@+id/text_book"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:background="@drawable/submit"
+                    android:text="@string/book_driver"
+                    android:visibility="visible"
+                    android:textColor="@color/white"
+                    android:padding="@dimen/_8sdp"
+                    android:textSize="@dimen/_12sdp" />
+
 
 
 
@@ -253,7 +266,7 @@
 
         </LinearLayout>
 
-    </com.daimajia.androidviewhover.BlurLayout>
+    <!--</com.daimajia.androidviewhover.BlurLayout>-->
 
 
 </LinearLayout>

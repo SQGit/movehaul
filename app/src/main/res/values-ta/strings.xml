@@ -187,4 +187,10 @@
     <string name="goods_typea">"பொருட்கள் வகை"</string>
     <string name="select_truck">"டிரக் தேர்வு"</string>
     <string name="pos">"இடுகை"</string>
+
+    <string name="login_email">Login Via E-Mail</string>
+    <string name="my_jobs">My Jobs</string>
+    <string name="book_driver">Book Driver</string>
+    <string name="drop">Drop</string>
+    <string name="delete_driver">Delete Job</string>
 </resources>
