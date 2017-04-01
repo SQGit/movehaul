@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 
 import com.rey.material.widget.Button;
 import com.rey.material.widget.EditText;
+import com.rey.material.widget.ImageView;
 import com.rey.material.widget.TextView;
 import com.sloop.fonts.FontsManager;
 
@@ -49,6 +50,8 @@ public class EmergencyContacts extends Activity {
     android.widget.EditText et_name,et_number,et_relation;
     Snackbar snackbar;
     android.widget.TextView tv_snack;
+    ImageView iv_edit1,iv_edit2;
+    boolean bl_edit1,bl_edit2;
 
 
     @Override
@@ -94,6 +97,9 @@ public class EmergencyContacts extends Activity {
         tv_emergency_relation1 = (TextView) findViewById(com.movhaul.customer.R.id.textview_emergency_relation1);
         tv_emergency_relation2 = (TextView) findViewById(com.movhaul.customer.R.id.textview_emergency_relation2);
 
+        iv_edit1 = (ImageView) findViewById(R.id.button_editContact1);
+        iv_edit2 = (ImageView) findViewById(R.id.button_editContact2);
+
         tl_name.setTypeface(tf);
         tl_phone.setTypeface(tf);
         tl_relation.setTypeface(tf);
@@ -133,76 +139,120 @@ public class EmergencyContacts extends Activity {
             @Override
             public void onClick(View v) {
 
-                if (sharedPreferences.getString("emergency1", "").equals("success")) {
 
-                    if(btn_submit.getText().equals("Add Contact")){
+                if (bl_edit1) {
 
-                        lt_edit1.setVisibility(View.VISIBLE);
-                        lt_success1.setVisibility(View.GONE);
-                        btn_submit.setText("Submit");
-                        et_name.setText("");
-                        et_number.setText("");
-                        et_relation.setText("");
-                        et_name.requestFocus();
+                    Log.e("tag","edit1");
 
-                    }
-                    else if(btn_submit.getText().equals("Submit")){
+                } else if (bl_edit2) {
+
+                } else {
 
 
+                    if (sharedPreferences.getString("emergency1", "").equals("success")) {
+
+                        if (btn_submit.getText().equals("Add Contact")) {
+
+                            lt_edit1.setVisibility(View.VISIBLE);
+                            lt_success1.setVisibility(View.GONE);
+                            btn_submit.setText("Submit");
+                            et_name.setText("");
+                            et_number.setText("");
+                            et_relation.setText("");
+                            et_name.requestFocus();
+
+                        } else if (btn_submit.getText().equals("Submit")) {
+
+                            if (!et_name.getText().toString().trim().isEmpty()) {
+                                if (!et_number.getText().toString().trim().isEmpty()) {
+                                    if (!et_relation.getText().toString().trim().isEmpty()) {
+
+                                        String name = et_name.getText().toString().trim();
+                                        String number = et_number.getText().toString().trim();
+                                        String relation = et_relation.getText().toString().trim();
+
+                                        card2.setVisibility(View.VISIBLE);
+                                        lt_edit2.setVisibility(View.GONE);
+                                        lt_success2.setVisibility(View.VISIBLE);
+                                        btn_submit.setVisibility(View.GONE);
+
+                                        lt_edit1.setVisibility(View.GONE);
+                                        lt_success1.setVisibility(View.VISIBLE);
 
 
+                                        editor.putString("emergency2", "success");
+                                        editor.putString("emg2_name", name);
+                                        editor.putString("emg2_number", number);
+                                        editor.putString("emg2_relation", relation);
+                                        editor.apply();
 
-                        if(!et_name.getText().toString().trim().isEmpty()){
-                            if(!et_number.getText().toString().trim().isEmpty()){
-                                if(!et_relation.getText().toString().trim().isEmpty()){
+                                        tv_emergency_name2.setText(name);
+                                        tv_emergency_no2.setText(number);
+                                        tv_emergency_relation2.setText(relation);
+
+                                    } else {
+                                        //relation
+                                        snackbar.show();
+                                        et_relation.requestFocus();
+                                        tv_snack.setText("Enter Relation");
+                                    }
+
+                                } else {
+                                    //phone
+                                    snackbar.show();
+                                    et_number.requestFocus();
+                                    tv_snack.setText("Enter Valid Phone Number");
+                                }
+
+                            } else {
+                                //name
+                                snackbar.show();
+                                et_name.requestFocus();
+                                tv_snack.setText("Enter Name");
+                            }
+
+
+                        }
+
+                    } else {
+
+                        if (!et_name.getText().toString().trim().isEmpty()) {
+                            if (!et_number.getText().toString().trim().isEmpty()) {
+                                if (!et_relation.getText().toString().trim().isEmpty()) {
 
                                     String name = et_name.getText().toString().trim();
                                     String number = et_number.getText().toString().trim();
                                     String relation = et_relation.getText().toString().trim();
 
 
-
-
-
-
-                                    card2.setVisibility(View.VISIBLE);
-                                    lt_edit2.setVisibility(View.GONE);
-                                    lt_success2.setVisibility(View.VISIBLE);
-                                    btn_submit.setVisibility(View.GONE);
-
                                     lt_edit1.setVisibility(View.GONE);
                                     lt_success1.setVisibility(View.VISIBLE);
-
-
-
-                                    editor.putString("emergency2","success");
-                                    editor.putString("emg2_name",name);
-                                    editor.putString("emg2_number",number);
-                                    editor.putString("emg2_relation",relation);
+                                    btn_submit.setText("Add Contact");
+                                    editor.putString("emergency1", "success");
+                                    editor.putString("emg1_name", name);
+                                    editor.putString("emg1_number", number);
+                                    editor.putString("emg1_relation", relation);
                                     editor.apply();
 
-                                    tv_emergency_name2.setText(name);
-                                    tv_emergency_no2.setText(number);
-                                    tv_emergency_relation2.setText(relation);
+                                    tv_emergency_name1.setText(name);
+                                    tv_emergency_no1.setText(number);
+                                    tv_emergency_relation1.setText(relation);
 
-                                }
-                                else{
+                                } else {
                                     //relation
                                     snackbar.show();
                                     et_relation.requestFocus();
                                     tv_snack.setText("Enter Relation");
                                 }
 
-                            }
-                            else{
+                            } else {
                                 //phone
                                 snackbar.show();
                                 et_number.requestFocus();
                                 tv_snack.setText("Enter Valid Phone Number");
                             }
 
-                        }
-                        else{
+                        } else {
                             //name
                             snackbar.show();
                             et_name.requestFocus();
@@ -210,74 +260,52 @@ public class EmergencyContacts extends Activity {
                         }
 
 
-
-
-
-
-
                     }
-
-
-
-                } else {
-
-
-                    if(!et_name.getText().toString().trim().isEmpty()){
-                        if(!et_number.getText().toString().trim().isEmpty()){
-                            if(!et_relation.getText().toString().trim().isEmpty()){
-
-                                String name = et_name.getText().toString().trim();
-                                String number = et_number.getText().toString().trim();
-                                String relation = et_relation.getText().toString().trim();
-
-
-
-                                lt_edit1.setVisibility(View.GONE);
-                                lt_success1.setVisibility(View.VISIBLE);
-                                btn_submit.setText("Add Contact");
-                                editor.putString("emergency1","success");
-                                editor.putString("emg1_name",name);
-                                editor.putString("emg1_number",number);
-                                editor.putString("emg1_relation",relation);
-                                editor.apply();
-
-                                tv_emergency_name1.setText(name);
-                                tv_emergency_no1.setText(number);
-                                tv_emergency_relation1.setText(relation);
-
-                            }
-                            else{
-                                //relation
-                                snackbar.show();
-                                et_relation.requestFocus();
-                                tv_snack.setText("Enter Relation");
-                            }
-
-                        }
-                        else{
-                            //phone
-                            snackbar.show();
-                            et_number.requestFocus();
-                            tv_snack.setText("Enter Valid Phone Number");
-                        }
-
-                    }
-                    else{
-                        //name
-                        snackbar.show();
-                        et_name.requestFocus();
-                        tv_snack.setText("Enter Name");
-                    }
-
-
 
                 }
+            }
+        });
+
+
+
+
+        iv_edit1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                lt_success1.setVisibility(View.GONE);
+                lt_success2.setVisibility(View.GONE);
+                lt_edit1.setVisibility(View.VISIBLE);
+                btn_submit.setVisibility(View.VISIBLE);
+
+                et_name.setText(sharedPreferences.getString("emg1_name",""));
+                et_number.setText(sharedPreferences.getString("emg1_number",""));
+                et_relation.setText(sharedPreferences.getString("emg1_relation",""));
+
+                bl_edit1 = true;
 
             }
         });
 
 
 
+        iv_edit2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                lt_success1.setVisibility(View.GONE);
+                lt_success2.setVisibility(View.GONE);
+                lt_edit1.setVisibility(View.VISIBLE);
+                btn_submit.setVisibility(View.VISIBLE);
+
+                et_name.setText(sharedPreferences.getString("emg2_name",""));
+                et_number.setText(sharedPreferences.getString("emg2_number",""));
+                et_relation.setText(sharedPreferences.getString("emg2_relation",""));
+
+                bl_edit2 = true;
+
+            }
+        });
 
 
 
