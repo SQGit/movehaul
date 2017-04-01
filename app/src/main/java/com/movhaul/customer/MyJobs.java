@@ -164,7 +164,7 @@ public class MyJobs extends Activity {
 
                         } else {
                             finish();
-                            Toast.makeText(getApplicationContext(), "No Drivers Bidded,Please Wait for some more time.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "No Jobs Found.", Toast.LENGTH_LONG).show();
 
                         }
 
@@ -174,7 +174,7 @@ public class MyJobs extends Activity {
 
                     } else {
                         finish();
-                        Toast.makeText(getApplicationContext(), "No Drivers Bidded,Please Wait for some more time.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "No Jobs Found.", Toast.LENGTH_LONG).show();
 
                     }
 

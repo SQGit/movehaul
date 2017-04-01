@@ -124,12 +124,14 @@ public class JobListAdapter extends ArrayAdapter<MV_Datas> {
 
         }
         mv_datas = ar_job_list.get(position);
-        Log.e("tag", position + " position " + mv_datas.getDriver_count());
+        //Log.e("tag", position + " position " + mv_datas.getDriver_count());
 
-      /*  if(Integer.valueOf(mv_datas.getDriver_count().trim()) !=0){
+        viewHolder.tv_book.setVisibility(View.GONE);
+        int ko = Integer.valueOf(mv_datas.getDriver_count());
+        if(ko !=0){
             viewHolder.tv_book.setVisibility(View.VISIBLE);
             viewHolder.tv_book.setTag(position);
-        }*/
+        }
 
 
         //Log.e("tag", "hover " +viewHolder.mSampleLayout.getHoverStatus());
@@ -176,9 +178,11 @@ public class JobListAdapter extends ArrayAdapter<MV_Datas> {
                 mv_datas = ar_job_list.get(position);
 
                 int ko = Integer.valueOf(mv_datas.getDriver_count());
+
+                Log.e("tag", " postions: " + position);
                 Log.e("tag", ko+" id: " + mv_datas.getDriver_count());
 
-                if (ko != 0) {
+              /*  if (ko != 0) {
                     booking_id = mv_datas.getBooking_id();
                     editor.putString("job_id", booking_id);
                     editor.commit();
@@ -187,7 +191,7 @@ public class JobListAdapter extends ArrayAdapter<MV_Datas> {
                 }
                 else{
                     Toast.makeText(context,"No Drivers Bidded",Toast.LENGTH_SHORT).show();
-                }
+                }*/
 
             }
         });

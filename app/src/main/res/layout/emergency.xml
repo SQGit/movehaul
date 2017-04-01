@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/top"
+    android:background="@drawable/bg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:gravity="top">
+
+        <include
+            layout="@layout/action_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></include>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_emergencyContacts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Emergency Contacts"
+                android:textColor="#F65F52"
+                android:textSize="@dimen/_19sdp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <include
+                layout="@layout/red_underline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </include>
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/_10sdp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_marginLeft="@dimen/_7sdp"
+                android:layout_marginRight="@dimen/_7sdp"
+                card_view:cardCornerRadius="@dimen/_3sdp"
+                card_view:contentPadding="@dimen/_8sdp">
+
+
+                <LinearLayout
+                    android:id="@+id/linear_edit_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_5sdp"
+                    android:visibility="visible">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:orientation="vertical">
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/til_name"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_8sdp"
+                            android:textColorHint="@color/colorAccent">
+
+                            <EditText
+                                android:id="@+id/edittext_name"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:hint="Name"
+                                android:inputType="textWebEmailAddress"
+                                android:maxLines="1"
+                                android:paddingTop="@dimen/_10sdp"
+                                android:textColor="#000000"
+                                android:textSize="@dimen/_15sdp" />
+                        </android.support.design.widget.TextInputLayout>
+
+                        <View
+                            android:layout_width="fill_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:background="#E1E1E1" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:orientation="vertical">
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/til_phone"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_8sdp"
+                            android:textColorHint="@color/colorAccent">
+
+                            <EditText
+                                android:id="@+id/edittext_phone"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:hint="Mobile No"
+                                android:inputType="number"
+                                android:maxLength="15"
+                                android:maxLines="1"
+                                android:paddingTop="@dimen/_10sdp"
+                                android:textColor="#000000"
+                                android:textSize="@dimen/_15sdp" />
+                        </android.support.design.widget.TextInputLayout>
+
+                        <View
+                            android:layout_width="fill_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:background="#E1E1E1" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:orientation="vertical">
+
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/til_relation"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_8sdp"
+                            android:textColorHint="@color/colorAccent">
+
+                            <EditText
+                                android:id="@+id/edittext_relation"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:hint="Relation"
+                                android:inputType="textWebEmailAddress"
+                                android:maxLength="15"
+                                android:maxLines="1"
+                                android:paddingTop="@dimen/_10sdp"
+                                android:textColor="#000000"
+                                android:textSize="@dimen/_15sdp" />
+                        </android.support.design.widget.TextInputLayout>
+
+                        <View
+                            android:layout_width="fill_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_marginBottom="@dimen/_15sdp"
+                            android:background="#E1E1E1" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linear_success_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    android:padding="@dimen/_5sdp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+
+                        <com.rey.material.widget.TextView
+                            android:id="@+id/textview_emergency_name1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:text="James Donner"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/_18sdp" />
+
+                        <com.rey.material.widget.TextView
+                            android:id="@+id/textview_emergency_relation1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Business Partner"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:textColor="@color/redColor"
+                            android:textSize="@dimen/_14sdp" />
+
+                        <com.rey.material.widget.TextView
+                            android:id="@+id/textview_emergency_number1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:maxLines="1"
+                            android:text="+273-5629-987654"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/_19sdp" />
+                    </LinearLayout>
+
+                    <com.rey.material.widget.ImageView
+                        android:id="@+id/button_editContact1"
+                        style="@style/Material.Drawable.Ripple.Touch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="@dimen/_15sdp"
+                        android:src="@drawable/edit_icon_emergency" />
+
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_view2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_marginLeft="@dimen/_7sdp"
+                    android:layout_marginRight="@dimen/_7sdp"
+                    android:visibility="gone"
+                    card_view:cardCornerRadius="@dimen/_3sdp"
+                    card_view:contentPadding="@dimen/_5sdp">
+
+
+                    <LinearLayout
+                        android:id="@+id/linear_edit_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/_5sdp">
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:orientation="vertical">
+
+                            <android.support.design.widget.TextInputLayout
+                                android:id="@+id/til_name2"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/_8sdp"
+                                android:textColorHint="@color/colorAccent">
+
+                                <EditText
+                                    android:id="@+id/edittext_name2"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:hint="Name"
+                                    android:inputType="textWebEmailAddress"
+                                    android:maxLines="1"
+                                    android:paddingTop="@dimen/_10sdp"
+                                    android:textColor="#000000"
+                                    android:textSize="@dimen/_15sdp" />
+                            </android.support.design.widget.TextInputLayout>
+
+                            <View
+                                android:layout_width="fill_parent"
+                                android:layout_height="@dimen/_1sdp"
+                                android:layout_marginBottom="@dimen/_5sdp"
+                                android:background="#E1E1E1" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:orientation="vertical">
+
+                            <android.support.design.widget.TextInputLayout
+                                android:id="@+id/til_phone2"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/_8sdp"
+                                android:textColorHint="@color/colorAccent">
+
+                                <EditText
+                                    android:id="@+id/edittext_phone2"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:hint="Mobile No"
+                                    android:inputType="textWebEmailAddress"
+                                    android:maxLines="1"
+                                    android:paddingTop="@dimen/_10sdp"
+                                    android:textColor="#000000"
+                                    android:textSize="@dimen/_15sdp" />
+                            </android.support.design.widget.TextInputLayout>
+
+                            <View
+                                android:layout_width="fill_parent"
+                                android:layout_height="@dimen/_1sdp"
+                                android:layout_marginBottom="@dimen/_5sdp"
+                                android:background="#E1E1E1" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_10sdp"
+
+                            android:orientation="vertical">
+
+
+                            <android.support.design.widget.TextInputLayout
+                                android:id="@+id/til_relation2"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/_8sdp"
+                                android:textColorHint="@color/colorAccent">
+
+                                <EditText
+                                    android:id="@+id/edittext_relation2"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:hint="Relation"
+                                    android:inputType="textWebEmailAddress"
+                                    android:maxLines="1"
+                                    android:paddingTop="@dimen/_10sdp"
+                                    android:textColor="#000000"
+                                    android:textSize="@dimen/_15sdp" />
+                            </android.support.design.widget.TextInputLayout>
+
+                            <View
+                                android:layout_width="fill_parent"
+                                android:layout_height="@dimen/_1sdp"
+                                android:layout_marginBottom="@dimen/_5sdp"
+                                android:background="#E1E1E1" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linear_success_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="gone"
+                        android:padding="@dimen/_5sdp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:orientation="vertical">
+
+                            <com.rey.material.widget.TextView
+                                android:id="@+id/textview_emergency_name2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:text="Danny Aymar"
+                                android:textColor="@color/textColor"
+                                android:textSize="@dimen/_18sdp" />
+
+                            <com.rey.material.widget.TextView
+                                android:id="@+id/textview_emergency_relation2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Brother"
+                                android:layout_marginTop="@dimen/_3sdp"
+                                android:textColor="@color/redColor"
+                                android:textSize="@dimen/_14sdp" />
+
+                            <com.rey.material.widget.TextView
+                                android:id="@+id/textview_emergency_number2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_3sdp"
+                                android:maxLines="1"
+                                android:text="+273-2395-721645"
+                                android:textColor="@color/textColor"
+                                android:textSize="@dimen/_19sdp" />
+                        </LinearLayout>
+
+                        <com.rey.material.widget.ImageView
+                            android:id="@+id/button_editContact2"
+                            style="@style/Material.Drawable.Ripple.Touch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:padding="@dimen/_15sdp"
+                            android:src="@drawable/edit_icon_emergency" />
+
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+
+                <com.rey.material.widget.Button
+                    android:id="@+id/button_submit"
+                    style="@style/Material.Drawable.Ripple.Touch"
+                    android:layout_width="@dimen/_140sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:background="@drawable/submit"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:paddingRight="@dimen/_3sdp"
+                    android:text="Submit"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="@dimen/_18sdp" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

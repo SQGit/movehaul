@@ -6,12 +6,14 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -35,12 +37,15 @@ import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.rey.material.widget.Button;
 import com.sloop.fonts.FontsManager;
+
+import org.jsoup.Jsoup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +55,7 @@ import java.util.Locale;
  * Created by sqindia on 21-10-2016.
  */
 public class SplashActivity extends Activity {
+    final private int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124;
     Button btn_register, btn_login, btn_call;
     ImageView truck_icon, logo_icon, bg_icon;
     LinearLayout lt_bottom;
@@ -62,9 +68,12 @@ public class SplashActivity extends Activity {
     SharedPreferences.Editor editor;
     TranslateAnimation anim_btn_b2t, anim_btn_t2b, anim_truck_c2r;
     Animation fadeIn, fadeOut;
-    final private int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124;
-    private FirebaseAnalytics mFirebaseAnalytics;
     LayoutInflater mInflater;
+    String currentVersion, playstoreVersion;
+    Dialog dg_show_update;
+    TextView tv_dg_txt, tv_dg_txt2;
+    Button btn_dg_download;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     public static int getDeviceWidth(Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -101,23 +110,67 @@ public class SplashActivity extends Activity {
         config = new Config();
 
 
+        dg_show_update = new Dialog(SplashActivity.this);
+        dg_show_update.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dg_show_update.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dg_show_update.setCancelable(false);
+        dg_show_update.setContentView(com.movhaul.customer.R.layout.dialog_road_confirm);
 
-       // String locale = getResources().getConfiguration().locale.getDisplayCountry();
+        btn_dg_download = (Button) dg_show_update.findViewById(com.movhaul.customer.R.id.button_yes);
+        tv_dg_txt = (android.widget.TextView) dg_show_update.findViewById(com.movhaul.customer.R.id.textView_1);
+        tv_dg_txt2 = (android.widget.TextView) dg_show_update.findViewById(com.movhaul.customer.R.id.textView_2);
+
+        tv_dg_txt.setText("Hooray...!!!");
+        tv_dg_txt2.setText("New Update available on PlayStore");
+        btn_dg_download.setText("Download");
+
+        tv_dg_txt.setTypeface(tf);
+        tv_dg_txt2.setTypeface(tf);
+        btn_dg_download.setTypeface(tf);
+
+        btn_dg_download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dg_show_update.dismiss();
+
+                final String appPackageName = SplashActivity.this.getPackageName(); // getPackageName() from Context or Activity object
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                } catch (android.content.ActivityNotFoundException anfe) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                }
+
+            }
+        });
+
+
+        try {
+            currentVersion = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+            Log.e("Tag", "version:" + currentVersion);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            Log.e("Tag", "err:" + e.toString());
+        }
+
+        new GetVersionCode().execute();
+
+
+        // String locale = getResources().getConfiguration().locale.getDisplayCountry();
 //
-       // String locale1 = getResources().getConfiguration().locale.getISO3Country();
+        // String locale1 = getResources().getConfiguration().locale.getISO3Country();
         //String locale2 = getResources().getConfiguration().locale.getDisplayName();
 
 
-       // Log.e("tag","resourc: "+locale + locale2 +locale1);
+        // Log.e("tag","resourc: "+locale + locale2 +locale1);
         Locale loc = Locale.getDefault();
 
-        Log.e("tag","resourc: "+ Locale.getDefault().getCountry());
-        Log.e("tag","resourc: "+ Locale.getDefault().getDisplayCountry());
-        Log.e("tag","resourc: "+ Locale.getDefault().getDisplayLanguage());
-        Log.e("tag","resourc: "+ Locale.getDefault().getDisplayName());
+        Log.e("tag", "resourc: " + Locale.getDefault().getCountry());
+        Log.e("tag", "resourc: " + Locale.getDefault().getDisplayCountry());
+        Log.e("tag", "resourc: " + Locale.getDefault().getDisplayLanguage());
+        Log.e("tag", "resourc: " + Locale.getDefault().getDisplayName());
 
-        Log.e("tag","lang:"+Locale.getDefault().getDisplayLanguage());
-        Log.e("tag","lang_code:"+Locale.getDefault().getLanguage());
+        Log.e("tag", "lang:" + Locale.getDefault().getDisplayLanguage());
+        Log.e("tag", "lang_code:" + Locale.getDefault().getLanguage());
 
         final float width = getDeviceWidth(this);
         final float height = getDeviceHeight(this);
@@ -218,7 +271,7 @@ public class SplashActivity extends Activity {
 
 
                     final List<String> permissionsList = new ArrayList<>();
-                   permissionsList.add(Manifest.permission.CALL_PHONE);
+                    permissionsList.add(Manifest.permission.CALL_PHONE);
 
 
                     String message = "You need to grant access to Call Phones";
@@ -305,29 +358,35 @@ public class SplashActivity extends Activity {
             btn_call.setVisibility(View.VISIBLE);
             lt_bottom.setVisibility(View.VISIBLE);
         } else {
-           snackbar.dismiss();
+            snackbar.dismiss();
             btn_call.setVisibility(View.GONE);
 
-            if (sharedPreferences.getString("login", "").equals("success")) {
+            if (Float.valueOf(currentVersion) < Float.valueOf(playstoreVersion)) {
 
-                lt_bottom.startAnimation(anim_btn_t2b);
-                truck_icon.startAnimation(anim_truck_c2r);
-                bg_icon.setAnimation(fadeOut);
+                //show dialog
+                dg_show_update.show();
 
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
+            }
+            else {
 
-                        Intent isd = new Intent(SplashActivity.this, DashboardNavigation.class);
-                        Bundle bndlanimation =
-                                ActivityOptions.makeCustomAnimation(getApplicationContext(), com.movhaul.customer.R.anim.anim1, com.movhaul.customer.R.anim.anim2).toBundle();
-                        startActivity(isd, bndlanimation);
+                if (sharedPreferences.getString("login", "").equals("success")) {
 
+                    lt_bottom.startAnimation(anim_btn_t2b);
+                    truck_icon.startAnimation(anim_truck_c2r);
+                    bg_icon.setAnimation(fadeOut);
 
-                    }
-                }, 1200);
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
 
+                            Intent isd = new Intent(SplashActivity.this, DashboardNavigation.class);
+                            Bundle bndlanimation =
+                                    ActivityOptions.makeCustomAnimation(getApplicationContext(), com.movhaul.customer.R.anim.anim1, com.movhaul.customer.R.anim.anim2).toBundle();
+                            startActivity(isd, bndlanimation);
+                        }
+                    }, 1200);
+                }
             }
 
 
@@ -336,7 +395,11 @@ public class SplashActivity extends Activity {
         Log.e("tag", "ds+" + is);
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
+    }
 
     public class check_internet extends AsyncTask<String, Void, String> {
 
@@ -345,7 +408,7 @@ public class SplashActivity extends Activity {
         protected void onPreExecute() {
             super.onPreExecute();
             Log.e("tag", "reg_preexe");
-           // av_loader.setVisibility(View.VISIBLE);
+            // av_loader.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -374,7 +437,7 @@ public class SplashActivity extends Activity {
             Log.e("tag", "net:" + s);
 
             if (s.equals("true")) {
-               // av_loader.setVisibility(View.GONE);
+                // av_loader.setVisibility(View.GONE);
 
                 if (sharedPreferences.getString("login", "").equals("success")) {
 
@@ -399,9 +462,8 @@ public class SplashActivity extends Activity {
                 }
 
 
-
             } else if (s.equals("false")) {
-               // av_loader.setVisibility(View.GONE);
+                // av_loader.setVisibility(View.GONE);
                 snackbar.show();
                 btn_call.setVisibility(View.VISIBLE);
                 lt_bottom.setVisibility(View.VISIBLE);
@@ -410,17 +472,10 @@ public class SplashActivity extends Activity {
 
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finishAffinity();
-    }
-
     private class PhoneCallListener extends PhoneStateListener {
 
-        private boolean isPhoneCalling = false;
-
         String LOG_TAG = "tag_LOGGING 123";
+        private boolean isPhoneCalling = false;
 
         @Override
         public void onCallStateChanged(int state, String incomingNumber) {
@@ -455,6 +510,67 @@ public class SplashActivity extends Activity {
         }
     }
 
+
+    private class GetVersionCode extends AsyncTask<Void, String, String> {
+
+        @Override
+
+        protected String doInBackground(Void... voids) {
+
+            String newVersion = null;
+
+            try {
+
+                Log.e("tag", "https://play.google.com/store/apps/details?id=" + SplashActivity.this.getPackageName() + "&hl=it");
+
+                newVersion = Jsoup.connect("https://play.google.com/store/apps/details?id=" + SplashActivity.this.getPackageName() + "&hl=it").timeout(30000)
+                        .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
+                        .referrer("http://www.google.com")
+                        .get()
+                        .select("div[itemprop=softwareVersion]")
+                        .first()
+                        .ownText();
+
+                Log.e("Tag", "new: " + newVersion);
+
+                return newVersion;
+
+            } catch (Exception e) {
+
+                Log.e("Tag", "dreerr: " + e.toString());
+                return newVersion;
+
+            }
+
+        }
+
+
+        @Override
+
+        protected void onPostExecute(String onlineVersion) {
+
+
+            Log.e("Tag", "OUTPUT: " + onlineVersion);
+
+            super.onPostExecute(onlineVersion);
+
+            playstoreVersion = onlineVersion;
+
+            if (playstoreVersion != null && !playstoreVersion.isEmpty()) {
+
+                if (Float.valueOf(currentVersion) < Float.valueOf(playstoreVersion)) {
+
+                    //show dialog
+                    dg_show_update.show();
+
+                }
+
+            }
+
+            Log.e("update", "Current version " + currentVersion + "playstore version " + playstoreVersion);
+
+        }
+    }
 
 
 }

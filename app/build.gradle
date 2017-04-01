@@ -83,6 +83,10 @@ dependencies {
     compile 'com.android.support:support-compat:25.1.1'
     compile 'com.daimajia.easing:library:2.0@aar'
 
+    compile 'org.jsoup:jsoup:1.8.3'
+
+
+
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -71,7 +71,7 @@
             app:arrowSize="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_5sdp"
             app:keyboardAutoPopOnSearch="false"
-            app:defaultNameCode="US"
+            app:defaultNameCode="NG"
             app:customMasterCountries="US,IN,NZ,NG,BD,PL,RO,ZW,JP"
             android:layout_gravity="center" />
 
