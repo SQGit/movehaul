@@ -1,6 +1,7 @@
 package com.movhaul.customer;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,11 +10,15 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+import com.daimajia.androidviewhover.BlurLayout;
 import com.rey.material.widget.TextView;
 
 import org.json.JSONException;
@@ -38,6 +43,9 @@ public class JobListAdapter extends ArrayAdapter<MV_Datas> {
     Typeface tf;
     String booking_id, id, token;
     Integer selected_position = -1;
+    ProgressDialog mProgressDialog;
+    private JobListAdapter adapter;
+
 
 
     public JobListAdapter(Context context, Activity acti, ArrayList<MV_Datas> objects) {
@@ -45,6 +53,7 @@ public class JobListAdapter extends ArrayAdapter<MV_Datas> {
         this.activity = acti;
         this.context = context;
         this.ar_job_list = objects;
+        adapter = this;
     }
 
 
@@ -74,6 +83,12 @@ public class JobListAdapter extends ArrayAdapter<MV_Datas> {
         id = sharedPreferences.getString("id", "");
         token = sharedPreferences.getString("token", "");
 
+        mProgressDialog = new ProgressDialog(context, com.movhaul.customer.R.style.AppCompatAlertDialogStyle);
+        mProgressDialog.setTitle(com.movhaul.customer.R.string.loading);
+        mProgressDialog.setMessage(context.getString(com.movhaul.customer.R.string.wait));
+        mProgressDialog.setIndeterminate(false);
+        mProgressDialog.setCancelable(false);
+
         if (convertView == null) {
 
             viewHolder = new ViewHolder();
@@ -88,9 +103,11 @@ public class JobListAdapter extends ArrayAdapter<MV_Datas> {
             viewHolder.tv_date_txt = (com.rey.material.widget.TextView) convertView.findViewById(R.id.textview_title_date);
             viewHolder.tv_bid_count = (com.rey.material.widget.TextView) convertView.findViewById(R.id.textview_bidding_count);
             viewHolder.tv_bid_count_txt = (com.rey.material.widget.TextView) convertView.findViewById(R.id.textview_bidding_count_txt);
-            // viewHolder.mSampleLayout = (BlurLayout) convertView.findViewById(R.id.blur_layout);
+
+
 
             viewHolder.tv_book = (com.rey.material.widget.TextView) convertView.findViewById(R.id.text_book);
+            viewHolder.tv_delete = (com.rey.material.widget.TextView) convertView.findViewById(R.id.text_delete);
 
             viewHolder.tv_pickup.setTypeface(tf);
             viewHolder.tv_drop.setTypeface(tf);
@@ -102,18 +119,18 @@ public class JobListAdapter extends ArrayAdapter<MV_Datas> {
             viewHolder.tv_bid_count_txt.setTypeface(tf);
             viewHolder.tv_book.setTypeface(tf);
 
+            //viewHolder.mSampleLayout = (BlurLayout) convertView.findViewById(R.id.blur_layout);
             //viewHolder.hover = LayoutInflater.from(context).inflate(R.layout.hover_layout, null);
 
             //viewHolder.tv_book= (com.rey.material.widget.TextView)  viewHolder.hover.findViewById(R.id.text_book);
             //viewHolder.tv_delete = (com.rey.material.widget.TextView)  viewHolder.hover.findViewById(R.id.text_delete);
 
-            // viewHolder.mSampleLayout.enableBlurBackground(false);
-/*
+         /*    viewHolder.mSampleLayout.enableBlurBackground(false);
             viewHolder.mSampleLayout.addChildAppearAnimator(viewHolder.hover, R.id.text_book, Techniques.SlideInLeft);
             viewHolder.mSampleLayout.addChildAppearAnimator(viewHolder.hover, R.id.text_delete, Techniques.SlideInRight);
             viewHolder.mSampleLayout.addChildDisappearAnimator(viewHolder.hover, R.id.text_book, Techniques.SlideOutLeft);
-            viewHolder.mSampleLayout.addChildDisappearAnimator(viewHolder.hover, R.id.text_delete, Techniques.SlideOutRight);
-*/
+            viewHolder.mSampleLayout.addChildDisappearAnimator(viewHolder.hover, R.id.text_delete, Techniques.SlideOutRight);*/
+
 
             // viewHolder.mSampleLayout.enableTouchEvent(true);
 
@@ -125,13 +142,28 @@ public class JobListAdapter extends ArrayAdapter<MV_Datas> {
         }
         mv_datas = ar_job_list.get(position);
         //Log.e("tag", position + " position " + mv_datas.getDriver_count());
-
-        viewHolder.tv_book.setVisibility(View.GONE);
         int ko = Integer.valueOf(mv_datas.getDriver_count());
         if(ko !=0){
             viewHolder.tv_book.setVisibility(View.VISIBLE);
             viewHolder.tv_book.setTag(position);
         }
+
+
+
+
+     //   viewHolder.mSampleLayout.setHoverView(viewHolder.hover);
+
+
+      /*  viewHolder.hover.findViewById(R.id.text_book).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                YoYo.with(Techniques.FlipInX)
+                        .duration(550)
+                        .playOn(v);
+
+                Log.e("tag","hover:"+position+" txt:"+mv_datas.getBooking_id());
+            }
+        });*/
 
 
         //Log.e("tag", "hover " +viewHolder.mSampleLayout.getHoverStatus());
@@ -182,7 +214,7 @@ public class JobListAdapter extends ArrayAdapter<MV_Datas> {
                 Log.e("tag", " postions: " + position);
                 Log.e("tag", ko+" id: " + mv_datas.getDriver_count());
 
-              /*  if (ko != 0) {
+                if (ko != 0) {
                     booking_id = mv_datas.getBooking_id();
                     editor.putString("job_id", booking_id);
                     editor.commit();
@@ -191,12 +223,12 @@ public class JobListAdapter extends ArrayAdapter<MV_Datas> {
                 }
                 else{
                     Toast.makeText(context,"No Drivers Bidded",Toast.LENGTH_SHORT).show();
-                }*/
+                }
 
             }
         });
 
-       /* viewHolder.tv_delete.setOnClickListener(new View.OnClickListener() {
+        viewHolder.tv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mv_datas = ar_job_list.get(position);
@@ -211,7 +243,7 @@ public class JobListAdapter extends ArrayAdapter<MV_Datas> {
 
                 }
             }
-        });*/
+        });
 
 
         viewHolder.tv_pickup.setText(mv_datas.getPickup());
@@ -226,8 +258,8 @@ public class JobListAdapter extends ArrayAdapter<MV_Datas> {
 
     private static class ViewHolder {
         TextView tv_pickup, tv_drop, tv_date, tv_pick_txt, tv_drop_txt, tv_date_txt, tv_bid_count, tv_bid_count_txt, tv_book, tv_delete;
-        // View hover;
-        // BlurLayout mSampleLayout;
+         //View hover;
+         //BlurLayout mSampleLayout;
     }
 
     public class delete_job extends AsyncTask<String, Void, String> {
@@ -235,6 +267,7 @@ public class JobListAdapter extends ArrayAdapter<MV_Datas> {
         protected void onPreExecute() {
             super.onPreExecute();
             Log.e("tag", "reg_preexe");
+            mProgressDialog.show();
         }
 
         @Override
@@ -244,7 +277,7 @@ public class JobListAdapter extends ArrayAdapter<MV_Datas> {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.accumulate("booking_id", booking_id);
                 json = jsonObject.toString();
-                return jsonStr = HttpUtils.makeRequest1(Config.WEB_URL + "customer/deletejob", json, id, token);
+                return jsonStr = HttpUtils.makeRequest1(Config.WEB_URL + "customer/deletebooking", json, id, token);
 
             } catch (Exception e) {
                 Log.e("InputStream", e.getLocalizedMessage());
@@ -257,7 +290,7 @@ public class JobListAdapter extends ArrayAdapter<MV_Datas> {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.e("tag", "tag" + s);
-
+            mProgressDialog.dismiss();
 
             if (s != null) {
                 try {
@@ -268,6 +301,10 @@ public class JobListAdapter extends ArrayAdapter<MV_Datas> {
                     if (status.equals("true")) {
 
                         Log.e("tag", "<-----true----->" + status);
+                       // adapter.notifyDataSetChanged();
+
+                        Intent insd = activity.getIntent();
+                        context.startActivity(insd);
 
                     } else if (status.equals("false")) {
 

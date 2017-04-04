@@ -89,12 +89,14 @@ public class EmergencyContacts extends Activity {
         tl_relation.setTypeface(tf);
         bl_edit_1 = false;
         bl_edit_2 = false;
+
+       // new get_emg_contact().execute();
         /*///////////////////////////////////////////
         editor.putString("emergency_1", "");     ////
         editor.putString("emergency_2", "");     ////
-        editor.commit();                         ////
+        editor.apply();                          ////
         btn_submit.setVisibility(View.VISIBLE);  ////
-        //////*//////////////////////////////////////
+        ////////*////////////////////////////////////
         if (sharedPreferences.getString("emergency_1", "").equals("")) {
             if (!com.movhaul.customer.Config.isConnected(EmergencyContacts.this)) {
                 snackbar.show();
@@ -169,6 +171,9 @@ public class EmergencyContacts extends Activity {
                                 editor.putString("emg2_number", number);
                                 editor.putString("emg2_relation", relation);
                                 editor.apply();
+
+                                new insert_emg_contact(name, number, relation, 3).execute();
+
                                 tv_emergency_name2.setText(name);
                                 tv_emergency_no2.setText(number);
                                 tv_emergency_relation2.setText(relation);
@@ -214,6 +219,8 @@ public class EmergencyContacts extends Activity {
                                         editor.putString("emg2_number", number);
                                         editor.putString("emg2_relation", relation);
                                         editor.apply();
+
+                                        new insert_emg_contact(name, number, relation, 2).execute();
                                         tv_emergency_name2.setText(name);
                                         tv_emergency_no2.setText(number);
                                         tv_emergency_relation2.setText(relation);
@@ -325,9 +332,9 @@ public class EmergencyContacts extends Activity {
             if (sharedPreferences.getString("emergency_2", "").equals("success")) {
                 card_2.setVisibility(View.VISIBLE);
                 btn_submit.setVisibility(View.GONE);
-                tv_emergency_name1.setText(sharedPreferences.getString("emg2_name", ""));
-                tv_emergency_no1.setText(sharedPreferences.getString("emg2_number", ""));
-                tv_emergency_relation1.setText(sharedPreferences.getString("emg2_relation", ""));
+                tv_emergency_name2.setText(sharedPreferences.getString("emg2_name", ""));
+                tv_emergency_no2.setText(sharedPreferences.getString("emg2_number", ""));
+                tv_emergency_relation2.setText(sharedPreferences.getString("emg2_relation", ""));
             } else {
                 btn_submit.setVisibility(View.VISIBLE);
                 btn_submit.setText("Add Contact");
@@ -386,11 +393,12 @@ public class EmergencyContacts extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            if (emg_id == 0) {
+            if (emg_id == 0 || emg_id == 2) {
                 url = "customer/insertemergency";
-            } else {
+            } else if (emg_id == 1 || emg_id == 3) {
                 url = "customer/updateemergency";
             }
+
         }
 
         @Override
@@ -403,7 +411,10 @@ public class EmergencyContacts extends Activity {
                 jsonObject.accumulate("emergency_relation", relation);
                 if (emg_id == 1)
                     jsonObject.accumulate("emergency_id", sharedPreferences.getString("emg1_id", ""));
-                json = jsonObject.toString();
+                if (emg_id == 3)
+                    jsonObject.accumulate("emergency_id", sharedPreferences.getString("emg2_id", ""));
+
+                    json = jsonObject.toString();
                 Log.e("tag", "<----service_token--->" + token);
                 return jsonStr = HttpUtils.makeRequest1(Config.WEB_URL + url, json, id, token);
             } catch (Exception e) {
@@ -448,6 +459,7 @@ public class EmergencyContacts extends Activity {
                             String number = jos.getString("emergency_mobile");
                             String relation = jos.getString("emergency_relation");
                             String emg_id = jos.getString("emergency_id");
+
                             if (i == 0) {
                                 editor.putString("emergency_1", "success");
                                 editor.putString("emg1_name", name);
@@ -456,11 +468,29 @@ public class EmergencyContacts extends Activity {
                                 editor.putString("emg1_id", emg_id);
                                 editor.apply();
                                 check_from_db();
+                                Log.e("tag", "working" + i);
                             }
+                            if (i == 1) {
+                                editor.putString("emergency_2", "success");
+                                editor.putString("emg2_name", name);
+                                editor.putString("emg2_number", number);
+                                editor.putString("emg2_relation", relation);
+                                editor.putString("emg2_id", emg_id);
+                                editor.apply();
+                                check_from_db();
+                                Log.e("tag", "working" + i);
+                            }
+
+
                         }
                     } else {
+
+                        Log.e("tag", "no data found");
+                        check_from_db();
+
                     }
                 } else {
+                    Log.e("tag", "false");
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

@@ -130,10 +130,7 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
         et_otp4.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-
                 if( keyCode != KeyEvent.KEYCODE_BACK && keyCode != KeyEvent.KEYCODE_DEL ) {
-
-
                     if (et_otp4.getText().toString().length() == 1) {
                         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.toggleSoftInput (0, 0);
@@ -148,9 +145,7 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
             @Override
             public void onClick(View view) {
                 tv_resendotp.setVisibility(View.GONE);
-
                 new resend_otp().execute();
-
             }
         });
 
@@ -178,8 +173,6 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
                                 Log.e("tag","for"+str_for+str_data);
 
                                 new otp_verify().execute();
-
-
                             }
                         }
                     }

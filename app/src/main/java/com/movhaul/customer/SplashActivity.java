@@ -152,7 +152,9 @@ public class SplashActivity extends Activity {
             Log.e("Tag", "err:" + e.toString());
         }
 
-        new GetVersionCode().execute();
+
+
+
 
 
         // String locale = getResources().getConfiguration().locale.getDisplayCountry();
@@ -208,6 +210,12 @@ public class SplashActivity extends Activity {
         textView.setTextColor(Color.WHITE);
         textView.setTypeface(tf);
         textView1.setTypeface(tf);
+
+        if (!com.movhaul.customer.Config.isConnected(SplashActivity.this)) {
+            snackbar.show();
+        } else {
+            new GetVersionCode().execute();
+        }
 
 
         final ObjectAnimator backgroundColorAnimator = ObjectAnimator.ofObject(sbView,

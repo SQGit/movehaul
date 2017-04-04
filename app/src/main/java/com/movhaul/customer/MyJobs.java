@@ -10,13 +10,14 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rey.material.widget.LinearLayout;
-import com.rey.material.widget.ListView;
 import com.sloop.fonts.FontsManager;
 
 import org.json.JSONArray;
@@ -31,7 +32,7 @@ import java.util.ArrayList;
 
 public class MyJobs extends Activity {
 
-    ListView lv_jobs_list;
+    //ListView lv_jobs_list;
     Snackbar snackbar;
     TextView tv_snack;
     Typeface tf;
@@ -40,8 +41,10 @@ public class MyJobs extends Activity {
     SharedPreferences.Editor editor;
     ArrayList ar_job_lists;
     MV_Datas mv_datas;
-    JobListAdapter job_list_adapter;
+    // JobListAdapter job_list_adapter;
     LinearLayout btn_back;
+    RecyclerView rv;
+    RecycleViewAdapter ca;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,7 +63,10 @@ public class MyJobs extends Activity {
         token = sharedPreferences.getString("token", "");
 
 
-        lv_jobs_list = (ListView) findViewById(com.movhaul.customer.R.id.listview_jobs);
+        // lv_jobs_list = (ListView) findViewById(com.movhaul.customer.R.id.listview_jobs);
+
+        rv = (RecyclerView) findViewById(R.id.recycler_view);
+
         btn_back = (LinearLayout) findViewById(com.movhaul.customer.R.id.layout_back);
 
         snackbar = Snackbar
@@ -81,7 +87,7 @@ public class MyJobs extends Activity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MyJobs.this,DashboardNavigation.class);
+                Intent i = new Intent(MyJobs.this, DashboardNavigation.class);
                 startActivity(i);
                 finish();
             }
@@ -154,7 +160,7 @@ public class MyJobs extends Activity {
                                 mv_datas.setPickup(pickup);
                                 mv_datas.setDrop(drop);
                                 mv_datas.setTime(part1);
-                                  mv_datas.setDriver_count(driver_count);
+                                mv_datas.setDriver_count(driver_count);
 
                                 ar_job_lists.add(mv_datas);
 
@@ -169,8 +175,15 @@ public class MyJobs extends Activity {
                         }
 
 
-                        job_list_adapter = new JobListAdapter(MyJobs.this, MyJobs.this, ar_job_lists);
-                        lv_jobs_list.setAdapter(job_list_adapter);
+                        //job_list_adapter = new JobListAdapter(MyJobs.this, MyJobs.this, ar_job_lists);
+                        // lv_jobs_list.setAdapter(job_list_adapter);
+
+                        ca = new RecycleViewAdapter(MyJobs.this, MyJobs.this, ar_job_lists);
+                        LinearLayoutManager llm = new LinearLayoutManager(MyJobs.this);
+                        llm.setOrientation(LinearLayoutManager.VERTICAL);
+                        rv.setLayoutManager(llm);
+                        rv.setAdapter(ca);
+
 
                     } else {
                         finish();
