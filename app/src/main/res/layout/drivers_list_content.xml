@@ -45,7 +45,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="top|center"
                         android:gravity="top"
-                        android:text="$ 150"
+                        android:text="₦ 150"
                         android:textColor="@color/redColor"
                         android:textSize="@dimen/_19sdp" />
 

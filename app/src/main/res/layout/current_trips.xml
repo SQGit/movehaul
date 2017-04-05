@@ -360,12 +360,7 @@
                     android:textColor="@color/redColor"
                     android:textSize="@dimen/_15sdp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="$"
-                    android:textColor="@color/redColor"
-                    android:textSize="@dimen/_19sdp" />
+
 
                 <TextView
                     android:id="@+id/cr_job_cost"
@@ -374,6 +369,14 @@
                     android:text="150"
                     android:textColor="@color/redColor"
                     android:textSize="@dimen/_15sdp" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" ₦"
+                    android:textColor="@color/redColor"
+                    android:textSize="@dimen/_17sdp" />
 
             </LinearLayout>
 

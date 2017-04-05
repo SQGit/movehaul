@@ -84,6 +84,8 @@ public class EmergencyContacts extends Activity {
         btn_back = (com.rey.material.widget.LinearLayout) findViewById(com.movhaul.customer.R.id.layout_back);
         iv_edit1 = (ImageView) findViewById(R.id.button_editContact1);
         iv_edit2 = (ImageView) findViewById(R.id.button_editContact2);
+
+       // tv_emergency_relation1.setInp
         tl_name.setTypeface(tf);
         tl_number.setTypeface(tf);
         tl_relation.setTypeface(tf);
@@ -134,7 +136,7 @@ public class EmergencyContacts extends Activity {
                                 editor.putString("emg1_number", number);
                                 editor.putString("emg1_relation", relation);
                                 editor.apply();
-                                tv_emergency_name1.setText(name);
+                                tv_emergency_name1.setText(name.toUpperCase());
                                 tv_emergency_no1.setText(number);
                                 tv_emergency_relation1.setText(relation);
                                 bl_edit_1 = false;
@@ -174,7 +176,7 @@ public class EmergencyContacts extends Activity {
 
                                 new insert_emg_contact(name, number, relation, 3).execute();
 
-                                tv_emergency_name2.setText(name);
+                                tv_emergency_name2.setText(name.toUpperCase());
                                 tv_emergency_no2.setText(number);
                                 tv_emergency_relation2.setText(relation);
                                 bl_edit_2 = false;
@@ -221,7 +223,7 @@ public class EmergencyContacts extends Activity {
                                         editor.apply();
 
                                         new insert_emg_contact(name, number, relation, 2).execute();
-                                        tv_emergency_name2.setText(name);
+                                        tv_emergency_name2.setText(name.toUpperCase());
                                         tv_emergency_no2.setText(number);
                                         tv_emergency_relation2.setText(relation);
                                     } else {
@@ -259,7 +261,7 @@ public class EmergencyContacts extends Activity {
                                     editor.putString("emg1_relation", relation);
                                     editor.apply();
                                     new insert_emg_contact(name, number, relation, 0).execute();
-                                    tv_emergency_name1.setText(name);
+                                    tv_emergency_name1.setText(name.toUpperCase());
                                     tv_emergency_no1.setText(number);
                                     tv_emergency_relation1.setText(relation);
                                 } else {
@@ -326,13 +328,13 @@ public class EmergencyContacts extends Activity {
         if (sharedPreferences.getString("emergency_1", "").equals("success")) {
             lt_edit.setVisibility(View.GONE);
             lt_contact_1.setVisibility(View.VISIBLE);
-            tv_emergency_name1.setText(sharedPreferences.getString("emg1_name", ""));
+            tv_emergency_name1.setText(sharedPreferences.getString("emg1_name", "").toUpperCase());
             tv_emergency_no1.setText(sharedPreferences.getString("emg1_number", ""));
             tv_emergency_relation1.setText(sharedPreferences.getString("emg1_relation", ""));
             if (sharedPreferences.getString("emergency_2", "").equals("success")) {
                 card_2.setVisibility(View.VISIBLE);
                 btn_submit.setVisibility(View.GONE);
-                tv_emergency_name2.setText(sharedPreferences.getString("emg2_name", ""));
+                tv_emergency_name2.setText(sharedPreferences.getString("emg2_name", "").toUpperCase());
                 tv_emergency_no2.setText(sharedPreferences.getString("emg2_number", ""));
                 tv_emergency_relation2.setText(sharedPreferences.getString("emg2_relation", ""));
             } else {

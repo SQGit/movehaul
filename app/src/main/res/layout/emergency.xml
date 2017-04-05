@@ -232,6 +232,7 @@
                                     android:layout_height="wrap_content"
                                     android:inputType="textCapCharacters"
                                     android:maxLines="1"
+                                    android:textAllCaps="true"
                                     android:text="James Conner"
                                     android:textColor="@color/textColor"
                                     android:textSize="@dimen/_18sdp" />
@@ -273,7 +274,8 @@
                                 android:layout_gravity="center"
                                 android:gravity="center"
                                 android:maxLines="1"
-                                android:text="+273-5629-987654"
+                                android:layout_marginLeft="@dimen/_5sdp"
+                                android:text="+273-5629-9876"
                                 android:textColor="@color/textColor"
                                 android:textSize="@dimen/_18sdp" />
 
@@ -354,7 +356,6 @@
                                     android:id="@+id/textview_emergency_name2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:inputType="textCapCharacters"
                                     android:maxLines="1"
                                     android:text="Emma Watson"
                                     android:textColor="@color/textColor"
@@ -396,8 +397,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:gravity="center"
+                                android:layout_marginLeft="@dimen/_5sdp"
                                 android:maxLines="1"
-                                android:text="+273-9791-560238"
+                                android:text="+273-9791-5602"
                                 android:textColor="@color/textColor"
                                 android:textSize="@dimen/_18sdp" />
 

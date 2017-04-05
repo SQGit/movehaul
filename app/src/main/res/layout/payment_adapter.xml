@@ -74,8 +74,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="$150"
-                android:textSize="@dimen/_26sdp"
+                android:text="₦ 150"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:textSize="@dimen/_23sdp"
                 android:textColor="@color/redColor"
                 android:padding="@dimen/_5sdp" />
 

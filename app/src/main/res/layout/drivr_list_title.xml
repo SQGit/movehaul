@@ -28,13 +28,12 @@
                 android:id="@+id/textview_title_bidding"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginRight="@dimen/_20sdp"
+                android:layout_gravity="center"
                 android:focusable="false"
                 android:gravity="center"
-                android:text="150 Naira"
+                android:text="150 ₦"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_16sdp" />
+                android:textSize="@dimen/_18sdp" />
 
             <RatingBar
                 android:id="@+id/ratingbar"
