@@ -70,7 +70,6 @@ public class LoginActivity extends Activity {
         et_mobile_no.setTypeface(tf);
         flt_mobile_no.setTypeface(tf);
         ccp.setTypeFace(tf);
-
         try {
             TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
             String countryCodeValue = tm.getNetworkCountryIso();
@@ -81,8 +80,6 @@ public class LoginActivity extends Activity {
             Log.e("tag", "flg" + ccp.getSelectedCountryCodeWithPlus());
             str_mobile_prefix = ccp.getSelectedCountryCodeWithPlus();
         }
-
-
         ccp.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
             @Override
             public void onCountrySelected() {

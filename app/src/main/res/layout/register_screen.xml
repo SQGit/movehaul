@@ -130,7 +130,7 @@
                 app:countryPreference="US,IN,NG"
                 app:customMasterCountries="US,IN,NZ,NG,PL,RO,FR,CY,CZ,CK"
                 app:keyboardAutoPopOnSearch="false"
-                app:defaultNameCode="us"
+                app:defaultNameCode="NG"
                 app:textSize="@dimen/_10sdp" />
 
 
