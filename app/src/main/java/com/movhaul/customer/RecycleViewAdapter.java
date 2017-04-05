@@ -16,6 +16,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 
 import com.daimajia.androidanimations.library.BaseViewAnimator;
@@ -23,6 +24,7 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidviewhover.BlurLayout;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.rey.material.widget.TextView;
+import com.sloop.fonts.FontsManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,7 +52,7 @@ public class RecycleViewAdapter extends
     String booking_id, id, token;
     ProgressDialog mProgressDialog;
     private RecycleViewAdapter adapter;
-    public int ii = 0;
+    public int hover_click = 0;
     TranslateAnimation anim_truck_c2r2,anim_truck_c2r3, anim_truck_c2r1, anim_truck_c2r;
 
     public RecycleViewAdapter(Context context, Activity acti, ArrayList<MV_Datas> objects) {
@@ -62,7 +64,7 @@ public class RecycleViewAdapter extends
 
 
     @Override
-    public void onBindViewHolder(final MyViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(final MyViewHolder viewHolder,  int position) {
 
         Log.e("tag","s:"+position);
        // postion_s = position;
@@ -72,11 +74,11 @@ public class RecycleViewAdapter extends
         mv_datas = ar_job_list.get(position);
         int ko = Integer.valueOf(mv_datas.getDriver_count());
         Log.e("tag", position + " :ss: " + ko);
-        if (ko != 0) {
+       /* if (ko != 0) {
             viewHolder.tv_book.setVisibility(View.GONE);
         } else {
             viewHolder.tv_book.setVisibility(View.GONE);
-        }
+        }*/
 
 
 
@@ -113,8 +115,8 @@ public class RecycleViewAdapter extends
 
 
 
-        viewHolder.tv_book.setVisibility(View.GONE);
-        viewHolder.tv_delete.setVisibility(View.GONE);
+        //viewHolder.tv_book.setVisibility(View.GONE);
+       // viewHolder.tv_delete.setVisibility(View.GONE);
 
 
         final float width = getDeviceWidth(context);
@@ -126,18 +128,56 @@ public class RecycleViewAdapter extends
         anim_truck_c2r.setFillAfter(true);
 
 
+
         anim_truck_c2r1 = new TranslateAnimation(viewHolder.tv_book.getX(),-500, 0, 0);
         anim_truck_c2r1.setDuration(1000);
         anim_truck_c2r1.setFillAfter(true);
+        anim_truck_c2r1.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                Log.e("tag","2st animation end");
+
+                viewHolder.tv_book.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
 
         anim_truck_c2r2 = new TranslateAnimation(viewHolder.tv_delete.getX()+500,viewHolder.tv_delete.getX(), 0, 0);
         anim_truck_c2r2.setDuration(1000);
         anim_truck_c2r2.setFillAfter(true);
 
 
+
         anim_truck_c2r3 = new TranslateAnimation(viewHolder.tv_delete.getX(),viewHolder.tv_delete.getX()+500, 0, 0);
         anim_truck_c2r3.setDuration(1000);
         anim_truck_c2r3.setFillAfter(true);
+        anim_truck_c2r3.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                Log.e("tag","2st animation end");
+
+                viewHolder.tv_delete.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
 
 
         viewHolder.tv_pickup.setText(mv_datas.getPickup());
@@ -149,6 +189,7 @@ public class RecycleViewAdapter extends
         viewHolder.tv_book.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+              //  Log.e("tag","book"+position);
                /* mv_datas = ar_job_list.get(position);
                 int ko = Integer.valueOf(mv_datas.getDriver_count());
                 Log.e("tag", " postions: " + position);
@@ -173,10 +214,7 @@ public class RecycleViewAdapter extends
             @Override
             public void onClick(View v) {
 
-
-
-
-
+                //Log.e("tag","delete"+position);
                /* mv_datas = ar_job_list.get(position);
                 booking_id = mv_datas.getBooking_id();
                 Log.e("tag","deL_id:"+mv_datas.getBooking_id());
@@ -202,14 +240,6 @@ public class RecycleViewAdapter extends
         return height;
     }
 
-   /* @Override
-    public int getItemViewType(int position) {
-
-        postion_s = position;
-        Log.e("Tag",postion_s+" p:s "+position);
-        return super.getItemViewType(position);
-
-    }*/
 
     @Override
     public int getItemCount() {
@@ -217,16 +247,18 @@ public class RecycleViewAdapter extends
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.job_list_adapter, parent, false);
+
+        FontsManager.initFormAssets(activity, "fonts/lato.ttf");
+        FontsManager.changeFonts(activity);
+
 
         final int poss = viewType;
         postion_s = viewType;
 
-        Log.e("tag_asdf","create_postions: "+postion_s);
-        Log.e("tag_asdf","createtype: "+viewType);
-        Log.e("tag_asdf","poss: "+poss);
+
 
 
         mProgressDialog = new ProgressDialog(context, com.movhaul.customer.R.style.AppCompatAlertDialogStyle);
@@ -242,62 +274,28 @@ public class RecycleViewAdapter extends
 
 
 
-
-
-
-        final MyViewHolder holder = new MyViewHolder(v);
-
-
-
-
+         final MyViewHolder holder = new MyViewHolder(v);
 
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                holder.hover = LayoutInflater.from(context).inflate(R.layout.hover_layout, null);
-
-                Log.e("tag_asdf","click_posits: "+postion_s);
-                Log.e("tag_asdf","click_viewtype: "+viewType);
-                Log.e("tag_asdf","click_poss: "+poss);
-
-                holder.hoverLayout.setHoverView(holder.hover);
-
-                holder.hoverLayout.enableBlurBackground(false);
-                holder.hoverLayout.addChildAppearAnimator(holder.hover, R.id.text_book, Techniques.SlideInLeft);
-                holder.hoverLayout.addChildAppearAnimator(holder.hover, R.id.text_delete, Techniques.SlideInRight);
-                holder.hoverLayout.addChildDisappearAnimator(holder.hover, R.id.text_book, Techniques.SlideOutLeft);
-                holder.hoverLayout.addChildDisappearAnimator(holder.hover, R.id.text_delete, Techniques.SlideOutRight);
-
-
-              /*  if(postion_s == poss) {
-
-                }
-                else{
-                    hoverLayout.dismissHover();
-                }*/
-
-
-
-               /* Log.e("tag","click v");
-                if (ii == 0) {
-
-                    // slid.prepare(viewHolder.tv_book);
+                Log.e("tag","click v_poss"+poss);
+                Log.e("tag","click postion_s"+postion_s);
+                if (holder.tv_book.getVisibility() == View.GONE) {
                     holder.tv_book.startAnimation(anim_truck_c2r);
-                    holder.tv_book.setVisibility(View.VISIBLE);
                     holder.tv_delete.startAnimation(anim_truck_c2r2);
+
+                    holder.tv_book.setVisibility(View.VISIBLE);
                     holder.tv_delete.setVisibility(View.VISIBLE);
-                    ii=1;
+                    hover_click=1;
                 }
-                else if(ii ==1){
-                    //slido.prepare(viewHolder.tv_book);
+                else {
                     holder.tv_book.startAnimation(anim_truck_c2r1);
                     holder.tv_delete.startAnimation(anim_truck_c2r3);
-
                    // holder.tv_book.setVisibility(View.GONE);
                    // holder.tv_delete.setVisibility(View.GONE);
-                    ii=0;
-                }*/
+                    hover_click=0;
+                }
             }
         });
 
@@ -315,8 +313,8 @@ public class RecycleViewAdapter extends
      */
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView tv_pickup, tv_drop, tv_date, tv_pick_txt, tv_drop_txt, tv_date_txt, tv_bid_count, tv_bid_count_txt, tv_book, tv_delete;
-        BlurLayout hoverLayout;
-        View hover;
+        //BlurLayout hoverLayout;
+       // View hover;
 
         public MyViewHolder(View view) {
             super(view);
@@ -332,9 +330,9 @@ public class RecycleViewAdapter extends
             tv_delete = (com.rey.material.widget.TextView) view.findViewById(R.id.text_delete);
 
 
-            hoverLayout = (BlurLayout) view.findViewById(R.id.blur_layout);
+            //hoverLayout = (BlurLayout) view.findViewById(R.id.blur_layout);
 
-            hoverLayout.enableTouchEvent(false);
+           // hoverLayout.enableTouchEvent(false);
 
 
 
