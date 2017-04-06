@@ -27,20 +27,50 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="start"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/cr_job_id_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Booking Id"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/_12sdp" />
+
+                    <TextView
+                        android:id="@+id/cr_job_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="1234"
+                        android:textColor="@color/redColor"
+                        android:textSize="@dimen/_20sdp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|center_vertical"
                     android:gravity="end"
+
                     android:orientation="horizontal"
                     android:paddingRight="@dimen/_15sdp">
-
 
 
                     <TextView
                         android:id="@+id/cr_job_cost"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="@dimen/_3sdp"
                         android:text="150"
                         android:textColor="@color/redColor"
@@ -49,6 +79,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:text=" ₦"
                         android:textColor="@color/redColor"
                         android:textSize="@dimen/_16sdp" />
@@ -63,6 +94,8 @@
                     android:focusable="false"
                     android:padding="@dimen/_2sdp"
                     android:src="@drawable/profile_img" />
+
+
             </FrameLayout>
 
             <LinearLayout
@@ -427,9 +460,9 @@
                             android:id="@+id/cr_dr_reg"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:layout_marginBottom="@dimen/_5sdp"
                             android:maxLines="2"
-                            android:layout_gravity="center"
                             android:text="KJA-193AA"
                             android:textColor="@color/textColor"
                             android:textSize="@dimen/_12sdp" />
@@ -437,8 +470,6 @@
 
 
                 </LinearLayout>
-
-
 
 
             </LinearLayout>

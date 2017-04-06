@@ -1,9 +1,5 @@
 package com.movhaul.customer;
 
-//customer\nearbydrivers
-//  latitude,longitude,radius
-
-
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
@@ -1697,6 +1693,12 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) lt_frame.getLayoutParams();
                     params.setMargins(0, 5, 0, 0);
                     lt_frame.setLayoutParams(params);
+
+                    int valueInPixels = (int) getResources().getDimension(com.movhaul.customer.R.dimen._21sdp);
+                    FrameLayout.LayoutParams params1 = (FrameLayout.LayoutParams) iv_map_point.getLayoutParams();
+                    params1.setMargins(0, valueInPixels, 0, 0);
+                    iv_map_point.setLayoutParams(params1);
+
                 }
             }
 
@@ -1710,6 +1712,12 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) lt_frame.getLayoutParams();
                 params.setMargins(0, valueInPixels, 0, 0);
                 lt_frame.setLayoutParams(params);
+
+                int valueInPixels2 = (int) getResources().getDimension(com.movhaul.customer.R.dimen._14sdp);
+                FrameLayout.LayoutParams params1 = (FrameLayout.LayoutParams) iv_map_point.getLayoutParams();
+                params1.setMargins(0, 0, 0, valueInPixels2);
+                iv_map_point.setLayoutParams(params1);
+
                 if (!p_loc_comp) {
                     Log.e("tag", "after_drop");
                     change_map_camera();
@@ -1896,28 +1904,21 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     //driver/driverupdate
                     String responseString = null;
                     HttpClient httpclient = new DefaultHttpClient();
-                    //HttpPost httppost = new HttpPost("https://demotest007.000webhostapp.com/webapi/Api/candidate_reg_image");
                     HttpPost httppost = new HttpPost(Config.WEB_URL + "customer/customerupdate");
+                    //  HttpPost httppost = new HttpPost("http://104.197.80.225:3010/vagan/post");
+
                     httppost.setHeader("id", id);
                     httppost.setHeader("sessiontoken", token);
                     httppost.setHeader("customer_email", customer_email);
                     httppost.setHeader("customer_name", customer_name);
 
-                /*    httppost.setHeader("candidate_name", "jj");
-                    httppost.setHeader("fathers_name", "dgfh");
-                    httppost.setHeader("mobile_no", "67867967676");
-                    httppost.setHeader("date_of_birth", "9-2-92");
-                    httppost.setHeader("gender", "hghhv");
-                    httppost.setHeader("address", "jhvgjv");
-                    httppost.setHeader("voter_id", "hvhvhj");
-                    httppost.setHeader("aadhar_id", "hvhv");
-                    httppost.setHeader("party_name", "hvhv");*/
+
+
 
                     try {
 
                         MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
                         entity.addPart("customerimage", new FileBody(new File(str_profile_img), "image/jpeg"));
-                        //entity.addPart("candidate_profile", new FileBody(new File(str_profile_img), "image/jpeg"));
                         Log.e("tag", "img: if ");
                         httppost.setEntity(entity);
                         HttpResponse response = httpclient.execute(httppost);
@@ -1966,7 +1967,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.e("tag", "tag" + s);
-
+            drawer.closeDrawer(Gravity.LEFT);
 
             if (s != null) {
                 try {
@@ -1976,6 +1977,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     Log.d("tag", "<-----Status----->" + status);
 
                     if (status.equals("true")) {
+
 
                         String img = jo.getString("customer_image");
                         String name = jo.getString("customer_name");

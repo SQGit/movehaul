@@ -47,7 +47,6 @@
                     android:layout_height="@dimen/_42sdp"
                     android:layout_gravity="center"
                     android:layout_marginBottom="@dimen/_14sdp"
-
                     android:src="@mipmap/map_point" />
 
                 <LinearLayout

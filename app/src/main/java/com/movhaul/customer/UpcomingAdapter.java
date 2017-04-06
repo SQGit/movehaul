@@ -1,12 +1,20 @@
 package com.movhaul.customer;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
@@ -15,6 +23,9 @@ import com.ramotion.foldingcell.FoldingCell;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.TextView;
 import com.sloop.fonts.FontsManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -25,21 +36,27 @@ import java.util.HashSet;
  */
 public class UpcomingAdapter extends ArrayAdapter<MV_Datas> {
 
-    private HashSet<Integer> unfoldedIndexes = new HashSet<>();
-    private View.OnClickListener defaultRequestBtnClickListener;
     Context context;
     ArrayList<MV_Datas> up_lists;
     Activity act;
     FoldingCell cell;
     MV_Datas mv_datas;
-    TextView tv_title_date,tv_title_booking_id,tv_title_pickup,tv_title_drop;
-    TextView tv_content_booking_id,tv_content_cost,tv_content_pickup,tv_content_drop,tv_content_dr_name,tv_content_dr_phone,tv_content_date,tv_content_time,tv_title_pickup_txt,tv_title_drop_txt,tv_content_pickup_txt,tv_content_drop_txt,tv_content_date_txt,tv_content_time_txt;
-    ImageView iv_content_prof,iv_content_bg;
+    TextView tv_title_date, tv_title_booking_id, tv_title_pickup, tv_title_drop;
+    TextView tv_content_booking_id, tv_content_cost, tv_content_pickup, tv_content_drop, tv_content_dr_name, tv_content_dr_phone, tv_content_date, tv_content_time, tv_title_pickup_txt, tv_title_drop_txt, tv_content_pickup_txt, tv_content_drop_txt, tv_content_date_txt, tv_content_time_txt;
+    ImageView iv_content_prof, iv_content_bg;
     Typeface tf;
     Button btn_cancel;
+    private HashSet<Integer> unfoldedIndexes = new HashSet<>();
+    private View.OnClickListener defaultRequestBtnClickListener;
+    ProgressDialog mProgressDialog;
+    Dialog dg_show_cancel;
+    android.widget.TextView tv_dg_txt, tv_dg_txt2;
+    Button btn_dg_cancel;
+    String id,token;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
-
-    public UpcomingAdapter(Context context,Activity acti, ArrayList<MV_Datas> objects) {
+    public UpcomingAdapter(Context context, Activity acti, ArrayList<MV_Datas> objects) {
         super(context, 0, objects);
         this.act = acti;
         up_lists = objects;
@@ -48,7 +65,7 @@ public class UpcomingAdapter extends ArrayAdapter<MV_Datas> {
 
     @Override
     public int getCount() {
-        return up_lists.size()-1;
+        return up_lists.size() - 1;
     }
 
     @Override
@@ -56,17 +73,61 @@ public class UpcomingAdapter extends ArrayAdapter<MV_Datas> {
         // get item for selected view
         //Item item = getItem(position);
         // if cell is exists - reuse it, if not - create the new one from resource
-         cell = (FoldingCell) convertView;
+        cell = (FoldingCell) convertView;
         ViewHolder viewHolder;
 
         tf = Typeface.createFromAsset(act.getAssets(), "fonts/lato.ttf");
 
-       FontsManager.initFormAssets(act, "fonts/lato.ttf");       //initialization
-       FontsManager.changeFonts(act);
+        FontsManager.initFormAssets(act, "fonts/lato.ttf");       //initialization
+        FontsManager.changeFonts(act);
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(act);
+        editor = sharedPreferences.edit();
+
+        id = sharedPreferences.getString("id", "");
+        token = sharedPreferences.getString("token", "");
+
+        mProgressDialog = new ProgressDialog(act);
+        mProgressDialog.setTitle(com.movhaul.customer.R.string.loading);
+        mProgressDialog.setMessage(act.getString(com.movhaul.customer.R.string.wait));
+        mProgressDialog.setIndeterminate(false);
+        mProgressDialog.setCancelable(false);
 
         mv_datas = up_lists.get(position+1);
 
-        Log.e("tag","ds: "+mv_datas.getDate());
+
+        dg_show_cancel = new Dialog(act);
+        dg_show_cancel.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dg_show_cancel.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dg_show_cancel.setCancelable(true);
+        dg_show_cancel.setContentView(com.movhaul.customer.R.layout.dialog_road_confirm);
+
+        btn_dg_cancel = (Button) dg_show_cancel.findViewById(com.movhaul.customer.R.id.button_yes);
+        tv_dg_txt = (android.widget.TextView) dg_show_cancel.findViewById(com.movhaul.customer.R.id.textView_1);
+        tv_dg_txt2 = (android.widget.TextView) dg_show_cancel.findViewById(com.movhaul.customer.R.id.textView_2);
+
+        tv_dg_txt.setText("Cancel Job");
+        tv_dg_txt2.setText("Are You sure want to Cancel this job \nMovHaul will deduct 10% from your payment.");
+        btn_dg_cancel.setText("OK");
+
+        tv_dg_txt.setTypeface(tf);
+        tv_dg_txt2.setTypeface(tf);
+        btn_dg_cancel.setTypeface(tf);
+
+        btn_dg_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dg_show_cancel.dismiss();
+
+                new cancel_job(mv_datas.getBooking_id(), mv_datas.getDriver_id()).execute();
+
+            }
+        });
+
+
+
+
+        Log.e("tag", "ds: " + mv_datas.getDate());
 
         if (cell == null) {
             viewHolder = new ViewHolder();
@@ -88,7 +149,6 @@ public class UpcomingAdapter extends ArrayAdapter<MV_Datas> {
             tv_title_pickup_txt.setTypeface(tf);
             tv_title_drop.setTypeface(tf);
             tv_title_drop_txt.setTypeface(tf);
-
 
 
             tv_content_booking_id = (TextView) cell.findViewById(com.movhaul.customer.R.id.textview_content_booking_id);
@@ -141,15 +201,15 @@ public class UpcomingAdapter extends ArrayAdapter<MV_Datas> {
         }
 
 
-        tv_title_date.setText(mv_datas.getDate());
-        tv_title_booking_id.setText(mv_datas.getBooking_id());
-        tv_title_pickup.setText(mv_datas.getPickup());
-        tv_title_drop.setText(mv_datas.getDrop());
+            tv_title_date.setText(mv_datas.getDate());
+            tv_title_booking_id.setText(mv_datas.getBooking_id());
+            tv_title_pickup.setText(mv_datas.getPickup());
+            tv_title_drop.setText(mv_datas.getDrop());
 
 
 
         tv_content_booking_id.setText(mv_datas.getBooking_id());
-        tv_content_cost.setText(mv_datas.getJob_cost()+" ₦");
+        tv_content_cost.setText(mv_datas.getJob_cost() + " ₦");
         tv_content_pickup.setText(mv_datas.getPickup());
         tv_content_drop.setText(mv_datas.getDrop());
         tv_content_dr_name.setText(mv_datas.getName());
@@ -157,32 +217,27 @@ public class UpcomingAdapter extends ArrayAdapter<MV_Datas> {
         tv_content_date.setText(mv_datas.getDate());
         tv_content_time.setText(mv_datas.getTime());
 
-        if(mv_datas.getVec_type().equals("Bus")){
+        if (mv_datas.getVec_type().equals("Bus")) {
             iv_content_bg.setImageResource(com.movhaul.customer.R.drawable.bus_profile_bg);
-        }
-        else{
+        } else {
             iv_content_bg.setImageResource(com.movhaul.customer.R.drawable.truck_ad);
         }
 
-        Log.e("tag","d: "+mv_datas.getDriver_image());
-        Log.e("tag","d: "+mv_datas.getName());
+        Log.e("tag", "d: " + mv_datas.getDriver_image());
+        Log.e("tag", "d: " + mv_datas.getName());
 
-        Glide.with(act).load(Config.WEB_URL_IMG+"driver_details/"+mv_datas.getDriver_image()).into(iv_content_prof);
-
-
-
+        Glide.with(act).load(Config.WEB_URL_IMG + "driver_details/" + mv_datas.getDriver_image()).into(iv_content_prof);
 
 
         viewHolder.btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("tag","buttonclick");
+                Log.e("tag", mv_datas.getBooking_id()+"buttonclick"+mv_datas.getDriver_id());
                 cell.unfold((true));
+
+                dg_show_cancel.show();
             }
         });
-
-
-
 
 
         return cell;
@@ -217,4 +272,75 @@ public class UpcomingAdapter extends ArrayAdapter<MV_Datas> {
         Button btn_cancel;
 
     }
+
+
+    public class cancel_job extends AsyncTask<String, Void, String> {
+        String booking_id, driver_id;
+
+        public cancel_job(String booking, String driver) {
+            booking_id = booking;
+            driver_id = driver;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mProgressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String json = "", jsonStr = "";
+            try {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.accumulate("booking_id", booking_id);
+                jsonObject.accumulate("driver_id", driver_id);
+                json = jsonObject.toString();
+                return jsonStr = HttpUtils.makeRequest1(Config.WEB_URL + "customer/canceljob", json, id, token);
+            } catch (Exception e) {
+                Log.e("InputStream", e.getLocalizedMessage());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("tag", "tag" + s);
+            mProgressDialog.dismiss();
+
+            if (s != null) {
+                try {
+                    JSONObject jo = new JSONObject(s);
+                    String status = jo.getString("status");
+                    // String msg = jo.getString("message");
+                    Log.e("tag", "<-----Status----->" + status);
+                    if (status.equals("true")) {
+
+                        Log.e("tag", "<-----true----->" + status);
+                        // adapter.notifyDataSetChanged();
+
+                        Intent insd = act.getIntent();
+                        act.startActivity(insd);
+
+                    } else if (status.equals("false")) {
+
+                        Log.e("tag", "Location not updated");
+                        //has to check internet and location...
+
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.e("tag", "nt" + e.toString());
+                    // Toast.makeText(getApplicationContext(),"Network Errror0",Toast.LENGTH_LONG).show();
+                }
+            } else {
+                // Toast.makeText(getApplicationContext(),"Network Errror1",Toast.LENGTH_LONG).show();
+            }
+
+        }
+
+    }
+
 }

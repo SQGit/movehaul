@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.BaseViewAnimator;
 import com.daimajia.androidanimations.library.Techniques;
@@ -48,37 +49,27 @@ public class RecycleViewAdapter extends
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     Typeface tf;
-    int postion_s;
     String booking_id, id, token;
     ProgressDialog mProgressDialog;
-    private RecycleViewAdapter adapter;
-    public int hover_click = 0;
-    TranslateAnimation anim_truck_c2r2,anim_truck_c2r3, anim_truck_c2r1, anim_truck_c2r;
 
     public RecycleViewAdapter(Context context, Activity acti, ArrayList<MV_Datas> objects) {
         this.activity = acti;
         this.context = context;
         this.ar_job_list = objects;
-        adapter = this;
     }
 
 
     @Override
-    public void onBindViewHolder(final MyViewHolder viewHolder,  int position) {
-
-        Log.e("tag","s:"+position);
-       // postion_s = position;
-
-
+    public void onBindViewHolder(final MyViewHolder viewHolder, final int position) {
 
         mv_datas = ar_job_list.get(position);
         int ko = Integer.valueOf(mv_datas.getDriver_count());
-        Log.e("tag", position + " :ss: " + ko);
-       /* if (ko != 0) {
-            viewHolder.tv_book.setVisibility(View.GONE);
+
+        if (ko != 0) {
+            viewHolder.tv_book.setVisibility(View.VISIBLE);
         } else {
             viewHolder.tv_book.setVisibility(View.GONE);
-        }*/
+        }
 
 
 
@@ -119,66 +110,6 @@ public class RecycleViewAdapter extends
        // viewHolder.tv_delete.setVisibility(View.GONE);
 
 
-        final float width = getDeviceWidth(context);
-
-
-
-        anim_truck_c2r = new TranslateAnimation(-500,viewHolder.tv_book.getX(), 0, 0);
-        anim_truck_c2r.setDuration(1000);
-        anim_truck_c2r.setFillAfter(true);
-
-
-
-        anim_truck_c2r1 = new TranslateAnimation(viewHolder.tv_book.getX(),-500, 0, 0);
-        anim_truck_c2r1.setDuration(1000);
-        anim_truck_c2r1.setFillAfter(true);
-        anim_truck_c2r1.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                Log.e("tag","2st animation end");
-
-                viewHolder.tv_book.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-
-        anim_truck_c2r2 = new TranslateAnimation(viewHolder.tv_delete.getX()+500,viewHolder.tv_delete.getX(), 0, 0);
-        anim_truck_c2r2.setDuration(1000);
-        anim_truck_c2r2.setFillAfter(true);
-
-
-
-        anim_truck_c2r3 = new TranslateAnimation(viewHolder.tv_delete.getX(),viewHolder.tv_delete.getX()+500, 0, 0);
-        anim_truck_c2r3.setDuration(1000);
-        anim_truck_c2r3.setFillAfter(true);
-        anim_truck_c2r3.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                Log.e("tag","2st animation end");
-
-                viewHolder.tv_delete.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-
 
         viewHolder.tv_pickup.setText(mv_datas.getPickup());
         viewHolder.tv_drop.setText(mv_datas.getDrop());
@@ -190,7 +121,7 @@ public class RecycleViewAdapter extends
             @Override
             public void onClick(View v) {
               //  Log.e("tag","book"+position);
-               /* mv_datas = ar_job_list.get(position);
+                mv_datas = ar_job_list.get(position);
                 int ko = Integer.valueOf(mv_datas.getDriver_count());
                 Log.e("tag", " postions: " + position);
                 Log.e("tag", ko+" id: " + mv_datas.getDriver_count());
@@ -204,7 +135,7 @@ public class RecycleViewAdapter extends
                 }
                 else{
                     Toast.makeText(context,"No Drivers Bidded",Toast.LENGTH_SHORT).show();
-                }*/
+                }
 
             }
         });
@@ -215,7 +146,7 @@ public class RecycleViewAdapter extends
             public void onClick(View v) {
 
                 //Log.e("tag","delete"+position);
-               /* mv_datas = ar_job_list.get(position);
+                mv_datas = ar_job_list.get(position);
                 booking_id = mv_datas.getBooking_id();
                 Log.e("tag","deL_id:"+mv_datas.getBooking_id());
 
@@ -225,26 +156,22 @@ public class RecycleViewAdapter extends
                 else{
                     new delete_job().execute();
 
-                }*/
+                }
             }
         });
 
 
     }
 
-    private float getDeviceWidth(Context context) {
 
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        int height = display.getHeight();
-        return height;
-    }
 
 
     @Override
     public int getItemCount() {
         return ar_job_list.size();
     }
+
+    //last option to create in linear layout and click listner
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -253,13 +180,6 @@ public class RecycleViewAdapter extends
 
         FontsManager.initFormAssets(activity, "fonts/lato.ttf");
         FontsManager.changeFonts(activity);
-
-
-        final int poss = viewType;
-        postion_s = viewType;
-
-
-
 
         mProgressDialog = new ProgressDialog(context, com.movhaul.customer.R.style.AppCompatAlertDialogStyle);
         mProgressDialog.setTitle(com.movhaul.customer.R.string.loading);
@@ -272,41 +192,8 @@ public class RecycleViewAdapter extends
         id = sharedPreferences.getString("id", "");
         token = sharedPreferences.getString("token", "");
 
-
-
-         final MyViewHolder holder = new MyViewHolder(v);
-
-        v.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("tag","click v_poss"+poss);
-                Log.e("tag","click postion_s"+postion_s);
-                if (holder.tv_book.getVisibility() == View.GONE) {
-                    holder.tv_book.startAnimation(anim_truck_c2r);
-                    holder.tv_delete.startAnimation(anim_truck_c2r2);
-
-                    holder.tv_book.setVisibility(View.VISIBLE);
-                    holder.tv_delete.setVisibility(View.VISIBLE);
-                    hover_click=1;
-                }
-                else {
-                    holder.tv_book.startAnimation(anim_truck_c2r1);
-                    holder.tv_delete.startAnimation(anim_truck_c2r3);
-                   // holder.tv_book.setVisibility(View.GONE);
-                   // holder.tv_delete.setVisibility(View.GONE);
-                    hover_click=0;
-                }
-            }
-        });
-
-
         return new MyViewHolder(v);
     }
-
-
-
-
-
 
     /**
      * View holder class

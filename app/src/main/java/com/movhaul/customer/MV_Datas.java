@@ -28,6 +28,15 @@ public class MV_Datas {
     String drop;
     String vec_type;
     String driver_count;
+    String job_status;
+
+    public String getJob_status() {
+        return job_status;
+    }
+
+    public void setJob_status(String job_status) {
+        this.job_status = job_status;
+    }
 
     public String getDriver_count() {
         return driver_count;

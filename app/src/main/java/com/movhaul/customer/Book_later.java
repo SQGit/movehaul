@@ -107,7 +107,7 @@ public class Book_later extends Activity {
     String date, time;
     FrameLayout fl_goods;
     LinearLayout lt_images;
-    String str_delivery_address,str_v_type,  str_drop, str_goods_type, str_truck_type, str_desc, str_goods_pic, str_profile_img, book_time;
+    String str_delivery_address, str_v_type, str_drop, str_goods_type, str_truck_type, str_desc, str_goods_pic, str_profile_img, book_time;
     ArrayList<String> selectedPhotos = new ArrayList<>();
     HashMap<String, String> hash_subtype1;
     HashMap<String, String> hash_truck_imgs1 = new HashMap<String, String>();
@@ -127,7 +127,6 @@ public class Book_later extends Activity {
             et_date.setText(new StringBuilder().append(day).append("/").append(month + 1).append("/").append(year).append(""));
         }
     };
-
 
 
     @Override
@@ -227,6 +226,23 @@ public class Book_later extends Activity {
             new fetch_trucks().execute();
         }
 
+        if (vec_type.equals("Bus")) {
+            et_truckType.setCompoundDrawablesWithIntrinsicBounds(com.movhaul.customer.R.drawable.bus_type, 0, 0, 0);
+            flt_truckType.setHint(getString(com.movhaul.customer.R.string.ad));
+            flt_deliveryAddress.setHint(getString(com.movhaul.customer.R.string.ava));
+            fl_goods.setVisibility(View.GONE);
+            lt_images.setVisibility(View.GONE);
+        } else if (vec_type.equals("Truck")) {
+            et_truckType.setCompoundDrawablesWithIntrinsicBounds(com.movhaul.customer.R.drawable.select_truck_type, 0, 0, 0);
+            flt_truckType.setHint(getString(com.movhaul.customer.R.string.adsf));
+            flt_deliveryAddress.setHint(getString(com.movhaul.customer.R.string.aev));
+            fl_goods.setVisibility(View.VISIBLE);
+            lt_images.setVisibility(View.VISIBLE);
+        }
+
+
+
+
 
         getImages.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -297,34 +313,11 @@ public class Book_later extends Activity {
 
                 }
 
-               // truck_type();
+                // truck_type();
             }
         });
 
 
-
-
-        if (vec_type.equals("Bus")) {
-            et_truckType.setCompoundDrawablesWithIntrinsicBounds(com.movhaul.customer.R.drawable.bus_type, 0, 0, 0);
-            flt_truckType.setHint("Bus Type");
-
-            fl_goods.setVisibility(View.GONE);
-            lt_images.setVisibility(View.GONE);
-            flt_description.setEnabled(true);
-            btn_post.setEnabled(true);
-        }
-
-
-
-        if (vec_type.equals("Bus")) {
-            et_truckType.setCompoundDrawablesWithIntrinsicBounds(com.movhaul.customer.R.drawable.select_truck_type, 0, 0, 0);
-            flt_truckType.setHint("Truck Type");
-
-            fl_goods.setVisibility(View.VISIBLE);
-            lt_images.setVisibility(View.VISIBLE);
-            flt_description.setEnabled(true);
-            btn_post.setEnabled(true);
-        }
 
 
         btn_post.setOnClickListener(new View.OnClickListener() {
@@ -333,51 +326,42 @@ public class Book_later extends Activity {
 
                 if (!(et_date.getText().toString().trim().isEmpty())) {
                     if (!(et_time.getText().toString().trim().isEmpty())) {
-                        if (!(et_deliveryAddress.getText().toString().trim().isEmpty())) {
-                            if (!(et_truckType.getText().toString().trim().isEmpty())) {
-                                if (!(et_description.getText().toString().trim().isEmpty())) {
+                        //if (!(et_deliveryAddress.getText().toString().trim().isEmpty())) {
+                        if (!(et_truckType.getText().toString().trim().isEmpty())) {
+                            //if (!(et_description.getText().toString().trim().isEmpty())) {
 
-
-                                    if (!(et_goodsType.getText().toString().trim().isEmpty())) {
-
-
-                                        if (vec_type.equals("Truck")) {
-                                            str_delivery_address = et_deliveryAddress.getText().toString();
-                                            str_goods_type = et_goodsType.getText().toString();
-                                            str_truck_type = et_truckType.getText().toString();
-                                            str_desc = et_description.getText().toString();
-                                            str_time = date + " T " + time;
-                                            new book_later_task().execute();
-                                        } else {
-                                            Toast.makeText(getApplicationContext(), "Choose Goods Type", Toast.LENGTH_LONG).show();
-                                        }
-                                    }
-                                    else{
-
-                                        str_delivery_address = et_deliveryAddress.getText().toString();
-                                        str_truck_type = et_truckType.getText().toString();
-                                        str_desc = et_description.getText().toString();
-                                        str_time = date + " T " + time;
-                                        Log.e("tag","e:"+str_time);
-                                        new book_later_task().execute();
-
-                                    }
-
-
-                                } else {
-                                    et_description.setError("Enter Description");
-                                    et_description.requestFocus();
-                                }
+                            if (vec_type.equals("Truck")) {
+                            if (!(et_goodsType.getText().toString().trim().isEmpty())) {
+                                str_goods_type = et_goodsType.getText().toString();
+                                str_truck_type = et_truckType.getText().toString();
+                                str_time = date + " T " + time;
+                                new book_later_task().execute();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Choose Goods Type", Toast.LENGTH_LONG).show();
+                            }
                             } else {
 
-                                Toast.makeText(getApplicationContext(), "Choose " + vec_type + " Type", Toast.LENGTH_LONG).show();
+                                //str_delivery_address = et_delivery_address.getText().toString();
+                                str_truck_type = et_truckType.getText().toString();
+                                str_time = date + " T " + time;
+                                new book_later_task().execute();
+
                             }
 
-
+                               /* } else {
+                                    et_description.setError("Enter Description");
+                                    et_description.requestFocus();
+                                }*/
                         } else {
+
+                            Toast.makeText(getApplicationContext(), "Choose " + vec_type + " Type", Toast.LENGTH_LONG).show();
+                        }
+
+
+                       /* } else {
                             et_deliveryAddress.setError("Enter Delivery Address");
                             et_deliveryAddress.requestFocus();
-                        }
+                        }*/
 
                     } else {
                         Toast.makeText(getApplicationContext(), "Please Select Time", Toast.LENGTH_LONG).show();
@@ -573,8 +557,8 @@ public class Book_later extends Activity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-       // Intent i = new Intent(Book_later.this, DashboardNavigation.class);
-       // startActivity(i);
+        // Intent i = new Intent(Book_later.this, DashboardNavigation.class);
+        // startActivity(i);
         finish();
     }
 
@@ -823,6 +807,15 @@ public class Book_later extends Activity {
             super.onPreExecute();
             Log.e("tag", "reg_preexe");
             mProgressDialog.show();
+
+
+            if ((!(et_description.getText().toString().trim().isEmpty()))) {
+                str_desc = et_description.getText().toString().trim();
+            }
+
+            if ((!(et_deliveryAddress.getText().toString().trim().isEmpty())))
+                str_delivery_address = et_deliveryAddress.getText().toString();
+
         }
 
         @Override
@@ -844,23 +837,27 @@ public class Book_later extends Activity {
                     httppost.setHeader("sessiontoken", token);
                     httppost.setHeader("pickup_location", pickup_location);
                     httppost.setHeader("drop_location", drop_location);
-                    httppost.setHeader("delivery_address", str_delivery_address);
 
-                    if(vec_type.equals("Truck")){
-                        httppost.setHeader("goods_type", str_goods_type);}
-                    else{
+                    if (vec_type.equals("Truck")) {
+                        httppost.setHeader("goods_type", str_goods_type);
+                    } else {
                         httppost.setHeader("goods_type", "passenger");
                     }
                     //httppost.setHeader("truck_type", str_truck_type);
                     httppost.setHeader("vehicle_type", vec_type);
                     httppost.setHeader("vehicle_main_type", str_v_type);
                     httppost.setHeader("vehicle_sub_type", str_truck_type);
-                    httppost.setHeader("description", str_desc);
                     httppost.setHeader("booking_time", str_time);
                     httppost.setHeader("pickup_latitude", pick_lati);
                     httppost.setHeader("pickup_longitude", pick_long);
                     httppost.setHeader("drop_latitude", drop_lati);
                     httppost.setHeader("drop_longitude", drop_long);
+
+                    if (str_desc != null)
+                        httppost.setHeader("description", str_desc);
+
+                    if (str_delivery_address != null)
+                        httppost.setHeader("delivery_address", str_delivery_address);
 
                     HttpResponse response = null;
                     HttpEntity r_entity = null;
@@ -928,23 +925,27 @@ public class Book_later extends Activity {
 
                     jsonObject.put("pickup_location", sharedPreferences.getString("pickup", ""));
                     jsonObject.put("drop_location", sharedPreferences.getString("drop", ""));
-                    jsonObject.put("delivery_address", str_delivery_address);
-                    if(vec_type.equals("Truck")){
-                        jsonObject.put("goods_type", str_goods_type);}
-                    else{
+                    if (vec_type.equals("Truck")) {
+                        jsonObject.put("goods_type", str_goods_type);
+                    } else {
                         jsonObject.put("goods_type", "passenger");
                     }
-                 //   jsonObject.put("truck_type", str_truck_type);
+                    //   jsonObject.put("truck_type", str_truck_type);
                     jsonObject.put("vehicle_type", vec_type);
                     jsonObject.put("vehicle_main_type", str_v_type);
                     jsonObject.put("vehicle_sub_type", str_truck_type);
 
-                    jsonObject.put("description", str_desc);
                     jsonObject.put("booking_time", str_time);
                     jsonObject.put("pickup_latitude", pick_lati);
                     jsonObject.put("pickup_longitude", pick_long);
                     jsonObject.put("drop_latitude", drop_lati);
                     jsonObject.put("drop_longitude", drop_long);
+
+                    if (str_desc != null) {
+                        jsonObject.put("description", str_desc);
+                    }
+                    if (str_delivery_address != null)
+                        jsonObject.put("delivery_address", str_delivery_address);
 
 
                     json = jsonObject.toString();
@@ -969,10 +970,13 @@ public class Book_later extends Activity {
                 try {
                     JSONObject jo = new JSONObject(s);
                     String status = jo.getString("status");
-                    String msg = jo.getString("message");
-                    String bookingid = jo.getString("booking_id");
+
                     Log.d("tag", "<-----Status----->" + status);
                     if (status.equals("true")) {
+
+                        String msg = jo.getString("message");
+                        String bookingid = jo.getString("booking_id");
+
                         Log.e("tag", "Location Updated");
 
                         editor.putString("job_id", bookingid);

@@ -752,6 +752,7 @@ public class Book_now extends Activity {
 
                     jsonObject.put("pickup_location", sharedPreferences.getString("pickup", ""));
                     jsonObject.put("drop_location", sharedPreferences.getString("drop", ""));
+                    if(str_delivery_address != null)
                     jsonObject.put("delivery_address", str_delivery_address);
 
                     if (vec_type.equals("Truck")) {

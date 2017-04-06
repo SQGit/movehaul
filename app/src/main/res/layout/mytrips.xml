@@ -23,7 +23,7 @@
         </include>
 
 
-        <com.rey.material.widget.TabIndicatorView
+        <!--<com.rey.material.widget.TabIndicatorView
             android:id="@+id/tab_indicator"
             android:layout_height="48dp"
             android:layout_width="match_parent"
@@ -35,7 +35,19 @@
             app:tpi_indicatorColor="@color/redColor"
             style="@style/Material.Widget.TabPageIndicator"
 
-            />
+            />-->
+
+        <android.support.design.widget.TabLayout
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabTextColor="@color/textColor"
+            app:tabSelectedTextColor="@color/redColor"
+            app:tabIndicatorColor="@color/redColor"
+            app:tabMode="fixed"
+            app:tabTextAppearance="@style/tabindicator"
+            app:tabGravity="fill"/>
 
 
     </LinearLayout>

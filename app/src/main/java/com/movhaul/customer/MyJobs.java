@@ -1,10 +1,13 @@
 package com.movhaul.customer;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -14,9 +17,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.rey.material.widget.Button;
 import com.rey.material.widget.LinearLayout;
 import com.sloop.fonts.FontsManager;
 
@@ -45,6 +50,7 @@ public class MyJobs extends Activity {
     LinearLayout btn_back;
     RecyclerView rv;
     RecycleViewAdapter ca;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,6 +89,11 @@ public class MyJobs extends Activity {
             new get_job_lists().execute();
 
         }
+
+
+
+
+
 
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override

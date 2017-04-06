@@ -5,11 +5,14 @@
     android:layout_marginLeft="@dimen/_20sdp"
     android:background="@android:color/transparent"
     android:orientation="vertical"
+    android:layout_marginTop="@dimen/_5sdp"
+    android:layout_marginBottom="@dimen/_5sdp"
     android:paddingBottom="@dimen/_3sdp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -76,6 +79,18 @@
                 <com.rey.material.widget.TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="completed"
+                    android:id="@+id/textview_sts"
+                    android:gravity="center"
+                    android:padding="@dimen/_2sdp"
+                    android:background="@drawable/white_bgg"
+                    android:layout_gravity="center"
+                    android:textColor="@color/gold"
+                    android:textSize="@dimen/_10sdp" />
+
+                <com.rey.material.widget.TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:id="@+id/textview_book_id"
                     android:text="MOV34563IX"
                     android:gravity="right"
@@ -104,8 +119,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:paddingLeft="@dimen/_10sdp"
->
+                    android:paddingLeft="@dimen/_10sdp">
 
 
                     <com.rey.material.widget.TextView
@@ -152,8 +166,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:paddingLeft="@dimen/_10sdp"
-              >
+                    android:paddingLeft="@dimen/_10sdp">
 
 
                     <com.rey.material.widget.TextView
@@ -181,15 +194,11 @@
             </LinearLayout>
 
 
-
-
-
-
-            </LinearLayout>
+        </LinearLayout>
 
 
     </LinearLayout>
 
-    </LinearLayout>
+</LinearLayout>
 
 
