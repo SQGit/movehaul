@@ -68,6 +68,7 @@ public class MyTrips extends AppCompatActivity {
     Dialog dg_show_cancel;
     TextView tv_dg_txt, tv_dg_txt2;
     Button btn_dg_cancel;
+    android.widget.LinearLayout lt_top;
     ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
 
         @Override
@@ -78,6 +79,9 @@ public class MyTrips extends AppCompatActivity {
 
                 FontsManager.initFormAssets(MyTrips.this, "fonts/lato.ttf");       //initialization
                 FontsManager.changeFonts(MyTrips.this);
+
+                //tl_indicator.setupWithViewPager(viewPager);
+               // tl_indicator.getTabAt(1).select();
 
 
             } else if (position == 1) {
@@ -179,6 +183,9 @@ public class MyTrips extends AppCompatActivity {
         tv_dg_txt2.setTypeface(tf);
         btn_dg_cancel.setTypeface(tf);
 
+        tl_indicator.setupWithViewPager(viewPager);
+
+
         btn_dg_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -230,53 +237,61 @@ public class MyTrips extends AppCompatActivity {
 
             if (position == 0) {
 
-                mv_datas = ar_job_upcoming.get(0);
-                Log.e("tag", "pickup: " + mv_datas.getPickup() + mv_datas.getJob_cost());
-                Log.e("tag", "33size " + ar_job_upcoming.size());
+                lt_top = (android.widget.LinearLayout) view.findViewById(R.id.layout_top);
 
-                tv_cr_date = (android.widget.TextView) view.findViewById(com.movhaul.customer.R.id.cr_date);
-                tv_cr_time = (android.widget.TextView) view.findViewById(com.movhaul.customer.R.id.cr_time);
-                tv_cr_pickup = (android.widget.TextView) view.findViewById(com.movhaul.customer.R.id.cr_pickup);
-                tv_cr_drop = (android.widget.TextView) view.findViewById(com.movhaul.customer.R.id.cr_drop);
-                tv_cr_tr_type = (android.widget.TextView) view.findViewById(com.movhaul.customer.R.id.cr_truck_type);
-                tv_cr_dr_name = (android.widget.TextView) view.findViewById(com.movhaul.customer.R.id.cr_dr_name);
-                tv_cr_dr_phone = (android.widget.TextView) view.findViewById(com.movhaul.customer.R.id.cr_dr_phone);
-                tv_cr_job_cost = (android.widget.TextView) view.findViewById(com.movhaul.customer.R.id.cr_job_cost);
-                tv_cr_job_id = (android.widget.TextView) view.findViewById(com.movhaul.customer.R.id.cr_job_id);
-                iv_content_prof = (ImageView) view.findViewById(com.movhaul.customer.R.id.imageview_content_profile);
-                iv_type = (ImageView) view.findViewById(com.movhaul.customer.R.id.imageView5);
-                btn_cancel_job = (Button) view.findViewById(R.id.btn_canceljob);
-
-
-                tv_cr_date.setText(mv_datas.getDate());
-                tv_cr_time.setText(mv_datas.getTime());
-                tv_cr_pickup.setText(mv_datas.getPickup());
-                tv_cr_drop.setText(mv_datas.getDrop());
-                tv_cr_tr_type.setText(mv_datas.getTruck_type());
-                tv_cr_dr_name.setText(mv_datas.getName());
-                tv_cr_dr_phone.setText(mv_datas.getDriver_number());
-                tv_cr_job_cost.setText(mv_datas.getJob_cost());
-                tv_cr_job_id.setText(mv_datas.getBooking_id());
-
-                Glide.with(MyTrips.this).load(Config.WEB_URL_IMG + "driver_details/" + mv_datas.getDriver_image()).into(iv_content_prof);
-
-                if (mv_datas.getVec_type().equals("Bus")) {
-                    iv_type.setImageResource(com.movhaul.customer.R.drawable.bus_type);
-                } else {
-                    iv_type.setImageResource(com.movhaul.customer.R.drawable.select_truck_type);
-                }
-
-                btn_cancel_job.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Log.e("tag", mv_datas.getDriver_id() + "cancel_Job" + mv_datas.getBooking_id());
-
-                        dg_show_cancel.show();
+                if (ar_job_upcoming.size() > 0) {
+                    lt_top.setVisibility(View.VISIBLE);
+                    mv_datas = ar_job_upcoming.get(0);
+                    Log.e("tag", "pickup: " + mv_datas.getPickup() + mv_datas.getJob_cost());
+                    Log.e("tag", "33size " + ar_job_upcoming.size());
+                    tv_cr_date = (android.widget.TextView) view.findViewById(com.movhaul.customer.R.id.cr_date);
+                    tv_cr_time = (android.widget.TextView) view.findViewById(com.movhaul.customer.R.id.cr_time);
+                    tv_cr_pickup = (android.widget.TextView) view.findViewById(com.movhaul.customer.R.id.cr_pickup);
+                    tv_cr_drop = (android.widget.TextView) view.findViewById(com.movhaul.customer.R.id.cr_drop);
+                    tv_cr_tr_type = (android.widget.TextView) view.findViewById(com.movhaul.customer.R.id.cr_truck_type);
+                    tv_cr_dr_name = (android.widget.TextView) view.findViewById(com.movhaul.customer.R.id.cr_dr_name);
+                    tv_cr_dr_phone = (android.widget.TextView) view.findViewById(com.movhaul.customer.R.id.cr_dr_phone);
+                    tv_cr_job_cost = (android.widget.TextView) view.findViewById(com.movhaul.customer.R.id.cr_job_cost);
+                    tv_cr_job_id = (android.widget.TextView) view.findViewById(com.movhaul.customer.R.id.cr_job_id);
+                    iv_content_prof = (ImageView) view.findViewById(com.movhaul.customer.R.id.imageview_content_profile);
+                    iv_type = (ImageView) view.findViewById(com.movhaul.customer.R.id.imageView5);
+                    btn_cancel_job = (Button) view.findViewById(R.id.btn_canceljob);
 
 
+                    tv_cr_date.setText(mv_datas.getDate());
+                    tv_cr_time.setText(mv_datas.getTime());
+                    tv_cr_pickup.setText(mv_datas.getPickup());
+                    tv_cr_drop.setText(mv_datas.getDrop());
+                    tv_cr_tr_type.setText(mv_datas.getTruck_type());
+                    tv_cr_dr_name.setText(mv_datas.getName());
+                    tv_cr_dr_phone.setText(mv_datas.getDriver_number());
+                    tv_cr_job_cost.setText(mv_datas.getJob_cost());
+                    tv_cr_job_id.setText(mv_datas.getBooking_id());
+
+                    Glide.with(MyTrips.this).load(Config.WEB_URL_IMG + "driver_details/" + mv_datas.getDriver_image()).into(iv_content_prof);
+
+                    if (mv_datas.getVec_type().equals("Bus")) {
+                        iv_type.setImageResource(com.movhaul.customer.R.drawable.bus_type);
+                    } else {
+                        iv_type.setImageResource(com.movhaul.customer.R.drawable.select_truck_type);
                     }
-                });
+                    btn_cancel_job.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Log.e("tag", mv_datas.getDriver_id() + "cancel_Job" + mv_datas.getBooking_id());
+                            dg_show_cancel.show();
+                        }
+                    });
+                } else {
+                /*    tl_indicator.setupWithViewPager(viewPager);
+                    tl_indicator.getTabAt(0).select();
 
+                    snackbar.show();
+                    tv_snack.setText("You don't have any jobs to show.");
+                    viewPager.setCurrentItem(1);*/
+                    lt_top.setVisibility(View.GONE);
+
+                }
 
             } else if (position == 1) {
                 ht_lview = (ListView) view.findViewById(com.movhaul.customer.R.id.lview);
@@ -424,7 +439,7 @@ public class MyTrips extends AppCompatActivity {
                             Log.e("tag", "size " + ar_job_upcoming.size());
                             viewPager.setAdapter(myViewPagerAdapter);
                             viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
-                            tl_indicator.setupWithViewPager(viewPager);
+
                             // tiv.setTabIndicatorFactory(new TabIndicatorView.ViewPagerIndicatorFactory(viewPager));
 
                         } else {

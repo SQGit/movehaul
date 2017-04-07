@@ -6,226 +6,329 @@
     android:orientation="vertical"
     android:paddingTop="@dimen/_5sdp">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:fadeScrollbars="false">
+        android:id="@+id/layout_top"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/_10sdp"
-            android:background="@drawable/white_bg"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/_5sdp"
-            android:paddingRight="@dimen/_3sdp"
-            android:paddingTop="@dimen/_2sdp">
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="start"
-                    android:layout_marginLeft="@dimen/_15sdp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/cr_job_id_txt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="Booking Id"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/_12sdp" />
-
-                    <TextView
-                        android:id="@+id/cr_job_id"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="1234"
-                        android:textColor="@color/redColor"
-                        android:textSize="@dimen/_20sdp" />
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end|center_vertical"
-                    android:gravity="end"
-
-                    android:orientation="horizontal"
-                    android:paddingRight="@dimen/_15sdp">
-
-
-                    <TextView
-                        android:id="@+id/cr_job_cost"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="@dimen/_3sdp"
-                        android:text="150"
-                        android:textColor="@color/redColor"
-                        android:textSize="@dimen/_21sdp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text=" ₦"
-                        android:textColor="@color/redColor"
-                        android:textSize="@dimen/_16sdp" />
-
-                </LinearLayout>
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/imageview_content_profile"
-                    android:layout_width="@dimen/_70sdp"
-                    android:layout_height="@dimen/_70sdp"
-                    android:layout_gravity="center"
-                    android:focusable="false"
-                    android:padding="@dimen/_2sdp"
-                    android:src="@drawable/profile_img" />
-
-
-            </FrameLayout>
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:fadeScrollbars="false">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center">
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/_10sdp"
+                android:background="@drawable/white_bg"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/_5sdp"
+                android:paddingRight="@dimen/_3sdp"
+                android:paddingTop="@dimen/_2sdp">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_2sdp"
-                    android:orientation="horizontal"
-                    android:paddingBottom="@dimen/_5sdp">
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                    <LinearLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/_10sdp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-
-                        android:paddingTop="@dimen/_5sdp">
-
-
-                        <ImageView
-                            android:id="@+id/imageView3l"
-                            android:layout_width="@dimen/_20sdp"
-                            android:layout_height="@dimen/_20sdp"
-                            android:layout_gravity="center"
-                            android:layout_marginRight="@dimen/_2sdp"
-                            android:src="@drawable/date_icon" />
-
-
-                        <TextView
-                            android:id="@+id/cr_date"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:maxLines="1"
-                            android:text="07-10-2016"
-                            android:textColor="@color/textColor"
-                            android:textSize="@dimen/_12sdp" />
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_2sdp"
-                    android:orientation="horizontal"
-                    android:paddingBottom="@dimen/_5sdp"
-                    android:weightSum="2">
-
-                    <LinearLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/_3sdp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:paddingLeft="@dimen/_5sdp"
-                        android:paddingTop="@dimen/_5sdp">
-
-                        <ImageView
-                            android:layout_width="@dimen/_20sdp"
-                            android:layout_height="@dimen/_20sdp"
-                            android:layout_gravity="center"
-                            android:layout_marginRight="@dimen/_1sdp"
-                            android:src="@drawable/time_icon" />
-
-                        <TextView
-                            android:id="@+id/cr_time"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:maxLines="1"
-                            android:text="12:30 PM"
-                            android:textColor="@color/textColor"
-                            android:textSize="@dimen/_12sdp" />
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_6sdp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_2sdp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:padding="@dimen/_2sdp"
-                        android:src="@drawable/driver_name_icon" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/_15sdp"
+                        android:gravity="start"
                         android:orientation="vertical">
 
+                        <TextView
+                            android:id="@+id/cr_job_id_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="Booking Id"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/_12sdp" />
+
+                        <TextView
+                            android:id="@+id/cr_job_id"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="1234"
+                            android:textColor="@color/redColor"
+                            android:textSize="@dimen/_20sdp" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|center_vertical"
+                        android:gravity="end"
+
+                        android:orientation="horizontal"
+                        android:paddingRight="@dimen/_15sdp">
+
+
+                        <TextView
+                            android:id="@+id/cr_job_cost"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/_3sdp"
+                            android:text="150"
+                            android:textColor="@color/redColor"
+                            android:textSize="@dimen/_21sdp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/driver_name"
+                            android:layout_gravity="center"
+                            android:text=" ₦"
+                            android:textColor="@color/redColor"
+                            android:textSize="@dimen/_16sdp" />
+
+                    </LinearLayout>
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imageview_content_profile"
+                        android:layout_width="@dimen/_70sdp"
+                        android:layout_height="@dimen/_70sdp"
+                        android:layout_gravity="center"
+                        android:focusable="false"
+                        android:padding="@dimen/_2sdp"
+                        android:src="@drawable/profile_img" />
+
+
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/_5sdp">
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/_10sdp"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+
+                            android:paddingTop="@dimen/_5sdp">
+
+
+                            <ImageView
+                                android:id="@+id/imageView3l"
+                                android:layout_width="@dimen/_20sdp"
+                                android:layout_height="@dimen/_20sdp"
+                                android:layout_gravity="center"
+                                android:layout_marginRight="@dimen/_2sdp"
+                                android:src="@drawable/date_icon" />
+
+
+                            <TextView
+                                android:id="@+id/cr_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:maxLines="1"
+                                android:text="07-10-2016"
+                                android:textColor="@color/textColor"
+                                android:textSize="@dimen/_12sdp" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:weightSum="2">
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/_3sdp"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:paddingLeft="@dimen/_5sdp"
+                            android:paddingTop="@dimen/_5sdp">
+
+                            <ImageView
+                                android:layout_width="@dimen/_20sdp"
+                                android:layout_height="@dimen/_20sdp"
+                                android:layout_gravity="center"
+                                android:layout_marginRight="@dimen/_1sdp"
+                                android:src="@drawable/time_icon" />
+
+                            <TextView
+                                android:id="@+id/cr_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:maxLines="1"
+                                android:text="12:30 PM"
+                                android:textColor="@color/textColor"
+                                android:textSize="@dimen/_12sdp" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_6sdp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:padding="@dimen/_2sdp"
+                            android:src="@drawable/driver_name_icon" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/driver_name"
+                                android:textColor="@color/redColor"
+                                android:textSize="@dimen/_11sdp" />
+
+                            <TextView
+                                android:id="@+id/cr_dr_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/_5sdp"
+                                android:inputType="textCapCharacters"
+                                android:maxLines="2"
+                                android:text="tom"
+                                android:textColor="@color/textColor"
+                                android:textSize="@dimen/_12sdp" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:padding="@dimen/_2sdp"
+                            android:src="@drawable/driver_phone_icon" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/driver_ph_no"
+                                android:textColor="@color/redColor"
+                                android:textSize="@dimen/_11sdp" />
+
+                            <TextView
+                                android:id="@+id/cr_dr_phone"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/_5sdp"
+                                android:maxLines="2"
+                                android:text="+140 555 8965"
+                                android:textColor="@color/textColor"
+                                android:textSize="@dimen/_12sdp" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.70dp"
+                    android:layout_marginBottom="@dimen/_3sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:background="@color/mgrey" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:paddingRight="@dimen/_20sdp"
+                    android:paddingTop="@dimen/_5sdp">
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="@dimen/_5sdp"
+                        android:src="@drawable/delivery_addr" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/_10sdp">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/pickupew"
                             android:textColor="@color/redColor"
                             android:textSize="@dimen/_11sdp" />
 
                         <TextView
-                            android:id="@+id/cr_dr_name"
+                            android:id="@+id/cr_pickup"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/_5sdp"
-                            android:inputType="textCapCharacters"
-                            android:maxLines="2"
-                            android:text="tom"
+                            android:maxLines="1"
+                            android:text="#6, North Avenue, Abuja, Nigeria"
                             android:textColor="@color/textColor"
                             android:textSize="@dimen/_12sdp" />
                     </LinearLayout>
@@ -234,283 +337,198 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_2sdp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:paddingRight="@dimen/_20sdp">
 
                     <ImageView
+                        android:id="@+id/imageVdiew2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:padding="@dimen/_2sdp"
-                        android:src="@drawable/driver_phone_icon" />
+                        android:padding="@dimen/_5sdp"
+                        android:src="@drawable/delivery_addr"
+                        android:visibility="invisible" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/_10sdp">
 
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/driver_ph_no"
+                            android:text="@string/drops"
                             android:textColor="@color/redColor"
                             android:textSize="@dimen/_11sdp" />
 
                         <TextView
-                            android:id="@+id/cr_dr_phone"
+                            android:id="@+id/cr_drop"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/_5sdp"
-                            android:maxLines="2"
-                            android:text="+140 555 8965"
+                            android:maxLines="1"
+                            android:text="#6, North Avenue, Abuja, Nigeria"
                             android:textColor="@color/textColor"
                             android:textSize="@dimen/_12sdp" />
                     </LinearLayout>
 
 
                 </LinearLayout>
-            </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.70dp"
-                android:layout_marginBottom="@dimen/_3sdp"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_3sdp"
-                android:background="@color/mgrey" />
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/_5sdp"
-                android:paddingRight="@dimen/_20sdp"
-                android:paddingTop="@dimen/_5sdp">
-
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:padding="@dimen/_5sdp"
-                    android:src="@drawable/delivery_addr" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.70dp"
+                    android:layout_marginBottom="@dimen/_3sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:background="@color/mgrey" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:paddingLeft="@dimen/_10sdp">
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/pickupew"
-                        android:textColor="@color/redColor"
-                        android:textSize="@dimen/_11sdp" />
-
-                    <TextView
-                        android:id="@+id/cr_pickup"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_5sdp"
-                        android:maxLines="1"
-                        android:text="#6, North Avenue, Abuja, Nigeria"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/_12sdp" />
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/_5sdp"
-                android:paddingRight="@dimen/_20sdp">
-
-                <ImageView
-                    android:id="@+id/imageVdiew2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:padding="@dimen/_5sdp"
-                    android:src="@drawable/delivery_addr"
-                    android:visibility="invisible" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:paddingLeft="@dimen/_10sdp">
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/drops"
-                        android:textColor="@color/redColor"
-                        android:textSize="@dimen/_11sdp" />
-
-                    <TextView
-                        android:id="@+id/cr_drop"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_5sdp"
-                        android:maxLines="1"
-                        android:text="#6, North Avenue, Abuja, Nigeria"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/_12sdp" />
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.70dp"
-                android:layout_marginBottom="@dimen/_3sdp"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_3sdp"
-                android:background="@color/mgrey" />
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/_5sdp"
-                android:paddingRight="@dimen/_20sdp"
-                android:paddingTop="@dimen/_5sdp">
-
-                <ImageView
-                    android:id="@+id/imageView5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:padding="@dimen/_5sdp"
-                    android:src="@drawable/select_truck_type" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:paddingLeft="@dimen/_10sdp">
-
-
-                    <TextView
-                        android:id="@+id/cr_delivery_txt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/vehicle_typeas"
-                        android:textColor="@color/redColor"
-                        android:textSize="@dimen/_11sdp" />
-
-                    <TextView
-                        android:id="@+id/cr_truck_type"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_5sdp"
-                        android:maxLines="1"
-                        android:text="Service vehicle"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/_12sdp" />
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:paddingRight="@dimen/_20sdp"
+                    android:paddingTop="@dimen/_5sdp">
 
                     <ImageView
+                        android:id="@+id/imageView5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:padding="@dimen/_2sdp"
+                        android:padding="@dimen/_5sdp"
                         android:src="@drawable/select_truck_type" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/_10sdp">
 
 
                         <TextView
+                            android:id="@+id/cr_delivery_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/vehicle_nods"
+                            android:text="@string/vehicle_typeas"
                             android:textColor="@color/redColor"
                             android:textSize="@dimen/_11sdp" />
 
                         <TextView
-                            android:id="@+id/cr_dr_reg"
+                            android:id="@+id/cr_truck_type"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
                             android:layout_marginBottom="@dimen/_5sdp"
-                            android:maxLines="2"
-                            android:text="KJA-193AA"
+                            android:maxLines="1"
+                            android:text="Service vehicle"
                             android:textColor="@color/textColor"
                             android:textSize="@dimen/_12sdp" />
                     </LinearLayout>
 
 
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:padding="@dimen/_2sdp"
+                            android:src="@drawable/select_truck_type" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/vehicle_nods"
+                                android:textColor="@color/redColor"
+                                android:textSize="@dimen/_11sdp" />
+
+                            <TextView
+                                android:id="@+id/cr_dr_reg"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="@dimen/_5sdp"
+                                android:maxLines="2"
+                                android:text="KJA-193AA"
+                                android:textColor="@color/textColor"
+                                android:textSize="@dimen/_12sdp" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
                 </LinearLayout>
-
-
             </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:gravity="center"
-        android:paddingLeft="@dimen/_25sdp"
-        android:paddingRight="@dimen/_25sdp">
+        </ScrollView>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center">
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:gravity="center"
+            android:paddingLeft="@dimen/_25sdp"
+            android:paddingRight="@dimen/_25sdp">
 
-            <com.rey.material.widget.Button
-                android:id="@+id/btn_canceljob"
-                style="@style/Material.Drawable.Ripple.Touch"
-                android:layout_width="fill_parent"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/_1sdp"
                 android:layout_weight="1"
-                android:background="@color/redColor"
-                android:gravity="center"
-                android:padding="@dimen/_7sdp"
-                android:text="@string/cancel_job"
-                android:textAllCaps="false"
-                android:textColor="#FFFFFF"
-                android:textSize="@dimen/_19sdp"
-                android:textStyle="bold" />
+                android:gravity="center">
+
+                <com.rey.material.widget.Button
+                    android:id="@+id/btn_canceljob"
+                    style="@style/Material.Drawable.Ripple.Touch"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/_1sdp"
+                    android:layout_weight="1"
+                    android:background="@color/redColor"
+                    android:gravity="center"
+                    android:padding="@dimen/_7sdp"
+                    android:text="@string/cancel_job"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="@dimen/_19sdp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
 
         </LinearLayout>
 
-
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/cr_dtxt"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:text="No Jobs"
+        android:gravity="center"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/_12sdp" />
 
 
 </LinearLayout>
