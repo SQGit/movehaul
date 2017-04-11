@@ -86,6 +86,12 @@ public class Forgot_Mobile extends Activity {
                 } else {
                     edtxt_email.setError("Enter a valid email address!");
                     edtxt_email.requestFocus();
+
+                    InputMethodManager inputMethodManager =
+                            (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.toggleSoftInputFromWindow(
+                            edtxt_email.getApplicationWindowToken(),
+                            InputMethodManager.SHOW_FORCED, 0);
                 }
             }
         });

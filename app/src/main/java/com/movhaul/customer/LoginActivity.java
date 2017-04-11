@@ -226,7 +226,7 @@ public class LoginActivity extends Activity {
                     if (status.equals("true")) {
                         Intent i = new Intent(LoginActivity.this, LoginOtpActivity.class);
                         i.putExtra("for", "phone");
-                        i.putExtra("data", str_mobile);
+                        i.putExtra("data", str_mobile_prefix+str_mobile);
                         startActivity(i);
                         finish();
                     } else if (status.equals("false")) {
@@ -238,7 +238,7 @@ public class LoginActivity extends Activity {
 
                             Intent i = new Intent(LoginActivity.this, LoginOtpActivity.class);
                             i.putExtra("for", "phone");
-                            i.putExtra("data", str_mobile);
+                            i.putExtra("data", str_mobile_prefix+str_mobile);
                             startActivity(i);
                             finish();
                         }

@@ -458,10 +458,15 @@ public class SplashActivity extends Activity {
                         @Override
                         public void run() {
 
-                            Intent isd = new Intent(SplashActivity.this, DashboardNavigation.class);
-                            Bundle bndlanimation =
-                                    ActivityOptions.makeCustomAnimation(getApplicationContext(), com.movhaul.customer.R.anim.anim1, com.movhaul.customer.R.anim.anim2).toBundle();
-                            startActivity(isd, bndlanimation);
+                            try {
+                                Intent isd = new Intent(SplashActivity.this, DashboardNavigation.class);
+                                Bundle bndlanimation =
+                                        ActivityOptions.makeCustomAnimation(getApplicationContext(), com.movhaul.customer.R.anim.anim1, com.movhaul.customer.R.anim.anim2).toBundle();
+                                startActivity(isd, bndlanimation);
+                            }
+                            catch (Exception e){
+                                Log.e("tag","err"+e.toString());
+                            }
 
 
                         }

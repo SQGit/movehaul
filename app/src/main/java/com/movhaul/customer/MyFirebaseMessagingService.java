@@ -41,19 +41,28 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         // TODO(developer): Handle FCM messages here.
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
-        Log.e(TAG, "From: " + remoteMessage.getFrom());
+        //Log.e(TAG, "From: " + remoteMessage.getFrom());
 
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
             Log.e(TAG, "Message data payload: " + remoteMessage.getData());
         }
 
+
+
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
             Log.e(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
         }
 
-        Log.e("tag","ef::"+remoteMessage.getNotification().getBody());
+        //Log.e("tag","body::"+remoteMessage.getNotification().getBody());
+        Log.e("tag","title::"+remoteMessage.getNotification().getTitle());
+        Log.e("tag","string::"+remoteMessage.getNotification().toString());
+
+        Log.e(TAG, "Data:str " + remoteMessage.toString());
+        Log.e(TAG, "Data:typ " + remoteMessage.getMessageType());
+        Log.e(TAG, "Data:gda " + remoteMessage.getData().toString());
+        Log.e(TAG, "Data:collky " + remoteMessage.getCollapseKey());
 
         /*if (remoteMessage.getData().size() > 0) {
             Log.e(TAG, "Data Payload: " + remoteMessage.getData().toString());
@@ -140,48 +149,95 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
 
-
-
     private void send_notification(String data) {
         Log.e("tag","data: "+ data);
 
-        String name = null,title = null,body = null;
+        String name = null,title = null,body = null,message = null;
         try {
             JSONObject jsonObject = new JSONObject(data);
 
            // name = jsonObject.getString("customer_name");
-            title = jsonObject.getString("title");
-            body = jsonObject.getString("body");
 
-            Log.e("tag","til"+title);
-            Log.e("tag","body"+body);
+            if(jsonObject.has("title")) {
+                title = jsonObject.getString("title");
+                body = jsonObject.getString("body");
+
+                Log.e("tag", "msg" + jsonObject.toString());
+                Log.e("tag", "til" + title);
+                Log.e("tag", "body" + body);
+            }
+            else{
+                message = jsonObject.toString();
+                Log.e("tag", "msg" + message);
+            }
 
 
         } catch (Exception e) {
             Log.e("InputStream", e.getLocalizedMessage());
+            message = data;
+
         }
 
 
-        Intent resultIntent = new Intent(this, MyJobs.class);
-        resultIntent.setAction(Intent.ACTION_MAIN);
-        resultIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-        PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,
-                resultIntent, PendingIntent.FLAG_ONE_SHOT);
-        NotificationCompat.Builder mNotifyBuilder;
-        NotificationManager mNotificationManager;
-        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotifyBuilder = new NotificationCompat.Builder(this)
-                .setContentTitle(title)
-                .setContentText(body)
-                .setSmallIcon(R.drawable.truck_icon);
-        mNotifyBuilder.setContentIntent(resultPendingIntent);
-        int defaults = 0;
-        defaults = defaults | Notification.DEFAULT_LIGHTS;
-        defaults = defaults | Notification.DEFAULT_VIBRATE;
-        defaults = defaults | Notification.DEFAULT_SOUND;
-        mNotifyBuilder.setDefaults(defaults);
-        mNotifyBuilder.setAutoCancel(true);
-        mNotificationManager.notify(0, mNotifyBuilder.build());
+
+
+        if(message== null) {
+
+            Intent resultIntent = new Intent(this, MyJobs.class);
+            resultIntent.setAction(Intent.ACTION_MAIN);
+            resultIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+            PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,
+                    resultIntent, PendingIntent.FLAG_ONE_SHOT);
+            NotificationCompat.Builder mNotifyBuilder;
+            NotificationManager mNotificationManager;
+            mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+            mNotifyBuilder = new NotificationCompat.Builder(this)
+                    .setContentTitle(title)
+                    .setContentText(body)
+                    .setSmallIcon(R.drawable.truck_icon);
+
+            mNotifyBuilder.setContentIntent(resultPendingIntent);
+            int defaults = 0;
+            defaults = defaults | Notification.DEFAULT_LIGHTS;
+            defaults = defaults | Notification.DEFAULT_VIBRATE;
+            defaults = defaults | Notification.DEFAULT_SOUND;
+            mNotifyBuilder.setDefaults(defaults);
+            mNotifyBuilder.setAutoCancel(true);
+            mNotificationManager.notify(0, mNotifyBuilder.build());
+        }
+        else{
+
+           // Intent resultIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + "com.movhaul.customer"));
+           // resultIntent.setAction(Intent.ACTION_MAIN);
+           // resultIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+
+
+            Intent resultIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.movhaul.customer"));
+            PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,
+                    resultIntent, PendingIntent.FLAG_ONE_SHOT);
+
+            NotificationCompat.Builder mNotifyBuilder;
+            NotificationManager mNotificationManager;
+            mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+            mNotifyBuilder = new NotificationCompat.Builder(this)
+                    .setContentTitle("Movhaul")
+                    .setContentText(message)
+                    .setSmallIcon(R.drawable.truck_icon);
+
+            mNotifyBuilder.setContentIntent(resultPendingIntent);
+            int defaults = 0;
+            defaults = defaults | Notification.DEFAULT_LIGHTS;
+            defaults = defaults | Notification.DEFAULT_VIBRATE;
+            defaults = defaults | Notification.DEFAULT_SOUND;
+            mNotifyBuilder.setDefaults(defaults);
+            mNotifyBuilder.setAutoCancel(true);
+            mNotificationManager.notify(0, mNotifyBuilder.build());
+        }
+
+
+
     }
 
 

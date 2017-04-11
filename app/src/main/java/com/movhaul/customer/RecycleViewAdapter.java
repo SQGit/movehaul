@@ -62,6 +62,10 @@ public class RecycleViewAdapter extends
     @Override
     public void onBindViewHolder(final MyViewHolder viewHolder, final int position) {
 
+
+        FontsManager.initFormAssets(activity, "fonts/lato.ttf");       //initialization
+        FontsManager.changeFonts(activity);
+
         mv_datas = ar_job_list.get(position);
         int ko = Integer.valueOf(mv_datas.getDriver_count());
 
@@ -178,6 +182,8 @@ public class RecycleViewAdapter extends
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.job_list_adapter, parent, false);
 
+        tf = Typeface.createFromAsset(activity.getAssets(), "fonts/lato.ttf");
+
         FontsManager.initFormAssets(activity, "fonts/lato.ttf");
         FontsManager.changeFonts(activity);
 
@@ -206,15 +212,31 @@ public class RecycleViewAdapter extends
         public MyViewHolder(View view) {
             super(view);
             tv_pickup = (com.rey.material.widget.TextView) view.findViewById(R.id.textview_title_pickup);
+            tv_pick_txt = (com.rey.material.widget.TextView) view.findViewById(R.id.textview_book_from_txt);
             tv_drop = (com.rey.material.widget.TextView) view.findViewById(R.id.textview_title_drop);
-            tv_date = (com.rey.material.widget.TextView) view.findViewById(R.id.textview_title_date);
-            tv_pick_txt = (com.rey.material.widget.TextView) view.findViewById(R.id.textview_title_date);
             tv_drop_txt = (com.rey.material.widget.TextView) view.findViewById(R.id.textview_book_to_txt);
-            tv_date_txt = (com.rey.material.widget.TextView) view.findViewById(R.id.textview_title_date);
+            tv_date = (com.rey.material.widget.TextView) view.findViewById(R.id.textview_title_date);
+            tv_date_txt = (com.rey.material.widget.TextView) view.findViewById(R.id.textview_date);
             tv_bid_count = (com.rey.material.widget.TextView) view.findViewById(R.id.textview_bidding_count);
             tv_bid_count_txt = (com.rey.material.widget.TextView) view.findViewById(R.id.textview_bidding_count_txt);
             tv_book = (com.rey.material.widget.TextView) view.findViewById(R.id.text_book);
             tv_delete = (com.rey.material.widget.TextView) view.findViewById(R.id.text_delete);
+
+
+            tv_pickup.setTypeface(tf);
+            tv_drop.setTypeface(tf);
+            tv_date.setTypeface(tf);
+            tv_pick_txt.setTypeface(tf);
+            tv_drop_txt.setTypeface(tf);
+            tv_date_txt.setTypeface(tf);
+            tv_bid_count_txt.setTypeface(tf);
+            tv_book.setTypeface(tf);
+            tv_delete.setTypeface(tf);
+            tv_bid_count.setTypeface(tf);
+
+
+
+
 
 
             //hoverLayout = (BlurLayout) view.findViewById(R.id.blur_layout);

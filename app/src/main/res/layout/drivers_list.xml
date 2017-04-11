@@ -56,19 +56,11 @@
             </LinearLayout>
         </LinearLayout>
 
-<!--
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-
-            android:src="@mipmap/ic_refresh_ico" />
--->
         <com.rey.material.widget.LinearLayout
             android:id="@+id/layout_refresh"
             style="@style/Material.Drawable.Ripple.Touch"
             android:layout_width="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="bottom"
             android:layout_height="wrap_content">
 
             <ImageView
@@ -83,7 +75,7 @@
             android:id="@+id/imgview_filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="bottom"
             android:src="@mipmap/ic_filter_ico" />
 
     </LinearLayout>

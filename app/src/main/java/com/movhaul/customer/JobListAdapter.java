@@ -20,6 +20,7 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.daimajia.androidviewhover.BlurLayout;
 import com.rey.material.widget.TextView;
+import com.sloop.fonts.FontsManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -76,7 +77,13 @@ public class JobListAdapter extends ArrayAdapter<MV_Datas> {
     public View getView(final int position, View convertView, ViewGroup parent) {
 
 
+
+
         ViewHolder viewHolder;
+
+        FontsManager.initFormAssets(activity, "fonts/lato.ttf");       //initialization
+        FontsManager.changeFonts(activity);
+
         tf = Typeface.createFromAsset(activity.getAssets(), "fonts/lato.ttf");
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         editor = sharedPreferences.edit();
@@ -99,7 +106,7 @@ public class JobListAdapter extends ArrayAdapter<MV_Datas> {
             viewHolder.tv_drop = (com.rey.material.widget.TextView) convertView.findViewById(R.id.textview_title_drop);
             viewHolder.tv_date = (com.rey.material.widget.TextView) convertView.findViewById(R.id.textview_title_date);
             viewHolder.tv_pick_txt = (com.rey.material.widget.TextView) convertView.findViewById(R.id.textview_title_date);
-            viewHolder.tv_drop_txt = (com.rey.material.widget.TextView) convertView.findViewById(R.id.textview_book_to_txt);
+
             viewHolder.tv_date_txt = (com.rey.material.widget.TextView) convertView.findViewById(R.id.textview_title_date);
             viewHolder.tv_bid_count = (com.rey.material.widget.TextView) convertView.findViewById(R.id.textview_bidding_count);
             viewHolder.tv_bid_count_txt = (com.rey.material.widget.TextView) convertView.findViewById(R.id.textview_bidding_count_txt);

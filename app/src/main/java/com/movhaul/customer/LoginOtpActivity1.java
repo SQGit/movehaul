@@ -536,7 +536,6 @@ public class LoginOtpActivity1 extends Activity implements View.OnFocusChangeLis
         }
 
     }
-
     public class resend_otp extends AsyncTask<String, Void, String> {
 
 
