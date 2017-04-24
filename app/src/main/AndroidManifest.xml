@@ -35,7 +35,7 @@
 
 
         <activity
-            android:name="com.movhaul.customer.SplashActivity"
+            android:name="com.movhaul.customer.Paystack"
             android:screenOrientation="sensorPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -147,11 +147,11 @@
             </intent-filter>
         </service>
 
+        <meta-data
+            android:name="co.paystack.android.PublicKey"
+            android:value="pk_test_7a2b290173743af455823f46d4d1f63f4377cce4"/>
 
 
-
-
-        />
 
     </application>
 

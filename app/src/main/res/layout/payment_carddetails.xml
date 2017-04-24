@@ -187,9 +187,10 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:hint="Expiry Date"
+                    android:hint="Expiry(MM/YYYY)"
                     android:inputType="date"
                     android:maxLines="1"
+                    android:layout_weight="1"
                     android:paddingTop="@dimen/_10sdp"
                     android:textColor="#000000"
                     android:textSize="@dimen/_15sdp" />
@@ -225,6 +226,7 @@
                     android:hint="CVV"
                     android:inputType="number"
                     android:maxLines="1"
+                    android:maxLength="3"
                     android:paddingTop="@dimen/_10sdp"
                     android:textColor="#000000"
                     android:textSize="@dimen/_15sdp" />
@@ -253,7 +255,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_20sdp"
             android:background="@null"
-            android:hint="Name on the Card"
+            android:hint="Name on the Card (Optional)"
             android:inputType="text"
             android:maxLines="1"
             android:paddingTop="@dimen/_10sdp"
