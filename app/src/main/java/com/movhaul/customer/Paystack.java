@@ -64,10 +64,10 @@ public class Paystack extends Activity {
             @Override
             public void onClick(View v) {
 
-                String cardNum = "5066666666666666666";
+                String cardNum = "4123450131001381";
 
                 card = new Card.Builder(cardNum, 0, 0, "").build();
-                card.setCvc("666");
+                card.setCvc("883");
                 card.setExpiryMonth(11);
                 card.setExpiryYear(2025);
 

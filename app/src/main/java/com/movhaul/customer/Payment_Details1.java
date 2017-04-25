@@ -62,8 +62,6 @@ public class Payment_Details1 extends Activity {
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
-
-
             @Override
 
             public void onCheckedChanged(RadioGroup group, int checkedId) {

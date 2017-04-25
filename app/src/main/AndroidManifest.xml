@@ -35,7 +35,7 @@
 
 
         <activity
-            android:name="com.movhaul.customer.Paystack"
+            android:name="com.movhaul.customer.Payment_Details"
             android:screenOrientation="sensorPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -96,10 +96,10 @@
             android:name="com.movhaul.customer.Tracking"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-        <activity
+        <!--<activity
             android:name="com.movhaul.customer.Payment_Details"
             android:screenOrientation="sensorPortrait"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>-->
         <activity
             android:name="com.movhaul.customer.Payment_Card_Details"
             android:screenOrientation="sensorPortrait"

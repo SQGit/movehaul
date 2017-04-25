@@ -52,7 +52,7 @@ public class Payment_Card_Details extends Activity {
         setContentView(com.movhaul.customer.R.layout.payment_carddetails);
         FontsManager.initFormAssets(this, "fonts/lato.ttf");       //initialization
         FontsManager.changeFonts(this);
-        btn_paynow = (Button) findViewById(com.movhaul.customer.R.id.btn_paynow);
+        btn_paynow = (Button) findViewById(com.movhaul.customer.R.id.button_cardpay);
         btn_back = (LinearLayout) findViewById(com.movhaul.customer.R.id.layout_back);
         flt_exp_date = (TextInputLayout) findViewById(com.movhaul.customer.R.id.float_exp_date);
         flt_cvv = (TextInputLayout) findViewById(com.movhaul.customer.R.id.float_cvv);
@@ -103,6 +103,8 @@ public class Payment_Card_Details extends Activity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 Intent i = new Intent(Payment_Card_Details.this, Payment_Details.class);
                 startActivity(i);
                 finish();
