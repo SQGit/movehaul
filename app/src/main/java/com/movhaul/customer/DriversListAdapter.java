@@ -26,7 +26,6 @@ import com.bumptech.glide.Glide;
 import com.ramotion.foldingcell.FoldingCell;
 import com.rey.material.widget.Button;
 import com.sloop.fonts.FontsManager;
-import com.systemspecs.remita.remitapaymentgateway.RemitaMainActivity;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -37,6 +36,7 @@ import java.util.HashSet;
  */
 public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
 
+    private static final int REQUEST_CODE_PAYMENT = 545;
     Context context;
     ArrayList<MV_Datas> ar_drv_list;
     Activity act;
@@ -49,19 +49,18 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
     Typeface type;
     ImageView iv_driver_image, iv_back, iv_front;
     ViewPager viewPager;
+    com.rey.material.widget.TextView tv_title_truck, tv_title_truck_txt, tv_title_driver_name, tv_title_bidding, tv_content_bidding, tv_content_driver_name, tv_content_damage_control, tv_content_truck, tv_title_driver_name_txt, tv_content_driver_name_txt, tv_content_damage_control_txt, tv_content_truck_txt, tv_content_job_comp, tv_content_break_hist, tv_content_job_completed, tv_content_break_history;
+    MV_Datas mv_datas;
+    String tr_front, tr_side, tr_back;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    String bidding;
+    int doid;
+    Typeface tf;
     private HashSet<Integer> unfoldedIndexes = new HashSet<>();
     private View.OnClickListener defaultRequestBtnClickListener;
     private int[] layouts;
     private MyViewPagerAdapter myViewPagerAdapter;
-    com.rey.material.widget.TextView tv_title_truck,tv_title_truck_txt,tv_title_driver_name,tv_title_bidding,tv_content_bidding,tv_content_driver_name,tv_content_damage_control,tv_content_truck,tv_title_driver_name_txt,tv_content_driver_name_txt,tv_content_damage_control_txt,tv_content_truck_txt,tv_content_job_comp,tv_content_break_hist,tv_content_job_completed,tv_content_break_history;
-    MV_Datas mv_datas;
-    String tr_front,tr_side,tr_back;
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
-    String bidding;
-    int doid ;
-    Typeface tf;
-    private static final int REQUEST_CODE_PAYMENT = 545;
 
     public DriversListAdapter(Context context, Activity acti, ArrayList<MV_Datas> objects, int ss) {
         super(context, 0, objects);
@@ -78,7 +77,7 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
     }
 
     @Override
-    public View getView(int position, final View convertView, ViewGroup parent) {
+    public View getView(final int position, final View convertView, ViewGroup parent) {
         // get item for selected view
         //Item item = getItem(position);
         // if cell is exists - reuse it, if not - create the new one from resource
@@ -135,19 +134,17 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
             cell.fold(true);
         }
 
-        if(doid == 0){
+        if (doid == 0) {
             layouts = new int[]{
                     com.movhaul.customer.R.layout.truck_front,
                     com.movhaul.customer.R.layout.truck_back,};
-        }
-        else {
+        } else {
 
             layouts = new int[]{
                     com.movhaul.customer.R.layout.truck_front,
                     com.movhaul.customer.R.layout.truck_back,
                     com.movhaul.customer.R.layout.truck_side};
         }
-
 
 
         RatingBar ratingBar = (RatingBar) cell.findViewById(com.movhaul.customer.R.id.ratingBsdar);
@@ -173,8 +170,6 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
                 context.getResources().getColor(com.movhaul.customer.R.color.gold));
 
 
-
-
         tv_title_bidding = (com.rey.material.widget.TextView) cell.findViewById(com.movhaul.customer.R.id.textview_title_bidding);
         tv_title_truck = (com.rey.material.widget.TextView) cell.findViewById(com.movhaul.customer.R.id.textview_title_truck_type);
         tv_title_driver_name = (com.rey.material.widget.TextView) cell.findViewById(com.movhaul.customer.R.id.textview_title_driver_name);
@@ -187,13 +182,11 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
         tv_title_truck_txt.setTypeface(tf);
         tv_title_driver_name_txt.setTypeface(tf);
 
-        if(doid == 0){
+        if (doid == 0) {
             tv_title_truck_txt.setText("Bus");
-        }
-        else{
+        } else {
             tv_title_truck_txt.setText("Truck");
         }
-
 
 
         tv_content_bidding = (com.rey.material.widget.TextView) cell.findViewById(com.movhaul.customer.R.id.textview_content_bidding);
@@ -236,22 +229,19 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
 
 
         bidding = mv_datas.getBidding();
-        Log.e("tag","ss: "+mv_datas.getBidding());
+        Log.e("tag", "ss: " + mv_datas.getBidding());
 
-        tv_title_bidding.setText(bidding+" ₦");
+        tv_title_bidding.setText(bidding + " ₦");
         tv_title_truck.setText(mv_datas.getTruck_type());
         tv_title_driver_name.setText(mv_datas.getName());
 
 
-
-
-        tv_content_bidding.setText(bidding+" ₦");
+        tv_content_bidding.setText(bidding + " ₦");
         tv_content_truck.setText(mv_datas.getTruck_type());
         tv_content_driver_name.setText(mv_datas.getName());
         tv_content_damage_control.setText(mv_datas.getDamage_control());
 
-        Glide.with(act).load(Config.WEB_URL_IMG+"driver_details/"+mv_datas.getDriver_image()).into(iv_driver_image);
-
+        Glide.with(act).load(Config.WEB_URL_IMG + "driver_details/" + mv_datas.getDriver_image()).into(iv_driver_image);
 
 
         iv_driver_image.setOnClickListener(new View.OnClickListener() {
@@ -261,16 +251,14 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
                 dialog2.show();
 
 
-
-                if(doid ==0) {
+                if (doid == 0) {
                     tr_front = mv_datas.getTruck_front();
                     tr_back = mv_datas.getTruck_back();
-                    Log.e("tag","bb:|+"+tr_back);
-                }
-                else{
+                    Log.e("tag", "bb:|+" + tr_back);
+                } else {
                     tr_front = mv_datas.getTruck_front();
                     tr_back = mv_datas.getTruck_back();
-                    tr_side  = mv_datas.getTruck_side();
+                    tr_side = mv_datas.getTruck_side();
                 }
 
 
@@ -283,11 +271,27 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog1.show();
+                //  dialog1.show();
+
+                mv_datas = ar_drv_list.get(position);
+
+
+
+
+                editor.putString("payment_amount", bidding);
+                editor.putString("booking_id", mv_datas.getBooking_id());
+                editor.putString("driver_id", mv_datas.getDriver_id());
+                editor.putString("bidding_id", mv_datas.getBidding_id());
+                editor.putString("book_for","truck");
+                editor.apply();
+
+
+                Intent i = new Intent(DriversListAdapter.this.getContext(), Payment_Details.class);
+                getContext().startActivity(i);
+
+
             }
         });
-
-
 
 
         dialog2 = new Dialog(DriversListAdapter.this.getContext());
@@ -308,14 +312,13 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
             @Override
             public void onClick(View view) {
 
-                if(doid ==0) {
+                if (doid == 0) {
                     if (viewPager.getCurrentItem() == 0) {
                         viewPager.setCurrentItem(1);
-                    }  else {
+                    } else {
                         viewPager.setCurrentItem(0);
                     }
-                }
-                else{
+                } else {
                     if (viewPager.getCurrentItem() == 0) {
                         viewPager.setCurrentItem(2);
                     } else if (viewPager.getCurrentItem() == 1) {
@@ -332,14 +335,13 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
             @Override
             public void onClick(View view) {
 
-                if(doid ==0) {
+                if (doid == 0) {
                     if (viewPager.getCurrentItem() == 0) {
                         viewPager.setCurrentItem(1);
-                    }  else {
+                    } else {
                         viewPager.setCurrentItem(0);
                     }
-                }
-                else{
+                } else {
                     if (viewPager.getCurrentItem() == 0) {
                         viewPager.setCurrentItem(1);
                     } else if (viewPager.getCurrentItem() == 1) {
@@ -386,25 +388,28 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
             public void onClick(View view) {
                 dialog1.dismiss();
 
-               mv_datas.getBooking_id();
+                mv_datas.getBooking_id();
                 mv_datas.getDriver_id();
 
-                editor.putString("payment_amount",bidding);
-                editor.putString("booking_id",mv_datas.getBooking_id());
-                editor.putString("driver_id",mv_datas.getDriver_id());
-                editor.putString("bidding_id",mv_datas.getBidding_id());
-                editor.commit();
-/*
+                editor.putString("payment_amount", bidding);
+                editor.putString("booking_id", mv_datas.getBooking_id());
+                editor.putString("driver_id", mv_datas.getDriver_id());
+                editor.putString("bidding_id", mv_datas.getBidding_id());
+                editor.apply();
+
+
                 Intent i = new Intent(DriversListAdapter.this.getContext(), Payment_Details.class);
-                getContext().startActivity(i);*/
+                getContext().startActivity(i);
 
 
-                Intent intent = new Intent(DriversListAdapter.this.getContext(), RemitaMainActivity.class);
+
+
+            /*    Intent intent = new Intent(DriversListAdapter.this.getContext(), RemitaMainActivity.class);
                 intent.putExtra("amount", bidding);
                 intent.putExtra("testMode", true);
                 intent.putExtra("apiKey", "U1lTUC4xNUhPMTIkMTIzLjR8U1lTUA==");
                 intent.putExtra("txnToken", "55316C54554334784E5568504D54496B4D54497A4C6A523855316C5455413D3D7C3932333737633266613035313135306337363534386636376266623131303165383831366464343834666234363064653062343731663538643461323835303537333638653232313135363366383334666337613166333265333336653834626539656566393465396363356131363739353463646239333434363164313732");
-                ((Activity) context).startActivityForResult(intent, REQUEST_CODE_PAYMENT);
+                ((Activity) context).startActivityForResult(intent, REQUEST_CODE_PAYMENT);*/
                 //getContext().startActivityForResult(intent, REQUEST_CODE_PAYMENT);
 
 
@@ -413,15 +418,13 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
         });
 
 
-
         return cell;
 
     }
 
-    public  void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.e("MyAdapter", "onActivityResult");
     }
-
 
 
     // simple methods for register cell state changes
@@ -468,7 +471,7 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
             View view = layoutInflater.inflate(layouts[position], container, false);
             container.addView(view);
 
-            if(doid ==1) {
+            if (doid == 1) {
                 if (position == 0) {
                     ImageView iv_trk = (ImageView) view.findViewById(com.movhaul.customer.R.id.image);
                     Glide.with(act).load(Config.WEB_URL_IMG + "vehicle_details/" + tr_front).into(iv_trk);
@@ -479,13 +482,12 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
                     ImageView iv_trk = (ImageView) view.findViewById(com.movhaul.customer.R.id.image);
                     Glide.with(act).load(Config.WEB_URL_IMG + "vehicle_details/" + tr_back).into(iv_trk);
                 }
-            }
-            else{
+            } else {
 
                 if (position == 0) {
                     ImageView iv_trk = (ImageView) view.findViewById(com.movhaul.customer.R.id.image);
                     Glide.with(act).load(Config.WEB_URL_IMG + "vehicle_details/" + tr_front).into(iv_trk);
-                }  else {
+                } else {
                     ImageView iv_trk = (ImageView) view.findViewById(com.movhaul.customer.R.id.image);
                     Glide.with(act).load(Config.WEB_URL_IMG + "vehicle_details/" + tr_back).into(iv_trk);
                 }
@@ -512,8 +514,6 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
             View view = (View) object;
             container.removeView(view);
         }
-
-
 
 
     }

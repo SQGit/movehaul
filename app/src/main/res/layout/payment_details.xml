@@ -5,6 +5,17 @@
     android:background="@drawable/bg"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:gravity="top">
+
+        <include
+            layout="@layout/action_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></include>
+    </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -16,17 +27,7 @@
             android:id="@+id/payment"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:gravity="top">
 
-                <include
-                    layout="@layout/action_bar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"></include>
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -86,9 +87,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="₦"
+                        android:text="₦ "
                         android:textColor="#ff4e4d"
-                        android:textSize="@dimen/_25sdp" />
+                        android:textSize="@dimen/_22sdp" />
 
                     <TextView
                         android:id="@+id/textview_payment"
@@ -144,7 +145,7 @@
                             android:textColor="#313131"
                             android:textSize="@dimen/_15sdp" />
 
-                        <View
+                     <!--   <View
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_1sdp"
                             android:background="#e0e0e0" />
@@ -178,7 +179,7 @@
                             android:paddingStart="@dimen/_15sdp"
                             android:text="Paypal"
                             android:textColor="#313131"
-                            android:textSize="@dimen/_15sdp" />
+                            android:textSize="@dimen/_15sdp" />-->
 
                     </RadioGroup>
 
@@ -209,6 +210,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top"
+                    android:visibility="gone"
                     android:gravity="center|bottom"
                     android:padding="@dimen/_3sdp">
 

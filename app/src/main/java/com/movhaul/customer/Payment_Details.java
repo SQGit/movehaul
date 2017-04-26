@@ -1,16 +1,28 @@
 package com.movhaul.customer;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -19,6 +31,7 @@ import android.widget.Toast;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.LinearLayout;
 import com.sloop.fonts.FontsManager;
+import com.systemspecs.remita.remitapaymentgateway.RemitaMainActivity;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -47,25 +60,38 @@ import co.paystack.android.model.Charge;
  */
 
 public class Payment_Details extends Activity {
-    Button btn_continue,btn_cardpay;
+    private static final int REQUEST_CODE_PAYMENT = 545;
+
+    private static final int REQUEST_CODE_PAYMENT_ROADSIDE = 123;
+    Button btn_continue, btn_cardpay;
     LinearLayout btn_back;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-    String tot_amt;
+    String tot_amt, cus_mail;
     TextView tv_payment;
     String payment;
-    private RadioGroup radioGroup;
-    private RadioButton r_card,bank,verve,wallet;
-    android.widget.LinearLayout lt_payment,lt_choose;
-
-
+    android.widget.LinearLayout lt_payment, lt_choose;
+    String bidding_id, booking_id, driver_id, transaction_id, id, token;
     String paystack_public_key = "pk_test_7a2b290173743af455823f46d4d1f63f4377cce4";
     String paystack_secrect_key = "sk_test_12704985e95d8959e480ac4eef130e4c6875a801";
-
+    ProgressDialog mProgressDialog;
     Card card;
+    Dialog dialog1;
+    Button btn_ok;
+    ImageView btn_close;
+    Typeface tf;
+    TextView tv_dialog1, tv_dialog2, tv_dialog3, tv_dialog4;
+    private RadioGroup radioGroup;
+    private RadioButton r_card, bank, verve, wallet;
     private Charge charge;
     private Transaction transaction;
     private String referenc;
+    Snackbar snackbar;
+    EditText et_card1,et_card2,et_card3,et_card4, et_exp, et_cvv,name;
+    TextView tv_snack;
+    boolean bl_truck;
+    Dialog  dg_road_confirm;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,9 +107,39 @@ public class Payment_Details extends Activity {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Payment_Details.this);
         editor = sharedPreferences.edit();
 
-        tot_amt = sharedPreferences.getString("payment_amount","");
+        tf = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
 
-        //tv_payment.setText(tot_amt);
+        id = sharedPreferences.getString("id", "");
+        token = sharedPreferences.getString("token", "");
+
+
+        cus_mail = sharedPreferences.getString("customer_email", "");
+
+
+
+
+        booking_id = sharedPreferences.getString("booking_id", "");
+        tot_amt = sharedPreferences.getString("payment_amount", "");
+
+        if(!(sharedPreferences.getString("book_for","").equals("roadside"))) {
+            bl_truck = true;
+            driver_id = sharedPreferences.getString("driver_id", "");
+            bidding_id = sharedPreferences.getString("bidding_id", "");
+        }
+
+        snackbar = Snackbar
+                .make(findViewById(com.movhaul.customer.R.id.top), "Network Error! Please Try Again Later.", Snackbar.LENGTH_LONG);
+        View sbView = snackbar.getView();
+        tv_snack = (android.widget.TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        tv_snack.setTextColor(Color.WHITE);
+        tv_snack.setTypeface(tf);
+
+
+        Log.e("tag", "bok " + booking_id);
+        Log.e("tag", "dr " + driver_id);
+        Log.e("tag", "bid " + bidding_id);
+
+        tv_payment.setText(tot_amt);
 
         PaystackSdk.initialize(getApplicationContext());
 
@@ -91,31 +147,184 @@ public class Payment_Details extends Activity {
         lt_choose = (android.widget.LinearLayout) findViewById(R.id.payment);
         lt_payment.setVisibility(View.GONE);
         radioGroup = (RadioGroup) findViewById(com.movhaul.customer.R.id.radioGroup2);
-        r_card  = (RadioButton) findViewById(R.id.radio1);
-
-
+        r_card = (RadioButton) findViewById(R.id.radio1);
+        bank = (RadioButton) findViewById(R.id.radio2);
         btn_cardpay = (Button) findViewById(com.movhaul.customer.R.id.button_cardpay);
+
+        et_card1 = (EditText) findViewById(R.id.editext_card1);
+        et_card2 = (EditText) findViewById(R.id.editext_card2);
+        et_card3 = (EditText) findViewById(R.id.editext_card3);
+        et_card4 = (EditText) findViewById(R.id.editext_card4);
+        et_exp = (EditText) findViewById(R.id.editTextExpiryDate);
+        et_cvv = (EditText) findViewById(R.id.editTextCvv);
+
+        mProgressDialog = new ProgressDialog(Payment_Details.this);
+        mProgressDialog.setTitle("Loading..");
+        mProgressDialog.setMessage("Please wait");
+        mProgressDialog.setIndeterminate(false);
+        mProgressDialog.setCancelable(false);
+
+
+        dialog1 = new Dialog(Payment_Details.this);
+        dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog1.setCancelable(false);
+        dialog1.setContentView(com.movhaul.customer.R.layout.dialogue_job_posting);
+        btn_ok = (Button) dialog1.findViewById(com.movhaul.customer.R.id.button_ok);
+        btn_close = (ImageView) dialog1.findViewById(com.movhaul.customer.R.id.button_close);
+        tv_dialog1 = (TextView) dialog1.findViewById(com.movhaul.customer.R.id.textView_1);
+        tv_dialog2 = (TextView) dialog1.findViewById(com.movhaul.customer.R.id.textView_2);
+        tv_dialog3 = (TextView) dialog1.findViewById(com.movhaul.customer.R.id.textView_3);
+        tv_dialog4 = (TextView) dialog1.findViewById(com.movhaul.customer.R.id.textView_4);
+        tv_dialog1.setText("Your Trip has Been");
+        tv_dialog2.setText("Confirmed!!");
+        tv_dialog3.setText("Our Driver will");
+        tv_dialog4.setText("Contact you soon..");
+
+        tv_dialog1.setTypeface(tf);
+        tv_dialog2.setTypeface(tf);
+        tv_dialog3.setTypeface(tf);
+        tv_dialog4.setTypeface(tf);
+        btn_ok.setTypeface(tf);
+
+        btn_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog1.dismiss();
+
+                editor.putString("job_id", "");
+                editor.commit();
+
+                Intent i = new Intent(Payment_Details.this, DashboardNavigation.class);
+                startActivity(i);
+                finish();
+            }
+        });
+        btn_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog1.dismiss();
+
+
+                editor.putString("job_id", "");
+                editor.commit();
+
+                Intent i = new Intent(Payment_Details.this, DashboardNavigation.class);
+                startActivity(i);
+                finish();
+            }
+        });
+
+
+
+
+        dg_road_confirm = new Dialog(Payment_Details.this);
+        dg_road_confirm.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dg_road_confirm.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dg_road_confirm.setCancelable(false);
+        dg_road_confirm.setContentView(com.movhaul.customer.R.layout.dialog_road_confirm);
+
+        Button btn_yes = (Button) dg_road_confirm.findViewById(R.id.button_yes);
+        TextView tv_txt1 = (TextView) dg_road_confirm.findViewById(R.id.textView_1);
+        TextView tv_txt2 = (TextView) dg_road_confirm.findViewById(R.id.textView_2);
+
+        tv_txt1.setTypeface(tf);
+        tv_txt2.setTypeface(tf);
+        btn_yes.setTypeface(tf);
+
+        btn_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dg_road_confirm.dismiss();
+
+                editor.putString("job_id", "");
+                editor.commit();
+
+                Intent i = new Intent(Payment_Details.this, DashboardNavigation.class);
+                startActivity(i);
+                finish();
+            }
+        });
+
+
+
 
 
         btn_cardpay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                if(et_card1.getText().toString().length()>=4){
+                    if(et_card2.getText().toString().length()>=4){
+                        if(et_card3.getText().toString().length()>=4){
+                            if(et_card4.getText().toString().length()>=4){
+                                if(et_exp.getText().toString().length()>=6){
+                                    if(et_cvv.getText().toString().length()>=3){
+
+                                        String cardNum = et_card1.getText().toString()+et_card2.getText().toString()+et_card3.getText().toString()+et_card4.getText().toString();
+                                        card = new Card.Builder(cardNum, 0, 0, "").build();
+                                        card.setCvc(et_cvv.getText().toString());
+                                        card.setExpiryMonth(11);
+                                        card.setExpiryYear(2025);
+                                        try {
+                                            startAFreshCharge();
+                                        } catch (Exception e) {
+                                            Log.e("tag", "An error occured hwile charging card: %s %s" + e.getClass().getSimpleName() + e.getMessage());
+                                        }
+
+                                    }
+                                    else{
+                                        snackbar.show();
+                                        tv_snack.setText("Enter Valid Cvv Number");
+                                        et_cvv.requestFocus();
+
+                                    }
+                                }
+                                else{
+
+                                    snackbar.show();
+                                    tv_snack.setText("Enter Valid Expiry Date");
+                                    et_exp.requestFocus();
+
+                                }
+                            }
+                            else{
+                                snackbar.show();
+                                tv_snack.setText("Enter Valid Card Number");
+                                et_card4.requestFocus();
+                            }
+                        }
+                        else{
+                            snackbar.show();
+                            tv_snack.setText("Enter Valid Card Number");
+                            et_card3.requestFocus();
+                        }
+                    }
+                    else{
+                        snackbar.show();
+                        tv_snack.setText("Enter Valid Card Number");
+                        et_card2.requestFocus();
+
+                    }
+                }
+                else{
+                    snackbar.show();
+                    tv_snack.setText("Enter Valid Card Number");
+                    et_card1.requestFocus();
+
+                }
 
 
-                String cardNum = "4123450131001381";
-
+              /*  String cardNum = "4123450131001381";
                 card = new Card.Builder(cardNum, 0, 0, "").build();
                 card.setCvc("883");
                 card.setExpiryMonth(11);
                 card.setExpiryYear(2025);
-
                 try {
                     startAFreshCharge();
                 } catch (Exception e) {
-                    Log.e("tag","An error occured hwile charging card: %s %s"+ e.getClass().getSimpleName()+ e.getMessage());
-                }
-
+                    Log.e("tag", "An error occured hwile charging card: %s %s" + e.getClass().getSimpleName() + e.getMessage());
+                }*/
 
 
             }
@@ -123,7 +332,30 @@ public class Payment_Details extends Activity {
 
 
 
+        et_exp.addTextChangedListener(new AutoAddTextWatcher(et_exp,"/", 2));
 
+
+        /*et_exp.addTextChangedListener(new TextWatcher() {
+            int len=0;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                String str = et_exp.getText().toString();
+                len = str.length();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String str = et_exp.getText().toString();
+                if(str.length()==2&& len <str.length()){//len check for backspace
+                    et_exp.append("/");
+                }
+            }
+        });*/
 
 
 
@@ -135,41 +367,69 @@ public class Payment_Details extends Activity {
 
                 // find which radio button is selected
 
-                if(checkedId == com.movhaul.customer.R.id.radio1) {
+                if (checkedId == com.movhaul.customer.R.id.radio1) {
 
                     payment = "CARD";
-                    Log.e("tag",payment);
+                    Log.e("tag", payment);
                     lt_payment.setVisibility(View.VISIBLE);
                     lt_choose.setVisibility(View.GONE);
 
-                } else if(checkedId == com.movhaul.customer.R.id.radio2) {
+                } else if (checkedId == com.movhaul.customer.R.id.radio2) {
 
                     payment = "BANKING";
-                    Log.e("tag",payment);
+                    Log.e("tag", payment);
 
-                } else if(checkedId == com.movhaul.customer.R.id.r_wallet) {
+                    Intent intent = new Intent(Payment_Details.this, RemitaMainActivity.class);
+                    intent.putExtra("amount", tot_amt);
+                    intent.putExtra("testMode", true);
+                    intent.putExtra("apiKey", "U1lTUC4xNUhPMTIkMTIzLjR8U1lTUA==");
+                    intent.putExtra("txnToken", "55316C54554334784E5568504D54496B4D54497A4C6A523855316C5455413D3D7C3932333737633266613035313135306337363534386636376266623131303165383831366464343834666234363064653062343731663538643461323835303537333638653232313135363366383334666337613166333265333336653834626539656566393465396363356131363739353463646239333434363164313732");
+                    if(bl_truck)
+                    startActivityForResult(intent, REQUEST_CODE_PAYMENT);
+                    else
+                    startActivityForResult(intent, REQUEST_CODE_PAYMENT_ROADSIDE);
 
-                    payment = "BANK_INTERNET";
 
-                }
-                else{
-                    payment = "MASTERCARD";
+                } /*else if (checkedId == com.movhaul.customer.R.id.radio3) {
+
+                    payment = "Wallet";
+
+                    Toast.makeText(getApplicationContext(), payment+" Payment Not Supported,Use Card or NetBanking", Toast.LENGTH_LONG).show();
+
+
+                    *//*Intent myIntent = new Intent(Payment_Details.this, ng.simplepay.gateway.Gateway.class);
+                    myIntent.putExtra("api_key", "test_pu_demo");
+                    myIntent.putExtra("description", "Order #123-45678 and a very long description");
+                    myIntent.putExtra("amount", 5685);
+                    myIntent.putExtra("amount_currency", "NGN");
+                    myIntent.putExtra("email", "a@a.com");
+                    myIntent.putExtra("phone", "+351911111111");
+                    myIntent.putExtra("payment_type", "checkout");
+                    myIntent.putExtra("logo", "https://secure.gravatar.com/avatar/c161f5d7024dc7a5c662033db3c397c3?s=140&d=identicon");
+                    startActivityForResult(myIntent, SIMPLEPAY_GATEWAY);*//*
+
+
+
+                }*/ else {
+                    payment = "Paypal";
+
+                    //Toast.makeText(getApplicationContext(), payment+" Payment Not Supported,Use Card or NetBanking", Toast.LENGTH_LONG).show();
+
                 }
 
             }
 
 
-
         });
-
 
 
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Payment_Details.this, DriversList.class);
+                /*Intent i = new Intent(Payment_Details.this, DriversList.class);
                 startActivity(i);
-                finish();
+                finish();*/
+              onBackPressed();
             }
         });
 
@@ -178,33 +438,24 @@ public class Payment_Details extends Activity {
             public void onClick(View view) {
                 lt_payment.setVisibility(View.VISIBLE);
                 lt_choose.setVisibility(View.GONE);
-
-                /*Intent i = new Intent(Payment_Details.this, WebViewAct.class);
-                startActivity(i);*/
-
-                //new login_customer().execute();
             }
         });
 
     }
+
     @Override
     public void onBackPressed() {
 
-        if(lt_payment.isShown()){
+        if (lt_payment.isShown()) {
 
             r_card.setChecked(false);
             lt_payment.setVisibility(View.GONE);
             lt_choose.setVisibility(View.VISIBLE);
 
-
-
+        } else {
+            finish();
         }
 
-
-        //super.onBackPressed();
-        /*Intent i = new Intent(Payment_Details.this,DashboardNavigation.class);
-        startActivity(i);
-        finish();*/
     }
 
 
@@ -217,12 +468,106 @@ public class Payment_Details extends Activity {
         return super.dispatchTouchEvent(ev);
     }
 
-
-
     private void startAFreshCharge() {
         // initialize the charge
         charge = new Charge();
+        mProgressDialog.show();
         new fetchAccessCodeFromServer().execute("https://api.paystack.co/transaction/initialize");
+    }
+
+    private void chargeCard() {
+        transaction = null;
+        PaystackSdk.chargeCard(Payment_Details.this, charge, new co.paystack.android.Paystack.TransactionCallback() {
+            // This is called only after transaction is successful
+            @Override
+            public void onSuccess(Transaction transaction) {
+
+                Payment_Details.this.transaction = transaction;
+                // Toast.makeText(Payment_Details.this, transaction.getReference(), Toast.LENGTH_LONG).show();
+                Log.e("tag", "trans3: " + transaction);
+                new verifyOnServer().execute(transaction.getReference());
+            }
+
+            // This is called only before requesting OTP
+            // Save reference so you may send to server if
+            // error occurs with OTP
+            // No need to dismiss dialog
+            @Override
+            public void beforeValidate(Transaction transaction) {
+                Payment_Details.this.transaction = transaction;
+                Log.e("tag", "trans2: " + transaction);
+                // Toast.makeText(Payment_Details.this, transaction.getReference(), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onError(Throwable error, Transaction transaction) {
+                // If an access code has expired, simply ask your server for a new one
+                // and restart the charge instead of displaying error
+                Payment_Details.this.transaction = transaction;
+                Log.e("tag", "trans0: " + transaction);
+                if (error instanceof ExpiredAccessCodeException) {
+                    Payment_Details.this.startAFreshCharge();
+                    Payment_Details.this.chargeCard();
+                    return;
+                }
+
+
+                if (transaction.getReference() != null) {
+                    // Toast.makeText(Payment_Details.this, transaction.getReference() + " concluded with error: " + error.getMessage(), Toast.LENGTH_LONG).show();
+                    new verifyOnServer().execute(transaction.getReference());
+                } else {
+                    // Toast.makeText(Payment_Details.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                    Log.e("tag", String.format("Error: %s %s", error.getClass().getSimpleName() + error.getMessage()));
+                }
+            }
+
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+
+
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_PAYMENT) {
+
+            Log.e("tagMyAdapter_class", "onActivityResult" + data.toString());
+
+            Log.e("tag", "cd:" + resultCode);
+            Log.e("tag", "rc:" + requestCode);
+            Log.e("tag", "dt:" + data.toString());
+
+            Bundle bundle = data.getExtras();
+            String authorizid = bundle.getString("authoriztionId");
+            String remitaTransRef = bundle.getString("remitaTransRef");
+            String responceCode = bundle.getString("responseCode");
+
+            Log.e("tag", "ss: " + authorizid);
+            Log.e("tag", "ss1: " + remitaTransRef);
+            Log.e("tag", "ss2: " + responceCode);
+
+            transaction_id = remitaTransRef;
+
+            new book_now_task("Trc0Bz39dox").execute();
+        }
+        else if (requestCode == REQUEST_CODE_PAYMENT_ROADSIDE && resultCode == Activity.RESULT_OK) {
+
+            Bundle bundle = data.getExtras();
+            String authorizid = bundle.getString("authoriztionId");
+            String remitaTransRef = bundle.getString("remitaTransRef");
+            String responceCode = bundle.getString("responseCode");
+
+            transaction_id = remitaTransRef;
+            Log.e("tag", "ss1: " + remitaTransRef);
+
+            new book_roadside().execute();
+        }
+
+        else{
+            bank.setChecked(false);
+        }
+
+
     }
 
     private class fetchAccessCodeFromServer extends AsyncTask<String, Void, String> {
@@ -231,6 +576,8 @@ public class Payment_Details extends Activity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
+
+            mProgressDialog.dismiss();
             if (result != null) {
 
 
@@ -266,7 +613,10 @@ public class Payment_Details extends Activity {
 
 
             } else {
-                Log.e("tag",String.format("There was a problem getting a new access code form the backend: %s", error));
+                Log.e("tag", String.format("There was a problem getting a new access code form the backend: %s", error));
+
+                snackbar.show();
+                tv_snack.setText(String.format("There was a problem getting a new access code form the backend: %s", error));
             }
         }
 
@@ -278,13 +628,13 @@ public class Payment_Details extends Activity {
                 String responseString = null;
                 HttpClient httpclient = new DefaultHttpClient();
                 HttpPost httppost = new HttpPost(ac_url[0]);
-                httppost.setHeader("Authorization", "Bearer "+paystack_secrect_key);
+                httppost.setHeader("Authorization", "Bearer " + paystack_secrect_key);
 
 
                 try {
                     JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("amount", "38900");
-                    jsonObject.put("email", "ramya@sqindia.net");
+                    jsonObject.put("amount", tot_amt + "00");
+                    jsonObject.put("email", cus_mail);
 
                     json = jsonObject.toString();
                     httppost.setEntity(new StringEntity(json));
@@ -313,62 +663,15 @@ public class Payment_Details extends Activity {
         }
     }
 
-
-
-
-    private void chargeCard() {
-        transaction = null;
-        PaystackSdk.chargeCard(Payment_Details.this, charge, new co.paystack.android.Paystack.TransactionCallback() {
-            // This is called only after transaction is successful
-            @Override
-            public void onSuccess(Transaction transaction) {
-
-                Payment_Details.this.transaction = transaction;
-                Toast.makeText(Payment_Details.this, transaction.getReference(), Toast.LENGTH_LONG).show();
-                Log.e("tag","trans3: "+transaction);
-                new verifyOnServer().execute(transaction.getReference());
-            }
-
-            // This is called only before requesting OTP
-            // Save reference so you may send to server if
-            // error occurs with OTP
-            // No need to dismiss dialog
-            @Override
-            public void beforeValidate(Transaction transaction) {
-                Payment_Details.this.transaction = transaction;
-                Log.e("tag","trans2: "+transaction);
-                Toast.makeText(Payment_Details.this, transaction.getReference(), Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onError(Throwable error, Transaction transaction) {
-                // If an access code has expired, simply ask your server for a new one
-                // and restart the charge instead of displaying error
-                Payment_Details.this.transaction = transaction;
-                Log.e("tag","trans0: "+transaction);
-                if (error instanceof ExpiredAccessCodeException) {
-                    Payment_Details.this.startAFreshCharge();
-                    Payment_Details.this.chargeCard();
-                    return;
-                }
-
-
-                if (transaction.getReference() != null) {
-                    Toast.makeText(Payment_Details.this, transaction.getReference() + " concluded with error: " + error.getMessage(), Toast.LENGTH_LONG).show();
-                    new verifyOnServer().execute(transaction.getReference());
-                } else {
-                    Toast.makeText(Payment_Details.this, error.getMessage(), Toast.LENGTH_LONG).show();
-                    Log.e("tag",String.format("Error: %s %s", error.getClass().getSimpleName()+ error.getMessage()));
-                }
-            }
-
-        });
-    }
-
-
     private class verifyOnServer extends AsyncTask<String, Void, String> {
 
         private String error;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mProgressDialog.show();
+        }
 
         @Override
         protected String doInBackground(String... reference) {
@@ -376,7 +679,7 @@ public class Payment_Details extends Activity {
             try {
                 String responseString = null;
 
-                Log.e("tag","ref Code : "+referenc);
+                Log.e("tag", "ref Code : " + referenc);
 
                 String url = "https://api.paystack.co/transaction" + "/verify/" + referenc;
 
@@ -384,12 +687,12 @@ public class Payment_Details extends Activity {
                 HttpGet request = new HttpGet(url);
 
                 // add request header
-                request.addHeader("Authorization", "Bearer "+paystack_secrect_key);
+                request.addHeader("Authorization", "Bearer " + paystack_secrect_key);
 
                 HttpResponse response = client.execute(request);
 
-                Log.e("tag","\nSending 'GET' request to URL : " + url);
-                Log.e("tag","Response Code : " +
+                Log.e("tag", "\nSending 'GET' request to URL : " + url);
+                Log.e("tag", "Response Code : " +
                         response.getStatusLine().getStatusCode());
 
                 BufferedReader rd = new BufferedReader(
@@ -401,7 +704,7 @@ public class Payment_Details extends Activity {
                     result.append(line);
                 }
 
-                Log.e("tag","rs: "+result.toString());
+                Log.e("tag", "rs: " + result.toString());
 
                 responseString = result.toString();
 
@@ -414,21 +717,300 @@ public class Payment_Details extends Activity {
         }
 
 
-
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
+            mProgressDialog.dismiss();;
             if (result != null) {
-                Log.e("tag","Gateway response: %s "+ result);
+                Log.e("tag", "Gateway response: %s " + result);
+
+                if (result != null) {
+                    try {
+                        JSONObject jo = new JSONObject(result);
+                        String status = jo.getString("status");
+                        Log.d("tag", "<-----Status----->" + status);
+                        if (status.equals("true")) {
+                            String data = jo.getString("data");
+
+                            JSONObject j_data = new JSONObject(data);
+
+                            String payment_sts = j_data.getString("status");
+                            if (payment_sts.equals("success")) {
+                                String pay_ref = j_data.getString("reference");
+                                new book_now_task(pay_ref).execute();
+
+                            } else {
+                             //   Toast.makeText(getApplicationContext(), "Payment Failed", Toast.LENGTH_LONG).show();
+                                snackbar.show();
+                                tv_snack.setText("Payment Failed.,Please Try Again");
+
+                                r_card.setChecked(false);
+                                lt_payment.setVisibility(View.GONE);
+                                lt_choose.setVisibility(View.VISIBLE);
+                                //finish();
+                            }
+
+
+                        } else if (status.equals("false")) {
+
+                            Log.e("tag", "Location not updated");
+                            //has to check internet and location...
+                           // Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
+                            snackbar.show();
+                            tv_snack.setText("Network Errror. Please Try Again Later");
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Log.e("tag", "nt" + e.toString());
+                       // Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
+                        snackbar.show();
+                        tv_snack.setText("Network Errror. Please Try Again Later");
+                    }
+                } else {
+                    //Toast.makeText(getApplicationContext(), "Network Errror1", Toast.LENGTH_LONG).show();
+                    snackbar.show();
+                    tv_snack.setText("Network Errror. Please Try Again Later");
+
+                }
+
 
             } else {
-                Log.e("tag",String.format("There was a problem verifying %s on the backend: %s ", referenc, error));
+                Log.e("tag", String.format("There was a problem verifying %s on the backend: %s ", referenc, error));
+
+                snackbar.show();
+                tv_snack.setText(String.format("There was a problem verifying %s on the backend: %s ", referenc, error));
             }
         }
 
 
+    }
+
+    public class book_now_task extends AsyncTask<String, Void, String> {
+
+        String reference;
+
+        public book_now_task(String ref) {
+            reference = ref;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Log.e("tag", "reg_preexe");
+            mProgressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String json = "", jsonStr = "";
+
+
+            Log.e("tag", "no poto");
+
+            String s = "";
+            JSONObject jsonObject = new JSONObject();
+            try {
+
+
+                jsonObject.put("transaction_id", reference);
+                jsonObject.put("booking_id", booking_id);
+                jsonObject.put("driver_id", driver_id);
+                jsonObject.put("bidding_id", bidding_id);
+
+
+                json = jsonObject.toString();
+
+                return s = HttpUtils.makeRequest1(com.movhaul.customer.Config.WEB_URL + "customer/payment", json, id, token);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("tag", "tag" + s);
+            mProgressDialog.dismiss();
+
+            if (s != null) {
+                try {
+                    JSONObject jo = new JSONObject(s);
+                    String status = jo.getString("status");
+                    Log.d("tag", "<-----Status----->" + status);
+                    if (status.equals("true")) {
+
+                        dialog1.show();
+                    } else if (status.equals("false")) {
+
+                        Log.e("tag", "Location not updated");
+                        //has to check internet and location...
+                       // Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
+                        snackbar.show();
+                        tv_snack.setText("Network Errror. Please Try Again Later");
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.e("tag", "nt" + e.toString());
+                  //  Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
+                    snackbar.show();
+                    tv_snack.setText("Network Errror. Please Try Again Later");
+                }
+            } else {
+                //Toast.makeText(getApplicationContext(), "Network Errror1", Toast.LENGTH_LONG).show();
+                snackbar.show();
+                tv_snack.setText("Network Errror. Please Try Again Later");
+            }
+
+        }
 
     }
+
+
+
+
+
+    public class AutoAddTextWatcher implements TextWatcher {
+        private CharSequence mBeforeTextChanged;
+        private int[] mArray_pos;
+        private EditText mEditText;
+        private String mAppentText;
+
+        public AutoAddTextWatcher(EditText editText, String appendText, int... position){
+            this.mEditText = editText;
+            this.mAppentText = appendText;
+            this.mArray_pos = position.clone();
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            mBeforeTextChanged = s.toString();
+
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            for (int i = 0; i < mArray_pos.length; i++) {
+                if(((mBeforeTextChanged.length() - mAppentText.length() * i) == (mArray_pos[i] - 1) &&
+                        (s.length() - mAppentText.length() * i) == mArray_pos[i])){
+                    mEditText.append(mAppentText);
+
+                    break;
+                }
+
+                if(((mBeforeTextChanged.length() - mAppentText.length() * i) == mArray_pos[i] &&
+                        (s.length() - mAppentText.length() * i) == (mArray_pos[i] + 1))){
+                    int idx_start = mArray_pos[i] + mAppentText.length() * i;
+                    int idx_end = Math.min(idx_start + mAppentText.length(), s.length());
+
+                    String sub = mEditText.getText().toString().substring(idx_start,  idx_end);
+
+                    if(!sub.equals(mAppentText)){
+                        mEditText.getText().insert(s.length() - 1, mAppentText);
+                    }
+
+                    break;
+                }
+
+                if(mAppentText.length() > 1 &&
+                        (mBeforeTextChanged.length() - mAppentText.length() * i) == (mArray_pos[i] + mAppentText.length()) &&
+                        (s.length() - mAppentText.length() * i) == (mArray_pos[i] + mAppentText.length() - 1)){
+                    int idx_start = mArray_pos[i] + mAppentText.length() * i;
+                    int idx_end = Math.min(idx_start + mAppentText.length(), s.length());
+
+                    mEditText.getText().delete(idx_start, idx_end);
+
+                    break;
+                }
+
+            }
+
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+        }
+
+    }
+
+
+
+
+    public class book_roadside extends AsyncTask<String, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Log.e("tag", "reg_preexe");
+            mProgressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String json = "", jsonStr = "";
+
+
+            Log.e("tag", "no poto");
+
+            String s = "";
+            JSONObject jsonObject = new JSONObject();
+            try {
+
+
+                jsonObject.put("transaction_id", "Rco32w3Viels3");
+                jsonObject.put("booking_id", booking_id);
+
+
+                json = jsonObject.toString();
+
+                return s = HttpUtils.makeRequest1(com.movhaul.customer.Config.WEB_URL + "customer/emergencypayment", json, id, token);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("tag", "tag" + s);
+            mProgressDialog.dismiss();
+
+            if (s != null) {
+                try {
+                    JSONObject jo = new JSONObject(s);
+                    String status = jo.getString("status");
+                    Log.d("tag", "<-----Status----->" + status);
+                    if (status.equals("true")) {
+
+                        dg_road_confirm.show();
+                    } else if (status.equals("false")) {
+
+                        Log.e("tag", "Location not updated");
+                        //has to check internet and location...
+                        Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.e("tag", "nt" + e.toString());
+                    Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
+                }
+            } else {
+                Toast.makeText(getApplicationContext(), "Network Errror1", Toast.LENGTH_LONG).show();
+            }
+
+        }
+
+    }
+
 
 
 

@@ -1674,6 +1674,9 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             iv_map_point.setVisibility(View.VISIBLE);
             mResultReceiver = new AddressResultReceiver(new Handler());
 
+            if(bottomSheetBehavior.getState() ==BottomSheetBehavior.STATE_COLLAPSED)
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+
 
         }
     }
@@ -2168,15 +2171,20 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                         Log.e("tag", msg);
                         String bookingid = jo.getString("booking_id");
                         String cost = jo.getString("price");
-                        editor.putString("job_id", bookingid);
+                        editor.putString("booking_id", bookingid);
+                        editor.putString("payment_amount", cost);
+                        editor.putString("book_for","roadside");
                         editor.commit();
 
-                        Intent intent = new Intent(DashboardNavigation.this, RemitaMainActivity.class);
+                        Intent i = new Intent(DashboardNavigation.this, Payment_Details.class);
+                        startActivity(i);
+
+                        /*Intent intent = new Intent(DashboardNavigation.this, RemitaMainActivity.class);
                         intent.putExtra("amount", cost);
                         intent.putExtra("testMode", true);
                         intent.putExtra("apiKey", "U1lTUC4xNUhPMTIkMTIzLjR8U1lTUA==");
                         intent.putExtra("txnToken", "55316C54554334784E5568504D54496B4D54497A4C6A523855316C5455413D3D7C3932333737633266613035313135306337363534386636376266623131303165383831366464343834666234363064653062343731663538643461323835303537333638653232313135363366383334666337613166333265333336653834626539656566393465396363356131363739353463646239333434363164313732");
-                        startActivityForResult(intent, REQUEST_CODE_PAYMENT);
+                        startActivityForResult(intent, REQUEST_CODE_PAYMENT);*/
 
 
                     } else if (status.equals("false")) {

@@ -83,6 +83,7 @@ dependencies {
 
     compile 'co.paystack.android:paystack:3.0.1'
 
+    //compile 'ng.simplepay.gateway:gateway:2.+'
 
 }
 

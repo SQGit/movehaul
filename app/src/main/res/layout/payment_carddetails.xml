@@ -2,10 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:id="@+id/top"
     android:background="@drawable/bg"
     android:orientation="vertical">
 
-    <LinearLayout
+  <!--  <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
@@ -15,7 +16,7 @@
             layout="@layout/action_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"></include>
-    </LinearLayout>
+    </LinearLayout>-->
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -56,6 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_15sdp"
         android:gravity="start|center"
         android:orientation="horizontal">
 
@@ -82,6 +84,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginRight="@dimen/_10sdp"
         android:gravity="center"
         android:orientation="horizontal">
@@ -91,7 +94,7 @@
             android:layout_width="@dimen/_51sdp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/_11sdp"
+            android:layout_margin="@dimen/_8sdp"
             android:gravity="center"
             android:imeOptions="actionNext"
             android:inputType="number"
@@ -111,7 +114,7 @@
             android:layout_width="@dimen/_51sdp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/_11sdp"
+            android:layout_margin="@dimen/_8sdp"
             android:gravity="center"
             android:imeOptions="actionNext"
             android:inputType="number"
@@ -131,7 +134,7 @@
             android:layout_width="@dimen/_51sdp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/_11sdp"
+            android:layout_margin="@dimen/_8sdp"
             android:gravity="center"
             android:imeOptions="actionNext"
             android:inputType="number"
@@ -151,7 +154,7 @@
             android:layout_width="@dimen/_51sdp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/_11sdp"
+            android:layout_margin="@dimen/_8sdp"
             android:gravity="center"
             android:imeOptions="actionDone"
             android:inputType="number"
@@ -189,7 +192,10 @@
                     android:background="@null"
                     android:hint="Expiry(MM/YYYY)"
                     android:inputType="date"
+                    android:maxLength="7"
                     android:maxLines="1"
+                    android:imeOptions="actionNext"
+                    android:imeActionId="@+id/editTextCvv"
                     android:layout_weight="1"
                     android:paddingTop="@dimen/_10sdp"
                     android:textColor="#000000"
@@ -226,7 +232,7 @@
                     android:hint="CVV"
                     android:inputType="number"
                     android:maxLines="1"
-                    android:maxLength="3"
+                    android:maxLength="4"
                     android:paddingTop="@dimen/_10sdp"
                     android:textColor="#000000"
                     android:textSize="@dimen/_15sdp" />
