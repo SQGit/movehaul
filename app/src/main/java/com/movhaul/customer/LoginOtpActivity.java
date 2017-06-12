@@ -276,12 +276,10 @@ public class LoginOtpActivity extends Activity implements TextWatcher {
     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
         //Log.e("tag", "before " + charSequence + " i " + i + " i1 " + i1 + " i2 " + i2);
     }
-
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
         // Log.e("tag", "ontext " + charSequence + " i " + i + " i1 " + i1 + " i2 " + i2);
     }
-
     @Override
     public void afterTextChanged(Editable editable) {
 

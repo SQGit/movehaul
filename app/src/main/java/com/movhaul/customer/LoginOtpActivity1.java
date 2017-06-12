@@ -234,7 +234,6 @@ public class LoginOtpActivity1 extends Activity implements View.OnFocusChangeLis
     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
     }
-
     @Override
     public void onTextChanged(CharSequence s, int i, int i1, int i2) {
 
@@ -274,7 +273,6 @@ public class LoginOtpActivity1 extends Activity implements View.OnFocusChangeLis
         }
 
     }
-
     @Override
     public void afterTextChanged(Editable editable) {
 
@@ -282,7 +280,6 @@ public class LoginOtpActivity1 extends Activity implements View.OnFocusChangeLis
 
 
     }
-
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
 
@@ -322,7 +319,6 @@ public class LoginOtpActivity1 extends Activity implements View.OnFocusChangeLis
 
 
     }
-
     @Override
     public boolean onKey(View v, int keyCode, KeyEvent event) {
 

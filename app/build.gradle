@@ -16,8 +16,8 @@ android {
         applicationId "com.movhaul.customer"
         minSdkVersion 17
         targetSdkVersion 25
-        versionCode 8
-        versionName "1.71"
+        versionCode 9
+        versionName "1.73"
         renderscriptTargetApi 18
         renderscriptSupportModeEnabled true
         multiDexEnabled true

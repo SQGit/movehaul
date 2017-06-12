@@ -19,8 +19,9 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
-import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -81,17 +82,19 @@ public class Payment_Details extends Activity {
     ImageView btn_close;
     Typeface tf;
     TextView tv_dialog1, tv_dialog2, tv_dialog3, tv_dialog4;
+    Snackbar snackbar;
+    EditText et_card1, et_card2, et_card3, et_card4, et_exp, et_cvv, name;
+    TextView tv_snack;
+    boolean bl_truck;
+    Dialog dg_road_confirm;
+    EditText et_name, et_phone;
+    CheckBox cb_box;
     private RadioGroup radioGroup;
     private RadioButton r_card, bank, verve, wallet;
     private Charge charge;
     private Transaction transaction;
     private String referenc;
-    Snackbar snackbar;
-    EditText et_card1,et_card2,et_card3,et_card4, et_exp, et_cvv,name;
-    TextView tv_snack;
-    boolean bl_truck;
-    Dialog  dg_road_confirm;
-
+    String cus_name,cus_mobile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,14 +117,15 @@ public class Payment_Details extends Activity {
 
 
         cus_mail = sharedPreferences.getString("customer_email", "");
-
+        cus_name = sharedPreferences.getString("customer_name", "");
+        cus_mobile = sharedPreferences.getString("customer_mobile", "");
 
 
 
         booking_id = sharedPreferences.getString("booking_id", "");
         tot_amt = sharedPreferences.getString("payment_amount", "");
 
-        if(!(sharedPreferences.getString("book_for","").equals("roadside"))) {
+        if (!(sharedPreferences.getString("book_for", "").equals("roadside"))) {
             bl_truck = true;
             driver_id = sharedPreferences.getString("driver_id", "");
             bidding_id = sharedPreferences.getString("bidding_id", "");
@@ -169,23 +173,53 @@ public class Payment_Details extends Activity {
         dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog1.setCancelable(false);
-        dialog1.setContentView(com.movhaul.customer.R.layout.dialogue_job_posting);
+        dialog1.setContentView(com.movhaul.customer.R.layout.dialogue_job_confirm);
         btn_ok = (Button) dialog1.findViewById(com.movhaul.customer.R.id.button_ok);
         btn_close = (ImageView) dialog1.findViewById(com.movhaul.customer.R.id.button_close);
         tv_dialog1 = (TextView) dialog1.findViewById(com.movhaul.customer.R.id.textView_1);
         tv_dialog2 = (TextView) dialog1.findViewById(com.movhaul.customer.R.id.textView_2);
-        tv_dialog3 = (TextView) dialog1.findViewById(com.movhaul.customer.R.id.textView_3);
-        tv_dialog4 = (TextView) dialog1.findViewById(com.movhaul.customer.R.id.textView_4);
-        tv_dialog1.setText("Your Trip has Been");
-        tv_dialog2.setText("Confirmed!!");
-        tv_dialog3.setText("Our Driver will");
-        tv_dialog4.setText("Contact you soon..");
+       tv_dialog3 = (TextView) findViewById(com.movhaul.customer.R.id.textView_3);
+        //tv_dialog4 = (TextView) dialog1.findViewById(com.movhaul.customer.R.id.textView_4);
+        et_name = (EditText) findViewById(R.id.name);
+        et_phone = (EditText) findViewById(R.id.phone);
+        cb_box = (CheckBox) findViewById(R.id.checkbox);
+        // tv_dialog1.setText("Your Trip has Been");
+        //   tv_dialog2.setText("Confirmed!!");
+        //   tv_dialog3.setText("Our Driver will");
+        //  tv_dialog4.setText("Contact you soon..");
+
+        et_name.setText(cus_name);
+        et_phone.setText(cus_mobile);
 
         tv_dialog1.setTypeface(tf);
         tv_dialog2.setTypeface(tf);
         tv_dialog3.setTypeface(tf);
-        tv_dialog4.setTypeface(tf);
+       // tv_dialog4.setTypeface(tf);
+        et_name.setTypeface(tf);
+        et_phone.setTypeface(tf);
         btn_ok.setTypeface(tf);
+
+
+        cb_box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    et_name.setVisibility(View.GONE);
+                    et_phone.setVisibility(View.GONE);
+                    tv_dialog3.setText("Shipment Received by You ");
+                    //et_name.setText(cus_name);
+                   // et_phone.setText(cus_mobile);
+                }
+                else{
+                    et_name.setVisibility(View.VISIBLE);
+                    et_phone.setVisibility(View.VISIBLE);
+                    tv_dialog3.setText("Shipment Received by");
+                    et_name.setText("");
+                    et_name.requestFocus();
+                    et_phone.setText("");
+                }
+            }
+        });
 
         btn_close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -203,19 +237,43 @@ public class Payment_Details extends Activity {
         btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 dialog1.dismiss();
-
-
                 editor.putString("job_id", "");
                 editor.commit();
-
                 Intent i = new Intent(Payment_Details.this, DashboardNavigation.class);
                 startActivity(i);
                 finish();
+
+                /*if (cb_box.isChecked()) {
+                    dialog1.dismiss();
+                    editor.putString("job_id", "");
+                    editor.commit();
+                    Intent i = new Intent(Payment_Details.this, DashboardNavigation.class);
+                    startActivity(i);
+                    finish();
+                } else {
+                    if (!et_name.getText().toString().trim().isEmpty() && et_name.getText().toString().trim().length() > 4) {
+                        if (!et_phone.getText().toString().trim().isEmpty() && et_phone.getText().toString().trim().length() > 9) {
+                            dialog1.dismiss();
+                            editor.putString("job_id", "");
+                            editor.commit();
+                            Intent i = new Intent(Payment_Details.this, DashboardNavigation.class);
+                            startActivity(i);
+                            finish();
+                        } else {
+                            snackbar.show();
+                            tv_snack.setText("Enter Valid Receiver Phone");
+                        }
+                    } else {
+                        snackbar.show();
+                        tv_snack.setText("Enter Valid Receiver Name");
+                    }
+                }*/
+
+
             }
         });
-
-
 
 
         dg_road_confirm = new Dialog(Payment_Details.this);
@@ -247,21 +305,18 @@ public class Payment_Details extends Activity {
         });
 
 
-
-
-
         btn_cardpay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(et_card1.getText().toString().length()>=4){
-                    if(et_card2.getText().toString().length()>=4){
-                        if(et_card3.getText().toString().length()>=4){
-                            if(et_card4.getText().toString().length()>=4){
-                                if(et_exp.getText().toString().length()>=6){
-                                    if(et_cvv.getText().toString().length()>=3){
+                if (et_card1.getText().toString().length() >= 4) {
+                    if (et_card2.getText().toString().length() >= 4) {
+                        if (et_card3.getText().toString().length() >= 4) {
+                            if (et_card4.getText().toString().length() >= 4) {
+                                if (et_exp.getText().toString().length() >= 6) {
+                                    if (et_cvv.getText().toString().length() >= 3) {
 
-                                        String cardNum = et_card1.getText().toString()+et_card2.getText().toString()+et_card3.getText().toString()+et_card4.getText().toString();
+                                        String cardNum = et_card1.getText().toString() + et_card2.getText().toString() + et_card3.getText().toString() + et_card4.getText().toString();
                                         card = new Card.Builder(cardNum, 0, 0, "").build();
                                         card.setCvc(et_cvv.getText().toString());
                                         card.setExpiryMonth(11);
@@ -272,42 +327,36 @@ public class Payment_Details extends Activity {
                                             Log.e("tag", "An error occured hwile charging card: %s %s" + e.getClass().getSimpleName() + e.getMessage());
                                         }
 
-                                    }
-                                    else{
+                                    } else {
                                         snackbar.show();
                                         tv_snack.setText("Enter Valid Cvv Number");
                                         et_cvv.requestFocus();
 
                                     }
-                                }
-                                else{
+                                } else {
 
                                     snackbar.show();
                                     tv_snack.setText("Enter Valid Expiry Date");
                                     et_exp.requestFocus();
 
                                 }
-                            }
-                            else{
+                            } else {
                                 snackbar.show();
                                 tv_snack.setText("Enter Valid Card Number");
                                 et_card4.requestFocus();
                             }
-                        }
-                        else{
+                        } else {
                             snackbar.show();
                             tv_snack.setText("Enter Valid Card Number");
                             et_card3.requestFocus();
                         }
-                    }
-                    else{
+                    } else {
                         snackbar.show();
                         tv_snack.setText("Enter Valid Card Number");
                         et_card2.requestFocus();
 
                     }
-                }
-                else{
+                } else {
                     snackbar.show();
                     tv_snack.setText("Enter Valid Card Number");
                     et_card1.requestFocus();
@@ -331,32 +380,7 @@ public class Payment_Details extends Activity {
         });
 
 
-
-        et_exp.addTextChangedListener(new AutoAddTextWatcher(et_exp,"/", 2));
-
-
-        /*et_exp.addTextChangedListener(new TextWatcher() {
-            int len=0;
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                String str = et_exp.getText().toString();
-                len = str.length();
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String str = et_exp.getText().toString();
-                if(str.length()==2&& len <str.length()){//len check for backspace
-                    et_exp.append("/");
-                }
-            }
-        });*/
-
+        et_exp.addTextChangedListener(new AutoAddTextWatcher(et_exp, "/", 2));
 
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -369,48 +393,95 @@ public class Payment_Details extends Activity {
 
                 if (checkedId == com.movhaul.customer.R.id.radio1) {
 
-                    payment = "CARD";
-                    Log.e("tag", payment);
-                    lt_payment.setVisibility(View.VISIBLE);
-                    lt_choose.setVisibility(View.GONE);
+                    if(cb_box.isChecked()) {
+                        payment = "CARD";
+                        Log.e("tag", payment);
+                        lt_payment.setVisibility(View.VISIBLE);
+                        lt_choose.setVisibility(View.GONE);
+
+                        cus_name = sharedPreferences.getString("customer_name","");
+                        cus_mobile = sharedPreferences.getString("customer_mobile","");
+                    }
+                    else{
+
+                        if (!et_name.getText().toString().trim().isEmpty() && et_name.getText().toString().trim().length() > 4) {
+                            if (!et_phone.getText().toString().trim().isEmpty() && et_phone.getText().toString().trim().length() > 9) {
+
+                                payment = "CARD";
+                                Log.e("tag", payment);
+                                lt_payment.setVisibility(View.VISIBLE);
+                                lt_choose.setVisibility(View.GONE);
+                                cus_name = et_name.getText().toString().trim();
+                                cus_mobile = et_phone.getText().toString().trim();
+
+                            } else {
+
+                                snackbar.show();
+                                tv_snack.setText("Enter Valid Receiver Phone");
+                                group.clearCheck();
+                            }
+                        } else {
+                            snackbar.show();
+                            tv_snack.setText("Enter Valid Receiver Name");
+                            group.clearCheck();
+                        }
+                    }
+
 
                 } else if (checkedId == com.movhaul.customer.R.id.radio2) {
 
-                    payment = "BANKING";
-                    Log.e("tag", payment);
+                    if(cb_box.isChecked()) {
+                        payment = "BANKING";
+                        Log.e("tag", payment);
 
-                    Intent intent = new Intent(Payment_Details.this, RemitaMainActivity.class);
-                    intent.putExtra("amount", tot_amt);
-                    intent.putExtra("testMode", true);
-                    intent.putExtra("apiKey", "U1lTUC4xNUhPMTIkMTIzLjR8U1lTUA==");
-                    intent.putExtra("txnToken", "55316C54554334784E5568504D54496B4D54497A4C6A523855316C5455413D3D7C3932333737633266613035313135306337363534386636376266623131303165383831366464343834666234363064653062343731663538643461323835303537333638653232313135363366383334666337613166333265333336653834626539656566393465396363356131363739353463646239333434363164313732");
-                    if(bl_truck)
-                    startActivityForResult(intent, REQUEST_CODE_PAYMENT);
-                    else
-                    startActivityForResult(intent, REQUEST_CODE_PAYMENT_ROADSIDE);
+                        cus_name = sharedPreferences.getString("customer_name","");
+                        cus_mobile = sharedPreferences.getString("customer_mobile","");
+
+                        Intent intent = new Intent(Payment_Details.this, RemitaMainActivity.class);
+                        intent.putExtra("amount", tot_amt);
+                        intent.putExtra("testMode", true);
+                        intent.putExtra("apiKey", "U1lTUC4xNUhPMTIkMTIzLjR8U1lTUA==");
+                        intent.putExtra("txnToken", "55316C54554334784E5568504D54496B4D54497A4C6A523855316C5455413D3D7C3932333737633266613035313135306337363534386636376266623131303165383831366464343834666234363064653062343731663538643461323835303537333638653232313135363366383334666337613166333265333336653834626539656566393465396363356131363739353463646239333434363164313732");
+                        if (bl_truck)
+                            startActivityForResult(intent, REQUEST_CODE_PAYMENT);
+                        else
+                            startActivityForResult(intent, REQUEST_CODE_PAYMENT_ROADSIDE);
+
+                    }
+                    else{
+
+                        if (!et_name.getText().toString().trim().isEmpty() && et_name.getText().toString().trim().length() > 4) {
+                            if (!et_phone.getText().toString().trim().isEmpty() && et_phone.getText().toString().trim().length() > 9) {
+
+                                Intent intent = new Intent(Payment_Details.this, RemitaMainActivity.class);
+                                intent.putExtra("amount", tot_amt);
+                                intent.putExtra("testMode", true);
+                                intent.putExtra("apiKey", "U1lTUC4xNUhPMTIkMTIzLjR8U1lTUA==");
+                                intent.putExtra("txnToken", "55316C54554334784E5568504D54496B4D54497A4C6A523855316C5455413D3D7C3932333737633266613035313135306337363534386636376266623131303165383831366464343834666234363064653062343731663538643461323835303537333638653232313135363366383334666337613166333265333336653834626539656566393465396363356131363739353463646239333434363164313732");
+                                if (bl_truck)
+                                    startActivityForResult(intent, REQUEST_CODE_PAYMENT);
+                                else
+                                    startActivityForResult(intent, REQUEST_CODE_PAYMENT_ROADSIDE);
+
+                                cus_name = et_name.getText().toString().trim();
+                                cus_mobile = et_phone.getText().toString().trim();
+
+                            } else {
+                                snackbar.show();
+                                tv_snack.setText("Enter Valid Receiver Phone");
+                                group.clearCheck();
+                            }
+                        } else {
+                            snackbar.show();
+                            tv_snack.setText("Enter Valid Receiver Name");
+                            group.clearCheck();
+                        }
+
+                    }
 
 
-                } /*else if (checkedId == com.movhaul.customer.R.id.radio3) {
-
-                    payment = "Wallet";
-
-                    Toast.makeText(getApplicationContext(), payment+" Payment Not Supported,Use Card or NetBanking", Toast.LENGTH_LONG).show();
-
-
-                    *//*Intent myIntent = new Intent(Payment_Details.this, ng.simplepay.gateway.Gateway.class);
-                    myIntent.putExtra("api_key", "test_pu_demo");
-                    myIntent.putExtra("description", "Order #123-45678 and a very long description");
-                    myIntent.putExtra("amount", 5685);
-                    myIntent.putExtra("amount_currency", "NGN");
-                    myIntent.putExtra("email", "a@a.com");
-                    myIntent.putExtra("phone", "+351911111111");
-                    myIntent.putExtra("payment_type", "checkout");
-                    myIntent.putExtra("logo", "https://secure.gravatar.com/avatar/c161f5d7024dc7a5c662033db3c397c3?s=140&d=identicon");
-                    startActivityForResult(myIntent, SIMPLEPAY_GATEWAY);*//*
-
-
-
-                }*/ else {
+                }
+                else {
                     payment = "Paypal";
 
                     //Toast.makeText(getApplicationContext(), payment+" Payment Not Supported,Use Card or NetBanking", Toast.LENGTH_LONG).show();
@@ -429,7 +500,7 @@ public class Payment_Details extends Activity {
                 /*Intent i = new Intent(Payment_Details.this, DriversList.class);
                 startActivity(i);
                 finish();*/
-              onBackPressed();
+                onBackPressed();
             }
         });
 
@@ -528,7 +599,6 @@ public class Payment_Details extends Activity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 
-
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_PAYMENT) {
 
             Log.e("tagMyAdapter_class", "onActivityResult" + data.toString());
@@ -549,8 +619,7 @@ public class Payment_Details extends Activity {
             transaction_id = remitaTransRef;
 
             new book_now_task("Trc0Bz39dox").execute();
-        }
-        else if (requestCode == REQUEST_CODE_PAYMENT_ROADSIDE && resultCode == Activity.RESULT_OK) {
+        } else if (requestCode == REQUEST_CODE_PAYMENT_ROADSIDE && resultCode == Activity.RESULT_OK) {
 
             Bundle bundle = data.getExtras();
             String authorizid = bundle.getString("authoriztionId");
@@ -561,9 +630,7 @@ public class Payment_Details extends Activity {
             Log.e("tag", "ss1: " + remitaTransRef);
 
             new book_roadside().execute();
-        }
-
-        else{
+        } else {
             bank.setChecked(false);
         }
 
@@ -720,7 +787,8 @@ public class Payment_Details extends Activity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            mProgressDialog.dismiss();;
+            mProgressDialog.dismiss();
+            ;
             if (result != null) {
                 Log.e("tag", "Gateway response: %s " + result);
 
@@ -740,7 +808,7 @@ public class Payment_Details extends Activity {
                                 new book_now_task(pay_ref).execute();
 
                             } else {
-                             //   Toast.makeText(getApplicationContext(), "Payment Failed", Toast.LENGTH_LONG).show();
+                                //   Toast.makeText(getApplicationContext(), "Payment Failed", Toast.LENGTH_LONG).show();
                                 snackbar.show();
                                 tv_snack.setText("Payment Failed.,Please Try Again");
 
@@ -755,7 +823,7 @@ public class Payment_Details extends Activity {
 
                             Log.e("tag", "Location not updated");
                             //has to check internet and location...
-                           // Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
+                            // Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
                             snackbar.show();
                             tv_snack.setText("Network Errror. Please Try Again Later");
 
@@ -763,7 +831,7 @@ public class Payment_Details extends Activity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                         Log.e("tag", "nt" + e.toString());
-                       // Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
+                        // Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
                         snackbar.show();
                         tv_snack.setText("Network Errror. Please Try Again Later");
                     }
@@ -848,7 +916,7 @@ public class Payment_Details extends Activity {
 
                         Log.e("tag", "Location not updated");
                         //has to check internet and location...
-                       // Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
+                        // Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
                         snackbar.show();
                         tv_snack.setText("Network Errror. Please Try Again Later");
 
@@ -856,7 +924,7 @@ public class Payment_Details extends Activity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("tag", "nt" + e.toString());
-                  //  Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
+                    //  Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
                     snackbar.show();
                     tv_snack.setText("Network Errror. Please Try Again Later");
                 }
@@ -871,16 +939,13 @@ public class Payment_Details extends Activity {
     }
 
 
-
-
-
     public class AutoAddTextWatcher implements TextWatcher {
         private CharSequence mBeforeTextChanged;
         private int[] mArray_pos;
         private EditText mEditText;
         private String mAppentText;
 
-        public AutoAddTextWatcher(EditText editText, String appendText, int... position){
+        public AutoAddTextWatcher(EditText editText, String appendText, int... position) {
             this.mEditText = editText;
             this.mAppentText = appendText;
             this.mArray_pos = position.clone();
@@ -896,30 +961,30 @@ public class Payment_Details extends Activity {
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             for (int i = 0; i < mArray_pos.length; i++) {
-                if(((mBeforeTextChanged.length() - mAppentText.length() * i) == (mArray_pos[i] - 1) &&
-                        (s.length() - mAppentText.length() * i) == mArray_pos[i])){
+                if (((mBeforeTextChanged.length() - mAppentText.length() * i) == (mArray_pos[i] - 1) &&
+                        (s.length() - mAppentText.length() * i) == mArray_pos[i])) {
                     mEditText.append(mAppentText);
 
                     break;
                 }
 
-                if(((mBeforeTextChanged.length() - mAppentText.length() * i) == mArray_pos[i] &&
-                        (s.length() - mAppentText.length() * i) == (mArray_pos[i] + 1))){
+                if (((mBeforeTextChanged.length() - mAppentText.length() * i) == mArray_pos[i] &&
+                        (s.length() - mAppentText.length() * i) == (mArray_pos[i] + 1))) {
                     int idx_start = mArray_pos[i] + mAppentText.length() * i;
                     int idx_end = Math.min(idx_start + mAppentText.length(), s.length());
 
-                    String sub = mEditText.getText().toString().substring(idx_start,  idx_end);
+                    String sub = mEditText.getText().toString().substring(idx_start, idx_end);
 
-                    if(!sub.equals(mAppentText)){
+                    if (!sub.equals(mAppentText)) {
                         mEditText.getText().insert(s.length() - 1, mAppentText);
                     }
 
                     break;
                 }
 
-                if(mAppentText.length() > 1 &&
+                if (mAppentText.length() > 1 &&
                         (mBeforeTextChanged.length() - mAppentText.length() * i) == (mArray_pos[i] + mAppentText.length()) &&
-                        (s.length() - mAppentText.length() * i) == (mArray_pos[i] + mAppentText.length() - 1)){
+                        (s.length() - mAppentText.length() * i) == (mArray_pos[i] + mAppentText.length() - 1)) {
                     int idx_start = mArray_pos[i] + mAppentText.length() * i;
                     int idx_end = Math.min(idx_start + mAppentText.length(), s.length());
 
@@ -938,8 +1003,6 @@ public class Payment_Details extends Activity {
         }
 
     }
-
-
 
 
     public class book_roadside extends AsyncTask<String, Void, String> {
@@ -1010,8 +1073,6 @@ public class Payment_Details extends Activity {
         }
 
     }
-
-
 
 
 }
