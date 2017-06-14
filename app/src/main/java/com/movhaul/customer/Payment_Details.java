@@ -885,6 +885,8 @@ public class Payment_Details extends Activity {
                 jsonObject.put("booking_id", booking_id);
                 jsonObject.put("driver_id", driver_id);
                 jsonObject.put("bidding_id", bidding_id);
+                jsonObject.put("receiver_name", cus_name);
+                jsonObject.put("receiver_phone", cus_mobile);
 
 
                 json = jsonObject.toString();

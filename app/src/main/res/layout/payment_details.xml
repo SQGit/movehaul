@@ -103,7 +103,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_5sdp"
-                    android:background="#fec4c2"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:background="#ffdddc"
                     android:orientation="vertical">
 
 
@@ -139,6 +141,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/_5sdp"
+                        android:singleLine="true"
                         android:visibility="gone"
                         android:hint="Name"
                         android:textSize="@dimen/_15sdp" />
