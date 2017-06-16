@@ -667,6 +667,7 @@ public class Book_now extends Activity {
                     httppost.setHeader("sessiontoken", token);
                     httppost.setHeader("pickup_location", pickup_location);
                     httppost.setHeader("drop_location", drop_location);
+                    httppost.setHeader("radius", "100");
                     if(str_delivery_address != null)
                     httppost.setHeader("delivery_address", str_delivery_address);
                     if (vec_type.equals("Truck")) {
@@ -774,6 +775,7 @@ public class Book_now extends Activity {
                     jsonObject.put("pickup_longitude", pick_long);
                     jsonObject.put("drop_latitude", drop_lati);
                     jsonObject.put("drop_longitude", drop_long);
+                    jsonObject.put("radius","100");
 
 
                     json = jsonObject.toString();

@@ -852,6 +852,7 @@ public class Book_later extends Activity {
                     httppost.setHeader("pickup_longitude", pick_long);
                     httppost.setHeader("drop_latitude", drop_lati);
                     httppost.setHeader("drop_longitude", drop_long);
+                    httppost.setHeader("radius", "100");
 
                     if (str_desc != null)
                         httppost.setHeader("description", str_desc);
@@ -940,6 +941,7 @@ public class Book_later extends Activity {
                     jsonObject.put("pickup_longitude", pick_long);
                     jsonObject.put("drop_latitude", drop_lati);
                     jsonObject.put("drop_longitude", drop_long);
+                    jsonObject.put("radius","100");
 
                     if (str_desc != null) {
                         jsonObject.put("description", str_desc);
