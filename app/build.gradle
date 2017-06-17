@@ -38,6 +38,12 @@ android {
     }
     productFlavors {
     }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE-FIREBASE.txt'
+        exclude 'META-INF/NOTICE'
+    }
 }
 
 repositories {
@@ -47,6 +53,15 @@ repositories {
 }
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+
+    compile project(':remita_21_03')
+
+    compile 'co.paystack.android:paystack:3.0.1'
+
+    //compile 'ng.simplepay.gateway:gateway:2.+'
+
+    
+
 
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'co.paystack.android:paystack:3.0.1'
@@ -69,7 +84,6 @@ dependencies {
     compile 'commons-codec:commons-codec:1.10'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.7.5'
     compile 'com.google.code.gson:gson:2.7'
-    compile project(':remita_21_03')
     compile 'com.hbb20:ccp:1.7.2'
     compile 'com.daimajia.androidviewhover:library:1.0.4@aar'
     compile 'com.daimajia.androidanimations:library:1.1.2@aar'
@@ -77,11 +91,8 @@ dependencies {
     compile 'com.daimajia.easing:library:2.0@aar'
     compile 'org.jsoup:jsoup:1.8.3'
     compile 'com.android.support:recyclerview-v7:25.3.1'
-
-    compile 'co.paystack.android:paystack:3.0.1'
-
-    //compile 'ng.simplepay.gateway:gateway:2.+'
-
+    compile 'com.firebase:firebase-client-android:2.5.2'
+    compile 'com.google.firebase:firebase-database:10.0.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

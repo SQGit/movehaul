@@ -8,81 +8,6 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:720587571829:android:44a3532d09fae41c",
-        "android_client_info": {
-          "package_name": "net.sqindia.movehaul"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "720587571829-27mulho2vi5gs7gbcdmje589vl1lis9l.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAD543-_GdgU03iJF2gz-jqAvjMRetXqfQ"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:720587571829:android:9bed983f152f615b",
-        "android_client_info": {
-          "package_name": "com.vineture.movhaul"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "720587571829-ncjkh9m67dptt8v0a89i3729fquk7qv7.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.vineture.movhaul",
-            "certificate_hash": "bdea5406f5dab54ce946311210772de114300ede"
-          }
-        },
-        {
-          "client_id": "720587571829-27mulho2vi5gs7gbcdmje589vl1lis9l.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAD543-_GdgU03iJF2gz-jqAvjMRetXqfQ"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "720587571829-27mulho2vi5gs7gbcdmje589vl1lis9l.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:720587571829:android:3392a433d21d2fc4",
         "android_client_info": {
           "package_name": "com.movhaul.customer"
@@ -119,6 +44,37 @@
               "client_type": 3
             }
           ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:720587571829:android:7a213b8d8dafde1f",
+        "android_client_info": {
+          "package_name": "com.movhaul.driver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "720587571829-27mulho2vi5gs7gbcdmje589vl1lis9l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAD543-_GdgU03iJF2gz-jqAvjMRetXqfQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2

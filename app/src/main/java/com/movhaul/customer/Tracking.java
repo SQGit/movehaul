@@ -30,6 +30,10 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -48,6 +52,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by sqindia on 02-11-2016.
@@ -82,6 +87,9 @@ public class Tracking extends FragmentActivity implements GoogleMap.OnMyLocation
     double curr_lati,curr_longi,drop_lati,drop_longi,mid_lati,mid_longi,driver_latitude,driver_longitude;
 
     private boolean mPermissionDenied = false;
+
+    Firebase reference1, reference2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +149,53 @@ public class Tracking extends FragmentActivity implements GoogleMap.OnMyLocation
             new get_jobs().execute();
 
         }
+
+
+        //Firebase.setAndroidContext(this);
+        //reference1 = new Firebase("https://movehaul-147509.firebaseio.com/driver_track" + "driver" + "_" + "customer");
+        //reference2 = new Firebase("https://movehaul-147509.firebaseio.com/driver_track" + "customer" + "_" + "driver");
+
+
+
+        /*reference1.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Map map = dataSnapshot.getValue(Map.class);
+                double latitude = Double.valueOf(map.get("latitude").toString());
+                double longitude = Double.valueOf(map.get("longitude").toString());
+
+
+                Log.e("tag","fir_Vl"+latitude+longitude);
+
+                if(sv_tracking.getVisibility() == View.VISIBLE){
+                    mMap.addMarker(new MarkerOptions().position(new LatLng(latitude,longitude)).icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_truck)));
+
+                }
+
+                Toast.makeText(getApplicationContext(),"values updating",Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });*/
+
 
 
         tv_hint.setVisibility(View.VISIBLE);
