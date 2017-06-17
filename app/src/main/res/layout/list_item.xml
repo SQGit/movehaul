@@ -8,6 +8,8 @@
         android:id="@+id/text"
         android:layout_height="wrap_content"
         android:textColor="#000000"
-        android:textSize="15sp"/>
+        android:paddingTop="@dimen/_7sdp"
+        android:paddingBottom="@dimen/_7sdp"
+        android:textSize="@dimen/_17sdp"/>
 
 </LinearLayout>

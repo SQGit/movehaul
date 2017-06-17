@@ -29,6 +29,42 @@ public class MV_Datas {
     String vec_type;
     String driver_count;
     String job_status;
+    String drop_latitude;
+    String drop_longitude;
+    String driver_latitude;
+    String driver_longitude;
+
+    public String getDriver_latitude() {
+        return driver_latitude;
+    }
+
+    public String getDriver_longitude() {
+        return driver_longitude;
+    }
+
+    public void setDriver_latitude(String driver_latitude) {
+        this.driver_latitude = driver_latitude;
+    }
+
+    public void setDriver_longitude(String driver_longitude) {
+        this.driver_longitude = driver_longitude;
+    }
+
+    public String getDrop_latitude() {
+        return drop_latitude;
+    }
+
+    public String getDrop_longitude() {
+        return drop_longitude;
+    }
+
+    public void setDrop_latitude(String drop_latitude) {
+        this.drop_latitude = drop_latitude;
+    }
+
+    public void setDrop_longitude(String drop_longitude) {
+        this.drop_longitude = drop_longitude;
+    }
 
     public String getJob_status() {
         return job_status;

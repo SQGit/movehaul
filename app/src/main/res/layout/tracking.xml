@@ -67,8 +67,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
+            android:padding="@dimen/_5sdp"
             android:hint="Booking ID/Vehicle No"
             android:singleLine="true"
+            android:inputType="number"
             android:textColor="@color/textColor"
             android:textColorHint="@color/hintColor"
             android:textSize="@dimen/_15sdp" />
@@ -137,8 +139,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_7sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_7sdp"
                     android:orientation="horizontal"
                     android:weightSum="2">
 
@@ -196,9 +199,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_7sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_5sdp">
+                    android:layout_marginTop="@dimen/_7sdp">
 
                     <TextView
                         android:id="@+id/textview_address"
@@ -213,57 +216,7 @@
                         android:textSize="@dimen/_15sdp" />
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="@dimen/_15sdp"
-                    android:layout_marginRight="@dimen/_15sdp"
-                    android:background="#666666" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="@dimen/_5sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:drawableLeft="@drawable/goods_tracking"
-                            android:drawablePadding="@dimen/_10sdp"
-                            android:maxLines="1"
-                            android:text="Computer Systems"
-                            android:textColor="@color/textColor"
-                            android:textSize="@dimen/_15sdp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableLeft="@drawable/truck_type_tracking"
-                            android:drawablePadding="@dimen/_10sdp"
-                            android:gravity="center"
-                            android:text="Heavy Load"
-                            android:textColor="@color/textColor"
-                            android:textSize="@dimen/_15sdp" />
-                    </LinearLayout>
-                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -276,9 +229,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_7sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_7sdp"
                     android:orientation="horizontal"
                     android:weightSum="2">
 
@@ -328,9 +281,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_7sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_5sdp">
+                    android:layout_marginTop="@dimen/_7sdp">
 
                     <TextView
                         android:id="@+id/textview_driver_phone"
@@ -351,13 +304,15 @@
                     android:layout_height="1dp"
                     android:layout_marginLeft="@dimen/_15sdp"
                     android:layout_marginRight="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
                     android:background="#666666" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_300sdp"
+                    android:layout_height="@dimen/_325sdp"
                     android:layout_weight="1"
                     android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:orientation="horizontal">
 

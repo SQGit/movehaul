@@ -1,16 +1,22 @@
 package com.movhaul.customer;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -24,9 +30,14 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.rey.material.widget.ImageView;
 import com.rey.material.widget.LinearLayout;
 import com.sloop.fonts.FontsManager;
@@ -42,7 +53,10 @@ import java.util.HashMap;
  * Created by sqindia on 02-11-2016.
  */
 
-public class Tracking extends FragmentActivity implements OnMapReadyCallback {
+public class Tracking extends FragmentActivity implements GoogleMap.OnMyLocationButtonClickListener,
+        OnMapReadyCallback,
+        ActivityCompat.OnRequestPermissionsResultCallback {
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     ImageView btn_search;
     TextView tv_hint;
     ScrollView sv_tracking;
@@ -62,7 +76,12 @@ public class Tracking extends FragmentActivity implements OnMapReadyCallback {
     HashMap<String, MV_Datas> hs_datas;
     TextView tv_date, tv_time, tv_drop, tv_driver_name, tv_driver_phone;
     CustomMapFragment customMapFragment;
+    Location glocation;
+    int iko;
     private GoogleMap mMap;
+    double curr_lati,curr_longi,drop_lati,drop_longi,mid_lati,mid_longi,driver_latitude,driver_longitude;
+
+    private boolean mPermissionDenied = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +149,8 @@ public class Tracking extends FragmentActivity implements OnMapReadyCallback {
         act_tracking.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                btn_search.setVisibility(View.GONE);
                 tv_hint.setVisibility(View.GONE);
                 sv_tracking.setVisibility(View.VISIBLE);
                 String d_id = act_tracking.getText().toString();
@@ -144,6 +165,28 @@ public class Tracking extends FragmentActivity implements OnMapReadyCallback {
                 tv_drop.setText(mv_datas.getDrop());
                 tv_driver_name.setText(mv_datas.getName());
                 tv_driver_phone.setText(mv_datas.getDriver_number());
+
+                 drop_lati = Double.valueOf(mv_datas.drop_latitude);
+                 drop_longi = Double.valueOf(mv_datas.drop_longitude);
+
+                driver_latitude = Double.valueOf(mv_datas.driver_latitude);
+                driver_longitude = Double.valueOf(mv_datas.driver_longitude);
+
+                Log.e("tag","lat:"+drop_lati);
+                Log.e("tag","lon:"+drop_longi);
+
+                mMap.clear();
+                mMap.addMarker(new MarkerOptions().position(new LatLng(drop_lati,drop_longi)).icon(BitmapDescriptorFactory.fromResource(R.drawable.delivery_addr_tracking)));
+                mMap.addMarker(new MarkerOptions().position(new LatLng(driver_latitude,driver_longitude)).icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_truck)));
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+
+                midPoint(curr_lati,curr_longi,drop_lati,drop_longi);
+
+
+
+
             }
         });
 
@@ -158,6 +201,7 @@ public class Tracking extends FragmentActivity implements OnMapReadyCallback {
                 if (count <= 0) {
                     tv_hint.setVisibility(View.VISIBLE);
                     sv_tracking.setVisibility(View.GONE);
+                    btn_search.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -181,9 +225,77 @@ public class Tracking extends FragmentActivity implements OnMapReadyCallback {
             public void onClick(View view) {
                 // tv_hint.setVisibility(View.GONE);
                 //sv_tracking.setVisibility(View.VISIBLE);
+                String getId = act_tracking.getText().toString().trim();
+                if (!act_tracking.getText().toString().trim().isEmpty()) {
+
+                    Log.e("tag", "getIdsts:" + getID(getId));
+
+                    if (getID(getId)) {
+                        snackbar.show();
+                        tv_snack.setText("correct Booking ID");
+                    } else {
+                        snackbar.show();
+                        tv_snack.setText("Invalid Booking ID");
+                    }
+                } else {
+                    snackbar.show();
+                    tv_snack.setText("Enter Booking ID");
+
+                }
             }
         });
 
+    }
+
+    public boolean getID(String asf) {
+
+        boolean id_sts = false;
+        int i = 0;
+
+        do {
+            if (i < ar_ids.size()) {
+                Log.e("tag", "asf:" + asf);
+                Log.e("tag", "arids:" + ar_ids.get(i));
+
+                if (ar_ids.get(i).equals(asf)) {
+                    id_sts = true;
+                }
+                Log.e("tag", "dists:" + id_sts);
+            }
+            i++;
+        } while (!id_sts);
+
+       /* for (String string : ar_ids) {
+            if (string.equals(asf)) {
+                return true;
+            }
+
+        }*/
+        return id_sts;
+    }
+
+    public  void midPoint(double lat1,double lon1,double lat2,double lon2){
+
+        double dLon = Math.toRadians(lon2 - lon1);
+
+        //convert to radians
+        lat1 = Math.toRadians(lat1);
+        lat2 = Math.toRadians(lat2);
+        lon1 = Math.toRadians(lon1);
+
+        double Bx = Math.cos(lat2) * Math.cos(dLon);
+        double By = Math.cos(lat2) * Math.sin(dLon);
+        double lat = Math.atan2(Math.sin(lat1) + Math.sin(lat2), Math.sqrt((Math.cos(lat1) + Bx) * (Math.cos(lat1) + Bx) + By * By));
+        double lon = lon1 + Math.atan2(By, Math.cos(lat1) + Bx);
+
+        //print out in degrees
+        System.out.println(Math.toDegrees(lat) + " " + Math.toDegrees(lon));
+        Toast.makeText(getApplicationContext(),"mid POint"+lat+lon,Toast.LENGTH_LONG).show();
+        mid_lati = Math.toDegrees(lat);
+        mid_longi = Math.toDegrees(lon);
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mid_lati, mid_longi), 10.5f));
+      //  mMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(mid_lati,mid_longi)));
     }
 
     @Override
@@ -206,6 +318,60 @@ public class Tracking extends FragmentActivity implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
+        mMap = googleMap;
+
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+        mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+        //googleMap.animateCamera(CameraUpdateFactory.zoomTo(9.0f));
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+
+
+        try {
+            boolean success = mMap.setMapStyle(
+                    MapStyleOptions.loadRawResourceStyle(
+                            this, R.raw.style_json));
+            if (!success) {
+                Log.e("TAG", "Style parsing failed.");
+            }
+        } catch (Resources.NotFoundException e) {
+            Log.e("TAG", "Can't find style. Error: ", e);
+        }
+
+
+        mMap.setOnMyLocationChangeListener(myLocationChangeListener);
+
+
+
+    }
+
+    GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
+        @Override
+        public void onMyLocationChange(Location location) {
+            if (iko == 0) {
+            Log.e("tag", "locationchanged");
+                curr_lati = location.getLatitude();
+                curr_longi = location.getLongitude();
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 10.5f));
+
+                iko = 1;
+            } else {
+            }
+
+        }
+    };
+
+
+
+    @Override
+    public boolean onMyLocationButtonClick() {
+
+        Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
+        // Return false so that we don't consume the event and the default behavior still occurs
+        // (the camera animates to the user's current position).
+        return false;
     }
 
 
@@ -268,6 +434,11 @@ public class Tracking extends FragmentActivity implements OnMapReadyCallback {
                                 Log.e("tag", "1st" + part1);
                                 Log.e("tag", "2st" + part2);
 
+                                String drop_latitude = jos.getString("drop_latitude");
+                                String drop_longitude = jos.getString("drop_longitude");
+                                String driver_latitude = jos.getString("driver_latitude");
+                                String driver_longitude = jos.getString("driver_longitude");
+
                                 mv_datas.setName(driver_name);
                                 mv_datas.setDriver_image(driver_image);
                                 mv_datas.setDriver_number(driver_phone);
@@ -281,6 +452,10 @@ public class Tracking extends FragmentActivity implements OnMapReadyCallback {
                                 mv_datas.setVec_type(vehicle_type);
                                 mv_datas.setJob_status(job_status);
                                 mv_datas.setDriver_id(driver_id);
+                                mv_datas.setDrop_latitude(drop_latitude);
+                                mv_datas.setDrop_longitude(drop_longitude);
+                                mv_datas.setDriver_latitude(driver_latitude);
+                                mv_datas.setDriver_longitude(driver_longitude);
 
                                 if (job_status.equals("confirmed")) {
                                     ar_job_upcoming.add(mv_datas);
@@ -295,7 +470,7 @@ public class Tracking extends FragmentActivity implements OnMapReadyCallback {
                                 Log.e("tag", "ar: " + ar_ids.get(i));
                             }
 
-                            id_adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.list_item,R.id.text, ar_ids);
+                            id_adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.list_item, R.id.text, ar_ids);
                             act_tracking.setAdapter(id_adapter);
 
                             //    viewPager.setAdapter(myViewPagerAdapter);
