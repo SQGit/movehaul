@@ -1,6 +1,5 @@
 package com.movhaul.customer;
 
-import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -10,13 +9,13 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -39,9 +38,12 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.rey.material.widget.ImageView;
 import com.rey.material.widget.LinearLayout;
 import com.sloop.fonts.FontsManager;
@@ -50,8 +52,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -83,13 +92,28 @@ public class Tracking extends FragmentActivity implements GoogleMap.OnMyLocation
     CustomMapFragment customMapFragment;
     Location glocation;
     int iko;
-    private GoogleMap mMap;
-    double curr_lati,curr_longi,drop_lati,drop_longi,mid_lati,mid_longi,driver_latitude,driver_longitude;
-
-    private boolean mPermissionDenied = false;
-
+    double curr_lati, curr_longi, drop_lati, drop_longi, mid_lati, mid_longi, driver_latitude, driver_longitude;
+    String driver_name;
     Firebase reference1, reference2;
+    float dist_Between;
+    Location currentLocation, dropLocation;
+    private GoogleMap mMap;
+    GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
+        @Override
+        public void onMyLocationChange(Location location) {
+            if (iko == 0) {
+                Log.e("tag", "locationchanged");
+                curr_lati = location.getLatitude();
+                curr_longi = location.getLongitude();
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 10.5f));
 
+                iko = 1;
+            } else {
+            }
+
+        }
+    };
+    private boolean mPermissionDenied = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,51 +175,9 @@ public class Tracking extends FragmentActivity implements GoogleMap.OnMyLocation
         }
 
 
-        //Firebase.setAndroidContext(this);
-        //reference1 = new Firebase("https://movehaul-147509.firebaseio.com/driver_track" + "driver" + "_" + "customer");
+        Firebase.setAndroidContext(this);
+
         //reference2 = new Firebase("https://movehaul-147509.firebaseio.com/driver_track" + "customer" + "_" + "driver");
-
-
-
-        /*reference1.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Map map = dataSnapshot.getValue(Map.class);
-                double latitude = Double.valueOf(map.get("latitude").toString());
-                double longitude = Double.valueOf(map.get("longitude").toString());
-
-
-                Log.e("tag","fir_Vl"+latitude+longitude);
-
-                if(sv_tracking.getVisibility() == View.VISIBLE){
-                    mMap.addMarker(new MarkerOptions().position(new LatLng(latitude,longitude)).icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_truck)));
-
-                }
-
-                Toast.makeText(getApplicationContext(),"values updating",Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });*/
-
 
 
         tv_hint.setVisibility(View.VISIBLE);
@@ -205,43 +187,7 @@ public class Tracking extends FragmentActivity implements GoogleMap.OnMyLocation
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                btn_search.setVisibility(View.GONE);
-                tv_hint.setVisibility(View.GONE);
-                sv_tracking.setVisibility(View.VISIBLE);
-                String d_id = act_tracking.getText().toString();
-
-                mv_datas = hs_datas.get(d_id);
-
-                Log.e("tag", mv_datas.getTime());
-                Log.e("tag", mv_datas.getName());
-
-                tv_date.setText(mv_datas.getDate());
-                tv_time.setText(mv_datas.getTime());
-                tv_drop.setText(mv_datas.getDrop());
-                tv_driver_name.setText(mv_datas.getName());
-                tv_driver_phone.setText(mv_datas.getDriver_number());
-
-                 drop_lati = Double.valueOf(mv_datas.drop_latitude);
-                 drop_longi = Double.valueOf(mv_datas.drop_longitude);
-
-                driver_latitude = Double.valueOf(mv_datas.driver_latitude);
-                driver_longitude = Double.valueOf(mv_datas.driver_longitude);
-
-                Log.e("tag","lat:"+drop_lati);
-                Log.e("tag","lon:"+drop_longi);
-
-                mMap.clear();
-                mMap.addMarker(new MarkerOptions().position(new LatLng(drop_lati,drop_longi)).icon(BitmapDescriptorFactory.fromResource(R.drawable.delivery_addr_tracking)));
-                mMap.addMarker(new MarkerOptions().position(new LatLng(driver_latitude,driver_longitude)).icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_truck)));
-
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-
-                midPoint(curr_lati,curr_longi,drop_lati,drop_longi);
-
-
-
-
+                getData();
             }
         });
 
@@ -286,8 +232,10 @@ public class Tracking extends FragmentActivity implements GoogleMap.OnMyLocation
                     Log.e("tag", "getIdsts:" + getID(getId));
 
                     if (getID(getId)) {
-                        snackbar.show();
-                        tv_snack.setText("correct Booking ID");
+
+                        getData();
+                        //     snackbar.show();
+                        //    tv_snack.setText("correct Booking ID");
                     } else {
                         snackbar.show();
                         tv_snack.setText("Invalid Booking ID");
@@ -301,6 +249,144 @@ public class Tracking extends FragmentActivity implements GoogleMap.OnMyLocation
         });
 
     }
+
+    public void getData() {
+
+        driver_name = mv_datas.getName();
+
+        reference1 = new Firebase("https://movehaul-147509.firebaseio.com/driver_track/" + driver_name);
+
+        btn_search.setVisibility(View.GONE);
+        tv_hint.setVisibility(View.GONE);
+        sv_tracking.setVisibility(View.VISIBLE);
+        String d_id = act_tracking.getText().toString();
+
+        mv_datas = hs_datas.get(d_id);
+
+        Log.e("tag", mv_datas.getTime());
+        Log.e("tag", mv_datas.getName());
+
+        tv_date.setText(mv_datas.getDate());
+        tv_time.setText(mv_datas.getTime());
+        tv_drop.setText(mv_datas.getDrop());
+        tv_driver_name.setText(mv_datas.getName());
+        tv_driver_phone.setText(mv_datas.getDriver_number());
+
+        drop_lati = Double.valueOf(mv_datas.drop_latitude);
+        drop_longi = Double.valueOf(mv_datas.drop_longitude);
+
+        driver_latitude = Double.valueOf(mv_datas.driver_latitude);
+        driver_longitude = Double.valueOf(mv_datas.driver_longitude);
+
+        Log.e("tag", "lat:" + drop_lati);
+        Log.e("tag", "lon:" + drop_longi);
+
+        mMap.clear();
+
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+
+        midPoint(curr_lati, curr_longi, drop_lati, drop_longi);
+
+        String str_origin = "origin=" + curr_lati + "," + curr_longi;
+        String str_dest = "destination=" + drop_lati + "," + drop_longi;
+        String sensor = "sensor=false";
+        String parameters = str_origin + "&" + str_dest + "&" + sensor;
+        String output = "json";
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
+        DownloadTask downloadTask = new DownloadTask();
+        downloadTask.execute(url);
+
+        mMap.addMarker(new MarkerOptions().position(new LatLng(drop_lati, drop_longi)).icon(BitmapDescriptorFactory.fromResource(R.drawable.delivery_addr_tracking)));
+
+        mMap.addMarker(new MarkerOptions()
+                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_truck))
+                .position(new LatLng(driver_latitude, driver_longitude))
+                .flat(true)
+                .rotation(-50));
+
+
+        reference1.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Map map = dataSnapshot.getValue(Map.class);
+                double latitude = Double.valueOf(map.get("latitude").toString());
+                double longitude = Double.valueOf(map.get("longitude").toString());
+
+
+                if (sv_tracking.getVisibility() == View.VISIBLE) {
+                    Log.e("tag", "fir_Vl" + latitude + longitude);
+
+                    dropLocation = new Location(LocationManager.GPS_PROVIDER);
+                    currentLocation = new Location(LocationManager.GPS_PROVIDER);
+
+                    dropLocation.setLatitude(drop_lati);
+                    dropLocation.setLongitude(drop_longi);
+
+                    currentLocation.setLatitude(latitude);
+                    currentLocation.setLongitude(longitude);
+
+                    dist_Between = currentLocation.distanceTo(dropLocation);
+
+                    mMap.clear();
+
+                    Log.e("tag", "distance is: " + dist_Between / 1000 + " km");
+
+                    String str_origin = "origin=" + latitude + "," + longitude;
+                    String str_dest = "destination=" + drop_lati + "," + drop_longi;
+                    String sensor = "sensor=false";
+                    String parameters = str_origin + "&" + str_dest + "&" + sensor;
+                    String output = "json";
+                    String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
+                    DownloadTask downloadTask = new DownloadTask();
+                    downloadTask.execute(url);
+
+                    mMap.addMarker(new MarkerOptions().position(new LatLng(drop_lati, drop_longi)).icon(BitmapDescriptorFactory.fromResource(R.drawable.delivery_addr_tracking)));
+
+
+                    LatLng mapCenter = new LatLng(latitude, longitude);
+                   // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mapCenter, 10.5f));
+                    mMap.addMarker(new MarkerOptions()
+                            .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_truck))
+                            .position(mapCenter)
+                            .flat(true)
+                            .rotation(-50));
+
+                    midPoint(latitude, longitude, drop_lati, drop_longi);
+
+
+                }
+
+                Toast.makeText(getApplicationContext(), "values updating", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
+    }
+
+
+   /* public static double[] midd (double lat1, double long1, double lat2, double long2){
+
+    }*/
 
     public boolean getID(String asf) {
 
@@ -329,7 +415,7 @@ public class Tracking extends FragmentActivity implements GoogleMap.OnMyLocation
         return id_sts;
     }
 
-    public  void midPoint(double lat1,double lon1,double lat2,double lon2){
+    public void midPoint(double lat1, double lon1, double lat2, double lon2) {
 
         double dLon = Math.toRadians(lon2 - lon1);
 
@@ -345,12 +431,22 @@ public class Tracking extends FragmentActivity implements GoogleMap.OnMyLocation
 
         //print out in degrees
         System.out.println(Math.toDegrees(lat) + " " + Math.toDegrees(lon));
-        Toast.makeText(getApplicationContext(),"mid POint"+lat+lon,Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "mid POint" + lat + lon, Toast.LENGTH_LONG).show();
         mid_lati = Math.toDegrees(lat);
         mid_longi = Math.toDegrees(lon);
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mid_lati, mid_longi), 10.5f));
-      //  mMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(mid_lati,mid_longi)));
+
+        LatLng mapCenter = new LatLng(mid_lati, mid_longi);
+        CameraPosition cameraPosition = CameraPosition.builder()
+                .target(mapCenter)
+                .zoom(10.5f)
+                .build();
+        // Animate the change in camera view over 2 seconds
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition),
+                2000, null);
+
+        // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mid_lati, mid_longi), 10.5f));
+        //  mMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(mid_lati,mid_longi)));
     }
 
     @Override
@@ -399,26 +495,7 @@ public class Tracking extends FragmentActivity implements GoogleMap.OnMyLocation
         mMap.setOnMyLocationChangeListener(myLocationChangeListener);
 
 
-
     }
-
-    GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
-        @Override
-        public void onMyLocationChange(Location location) {
-            if (iko == 0) {
-            Log.e("tag", "locationchanged");
-                curr_lati = location.getLatitude();
-                curr_longi = location.getLongitude();
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 10.5f));
-
-                iko = 1;
-            } else {
-            }
-
-        }
-    };
-
-
 
     @Override
     public boolean onMyLocationButtonClick() {
@@ -429,6 +506,43 @@ public class Tracking extends FragmentActivity implements GoogleMap.OnMyLocation
         return false;
     }
 
+    private String downloadUrl(String strUrl) throws IOException {
+        String data = "";
+        InputStream iStream = null;
+        HttpURLConnection urlConnection = null;
+        try {
+            URL url = new URL(strUrl);
+
+            // Creating an http connection to communicate with url
+            urlConnection = (HttpURLConnection) url.openConnection();
+
+            // Connecting to url
+            urlConnection.connect();
+
+            // Reading data from url
+            iStream = urlConnection.getInputStream();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(iStream));
+
+            StringBuffer sb = new StringBuffer();
+
+            String line = "";
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+
+            data = sb.toString();
+
+            br.close();
+
+        } catch (Exception e) {
+            Log.d("Exception sd sd url", e.toString());
+        } finally {
+            iStream.close();
+            urlConnection.disconnect();
+        }
+        return data;
+    }
 
     public class get_jobs extends AsyncTask<String, Void, String> {
         @Override
@@ -554,6 +668,103 @@ public class Tracking extends FragmentActivity implements GoogleMap.OnMyLocation
 
         }
 
+    }
+
+    private class DownloadTask extends AsyncTask<String, Void, String> {
+
+        // Downloading data in non-ui thread
+        @Override
+        protected String doInBackground(String... url) {
+
+            // For storing data from web service
+            String data = "";
+
+            try {
+                // Fetching the data from web service
+                data = downloadUrl(url[0]);
+            } catch (Exception e) {
+                Log.d("Background Task", e.toString());
+            }
+            return data;
+        }
+
+        // Executes in UI thread, after the execution of
+        // doInBackground()
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            ParserTask parserTask = new ParserTask();
+
+            // Invokes the thread for parsing the JSON data
+            parserTask.execute(result);
+
+        }
+    }
+
+    private class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
+
+        // Parsing the data in non-ui thread
+        @Override
+        protected List<List<HashMap<String, String>>> doInBackground(String... jsonData) {
+
+            JSONObject jObject;
+            List<List<HashMap<String, String>>> routes = null;
+
+            try {
+                jObject = new JSONObject(jsonData[0]);
+                DirectionsJSONParser parser = new DirectionsJSONParser();
+
+                // Starts parsing data
+                routes = parser.parse(jObject);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return routes;
+        }
+
+        // Executes in UI thread, after the parsing process
+        @Override
+        protected void onPostExecute(List<List<HashMap<String, String>>> result) {
+            ArrayList<LatLng> points = null;
+            PolylineOptions lineOptions = null;
+            Polyline polyline;
+            MarkerOptions markerOptions = new MarkerOptions();
+
+            // Traversing through all the routes
+            if (!result.isEmpty()) {
+                for (int i = 0; i < result.size(); i++) {
+                    points = new ArrayList<LatLng>();
+                    lineOptions = new PolylineOptions();
+
+                    // Fetching i-th route
+                    List<HashMap<String, String>> path = result.get(i);
+
+                    // Fetching all the points in i-th route
+                    for (int j = 0; j < path.size(); j++) {
+                        HashMap<String, String> point = path.get(j);
+
+                        double lat = Double.parseDouble(point.get("lat"));
+                        double lng = Double.parseDouble(point.get("lng"));
+                        LatLng position = new LatLng(lat, lng);
+
+                        points.add(position);
+                    }
+
+                    // Adding all the points in the route to LineOptions
+                    lineOptions.addAll(points);
+                    lineOptions.width(6);
+                    lineOptions.color(getResources().getColor(R.color.redColor));
+
+                }
+
+                // Drawing polyline in the Google Map for the i-th route
+                polyline = mMap.addPolyline(lineOptions);
+                polyline.remove();
+                polyline = mMap.addPolyline(lineOptions);
+
+            }
+        }
     }
 
 
