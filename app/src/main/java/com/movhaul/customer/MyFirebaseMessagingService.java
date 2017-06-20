@@ -76,7 +76,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }*/
        // sendNotification(remoteMessage.getNotification().getBody());
         Log.e("tag","asdf: "+ remoteMessage.getNotification().getBody());
-        send_notification(remoteMessage.getNotification().getBody());
+
+        if(remoteMessage.getNotification().getBody().toString().contains("Job Started")){
+            send_notification1(remoteMessage.getNotification().getBody());
+        }
+        else {
+            send_notification(remoteMessage.getNotification().getBody());
+        }
 
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
@@ -211,6 +217,98 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
            // Intent resultIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + "com.movhaul.customer"));
            // resultIntent.setAction(Intent.ACTION_MAIN);
            // resultIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+
+
+            Intent resultIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.movhaul.customer"));
+            PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,
+                    resultIntent, PendingIntent.FLAG_ONE_SHOT);
+
+            NotificationCompat.Builder mNotifyBuilder;
+            NotificationManager mNotificationManager;
+            mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+            mNotifyBuilder = new NotificationCompat.Builder(this)
+                    .setContentTitle("Movhaul")
+                    .setContentText(message)
+                    .setSmallIcon(R.drawable.truck_icon);
+
+            mNotifyBuilder.setContentIntent(resultPendingIntent);
+            int defaults = 0;
+            defaults = defaults | Notification.DEFAULT_LIGHTS;
+            defaults = defaults | Notification.DEFAULT_VIBRATE;
+            defaults = defaults | Notification.DEFAULT_SOUND;
+            mNotifyBuilder.setDefaults(defaults);
+            mNotifyBuilder.setAutoCancel(true);
+            mNotificationManager.notify(0, mNotifyBuilder.build());
+        }
+
+
+
+    }
+
+
+    private void send_notification1(String data) {
+        Log.e("tag","data: "+ data);
+
+        String name = null,title = null,body = null,message = null;
+        try {
+            JSONObject jsonObject = new JSONObject(data);
+
+            // name = jsonObject.getString("customer_name");
+
+            if(jsonObject.has("title")) {
+                title = jsonObject.getString("title");
+                body = jsonObject.getString("body");
+
+                Log.e("tag", "msg" + jsonObject.toString());
+                Log.e("tag", "til" + title);
+                Log.e("tag", "body" + body);
+            }
+            else{
+                message = jsonObject.toString();
+                Log.e("tag", "msg" + message);
+            }
+
+
+        } catch (Exception e) {
+            Log.e("InputStream", e.getLocalizedMessage());
+            message = data;
+
+        }
+
+
+
+
+        if(message== null) {
+
+            Intent resultIntent = new Intent(this, DashboardNavigation.class);
+            resultIntent.setAction(Intent.ACTION_MAIN);
+            resultIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+            PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,
+                    resultIntent, PendingIntent.FLAG_ONE_SHOT);
+            NotificationCompat.Builder mNotifyBuilder;
+            NotificationManager mNotificationManager;
+            mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+            mNotifyBuilder = new NotificationCompat.Builder(this)
+                    .setContentTitle(title)
+                    .setContentText(body)
+                    .setSmallIcon(R.drawable.truck_icon);
+
+            mNotifyBuilder.setContentIntent(resultPendingIntent);
+            int defaults = 0;
+            defaults = defaults | Notification.DEFAULT_LIGHTS;
+            defaults = defaults | Notification.DEFAULT_VIBRATE;
+            defaults = defaults | Notification.DEFAULT_SOUND;
+            mNotifyBuilder.setDefaults(defaults);
+            mNotifyBuilder.setAutoCancel(true);
+            mNotificationManager.notify(0, mNotifyBuilder.build());
+        }
+        else{
+
+            // Intent resultIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + "com.movhaul.customer"));
+            // resultIntent.setAction(Intent.ACTION_MAIN);
+            // resultIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 
 
             Intent resultIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.movhaul.customer"));
