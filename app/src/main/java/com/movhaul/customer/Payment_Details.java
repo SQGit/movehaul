@@ -49,6 +49,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Random;
 
 import co.paystack.android.PaystackSdk;
 import co.paystack.android.Transaction;
@@ -618,7 +619,7 @@ public class Payment_Details extends Activity {
 
             transaction_id = remitaTransRef;
 
-            new book_now_task("Trc0Bz39dox").execute();
+            new book_now_task(getSaltString()).execute();
         } else if (requestCode == REQUEST_CODE_PAYMENT_ROADSIDE && resultCode == Activity.RESULT_OK) {
 
             Bundle bundle = data.getExtras();
@@ -634,6 +635,19 @@ public class Payment_Details extends Activity {
             bank.setChecked(false);
         }
 
+
+    }
+
+    protected String getSaltString() {
+        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        StringBuilder salt = new StringBuilder();
+        Random rnd = new Random();
+        while (salt.length() < 18) { // length of the random string.
+            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+            salt.append(SALTCHARS.charAt(index));
+        }
+        String saltStr = salt.toString();
+        return saltStr;
 
     }
 
