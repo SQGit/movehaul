@@ -67,8 +67,7 @@ import java.util.Map;
  * Created by sqindia on 02-11-2016.
  */
 
-public class Tracking extends FragmentActivity implements GoogleMap.OnMyLocationButtonClickListener,
-        OnMapReadyCallback,
+public class Tracking extends FragmentActivity implements OnMapReadyCallback,
         ActivityCompat.OnRequestPermissionsResultCallback {
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     ImageView btn_search;
@@ -352,12 +351,20 @@ public class Tracking extends FragmentActivity implements GoogleMap.OnMyLocation
                             .flat(true)
                             .rotation(-50));
 
+                    LatLng mapCenter11 = new LatLng(mid_lati, mid_longi);
+                    CameraPosition cameraPosition1 = CameraPosition.builder()
+                            .target(mapCenter11)
+                            .build();
+                    // Animate the change in camera view over 2 seconds
+                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition1),
+                            2000, null);
+
                     midPoint(latitude, longitude, drop_lati, drop_longi);
 
 
                 }
 
-                Toast.makeText(getApplicationContext(), "values updating", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "values updating", Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -430,20 +437,20 @@ public class Tracking extends FragmentActivity implements GoogleMap.OnMyLocation
         double lon = lon1 + Math.atan2(By, Math.cos(lat1) + Bx);
 
         //print out in degrees
-        System.out.println(Math.toDegrees(lat) + " " + Math.toDegrees(lon));
-        Toast.makeText(getApplicationContext(), "mid POint" + lat + lon, Toast.LENGTH_LONG).show();
+      //  System.out.println(Math.toDegrees(lat) + " " + Math.toDegrees(lon));
+      //  Toast.makeText(getApplicationContext(), "mid POint" + lat + lon, Toast.LENGTH_LONG).show();
         mid_lati = Math.toDegrees(lat);
         mid_longi = Math.toDegrees(lon);
 
 
-        LatLng mapCenter = new LatLng(mid_lati, mid_longi);
+       /* LatLng mapCenter = new LatLng(mid_lati, mid_longi);
         CameraPosition cameraPosition = CameraPosition.builder()
                 .target(mapCenter)
                 .zoom(10.5f)
                 .build();
         // Animate the change in camera view over 2 seconds
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition),
-                2000, null);
+                2000, null);*/
 
         // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mid_lati, mid_longi), 10.5f));
         //  mMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(mid_lati,mid_longi)));
@@ -497,14 +504,7 @@ public class Tracking extends FragmentActivity implements GoogleMap.OnMyLocation
 
     }
 
-    @Override
-    public boolean onMyLocationButtonClick() {
 
-        Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
-        // Return false so that we don't consume the event and the default behavior still occurs
-        // (the camera animates to the user's current position).
-        return false;
-    }
 
     private String downloadUrl(String strUrl) throws IOException {
         String data = "";
