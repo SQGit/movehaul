@@ -732,37 +732,39 @@ public class Tracking extends FragmentActivity implements OnMapReadyCallback,
             MarkerOptions markerOptions = new MarkerOptions();
 
             // Traversing through all the routes
-            if (!result.isEmpty()) {
-                for (int i = 0; i < result.size(); i++) {
-                    points = new ArrayList<LatLng>();
-                    lineOptions = new PolylineOptions();
+            if (result != null) {
+                if (!result.isEmpty()) {
+                    for (int i = 0; i < result.size(); i++) {
+                        points = new ArrayList<LatLng>();
+                        lineOptions = new PolylineOptions();
 
-                    // Fetching i-th route
-                    List<HashMap<String, String>> path = result.get(i);
+                        // Fetching i-th route
+                        List<HashMap<String, String>> path = result.get(i);
 
-                    // Fetching all the points in i-th route
-                    for (int j = 0; j < path.size(); j++) {
-                        HashMap<String, String> point = path.get(j);
+                        // Fetching all the points in i-th route
+                        for (int j = 0; j < path.size(); j++) {
+                            HashMap<String, String> point = path.get(j);
 
-                        double lat = Double.parseDouble(point.get("lat"));
-                        double lng = Double.parseDouble(point.get("lng"));
-                        LatLng position = new LatLng(lat, lng);
+                            double lat = Double.parseDouble(point.get("lat"));
+                            double lng = Double.parseDouble(point.get("lng"));
+                            LatLng position = new LatLng(lat, lng);
 
-                        points.add(position);
+                            points.add(position);
+                        }
+
+                        // Adding all the points in the route to LineOptions
+                        lineOptions.addAll(points);
+                        lineOptions.width(6);
+                        lineOptions.color(getResources().getColor(R.color.redColor));
+
                     }
 
-                    // Adding all the points in the route to LineOptions
-                    lineOptions.addAll(points);
-                    lineOptions.width(6);
-                    lineOptions.color(getResources().getColor(R.color.redColor));
+                    // Drawing polyline in the Google Map for the i-th route
+                    polyline = mMap.addPolyline(lineOptions);
+                    polyline.remove();
+                    polyline = mMap.addPolyline(lineOptions);
 
                 }
-
-                // Drawing polyline in the Google Map for the i-th route
-                polyline = mMap.addPolyline(lineOptions);
-                polyline.remove();
-                polyline = mMap.addPolyline(lineOptions);
-
             }
         }
     }
