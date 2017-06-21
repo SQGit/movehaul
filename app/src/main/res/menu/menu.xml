@@ -3,15 +3,13 @@
 
 
     <item
+        android:id="@+id/support"
+        android:title="@string/support" />
+    <item
         android:id="@+id/feedback"
-        android:title="Feedback" />
-
+        android:title="@string/feedback" />
     <item
         android:id="@+id/logout"
-        android:title="Logout" />
-
-    <item
-        android:id="@+id/exit"
-        android:title="Exit" />
+        android:title="@string/logout" />
 
 </menu>
