@@ -175,8 +175,8 @@ public class MyTrips extends AppCompatActivity {
         tv_dg_txt = (android.widget.TextView) dg_show_cancel.findViewById(com.movhaul.customer.R.id.textView_1);
         tv_dg_txt2 = (android.widget.TextView) dg_show_cancel.findViewById(com.movhaul.customer.R.id.textView_2);
 
-        tv_dg_txt.setText("Cancel Job");
-        tv_dg_txt2.setText("Are You sure want to Cancel this job \nMovHaul will deduct 35% from your payment.");
+        tv_dg_txt.setText(R.string.ca);
+        tv_dg_txt2.setText(R.string.axcanc);
         btn_dg_cancel.setText("OK");
 
         tv_dg_txt.setTypeface(tf);
@@ -444,7 +444,7 @@ public class MyTrips extends AppCompatActivity {
 
                         } else {
                             finish();
-                            Toast.makeText(getApplicationContext(), "Currently you don't have any Jobs to Show...", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), R.string.cade, Toast.LENGTH_LONG).show();
                         }
 
                     } else if (status.equals("false")) {

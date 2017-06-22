@@ -121,10 +121,10 @@ public class Payment_Card_Details extends Activity {
         tv_dialog2 = (TextView) dialog1.findViewById(com.movhaul.customer.R.id.textView_2);
         tv_dialog3 = (TextView) dialog1.findViewById(com.movhaul.customer.R.id.textView_3);
         tv_dialog4 = (TextView) dialog1.findViewById(com.movhaul.customer.R.id.textView_4);
-        tv_dialog1.setText("Your Trip has Been");
-        tv_dialog2.setText("Confirmed!!");
-        tv_dialog3.setText("Our Driver will");
-        tv_dialog4.setText("Contact you soon..");
+        tv_dialog1.setText(R.string.adsaz);
+        tv_dialog2.setText(R.string.cacx);
+        tv_dialog3.setText(R.string.acwz);
+        tv_dialog4.setText(R.string.caez);
 
         tv_dialog1.setTypeface(type);
         tv_dialog2.setTypeface(type);
@@ -242,16 +242,16 @@ public class Payment_Card_Details extends Activity {
 
                         Log.e("tag", "Location not updated");
                         //has to check internet and location...
-                        Toast.makeText(getApplicationContext(),"Network Errror. Please Try Again Later",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),R.string.ase,Toast.LENGTH_LONG).show();
 
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("tag", "nt" + e.toString());
-                    Toast.makeText(getApplicationContext(),"Network Errror. Please Try Again Later",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),R.string.ase,Toast.LENGTH_LONG).show();
                 }
             } else {
-                 Toast.makeText(getApplicationContext(),"Network Errror1",Toast.LENGTH_LONG).show();
+                 Toast.makeText(getApplicationContext(),R.string.ase,Toast.LENGTH_LONG).show();
             }
 
         }

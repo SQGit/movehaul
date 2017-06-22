@@ -36,7 +36,6 @@ import java.util.HashSet;
  */
 public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
 
-    private static final int REQUEST_CODE_PAYMENT = 545;
     Context context;
     ArrayList<MV_Datas> ar_drv_list;
     Activity act;
@@ -78,9 +77,6 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
 
     @Override
     public View getView(final int position, final View convertView, ViewGroup parent) {
-        // get item for selected view
-        //Item item = getItem(position);
-        // if cell is exists - reuse it, if not - create the new one from resource
         cell = (FoldingCell) convertView;
         ViewHolder viewHolder;
         tf = Typeface.createFromAsset(act.getAssets(), "fonts/lato.ttf");
@@ -149,9 +145,7 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
 
         RatingBar ratingBar = (RatingBar) cell.findViewById(com.movhaul.customer.R.id.ratingBsdar);
         RatingBar ratingBar1 = (RatingBar) cell.findViewById(com.movhaul.customer.R.id.ratingbar);
-      /*  LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
-        stars.getDrawable(2).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
-*/
+
         LayerDrawable layerDrawable = (LayerDrawable) ratingBar.getProgressDrawable();
         LayerDrawable layerDrawable1 = (LayerDrawable) ratingBar1.getProgressDrawable();
         DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable1.getDrawable(0)),
@@ -218,12 +212,6 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
 
         iv_driver_image = (ImageView) cell.findViewById(com.movhaul.customer.R.id.driver_image);
 
-
-      /*  Glide.with(ProfileActivity.this).load(Config.WEB_URL+"vehicle_details/"+img).error(R.drawable.truck_front_ico).into(iv_vec_front);
-        Glide.with(ProfileActivity.this).load(Config.WEB_URL+"vehicle_details/"+img1).error(R.drawable.truck_side_ico).into(iv_vec_side);
-        Glide.with(ProfileActivity.this).load(Config.WEB_URL+"vehicle_details/"+img2).error(R.drawable.truck_back_ico).into(iv_vec_back);
-        Glide.with(ProfileActivity.this).load(Config.WEB_URL+"vehicle_details/"+img3).into(iv_vec_rc);
-        Glide.with(ProfileActivity.this).load(Config.WEB_URL+"vehicle_details/"+img4).into(iv_vec_ins);*/
 
         mv_datas = ar_drv_list.get(position);
 
@@ -366,10 +354,10 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
         tv_dialog2 = (TextView) dialog1.findViewById(com.movhaul.customer.R.id.textView_2);
         tv_dialog3 = (TextView) dialog1.findViewById(com.movhaul.customer.R.id.textView_3);
         tv_dialog4 = (TextView) dialog1.findViewById(com.movhaul.customer.R.id.textView_4);
-        tv_dialog1.setText("Selected Driver");
-        tv_dialog2.setText("Successfully!!");
-        tv_dialog3.setText("Are you sure that");
-        tv_dialog4.setText("this driver is suitable for your job?");
+        tv_dialog1.setText(R.string.awex);
+        tv_dialog2.setText(R.string.zxwea);
+        tv_dialog3.setText(R.string.czwa);
+        tv_dialog4.setText(R.string.azec);
 
         tv_dialog1.setTypeface(type);
         tv_dialog2.setTypeface(type);
@@ -401,19 +389,6 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
                 Intent i = new Intent(DriversListAdapter.this.getContext(), Payment_Details.class);
                 getContext().startActivity(i);
 
-
-
-
-            /*    Intent intent = new Intent(DriversListAdapter.this.getContext(), RemitaMainActivity.class);
-                intent.putExtra("amount", bidding);
-                intent.putExtra("testMode", true);
-                intent.putExtra("apiKey", "U1lTUC4xNUhPMTIkMTIzLjR8U1lTUA==");
-                intent.putExtra("txnToken", "55316C54554334784E5568504D54496B4D54497A4C6A523855316C5455413D3D7C3932333737633266613035313135306337363534386636376266623131303165383831366464343834666234363064653062343731663538643461323835303537333638653232313135363366383334666337613166333265333336653834626539656566393465396363356131363739353463646239333434363164313732");
-                ((Activity) context).startActivityForResult(intent, REQUEST_CODE_PAYMENT);*/
-                //getContext().startActivityForResult(intent, REQUEST_CODE_PAYMENT);
-
-
-                //finish();
             }
         });
 

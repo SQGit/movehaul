@@ -76,7 +76,7 @@ public class MyJobs extends Activity {
         btn_back = (LinearLayout) findViewById(com.movhaul.customer.R.id.layout_back);
 
         snackbar = Snackbar
-                .make(findViewById(com.movhaul.customer.R.id.top), "Network Error! Please Try Again Later.", Snackbar.LENGTH_LONG);
+                .make(findViewById(com.movhaul.customer.R.id.top), R.string.ase, Snackbar.LENGTH_LONG);
         View sbView = snackbar.getView();
         tv_snack = (android.widget.TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         tv_snack.setTextColor(Color.WHITE);
@@ -84,7 +84,7 @@ public class MyJobs extends Activity {
 
         if (!com.movhaul.customer.Config.isConnected(MyJobs.this)) {
             snackbar.show();
-            tv_snack.setText("Please Connect Internet and Try again");
+            tv_snack.setText(R.string.conn);
         } else {
             new get_job_lists().execute();
 
@@ -181,7 +181,7 @@ public class MyJobs extends Activity {
 
                         } else {
                             finish();
-                            Toast.makeText(getApplicationContext(), "No Jobs Found.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), R.string.nojobs, Toast.LENGTH_LONG).show();
 
                         }
 
@@ -198,7 +198,7 @@ public class MyJobs extends Activity {
 
                     } else {
                         finish();
-                        Toast.makeText(getApplicationContext(), "No Jobs Found.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), R.string.nojobs, Toast.LENGTH_LONG).show();
 
                     }
 

@@ -47,7 +47,6 @@ import java.util.ArrayList;
 public class DriversList extends AppCompatActivity {
     ListView lv_drv_list;
     ImageView iv_filter;
-    Dialog dialog_filter;
     LinearLayout lt_filter_dialog;
     Button btn_filter;
     com.rey.material.widget.LinearLayout btn_back, btn_refresh;
@@ -55,10 +54,9 @@ public class DriversList extends AppCompatActivity {
     int i = 0;
     Snackbar snackbar;
     Typeface tf;
-    TextView tv_snack, tv_pickup, tv_drop, tv_delivery, tv_date, tv_time, tv_truck;
+    TextView tv_snack;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-    //String id, token;
     DriversListAdapter drv_adapter;
     ArrayList<MV_Datas> ar_driver_data;
     MV_Datas mv_datas;
@@ -68,7 +66,7 @@ public class DriversList extends AppCompatActivity {
     private static final int REQUEST_CODE_PAYMENT = 545;
     String bidding_id, booking_id, driver_id, transaction_id,id,token;
     Dialog dialog1;
-    Button btn_paynow, btn_ok;
+    Button  btn_ok;
     ImageView btn_close;
     TextView tv_dialog1, tv_dialog2, tv_dialog3, tv_dialog4;
 
@@ -126,14 +124,14 @@ public class DriversList extends AppCompatActivity {
         final int height = getDeviceHeight(DriversList.this);
 
         mProgressDialog = new ProgressDialog(DriversList.this);
-        mProgressDialog.setTitle("Loading..");
-        mProgressDialog.setMessage("Please wait");
+        mProgressDialog.setTitle(getString(R.string.adc));
+        mProgressDialog.setMessage(getString(R.string.cwa));
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.setCancelable(false);
 
 
         snackbar = Snackbar
-                .make(findViewById(com.movhaul.customer.R.id.top), "Network Error! Please Try Again Later.", Snackbar.LENGTH_LONG);
+                .make(findViewById(com.movhaul.customer.R.id.top), R.string.asee, Snackbar.LENGTH_LONG);
         View sbView = snackbar.getView();
         tv_snack = (android.widget.TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         tv_snack.setTextColor(Color.WHITE);
@@ -142,7 +140,7 @@ public class DriversList extends AppCompatActivity {
 
         if (!com.movhaul.customer.Config.isConnected(DriversList.this)) {
             snackbar.show();
-            tv_snack.setText("Please Connect Internet and Try again");
+            tv_snack.setText(R.string.wqc);
         } else {
             new get_drivers().execute();
 
@@ -266,10 +264,10 @@ public class DriversList extends AppCompatActivity {
         tv_dialog2 = (TextView) dialog1.findViewById(com.movhaul.customer.R.id.textView_2);
         tv_dialog3 = (TextView) dialog1.findViewById(com.movhaul.customer.R.id.textView_3);
         tv_dialog4 = (TextView) dialog1.findViewById(com.movhaul.customer.R.id.textView_4);
-        tv_dialog1.setText("Your Trip has Been");
-        tv_dialog2.setText("Confirmed!!");
-        tv_dialog3.setText("Our Driver will");
-        tv_dialog4.setText("Contact you soon..");
+        tv_dialog1.setText(R.string.acw);
+        tv_dialog2.setText(R.string.cwx);
+        tv_dialog3.setText(R.string.cqa);
+        tv_dialog4.setText(R.string.cxz);
 
         tv_dialog1.setTypeface(tf);
         tv_dialog2.setTypeface(tf);
@@ -483,12 +481,12 @@ public class DriversList extends AppCompatActivity {
 
                             if (ar_driver_data.size() == 0) {
                                 finish();
-                                Toast.makeText(getApplicationContext(), "No Drivers Bidded,Please Wait for some more time.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), R.string.azew, Toast.LENGTH_LONG).show();
                             }
 
                         } else {
                             finish();
-                            Toast.makeText(getApplicationContext(), "No Drivers Bidded,Please Wait for some more time.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), R.string.azew, Toast.LENGTH_LONG).show();
 
                         }
 
@@ -498,7 +496,7 @@ public class DriversList extends AppCompatActivity {
 
                     } else {
                         finish();
-                        Toast.makeText(getApplicationContext(), "No Drivers Bidded,Please Wait for some more time.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), R.string.azew, Toast.LENGTH_LONG).show();
 
                     }
 
@@ -574,16 +572,16 @@ public class DriversList extends AppCompatActivity {
 
                         Log.e("tag", "Location not updated");
                         //has to check internet and location...
-                        Toast.makeText(getApplicationContext(),"Network Errror. Please Try Again Later",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),R.string.ase,Toast.LENGTH_LONG).show();
 
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("tag", "nt" + e.toString());
-                    Toast.makeText(getApplicationContext(),"Network Errror. Please Try Again Later",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),R.string.ase,Toast.LENGTH_LONG).show();
                 }
             } else {
-                Toast.makeText(getApplicationContext(),"Network Errror1",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),R.string.ase,Toast.LENGTH_LONG).show();
             }
 
         }

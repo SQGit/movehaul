@@ -138,7 +138,7 @@ public class RecycleViewAdapter extends
                     activity.startActivity(i);
                 }
                 else{
-                    Toast.makeText(context,"No Drivers Bidded",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.asdfxz,Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -155,7 +155,7 @@ public class RecycleViewAdapter extends
                 Log.e("tag","deL_id:"+mv_datas.getBooking_id());
 
                 if (!com.movhaul.customer.Config.isConnected(context)) {
-                    Toast.makeText(context,"No network Found,Please Try Again Later.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,R.string.ase,Toast.LENGTH_SHORT).show();
                 }
                 else{
                     new delete_job().execute();

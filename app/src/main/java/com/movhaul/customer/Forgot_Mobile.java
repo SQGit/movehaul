@@ -55,7 +55,7 @@ public class Forgot_Mobile extends Activity {
 
 
         snackbar = Snackbar
-                .make(findViewById(com.movhaul.customer.R.id.top), "Network Error! Please Try Again Later.", Snackbar.LENGTH_LONG);
+                .make(findViewById(com.movhaul.customer.R.id.top), R.string.ase, Snackbar.LENGTH_LONG);
         View sbView = snackbar.getView();
         tv_snack = (android.widget.TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         tv_snack.setTextColor(Color.WHITE);
@@ -63,7 +63,7 @@ public class Forgot_Mobile extends Activity {
 
         if (!config.isConnected(Forgot_Mobile.this)) {
             snackbar.show();
-            tv_snack.setText("Please Connect Internet and Try again");
+            tv_snack.setText(R.string.conn);
         }
 
 
@@ -182,7 +182,7 @@ public class Forgot_Mobile extends Activity {
 
                            // Toast.makeText(getApplicationContext(),"Mobile Number Not Registered",Toast.LENGTH_LONG).show();
 
-                            tv_snack.setText("No Number Associated with this Email !");
+                            tv_snack.setText(R.string.nonmas);
                             snackbar.show();
 
                         }
@@ -198,7 +198,7 @@ public class Forgot_Mobile extends Activity {
                         else  {
 
                             //Toast.makeText(getApplicationContext(),"Please Try Again Later",Toast.LENGTH_LONG).show();
-                            tv_snack.setText("Please Try Again Later !");
+                            tv_snack.setText(R.string.ase);
                             snackbar.show();
                         }
 
@@ -208,12 +208,12 @@ public class Forgot_Mobile extends Activity {
                     e.printStackTrace();
                     Log.e("tag","nt"+e.toString());
                    // Toast.makeText(getApplicationContext(),"Network Errror0",Toast.LENGTH_LONG).show();
-                    tv_snack.setText("Network Error, Please Try Again Later !");
+                    tv_snack.setText(R.string.ase);
                     snackbar.show();
                 }
             } else {
                // Toast.makeText(getApplicationContext(),"Network Errror1",Toast.LENGTH_LONG).show();
-                tv_snack.setText("Network Error, Please Try Again Later !");
+                tv_snack.setText(R.string.ase);
                 snackbar.show();
             }
 

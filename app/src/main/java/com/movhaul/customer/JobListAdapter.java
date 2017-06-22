@@ -45,7 +45,7 @@ public class JobListAdapter extends ArrayAdapter<MV_Datas> {
     String booking_id, id, token;
     Integer selected_position = -1;
     ProgressDialog mProgressDialog;
-    private JobListAdapter adapter;
+    //private JobListAdapter adapter;
 
 
 
@@ -54,7 +54,7 @@ public class JobListAdapter extends ArrayAdapter<MV_Datas> {
         this.activity = acti;
         this.context = context;
         this.ar_job_list = objects;
-        adapter = this;
+       // adapter = this;
     }
 
 

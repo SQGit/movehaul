@@ -837,25 +837,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 getMyLocation();
 
 
-                // Location loc = mMap.getMyLocation();
-
-
-               /* if (loc != null) {
-                    LatLng latLang = new LatLng(loc.getLatitude(), loc
-                            .getLongitude());
-                *//*    cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLang, 17);
-                mMap.animateCamera(cameraUpdate);
-*//*
-                    mMap.clear();
-                    CameraPosition cameraPosition = new CameraPosition.Builder()
-                            .target(latLang).zoom(15f).build();
-                    mMap.animateCamera(CameraUpdateFactory
-                            .newCameraPosition(cameraPosition));
-                    //mMap.addMarker(new MarkerOptions().position(latLang));
-
-                }*/
-
-
             }
         });
 
@@ -2259,16 +2240,16 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
                         Log.e("tag", "Location not updated");
                         //has to check internet and location...
-                        Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), com.movhaul.customer.R.string.eer, Toast.LENGTH_LONG).show();
 
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("tag", "nt" + e.toString());
-                    Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), com.movhaul.customer.R.string.eer, Toast.LENGTH_LONG).show();
                 }
             } else {
-                Toast.makeText(getApplicationContext(), "Network Errror1", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), com.movhaul.customer.R.string.eer, Toast.LENGTH_LONG).show();
             }
 
         }

@@ -30,60 +30,14 @@ import java.util.ArrayList;
 public class Dialog_GoodsType extends Dialog {
 
     public Activity activity;
-    TextView tv_header;
-    ImageView img_back;
     Typeface tf;
-    ArrayList<String> country_lists = new ArrayList<>();
-    ArrayList<String> state_lists = new ArrayList<>();
-    ArrayList<String> zip_lists = new ArrayList<>();
-    ListAdapter adapter1, adapter2, adapter3;
+    ListAdapter adapter1;
     View div_view;
     Context context;
-    Cursor cursor;
-    String query, str_country, str_state, str_zip;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     ArrayList<String> ar_goods_type = new ArrayList<>();
-    ListView lview_cont, lview_state, lview_zip;
-
-
-    /*ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
-
-        @Override
-        public void onPageSelected(int position) {
-            if (position == 0) {
-                tv_header.setText("Country");
-                img_back.setVisibility(View.GONE);
-                country_lists.clear();
-                adapter1.notifyDataSetChanged();
-
-            } else if (position == 1) {
-                tv_header.setText("State");
-                img_back.setVisibility(View.GONE);
-                state_lists.clear();
-                adapter2.notifyDataSetChanged();
-            } else {
-                tv_header.setText("Zip");
-                img_back.setVisibility(View.GONE);
-                zip_lists.clear();
-                adapter3.notifyDataSetChanged();
-            }
-        }
-
-        @Override
-        public void onPageScrolled(int arg0, float arg1, int arg2) {
-
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int arg0) {
-
-        }
-    };*/
-   // private ViewPager viewPager;
-   // private int[] layouts;
-    //private MyViewPagerAdapter myViewPagerAdapter;
-
+    ListView lview_cont;
 
     public Dialog_GoodsType(Activity activity, ArrayList<String> ar_goods) {
         super(activity);
@@ -100,126 +54,12 @@ public class Dialog_GoodsType extends Dialog {
 
         tf = Typeface.createFromAsset(activity.getAssets(), "fonts/lato.ttf");
 
-
-
-
-/*
-        layouts = new int[]{
-                R.layout.register_country,
-       *//*         R.layout.register_state,*//*
-                };*/
-
-
-
-
-
-
-
-
         lview_cont = (ListView) findViewById(com.movhaul.customer.R.id.lview);
         adapter1 = new ListAdapter(activity.getApplicationContext(), com.movhaul.customer.R.layout.dialog_vehicle_types, ar_goods_type);
         lview_cont.setAdapter(adapter1);
 
-
-/*        myViewPagerAdapter = new MyViewPagerAdapter();
-        viewPager.setAdapter(myViewPagerAdapter);
-        viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
-
-
-        viewPager.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        });*/
-
-        // viewPager.beginFakeDrag();
-
-       /* img_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                int current = 0;
-                current = viewPager.getCurrentItem() - 1;
-                // Do something after 5s = 5000ms
-                if (current < layouts.length) {
-                    // move to next screen
-                    viewPager.setCurrentItem(current);
-
-                } else {
-                    // launchHomeScreen();
-                }
-
-            }
-        });*/
-
-
     }
 
-
-
-  /*  public class MyViewPagerAdapter extends PagerAdapter {
-
-        ListView lview_cont, lview_state, lview_zip;
-        private LayoutInflater layoutInflater;
-
-        public MyViewPagerAdapter() {
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, final int position) {
-
-            layoutInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-            View view = layoutInflater.inflate(layouts[position], container, false);
-            container.addView(view);
-
-            if (position == 0) {
-
-                lview_cont = (ListView) view.findViewById(R.id.lview);
-                adapter1 = new ListAdapter(activity.getApplicationContext(), R.layout.dialog_vehicle_types, country_lists);
-                lview_cont.setAdapter(adapter1);
-
-
-            } else if (position == 1) {
-
-                state_lists.clear();
-
-
-                lview_state = (ListView) view.findViewById(R.id.lview);
-                adapter2 = new ListAdapter(activity.getApplicationContext(), R.layout.dialog_vehicle_types, state_lists);
-                lview_state.setAdapter(adapter2);
-
-
-            } else {
-
-                lview_zip = (ListView) view.findViewById(R.id.lview);
-                adapter3 = new ListAdapter(activity.getApplicationContext(), R.layout.dialog_vehicle_types, zip_lists);
-                lview_zip.setAdapter(adapter3);
-
-            }
-
-
-            return view;
-        }
-
-        @Override
-        public int getCount() {
-            return layouts.length;
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object obj) {
-            return view == obj;
-        }
-
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            View view = (View) object;
-            container.removeView(view);
-        }
-    }*/
 
     public class ListAdapter extends ArrayAdapter<String> {
 

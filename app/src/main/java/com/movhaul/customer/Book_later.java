@@ -67,7 +67,6 @@ import java.util.HashSet;
 public class Book_later extends Activity {
     final static int DATE_PICKER_ID1 = 1111;
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
-    private static final int INTENT_REQUEST_GET_N_IMAGES = 14;
     Dialog dialog1;
     LinearLayout lt_goodsType, lt_truckType;
     com.rey.material.widget.LinearLayout btn_back;
@@ -77,15 +76,12 @@ public class Book_later extends Activity {
     Button btn_post, btn_ok;
     int year;
     String pickup_location, drop_location, pick_lati, pick_long, drop_lati, drop_long;
-    String truck, goods, id, token, str_time;
+    String id, token, str_time;
     int month;
     int day;
     ImageView btn_close;
     Typeface type;
     ArrayList<String> mdatas;
-    HashSet<Uri> mMedia = new HashSet<Uri>();
-    ArrayList<Uri> image_path = new ArrayList<>();
-    String[] imagearray;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     ArrayList<Uri> image_uris;
@@ -107,8 +103,7 @@ public class Book_later extends Activity {
     String date, time;
     FrameLayout fl_goods;
     LinearLayout lt_images;
-    String str_delivery_address, str_v_type, str_drop, str_goods_type, str_truck_type, str_desc, str_goods_pic, str_profile_img, book_time;
-    ArrayList<String> selectedPhotos = new ArrayList<>();
+    String str_delivery_address, str_v_type,str_goods_type, str_truck_type, str_desc,str_profile_img, book_time;
     HashMap<String, String> hash_subtype1;
     HashMap<String, String> hash_truck_imgs1 = new HashMap<String, String>();
     String vec_type;
@@ -119,7 +114,6 @@ public class Book_later extends Activity {
         public void onDateSet(DatePicker view, int selectedYear,
                               int selectedMonth, int selectedDay) {
 
-            //view.setMinDate(System.currentTimeMillis() - 1000);
             year = selectedYear;
             month = selectedMonth;
             day = selectedDay;
@@ -139,7 +133,6 @@ public class Book_later extends Activity {
         mdatas = new ArrayList<>();
         btn_time = (ImageView) findViewById(com.movhaul.customer.R.id.iv_btn_time);
         btn_date = (ImageView) findViewById(com.movhaul.customer.R.id.iv_btn_date);
-        // msg=(TextView) findViewById(R.id.msg);
         mSelectedImagesContainer = (ViewGroup) findViewById(com.movhaul.customer.R.id.selected_photos_container);
         et_time = (EditText) findViewById(com.movhaul.customer.R.id.editTextTime);
         et_goodsType = (EditText) findViewById(com.movhaul.customer.R.id.editTextGoodsType);
@@ -175,7 +168,6 @@ public class Book_later extends Activity {
         flt_truckType.setTypeface(type);
         flt_description.setTypeface(type);
 
-        // Log.e("tag","s:"+System.currentTimeMillis());
 
         View getImages = findViewById(com.movhaul.customer.R.id.camera);
         mSelectedImagesContainer = (ViewGroup) findViewById(com.movhaul.customer.R.id.selected_photos_container);
@@ -212,15 +204,15 @@ public class Book_later extends Activity {
 
 
         mProgressDialog = new ProgressDialog(Book_later.this, com.movhaul.customer.R.style.AppCompatAlertDialogStyle);
-        mProgressDialog.setTitle("Loading..");
-        mProgressDialog.setMessage("Please wait");
+        mProgressDialog.setTitle(getString(R.string.lodo));
+        mProgressDialog.setMessage(getString(R.string.wai));
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.setCancelable(false);
 
 
         if (!com.movhaul.customer.Config.isConnected(Book_later.this)) {
             snackbar.show();
-            tv_snack.setText("Please Connect Internet and Try again");
+            tv_snack.setText(R.string.conn);
         } else {
             new fetch_goods().execute();
             new fetch_trucks().execute();
@@ -247,10 +239,6 @@ public class Book_later extends Activity {
         getImages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Log.e("tag", "s:" + goods_imgs.size());
-                Log.e("tag", "i:" + image_uris.size());
-
                 if (goods_imgs.isEmpty()) {
                     min = 2;
                     max = 4;
@@ -291,21 +279,7 @@ public class Book_later extends Activity {
             @Override
             public void onClick(View view) {
 
-
                 if (vec_type.equals("Bus")) {
-                   /* ar_truck_imgs.clear();
-                    ar_truck_type.clear();
-                    hash_subtype.clear();
-                    hash_truck_imgs.clear();
-                    ar_truck_sstype.clear();
-
-                    ar_truck_type = ar_truck_type1;
-                    hash_subtype = hash_subtype1;
-                    hash_truck_imgs = hash_truck_imgs1;
-                    ar_truck_sstype = ar_truck_sstype1;
-                    ar_truck_imgs = ar_truck_imgs1;
-                    Log.e("tag","siz"+ar_truck_type.size());
-                    Log.e("tag","si2z"+ar_truck_type1.size());*/
                     truck_type(ar_truck_type1, hash_subtype1, hash_truck_imgs1, ar_truck_sstype1, ar_truck_imgs1);
 
                 } else {
@@ -313,7 +287,6 @@ public class Book_later extends Activity {
 
                 }
 
-                // truck_type();
             }
         });
 
@@ -326,10 +299,7 @@ public class Book_later extends Activity {
 
                 if (!(et_date.getText().toString().trim().isEmpty())) {
                     if (!(et_time.getText().toString().trim().isEmpty())) {
-                        //if (!(et_deliveryAddress.getText().toString().trim().isEmpty())) {
                         if (!(et_truckType.getText().toString().trim().isEmpty())) {
-                            //if (!(et_description.getText().toString().trim().isEmpty())) {
-
                             if (vec_type.equals("Truck")) {
                             if (!(et_goodsType.getText().toString().trim().isEmpty())) {
                                 str_goods_type = et_goodsType.getText().toString();
@@ -337,37 +307,21 @@ public class Book_later extends Activity {
                                 str_time = date + " T " + time;
                                 new book_later_task().execute();
                             } else {
-                                Toast.makeText(getApplicationContext(), "Choose Goods Type", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), R.string.ga, Toast.LENGTH_LONG).show();
                             }
                             } else {
-
-                                //str_delivery_address = et_delivery_address.getText().toString();
                                 str_truck_type = et_truckType.getText().toString();
                                 str_time = date + " T " + time;
                                 new book_later_task().execute();
-
                             }
-
-                               /* } else {
-                                    et_description.setError("Enter Description");
-                                    et_description.requestFocus();
-                                }*/
                         } else {
-
-                            Toast.makeText(getApplicationContext(), "Choose " + vec_type + " Type", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), getString(R.string.adaax) + vec_type + getString(R.string.w), Toast.LENGTH_LONG).show();
                         }
-
-
-                       /* } else {
-                            et_deliveryAddress.setError("Enter Delivery Address");
-                            et_deliveryAddress.requestFocus();
-                        }*/
-
                     } else {
-                        Toast.makeText(getApplicationContext(), "Please Select Time", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), R.string.ada, Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "Please Choose Date First", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.wea, Toast.LENGTH_LONG).show();
                 }
 
 
@@ -385,14 +339,11 @@ public class Book_later extends Activity {
                 mTimePicker = new TimePickerDialog(Book_later.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-
-                        Log.e("tag", "time:" + selectedHour + selectedMinute);
-
                         time = selectedHour + ":" + selectedMinute + ":00";
                         updateTime(selectedHour, selectedMinute);
                     }
                 }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle("Select Time");
+                mTimePicker.setTitle(getString(R.string.waz));
                 mTimePicker.show();
 
 
@@ -520,22 +471,6 @@ public class Book_later extends Activity {
         });
     }
 
-  /*  private void truck_type() {
-
-        Dialog_VehicleType dialog_vehicleType = new Dialog_VehicleType(Book_later.this, ar_truck_type, hash_subtype, hash_truck_imgs, ar_truck_sstype, ar_truck_imgs);
-        dialog_vehicleType.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.choose));
-        dialog_vehicleType.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        dialog_vehicleType.show();
-        dialog_vehicleType.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                if (!(sharedPreferences.getString("sub_truck_type", "").equals(""))) {
-                    et_truckType.setText(sharedPreferences.getString("sub_truck_type", ""));
-                }
-            }
-        });
-    }*/
-
     private void truck_type(ArrayList<String> ar_truck_typea, HashMap<String, String> hash_subtypea, HashMap<String, String> hash_truck_imgsa, ArrayList<String> ar_truck_sstypea, ArrayList<String> ar_truck_imgsa) {
         Dialog_VehicleType dialog_vehicleType = new Dialog_VehicleType(Book_later.this, ar_truck_typea, hash_subtypea, hash_truck_imgsa, ar_truck_sstypea, ar_truck_imgsa);
         dialog_vehicleType.getWindow().setBackgroundDrawable(getResources().getDrawable(com.movhaul.customer.R.drawable.choose));
@@ -557,8 +492,6 @@ public class Book_later extends Activity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        // Intent i = new Intent(Book_later.this, DashboardNavigation.class);
-        // startActivity(i);
         finish();
     }
 
@@ -655,18 +588,6 @@ public class Book_later extends Activity {
                     return false;
                 }
             });
-
-      /*     imageHolder.setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View view) {
-                   Log.e("tag","as:"+pa);
-                   Log.e("tag","count_before"+mSelectedImagesContainer.getChildCount());
-
-                   max = mSelectedImagesContainer.getChildCount();
-                   Log.e("tag",max+"count_after"+mSelectedImagesContainer.getChildCount());
-               }
-           });*/
-
 
         }
 
@@ -993,13 +914,13 @@ public class Book_later extends Activity {
 
                         Log.e("tag", "Location not updated");
                         //has to check internet and location...
-                        Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),R.string.err, Toast.LENGTH_LONG).show();
 
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("tag", "nt" + e.toString());
-                    Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.err, Toast.LENGTH_LONG).show();
                 }
             } else {
                 // Toast.makeText(getApplicationContext(),"Network Errror1",Toast.LENGTH_LONG).show();

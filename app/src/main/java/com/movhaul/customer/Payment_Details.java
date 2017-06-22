@@ -133,7 +133,7 @@ public class Payment_Details extends Activity {
         }
 
         snackbar = Snackbar
-                .make(findViewById(com.movhaul.customer.R.id.top), "Network Error! Please Try Again Later.", Snackbar.LENGTH_LONG);
+                .make(findViewById(com.movhaul.customer.R.id.top), R.string.ase, Snackbar.LENGTH_LONG);
         View sbView = snackbar.getView();
         tv_snack = (android.widget.TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         tv_snack.setTextColor(Color.WHITE);
@@ -207,14 +207,14 @@ public class Payment_Details extends Activity {
                 if(isChecked){
                     et_name.setVisibility(View.GONE);
                     et_phone.setVisibility(View.GONE);
-                    tv_dialog3.setText("Shipment Received by You ");
+                    tv_dialog3.setText(R.string.aeioc);
                     //et_name.setText(cus_name);
                    // et_phone.setText(cus_mobile);
                 }
                 else{
                     et_name.setVisibility(View.VISIBLE);
                     et_phone.setVisibility(View.VISIBLE);
-                    tv_dialog3.setText("Shipment Received by");
+                    tv_dialog3.setText(R.string.aeicy);
                     et_name.setText("");
                     et_name.requestFocus();
                     et_phone.setText("");
@@ -442,7 +442,7 @@ public class Payment_Details extends Activity {
                         intent.putExtra("amount", tot_amt);
                         intent.putExtra("testMode", true);
                         intent.putExtra("apiKey", "U1lTUC4xNUhPMTIkMTIzLjR8U1lTUA==");
-                        intent.putExtra("txnToken", "55316C54554334784E5568504D54496B4D54497A4C6A523855316C5455413D3D7C3932333737633266613035313135306337363534386636376266623131303165383831366464343834666234363064653062343731663538643461323835303537333638653232313135363366383334666337613166333265333336653834626539656566393465396363356131363739353463646239333434363164313732");
+                        intent.putExtra("txnToken", getSaltString());
                         if (bl_truck)
                             startActivityForResult(intent, REQUEST_CODE_PAYMENT);
                         else
@@ -458,7 +458,7 @@ public class Payment_Details extends Activity {
                                 intent.putExtra("amount", tot_amt);
                                 intent.putExtra("testMode", true);
                                 intent.putExtra("apiKey", "U1lTUC4xNUhPMTIkMTIzLjR8U1lTUA==");
-                                intent.putExtra("txnToken", "55316C54554334784E5568504D54496B4D54497A4C6A523855316C5455413D3D7C3932333737633266613035313135306337363534386636376266623131303165383831366464343834666234363064653062343731663538643461323835303537333638653232313135363366383334666337613166333265333336653834626539656566393465396363356131363739353463646239333434363164313732");
+                                intent.putExtra("txnToken", getSaltString());
                                 if (bl_truck)
                                     startActivityForResult(intent, REQUEST_CODE_PAYMENT);
                                 else
@@ -725,7 +725,6 @@ public class Payment_Details extends Activity {
                     Log.e("tag", response.getStatusLine().toString());
                     if (statusCode == 200) {
                         responseString = EntityUtils.toString(r_entity);
-
                         Log.e("InputStream00", responseString);
                     } else {
                         responseString = "Error occurred! Http Status Code: "
@@ -839,7 +838,7 @@ public class Payment_Details extends Activity {
                             //has to check internet and location...
                             // Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
                             snackbar.show();
-                            tv_snack.setText("Network Errror. Please Try Again Later");
+                            tv_snack.setText(R.string.ase);
 
                         }
                     } catch (JSONException e) {
@@ -847,12 +846,12 @@ public class Payment_Details extends Activity {
                         Log.e("tag", "nt" + e.toString());
                         // Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
                         snackbar.show();
-                        tv_snack.setText("Network Errror. Please Try Again Later");
+                        tv_snack.setText(R.string.ase);
                     }
                 } else {
                     //Toast.makeText(getApplicationContext(), "Network Errror1", Toast.LENGTH_LONG).show();
                     snackbar.show();
-                    tv_snack.setText("Network Errror. Please Try Again Later");
+                    tv_snack.setText(R.string.ase);
 
                 }
 
@@ -934,7 +933,7 @@ public class Payment_Details extends Activity {
                         //has to check internet and location...
                         // Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
                         snackbar.show();
-                        tv_snack.setText("Network Errror. Please Try Again Later");
+                        tv_snack.setText(R.string.ase);
 
                     }
                 } catch (JSONException e) {
@@ -942,12 +941,12 @@ public class Payment_Details extends Activity {
                     Log.e("tag", "nt" + e.toString());
                     //  Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
                     snackbar.show();
-                    tv_snack.setText("Network Errror. Please Try Again Later");
+                    tv_snack.setText(R.string.ase);
                 }
             } else {
                 //Toast.makeText(getApplicationContext(), "Network Errror1", Toast.LENGTH_LONG).show();
                 snackbar.show();
-                tv_snack.setText("Network Errror. Please Try Again Later");
+                tv_snack.setText(R.string.ase);
             }
 
         }
@@ -1041,7 +1040,7 @@ public class Payment_Details extends Activity {
             try {
 
 
-                jsonObject.put("transaction_id", "Rco32w3Viels3");
+                jsonObject.put("transaction_id", getSaltString());
                 jsonObject.put("booking_id", booking_id);
 
 
@@ -1074,16 +1073,16 @@ public class Payment_Details extends Activity {
 
                         Log.e("tag", "Location not updated");
                         //has to check internet and location...
-                        Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), R.string.ase, Toast.LENGTH_LONG).show();
 
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("tag", "nt" + e.toString());
-                    Toast.makeText(getApplicationContext(), "Network Errror. Please Try Again Later", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),R.string.ase, Toast.LENGTH_LONG).show();
                 }
             } else {
-                Toast.makeText(getApplicationContext(), "Network Errror1", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),R.string.ase, Toast.LENGTH_LONG).show();
             }
 
         }

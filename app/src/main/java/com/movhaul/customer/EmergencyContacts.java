@@ -102,7 +102,7 @@ public class EmergencyContacts extends Activity {
         if (sharedPreferences.getString("emergency_1", "").equals("")) {
             if (!com.movhaul.customer.Config.isConnected(EmergencyContacts.this)) {
                 snackbar.show();
-                tv_snack.setText("Please Connect Internet and Try again");
+                tv_snack.setText(R.string.ase);
             } else {
                 new get_emg_contact().execute();
             }
@@ -144,17 +144,17 @@ public class EmergencyContacts extends Activity {
                             } else {
                                 snackbar.show();
                                 et_relation.requestFocus();
-                                tv_snack.setText("Enter Relation");
+                                tv_snack.setText(R.string.asdz);
                             }
                         } else {
                             snackbar.show();
                             et_number.requestFocus();
-                            tv_snack.setText("Enter Valid Phone Number");
+                            tv_snack.setText(R.string.zcwe);
                         }
                     } else {
                         snackbar.show();
                         et_name.requestFocus();
-                        tv_snack.setText("Enter Name");
+                        tv_snack.setText(R.string.azce);
                     }
                 } else if (bl_edit_2) {
                     Log.e("tag", "edit_emergency_2");
@@ -183,17 +183,17 @@ public class EmergencyContacts extends Activity {
                             } else {
                                 snackbar.show();
                                 et_relation.requestFocus();
-                                tv_snack.setText("Enter Relation");
+                                tv_snack.setText(R.string.asdz);
                             }
                         } else {
                             snackbar.show();
                             et_number.requestFocus();
-                            tv_snack.setText("Enter Valid Phone Number");
+                            tv_snack.setText(R.string.zcwe);
                         }
                     } else {
                         snackbar.show();
                         et_name.requestFocus();
-                        tv_snack.setText("Enter Name");
+                        tv_snack.setText(R.string.azce);
                     }
                 } else {
                     if (sharedPreferences.getString("emergency_1", "").equals("success")) {
@@ -230,19 +230,19 @@ public class EmergencyContacts extends Activity {
                                         //relation
                                         snackbar.show();
                                         et_relation.requestFocus();
-                                        tv_snack.setText("Enter Relation");
+                                        tv_snack.setText(R.string.asdz);
                                     }
                                 } else {
                                     //phone
                                     snackbar.show();
                                     et_number.requestFocus();
-                                    tv_snack.setText("Enter Valid Phone Number");
+                                    tv_snack.setText(R.string.zcwe);
                                 }
                             } else {
                                 //name
                                 snackbar.show();
                                 et_name.requestFocus();
-                                tv_snack.setText("Enter Name");
+                                tv_snack.setText(R.string.azce);
                             }
                         }
                     } else {
@@ -268,19 +268,19 @@ public class EmergencyContacts extends Activity {
                                     //relation
                                     snackbar.show();
                                     et_relation.requestFocus();
-                                    tv_snack.setText("Enter Relation");
+                                    tv_snack.setText(R.string.asdz);
                                 }
                             } else {
                                 //phone
                                 snackbar.show();
                                 et_number.requestFocus();
-                                tv_snack.setText("Enter Valid Phone Number");
+                                tv_snack.setText(R.string.zcwe);
                             }
                         } else {
                             //name
                             snackbar.show();
                             et_name.requestFocus();
-                            tv_snack.setText("Enter Name");
+                            tv_snack.setText(R.string.azce);
                         }
                     }
                 }
@@ -339,7 +339,7 @@ public class EmergencyContacts extends Activity {
                 tv_emergency_relation2.setText(sharedPreferences.getString("emg2_relation", ""));
             } else {
                 btn_submit.setVisibility(View.VISIBLE);
-                btn_submit.setText("Add Contact");
+                btn_submit.setText(R.string.addc);
                 card_2.setVisibility(View.GONE);
             }
         } else {
@@ -360,7 +360,7 @@ public class EmergencyContacts extends Activity {
                 btn_submit.setVisibility(View.GONE);
             } else {
                 btn_submit.setVisibility(View.VISIBLE);
-                btn_submit.setText("Add Contact");
+                btn_submit.setText(R.string.addc);
             }
         } else if (bl_edit_2) {
             lt_edit.setVisibility(View.GONE);

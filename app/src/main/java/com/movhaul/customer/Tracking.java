@@ -237,11 +237,11 @@ public class Tracking extends FragmentActivity implements OnMapReadyCallback,
                         //    tv_snack.setText("correct Booking ID");
                     } else {
                         snackbar.show();
-                        tv_snack.setText("Invalid Booking ID");
+                        tv_snack.setText(R.string.acwa);
                     }
                 } else {
                     snackbar.show();
-                    tv_snack.setText("Enter Booking ID");
+                    tv_snack.setText(R.string.zexc);
 
                 }
             }
@@ -649,7 +649,7 @@ public class Tracking extends FragmentActivity implements OnMapReadyCallback,
 
                         } else {
                             finish();
-                            Toast.makeText(getApplicationContext(), "Currently you don't have any Jobs to Show...", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), R.string.acwzaz, Toast.LENGTH_LONG).show();
                         }
 
                     } else if (status.equals("false")) {
