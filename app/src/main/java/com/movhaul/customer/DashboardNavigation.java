@@ -76,6 +76,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.gun0912.tedpicker.ImagePickerActivity;
@@ -1395,15 +1396,14 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     private void draw_line(double dl_pick_lati, double dl_pick_longi, double dl_drop_lati, double dl_drop_longi) {
 
 
-        // mMap.clear();
+        mMap.clear();
 
-        mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+        mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
                 .position(new LatLng(dl_pick_lati, dl_pick_longi)));
 
-        mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+        mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
                 .position(new LatLng(dl_drop_lati, dl_drop_longi)));
-        CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(dl_drop_lati, dl_drop_longi)).zoom(15f).build();
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
 
         iv_map_point.setVisibility(View.GONE);
         /*Polyline line = mMap.addPolyline(new PolylineOptions()
@@ -1423,6 +1423,55 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         DownloadTask downloadTask = new DownloadTask();
         downloadTask.execute(url);
 
+
+        midPoint(dl_pick_lati,dl_pick_longi,dl_drop_lati,dl_drop_longi);
+
+
+
+    }
+
+
+    public void midPoint(double lat1, double lon1, double lat2, double lon2) {
+
+        double dLon = Math.toRadians(lon2 - lon1);
+
+        //convert to radians
+        lat1 = Math.toRadians(lat1);
+        lat2 = Math.toRadians(lat2);
+        lon1 = Math.toRadians(lon1);
+
+        double Bx = Math.cos(lat2) * Math.cos(dLon);
+        double By = Math.cos(lat2) * Math.sin(dLon);
+        double lat = Math.atan2(Math.sin(lat1) + Math.sin(lat2), Math.sqrt((Math.cos(lat1) + Bx) * (Math.cos(lat1) + Bx) + By * By));
+        double lon = lon1 + Math.atan2(By, Math.cos(lat1) + Bx);
+
+        //print out in degrees
+        //  System.out.println(Math.toDegrees(lat) + " " + Math.toDegrees(lon));
+        //  Toast.makeText(getApplicationContext(), "mid POint" + lat + lon, Toast.LENGTH_LONG).show();
+        double mid_lati = Math.toDegrees(lat);
+        double mid_longi = Math.toDegrees(lon);
+
+
+
+
+        final LatLngBounds bounds = new LatLngBounds.Builder().include(new LatLng(lat1, lon1)).include(new LatLng(lat2, lon2)).build();
+        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 120));
+
+        //CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(mid_lati, mid_longi)).build();
+        //mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+
+       /* LatLng mapCenter = new LatLng(mid_lati, mid_longi);
+        CameraPosition cameraPosition = CameraPosition.builder()
+                .target(mapCenter)
+                .zoom(10.5f)
+                .build();
+        // Animate the change in camera view over 2 seconds
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition),
+                2000, null);*/
+
+        // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mid_lati, mid_longi), 10.5f));
+        //  mMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(mid_lati,mid_longi)));
     }
 
     /**
