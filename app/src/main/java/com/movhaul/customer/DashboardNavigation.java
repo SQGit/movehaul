@@ -67,9 +67,9 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.ActivityRecognition;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -77,6 +77,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.gun0912.tedpicker.ImagePickerActivity;
@@ -137,6 +138,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     public String vec_type;
     public double dl_pick_lati, dl_pick_longi, dl_drop_lati, dl_drop_longi;
     public double dl_dr_lati, dl_dr_longi;
+    public int frm_width, frm_hight;
     protected String mAddressOutput;
     protected String mAreaOutput;
     protected String mCityOutput;
@@ -389,6 +391,9 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         customMapFragment.setOnDragListener(DashboardNavigation.this);
 
         customMapFragment.getMapAsync(this);
+
+        frm_width = customMapFragment.getView().getMeasuredWidth() - 50;
+        frm_hight = customMapFragment.getView().getMeasuredHeight() - 200;
 
         // GoogleMap map = customMapFragment.getMap();
 
@@ -1052,10 +1057,13 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             Location myLocation = mMap.getMyLocation();
 
             if (myLocation != null) {
-                LatLng myLatLng = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
+                LatLng myLatLng1 = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
 
-                CameraPosition myPosition = new CameraPosition.Builder().target(myLatLng).zoom(17).bearing(90).tilt(30).build();
+                //CameraPosition myPosition = new CameraPosition.Builder().target(myLatLng).zoom(17).bearing(90).tilt(30).build();
+                CameraPosition myPosition = new CameraPosition.Builder().target(myLatLng1).zoom(17).build();
                 mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+
+
             }
         }
     }
@@ -1185,7 +1193,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             // builder checks this and throws an exception if it is not the case.
 
             //AutocompleteFilter typeFilter = new AutocompleteFilter.Builder().setTypeFilter(Place.TYPE_COUNTRY).setCountry("NG").build();
-         //   //.setBoundsBias(new LatLngBounds(new LatLng(23.63936, 68.14712), new LatLng(28.20453, 97.34466)))
+            //   //.setBoundsBias(new LatLngBounds(new LatLng(23.63936, 68.14712), new LatLng(28.20453, 97.34466)))
             Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)/*.setFilter(typeFilter)*/.build(this);
             startActivityForResult(intent, REQUEST_AC_PICKUP);
         } catch (GooglePlayServicesRepairableException e) {
@@ -1207,7 +1215,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         try {
             // The autocomplete activity requires Google Play Services to be available. The intent
             // builder checks this and throws an exception if it is not the case.
-           // AutocompleteFilter typeFilter = new AutocompleteFilter.Builder().setTypeFilter(Place.TYPE_COUNTRY).setCountry("NG").build();
+            // AutocompleteFilter typeFilter = new AutocompleteFilter.Builder().setTypeFilter(Place.TYPE_COUNTRY).setCountry("NG").build();
             Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)/*.setFilter(typeFilter)*/.build(this);
             startActivityForResult(intent, REQUEST_AC_DROP);
 
@@ -1278,15 +1286,15 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
                     //latLong = new LatLng(location.getLatitude(), location.getLongitude());
 
-                    CameraPosition cameraPosition = new CameraPosition.Builder()
-                            .target(latLong).zoom(15f).build();
+                   /* CameraPosition cameraPosition = new CameraPosition.Builder()
+                            .target(latLong).zoom(15f).build();*/
 
                     //  mMap.setMyLocationEnabled(true);
                     mMap.getUiSettings().setMyLocationButtonEnabled(false);
                     mMap.getUiSettings().setZoomControlsEnabled(false);
                     mMap.getUiSettings().setZoomGesturesEnabled(true);
-                    mMap.animateCamera(CameraUpdateFactory
-                            .newCameraPosition(cameraPosition));
+                   /* mMap.animateCamera(CameraUpdateFactory
+                            .newCameraPosition(cameraPosition));*/
                     //mMap.addMarker(new MarkerOptions().position(latLong));
 
                 }
@@ -1398,10 +1406,12 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
         mMap.clear();
 
-        mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+        Marker pickup_marker, drop_marker;
+
+        pickup_marker = mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
                 .position(new LatLng(dl_pick_lati, dl_pick_longi)));
 
-        mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+        drop_marker = mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
                 .position(new LatLng(dl_drop_lati, dl_drop_longi)));
 
 
@@ -1424,14 +1434,13 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         downloadTask.execute(url);
 
 
-        midPoint(dl_pick_lati,dl_pick_longi,dl_drop_lati,dl_drop_longi);
-
+        midPoint(dl_pick_lati, dl_pick_longi, dl_drop_lati, dl_drop_longi, pickup_marker, drop_marker);
 
 
     }
 
 
-    public void midPoint(double lat1, double lon1, double lat2, double lon2) {
+    public void midPoint(double lat1, double lon1, double lat2, double lon2, Marker one, Marker two) {
 
         double dLon = Math.toRadians(lon2 - lon1);
 
@@ -1452,10 +1461,58 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         double mid_longi = Math.toDegrees(lon);
 
 
+        // LatLngBounds.Builder builder = new LatLngBounds.Builder();
 
 
-        final LatLngBounds bounds = new LatLngBounds.Builder().include(new LatLng(lat1, lon1)).include(new LatLng(lat2, lon2)).build();
-        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 120));
+      /*  Marker[] markers = {one,two};
+        for (Marker m : markers) {
+            builder.include(m.getPosition());
+        }
+        LatLngBounds bounds = builder.build();
+        int padding = ((frm_hight * 10) / 100); // offset from edges of the map
+        // in pixels
+        Log.e("tag","ss:"+padding);*/
+        //   CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds,
+        // 80);
+        // mMap.animateCamera(cu);
+
+
+        double meters = 5000;
+        double meters1 = 15000;
+        double coef = meters * 0.0000089;
+        double coef1 = meters1 * 0.0000089;
+        double new_lat1 = lat1 + coef;
+        double new_long1 = lon1 + coef / Math.cos(lat1 * 0.018);
+
+        double new_lat2 = lat2 + coef;
+        double new_long2 = lon2 + coef / Math.cos(lat2 * 0.018);
+
+        Marker pickup_marker1, drop_marker1;
+
+        pickup_marker1 = mMap.addMarker(new MarkerOptions().position(new LatLng(dl_pick_lati, dl_pick_longi)).draggable(true).visible(false));
+
+        drop_marker1 = mMap.addMarker(new MarkerOptions().position(new LatLng(dl_drop_lati, dl_drop_longi)).draggable(true).visible(false));
+
+
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+
+
+        Marker[] markers = {pickup_marker1, drop_marker1};
+        for (Marker m : markers) {
+            builder.include(m.getPosition());
+        }
+        LatLngBounds bounds = builder.build();
+        int padding = ((frm_hight * 10) / 100); // offset from edges of the map
+        // in pixels
+        Log.e("tag", "ss:" + padding);
+
+        //final LatLngBounds bounds = new LatLngBounds.Builder().include(new LatLng(lat1, lon1)).include(new LatLng(lat2, lon2)).build();
+        // mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 120));
+
+        //  final LatLngBounds boundss = new LatLngBounds.Builder().include(new LatLng(new_lat1, new_long1)).include(new LatLng(new_lat2, new_long2)).build();
+        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds,
+                250);
+        mMap.animateCamera(cu);
 
         //CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(mid_lati, mid_longi)).build();
         //mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
@@ -1693,18 +1750,21 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         } else {
             final int height = getDeviceHeight(DashboardNavigation.this);
             TranslateAnimation anim_btn_b2t = new TranslateAnimation(0, 0, height, 0);
-            anim_btn_b2t.setDuration(500);
+            anim_btn_b2t.setDuration(250);
             lt_filter_dialog.setAnimation(anim_btn_b2t);
             lt_filter_dialog.setVisibility(View.VISIBLE);
             aet_drop.setText("");
             p_loc_comp = false;
-            // mMap.clear();
+            mMap.clear();
             getMyLocation();
+            //mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+
+
             iv_map_point.setVisibility(View.VISIBLE);
             mResultReceiver = new AddressResultReceiver(new Handler());
 
-            if(bottomSheetBehavior.getState() ==BottomSheetBehavior.STATE_COLLAPSED)
-            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+            if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED)
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
 
 
         }
@@ -1764,60 +1824,66 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
     public void change_map_camera() {
 
-        mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
 
-            @Override
-            public void onCameraChange(CameraPosition cameraPosition) {
-                Log.e("tagmap", "Camera postion change" + cameraPosition + "");
-                mCenterLatLong = cameraPosition.target;
-                dl_pick_lati = mCenterLatLong.latitude;
-                dl_pick_longi = mCenterLatLong.longitude;
+        if(mMap != null) {
+
+            mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+
+                @Override
+                public void onCameraChange(CameraPosition cameraPosition) {
+                    Log.e("tagmap", "Camera postion change" + cameraPosition + "");
+                    mCenterLatLong = cameraPosition.target;
+                    dl_pick_lati = mCenterLatLong.latitude;
+                    dl_pick_longi = mCenterLatLong.longitude;
 
 
-                if (!p_loc_comp) {
+                    if (!p_loc_comp) {
 
-                    try {
-
-                        Location mLocation = new Location("");
-                        mLocation.setLatitude(dl_pick_lati);
-                        mLocation.setLongitude(dl_pick_longi);
-                        // mMap.clear();
-                        str_lati = String.valueOf(mCenterLatLong.latitude);
-                        str_longi = String.valueOf(mCenterLatLong.longitude);
-                        startIntentService(mLocation);
-                        geocoder = new Geocoder(DashboardNavigation.this, Locale.getDefault());
                         try {
-                            addresses = geocoder.getFromLocation(mCenterLatLong.latitude, mCenterLatLong.longitude, 1);
-                            str_locality = addresses.get(0).getLocality();
-                            str_address = addresses.get(0).getAddressLine(0);
-                            Log.e("tagplace0", "lati: " + str_lati + "longi: " + str_longi + "\nlocality: " + str_locality + "\taddr0: " + str_address +
-                                    "\naddr1: " + addresses.get(0).getAddressLine(1) + "\n addr2: " + addresses.get(0).getAddressLine(2) + "\n adminarea: "
-                                    + addresses.get(0).getAdminArea() + "\n feature name: " + addresses.get(0).getFeatureName() + "\n Sub loca: "
-                                    + addresses.get(0).getSubLocality() + "\n subadmin: " + addresses.get(0).getSubAdminArea()
-                                    + "\n premisis: " + addresses.get(0).getPremises() + "\n postal " + addresses.get(0).getPostalCode());
-                            mStreetOutput = str_address;
-                            mCityOutput = str_locality;
-                            mPickup_lat = str_lati;
-                            mPickup_long = str_longi;
+
+                            Location mLocation = new Location("");
+                            mLocation.setLatitude(dl_pick_lati);
+                            mLocation.setLongitude(dl_pick_longi);
+                            // mMap.clear();
+                            str_lati = String.valueOf(mCenterLatLong.latitude);
+                            str_longi = String.valueOf(mCenterLatLong.longitude);
+                            startIntentService(mLocation);
+                            geocoder = new Geocoder(DashboardNavigation.this, Locale.getDefault());
+                            try {
+                                addresses = geocoder.getFromLocation(mCenterLatLong.latitude, mCenterLatLong.longitude, 1);
+                                str_locality = addresses.get(0).getLocality();
+                                str_address = addresses.get(0).getAddressLine(0);
+                                Log.e("tagplace0", "lati: " + str_lati + "longi: " + str_longi + "\nlocality: " + str_locality + "\taddr0: " + str_address +
+                                        "\naddr1: " + addresses.get(0).getAddressLine(1) + "\n addr2: " + addresses.get(0).getAddressLine(2) + "\n adminarea: "
+                                        + addresses.get(0).getAdminArea() + "\n feature name: " + addresses.get(0).getFeatureName() + "\n Sub loca: "
+                                        + addresses.get(0).getSubLocality() + "\n subadmin: " + addresses.get(0).getSubAdminArea()
+                                        + "\n premisis: " + addresses.get(0).getPremises() + "\n postal " + addresses.get(0).getPostalCode());
+                                mStreetOutput = str_address;
+                                mCityOutput = str_locality;
+                                mPickup_lat = str_lati;
+                                mPickup_long = str_longi;
+                            } catch (Exception e) {
+                                Log.e("tag", "er_geocoder: " + e.toString());
+                            }
+                            // new updateLocation().execute();
                         } catch (Exception e) {
-                            Log.e("tag", "er_geocoder: " + e.toString());
+                            e.printStackTrace();
+                            Log.e("tag", "eroo:" + e.toString());
+                        } finally {
+                            lt_first.setVisibility(View.VISIBLE);
+                            lt_second.setVisibility(View.VISIBLE);
+                            lt_last.setVisibility(View.VISIBLE);
                         }
-                        // new updateLocation().execute();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Log.e("tag", "eroo:" + e.toString());
-                    } finally {
-                        lt_first.setVisibility(View.VISIBLE);
-                        lt_second.setVisibility(View.VISIBLE);
-                        lt_last.setVisibility(View.VISIBLE);
+                    } else {
+                        Log.e("tag", "mapnotworks:");
                     }
-                } else {
-                    Log.e("tag", "mapnotworks:");
+
+
                 }
+            });
 
 
-            }
-        });
+        }
 
 
     }
@@ -1943,8 +2009,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     httppost.setHeader("sessiontoken", token);
                     httppost.setHeader("customer_email", customer_email);
                     httppost.setHeader("customer_name", customer_name);
-
-
 
 
                     try {
@@ -2202,7 +2266,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                         String cost = jo.getString("price");
                         editor.putString("booking_id", bookingid);
                         editor.putString("payment_amount", cost);
-                        editor.putString("book_for","roadside");
+                        editor.putString("book_for", "roadside");
                         editor.commit();
 
                         Intent i = new Intent(DashboardNavigation.this, Payment_Details.class);

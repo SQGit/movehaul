@@ -192,7 +192,7 @@
                 android:textSize="@dimen/_12sdp" />
 
             <com.rey.material.widget.TextView
-                android:id="@+id/textview_content_jobs_compl"
+                android:id="@+id/textview_context_total_jobs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

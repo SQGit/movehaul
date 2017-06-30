@@ -455,6 +455,7 @@ public class DriversList extends AppCompatActivity {
                                         String damage_control = jos.getString("damage_control");
                                         String booking_id = jos.getString("booking_id");
                                         String bidding_id = jos.getString("bidding_id");
+                                        String tot_jobs = jos.getString("finished_jobs");
 
 
                                         mv_datas.setDriver_id(driver_id);
@@ -469,6 +470,7 @@ public class DriversList extends AppCompatActivity {
                                         mv_datas.setDamage_control(damage_control);
                                         mv_datas.setBooking_id(booking_id);
                                         mv_datas.setBidding_id(bidding_id);
+                                        mv_datas.setTotJobs(tot_jobs);
                                         doid = 1;
 
                                         ar_driver_data.add(mv_datas);

@@ -30,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by Salman on 29-03-2017.
@@ -188,7 +189,7 @@ public class MyJobs extends Activity {
 
                         //job_list_adapter = new JobListAdapter(MyJobs.this, MyJobs.this, ar_job_lists);
                         // lv_jobs_list.setAdapter(job_list_adapter);
-
+                        Collections.reverse(ar_job_lists);
                         ca = new RecycleViewAdapter(MyJobs.this, MyJobs.this, ar_job_lists);
                         LinearLayoutManager llm = new LinearLayoutManager(MyJobs.this);
                         llm.setOrientation(LinearLayoutManager.VERTICAL);

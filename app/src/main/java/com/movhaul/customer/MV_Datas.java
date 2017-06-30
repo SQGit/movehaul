@@ -33,6 +33,7 @@ public class MV_Datas {
     String drop_longitude;
     String driver_latitude;
     String driver_longitude;
+    private String totJobs;
 
     public String getDriver_latitude() {
         return driver_latitude;
@@ -244,5 +245,13 @@ public class MV_Datas {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public void setTotJobs(String totJobs) {
+        this.totJobs = totJobs;
+    }
+
+    public String getTotJobs() {
+        return totJobs;
     }
 }

@@ -33,6 +33,7 @@ import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -40,7 +41,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -97,6 +100,7 @@ public class Tracking extends FragmentActivity implements OnMapReadyCallback,
     float dist_Between;
     Location currentLocation, dropLocation;
     private GoogleMap mMap;
+    public int frm_width;
     GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
         @Override
         public void onMyLocationChange(Location location) {
@@ -142,6 +146,9 @@ public class Tracking extends FragmentActivity implements OnMapReadyCallback,
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
+        frm_width = mapFragment.getView().getMeasuredWidth();
 
 
         mProgressDialog = new ProgressDialog(Tracking.this);
@@ -228,7 +235,7 @@ public class Tracking extends FragmentActivity implements OnMapReadyCallback,
                 String getId = act_tracking.getText().toString().trim();
                 if (!act_tracking.getText().toString().trim().isEmpty()) {
 
-                    Log.e("tag", "getIdsts:" + getID(getId));
+                ///   Log.e("tag", "getIdsts:" + getID(getId));
 
                     if (getID(getId)) {
 
@@ -340,12 +347,15 @@ public class Tracking extends FragmentActivity implements OnMapReadyCallback,
                     DownloadTask downloadTask = new DownloadTask();
                     downloadTask.execute(url);
 
-                    mMap.addMarker(new MarkerOptions().position(new LatLng(drop_lati, drop_longi)).icon(BitmapDescriptorFactory.fromResource(R.drawable.delivery_addr_tracking)));
+
+                    Marker pickup_marker, drop_marker;
+
+                   pickup_marker =  mMap.addMarker(new MarkerOptions().position(new LatLng(drop_lati, drop_longi)).icon(BitmapDescriptorFactory.fromResource(R.drawable.delivery_addr_tracking)));
 
 
                     LatLng mapCenter = new LatLng(latitude, longitude);
                    // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mapCenter, 10.5f));
-                    mMap.addMarker(new MarkerOptions()
+                   drop_marker =  mMap.addMarker(new MarkerOptions()
                             .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_truck))
                             .position(mapCenter)
                             .flat(true)
@@ -360,6 +370,28 @@ public class Tracking extends FragmentActivity implements OnMapReadyCallback,
                             2000, null);
 
                     midPoint(latitude, longitude, drop_lati, drop_longi);
+
+
+                    LatLngBounds.Builder builder = new LatLngBounds.Builder();
+
+
+                    Marker[] markers = {pickup_marker, drop_marker};
+                    for (Marker m : markers) {
+                        builder.include(m.getPosition());
+                    }
+                    LatLngBounds bounds = builder.build();
+                    int padding = ((frm_width * 10) / 100); // offset from edges of the map
+                    // in pixels
+                    Log.e("tag", "ss:" + padding);
+
+                    //final LatLngBounds bounds = new LatLngBounds.Builder().include(new LatLng(lat1, lon1)).include(new LatLng(lat2, lon2)).build();
+                    // mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 120));
+
+                    //  final LatLngBounds boundss = new LatLngBounds.Builder().include(new LatLng(new_lat1, new_long1)).include(new LatLng(new_lat2, new_long2)).build();
+                    CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds,
+                            padding+100);
+                    mMap.animateCamera(cu);
+
 
 
                 }
@@ -400,18 +432,21 @@ public class Tracking extends FragmentActivity implements OnMapReadyCallback,
         boolean id_sts = false;
         int i = 0;
 
-        do {
-            if (i < ar_ids.size()) {
-                Log.e("tag", "asf:" + asf);
-                Log.e("tag", "arids:" + ar_ids.get(i));
+        if(ar_ids.size()>0) {
+            do {
+                if (i < ar_ids.size()) {
+                    Log.e("tag", "asf:" + asf);
+                    Log.e("tag", "arids:" + ar_ids.get(i));
 
-                if (ar_ids.get(i).equals(asf)) {
-                    id_sts = true;
+                    if (ar_ids.get(i).equals(asf)) {
+                        id_sts = true;
+                    }
+                    Log.e("tag", "dists:" + id_sts);
                 }
-                Log.e("tag", "dists:" + id_sts);
-            }
-            i++;
-        } while (!id_sts);
+                i++;
+            } while (!id_sts);
+
+        }
 
        /* for (String string : ar_ids) {
             if (string.equals(asf)) {

@@ -48,7 +48,7 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
     Typeface type;
     ImageView iv_driver_image, iv_back, iv_front;
     ViewPager viewPager;
-    com.rey.material.widget.TextView tv_title_truck, tv_title_truck_txt, tv_title_driver_name, tv_title_bidding, tv_content_bidding, tv_content_driver_name, tv_content_damage_control, tv_content_truck, tv_title_driver_name_txt, tv_content_driver_name_txt, tv_content_damage_control_txt, tv_content_truck_txt, tv_content_job_comp, tv_content_break_hist, tv_content_job_completed, tv_content_break_history;
+    com.rey.material.widget.TextView tv_title_truck, tv_title_truck_txt, tv_title_driver_name, tv_title_bidding, tv_content_bidding, tv_content_driver_name, tv_content_damage_control, tv_content_truck, tv_title_driver_name_txt, tv_content_driver_name_txt, tv_content_damage_control_txt, tv_content_truck_txt, tv_content_job_comp, tv_content_break_hist,  tv_content_break_history,tv_content_tot_jobs;
     MV_Datas mv_datas;
     String tr_front, tr_side, tr_back;
     SharedPreferences sharedPreferences;
@@ -195,8 +195,8 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
 
         tv_content_job_comp = (com.rey.material.widget.TextView) cell.findViewById(com.movhaul.customer.R.id.textview_content_jobs_completed);
         tv_content_break_hist = (com.rey.material.widget.TextView) cell.findViewById(com.movhaul.customer.R.id.textview_content_breakdown);
-        tv_content_job_completed = (com.rey.material.widget.TextView) cell.findViewById(com.movhaul.customer.R.id.textview_content_jobs_compl);
         tv_content_break_history = (com.rey.material.widget.TextView) cell.findViewById(com.movhaul.customer.R.id.textview_content_break);
+        tv_content_tot_jobs = (com.rey.material.widget.TextView) cell.findViewById(com.movhaul.customer.R.id.textview_context_total_jobs);
 
         tv_content_bidding.setTypeface(tf);
         tv_content_driver_name.setTypeface(tf);
@@ -207,8 +207,8 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
         tv_content_truck_txt.setTypeface(tf);
         tv_content_job_comp.setTypeface(tf);
         tv_content_break_hist.setTypeface(tf);
-        tv_content_job_completed.setTypeface(tf);
         tv_content_break_history.setTypeface(tf);
+        tv_content_tot_jobs.setTypeface(tf);
 
         iv_driver_image = (ImageView) cell.findViewById(com.movhaul.customer.R.id.driver_image);
 
@@ -228,6 +228,8 @@ public class DriversListAdapter extends ArrayAdapter<MV_Datas> {
         tv_content_truck.setText(mv_datas.getTruck_type());
         tv_content_driver_name.setText(mv_datas.getName());
         tv_content_damage_control.setText(mv_datas.getDamage_control());
+
+        tv_content_tot_jobs.setText(mv_datas.getTotJobs());
 
         Glide.with(act).load(Config.WEB_URL_IMG + "driver_details/" + mv_datas.getDriver_image()).into(iv_driver_image);
 

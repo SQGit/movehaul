@@ -189,8 +189,8 @@ public class Payment_Details extends Activity {
         //   tv_dialog3.setText("Our Driver will");
         //  tv_dialog4.setText("Contact you soon..");
 
-        et_name.setText(cus_name);
-        et_phone.setText(cus_mobile);
+       // et_name.setText(cus_name);
+        //et_phone.setText(cus_mobile);
 
         tv_dialog1.setTypeface(tf);
         tv_dialog2.setTypeface(tf);
@@ -207,14 +207,17 @@ public class Payment_Details extends Activity {
                 if(isChecked){
                     et_name.setVisibility(View.GONE);
                     et_phone.setVisibility(View.GONE);
-                    tv_dialog3.setText(R.string.aeioc);
+                    et_name.setText(cus_name);
+                    et_phone.setText(cus_mobile);
+
+                    //tv_dialog3.setText(R.string.aeioc);
                     //et_name.setText(cus_name);
                    // et_phone.setText(cus_mobile);
                 }
                 else{
                     et_name.setVisibility(View.VISIBLE);
                     et_phone.setVisibility(View.VISIBLE);
-                    tv_dialog3.setText(R.string.aeicy);
+                   // tv_dialog3.setText(R.string.aeicy);
                     et_name.setText("");
                     et_name.requestFocus();
                     et_phone.setText("");
