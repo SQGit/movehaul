@@ -67,6 +67,7 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.ActivityRecognition;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.CameraUpdate;
@@ -881,16 +882,23 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                         snackbar.show();
                         tv_snack.setText(com.movhaul.customer.R.string.adsfb);
                     } else {
-                        editor.putString("pickup", mStreetOutput + ", " + mCityOutput);
-                        editor.putString("drop", aet_drop.getText().toString());
-                        editor.putString("pickup_lati", mPickup_lat);
-                        editor.putString("pickup_long", mPickup_long);
-                        editor.putString("drop_lati", mDrop_lat);
-                        editor.putString("drop_long", mDrop_long);
-                        editor.commit();
-                        Intent i = new Intent(DashboardNavigation.this, Book_now.class);
-                        i.putExtra("vec_type", vec_type);
-                        startActivity(i);
+                        if (mStreetOutput == null || mStreetOutput.equals("null")) {
+
+                            snackbar.show();
+                            tv_snack.setText("Choose PickupLocation Again");
+                        }
+                        else {
+                            editor.putString("pickup", mStreetOutput + ", " + mCityOutput);
+                            editor.putString("drop", aet_drop.getText().toString());
+                            editor.putString("pickup_lati", mPickup_lat);
+                            editor.putString("pickup_long", mPickup_long);
+                            editor.putString("drop_lati", mDrop_lat);
+                            editor.putString("drop_long", mDrop_long);
+                            editor.commit();
+                            Intent i = new Intent(DashboardNavigation.this, Book_now.class);
+                            i.putExtra("vec_type", vec_type);
+                            startActivity(i);
+                        }
                     }
                 } else {
                     snackbar.show();
@@ -1192,9 +1200,9 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             // The autocomplete activity requires Google Play Services to be available. The intent
             // builder checks this and throws an exception if it is not the case.
 
-            //AutocompleteFilter typeFilter = new AutocompleteFilter.Builder().setTypeFilter(Place.TYPE_COUNTRY).setCountry("NG").build();
+            AutocompleteFilter typeFilter = new AutocompleteFilter.Builder().setTypeFilter(Place.TYPE_COUNTRY).setCountry("NG").build();
             //   //.setBoundsBias(new LatLngBounds(new LatLng(23.63936, 68.14712), new LatLng(28.20453, 97.34466)))
-            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)/*.setFilter(typeFilter)*/.build(this);
+            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).setFilter(typeFilter).build(this);
             startActivityForResult(intent, REQUEST_AC_PICKUP);
         } catch (GooglePlayServicesRepairableException e) {
             // Indicates that Google Play Services is either not installed or not up to date. Prompt
@@ -1215,8 +1223,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         try {
             // The autocomplete activity requires Google Play Services to be available. The intent
             // builder checks this and throws an exception if it is not the case.
-            // AutocompleteFilter typeFilter = new AutocompleteFilter.Builder().setTypeFilter(Place.TYPE_COUNTRY).setCountry("NG").build();
-            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)/*.setFilter(typeFilter)*/.build(this);
+             AutocompleteFilter typeFilter = new AutocompleteFilter.Builder().setTypeFilter(Place.TYPE_COUNTRY).setCountry("NG").build();
+            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).setFilter(typeFilter).build(this);
             startActivityForResult(intent, REQUEST_AC_DROP);
 
             //  lt_pickup.setEnabled(false);
@@ -1954,35 +1962,42 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             MarkerOptions markerOptions = new MarkerOptions();
 
             // Traversing through all the routes
-            if (!result.isEmpty()) {
-                for (int i = 0; i < result.size(); i++) {
-                    points = new ArrayList<LatLng>();
-                    lineOptions = new PolylineOptions();
+            try
+            {
+                if (!result.isEmpty()) {
+                    for (int i = 0; i < result.size(); i++) {
+                        points = new ArrayList<LatLng>();
+                        lineOptions = new PolylineOptions();
 
-                    // Fetching i-th route
-                    List<HashMap<String, String>> path = result.get(i);
+                        // Fetching i-th route
+                        List<HashMap<String, String>> path = result.get(i);
 
-                    // Fetching all the points in i-th route
-                    for (int j = 0; j < path.size(); j++) {
-                        HashMap<String, String> point = path.get(j);
+                        // Fetching all the points in i-th route
+                        for (int j = 0; j < path.size(); j++) {
+                            HashMap<String, String> point = path.get(j);
 
-                        double lat = Double.parseDouble(point.get("lat"));
-                        double lng = Double.parseDouble(point.get("lng"));
-                        LatLng position = new LatLng(lat, lng);
+                            double lat = Double.parseDouble(point.get("lat"));
+                            double lng = Double.parseDouble(point.get("lng"));
+                            LatLng position = new LatLng(lat, lng);
 
-                        points.add(position);
+                            points.add(position);
+                        }
+
+                        // Adding all the points in the route to LineOptions
+                        lineOptions.addAll(points);
+                        lineOptions.width(6);
+                        lineOptions.color(getResources().getColor(com.movhaul.customer.R.color.redColor));
+
                     }
 
-                    // Adding all the points in the route to LineOptions
-                    lineOptions.addAll(points);
-                    lineOptions.width(6);
-                    lineOptions.color(getResources().getColor(com.movhaul.customer.R.color.redColor));
-
+                    // Drawing polyline in the Google Map for the i-th route
+                    mMap.addPolyline(lineOptions);
                 }
-
-                // Drawing polyline in the Google Map for the i-th route
-                mMap.addPolyline(lineOptions);
             }
+            catch (Exception e){
+                Log.e("tag","ex: "+e.toString());
+            }
+
         }
     }
 

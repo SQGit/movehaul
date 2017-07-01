@@ -222,6 +222,7 @@
                                     android:drawableLeft="@drawable/delivery_addr"
                                     android:hint="@string/nearby_location"
                                     android:inputType="text"
+                                    android:imeOptions="actionDone"
                                     android:maxLines="1"
                                     android:paddingTop="@dimen/_10sdp"
                                     android:textColor="#000000"

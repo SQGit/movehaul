@@ -115,10 +115,33 @@ public class Book_later extends Activity {
                               int selectedMonth, int selectedDay) {
 
             year = selectedYear;
-            month = selectedMonth;
+            month = selectedMonth+1;
             day = selectedDay;
-            date = day + "/" + month + 1 + "/" + year;
-            et_date.setText(new StringBuilder().append(day).append("/").append(month + 1).append("/").append(year).append(""));
+
+            date = year + "/" + month + "/" + day;
+            Log.e("tag","brf: "+date);
+
+            if(String.valueOf(month).length()>1){
+                if(String.valueOf(day).length()>1) {
+                    date = year + "/" + month + "/" + day;
+                }
+                else{
+                    date = year + "/" + month + "/" + "0" + day;
+                }
+            }
+            else{
+                if(String.valueOf(day).length()>1) {
+                    date = year + "/" +"0"+ month + "/" + day;
+                }
+                else{
+                    date = year + "/" + "0"+month + "/" + "0" + day;
+                }
+            }
+
+            Log.e("tag","after: "+date);
+
+           // et_date.setText(new StringBuilder().append(day).append("/").append(month).append("/").append(year).append(""));
+            et_date.setText(date);
         }
     };
 
@@ -305,6 +328,10 @@ public class Book_later extends Activity {
                                 str_goods_type = et_goodsType.getText().toString();
                                 str_truck_type = et_truckType.getText().toString();
                                 str_time = date + " T " + time;
+
+                                Log.e("tag","date "+date);
+                                Log.e("tag","time "+time);
+
                                 new book_later_task().execute();
                             } else {
                                 Toast.makeText(getApplicationContext(), R.string.ga, Toast.LENGTH_LONG).show();

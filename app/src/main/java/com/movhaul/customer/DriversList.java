@@ -175,8 +175,16 @@ public class DriversList extends AppCompatActivity {
         btn_refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(DriversList.this, "Refresh", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(DriversList.this, "Refresh", Toast.LENGTH_SHORT).show();
                 iv_refresh.startAnimation(rotate);
+                if (!com.movhaul.customer.Config.isConnected(DriversList.this)) {
+                    snackbar.show();
+                    tv_snack.setText(R.string.wqc);
+                } else {
+                    new get_drivers().execute();
+
+                }
+
             }
         });
 
@@ -402,7 +410,7 @@ public class DriversList extends AppCompatActivity {
 
 
                                 if (jos.getString("driver_job_status").equals("free")) {
-
+                                        ar_driver_data.clear();
 
                                     if (jos.has("bus_image_front")) {
 

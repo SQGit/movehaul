@@ -15,6 +15,8 @@ import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.rey.material.widget.Button;
@@ -46,6 +48,8 @@ public class Job_review extends Activity {
     String vec_type;
     ImageView iv_type;
     android.widget.LinearLayout lt_nearby;
+    ScrollView scr_view;
+    ProgressBar progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +69,7 @@ public class Job_review extends Activity {
         btn_back = (LinearLayout) findViewById(com.movhaul.customer.R.id.layout_back);
         btn_continue = (Button) findViewById(com.movhaul.customer.R.id.btn_continue);
         tv_timer = (TextView) findViewById(com.movhaul.customer.R.id.text_Timer);
+        tv_timer.setVisibility(View.GONE);
 
         tv_pickup = (TextView) findViewById(com.movhaul.customer.R.id.textview_pickup);
         tv_drop = (TextView) findViewById(com.movhaul.customer.R.id.textview_drop);
@@ -73,6 +78,8 @@ public class Job_review extends Activity {
         tv_time = (TextView) findViewById(com.movhaul.customer.R.id.textview_time);
         tv_truck = (TextView) findViewById(com.movhaul.customer.R.id.textview_truck);
         iv_type  = (ImageView) findViewById(com.movhaul.customer.R.id.image_type);
+        scr_view = (ScrollView) findViewById(R.id.scrlview);
+        progress = (ProgressBar) findViewById(R.id.progress);
 
         lt_nearby = (android.widget.LinearLayout) findViewById(com.movhaul.customer.R.id.layout_landmark);
 
@@ -270,6 +277,8 @@ public class Job_review extends Activity {
                                 tv_date.setText(part1);
                                 tv_time.setText(part2);
                                 tv_truck.setText(vehicle_main_type+" - "+vehicle_sub_type);
+                                progress.setVisibility(View.GONE);
+                                scr_view.setVisibility(View.VISIBLE);
 
                             }
                         }

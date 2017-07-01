@@ -1083,9 +1083,11 @@ public class Payment_Details extends Activity {
                     e.printStackTrace();
                     Log.e("tag", "nt" + e.toString());
                     Toast.makeText(getApplicationContext(),R.string.ase, Toast.LENGTH_LONG).show();
+                   // finish();
                 }
             } else {
                 Toast.makeText(getApplicationContext(),R.string.ase, Toast.LENGTH_LONG).show();
+               // finish();
             }
 
         }

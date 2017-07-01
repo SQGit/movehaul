@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.sloop.fonts.FontsManager;
@@ -23,15 +22,16 @@ public class Payment_Adapter extends BaseAdapter {
     LayoutInflater inflater;
     Context context;
     Typeface tf;
-    ArrayList<String> myList;
+    ArrayList<MV_Datas> payment_list;
     Activity act;
+    MV_Datas mv_datas;
 
 
 
     public Payment_Adapter(Activity activity, ArrayList array_list) {
 
         this.context = activity.getApplicationContext();
-        this.myList = array_list;
+        this.payment_list = array_list;
         inflater = LayoutInflater.from(this.context);
         act =activity;
 
@@ -39,7 +39,7 @@ public class Payment_Adapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 5;
+        return payment_list.size();
     }
 
     @Override
@@ -53,9 +53,9 @@ public class Payment_Adapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View convertView, ViewGroup viewGroup) {
+    public View getView(int position, View convertView, ViewGroup viewGroup) {
         final MyViewHolder mViewHolder;
-        final TextView tv_vin_no, tv_vin_make, tv_add;
+        final TextView tv_booking_id,tv_date,tv_cost;
 
         FontsManager.initFormAssets(act, "fonts/lato.ttf");       //initialization
         FontsManager.changeFonts(act);
@@ -64,19 +64,29 @@ public class Payment_Adapter extends BaseAdapter {
             convertView = inflater.inflate(com.movhaul.customer.R.layout.payment_adapter, viewGroup, false);
             mViewHolder = new MyViewHolder(convertView);
 
-           // tv_vin_no = (TextView) convertView.findViewById(R.id.textview_vin_no);
-           // tv_vin_make = (TextView) convertView.findViewById(R.id.textview_vin_make);
+            tv_booking_id = (TextView) convertView.findViewById(R.id.textview_booking_id);
+            tv_date = (TextView) convertView.findViewById(R.id.textview_date);
+            tv_cost = (TextView) convertView.findViewById(R.id.textview_cost);
 
+            tv_booking_id.setTypeface(tf);
+            tv_date.setTypeface(tf);
+            tv_cost.setTypeface(tf);
 
             convertView.setTag(mViewHolder);
 
         } else {
             mViewHolder = (MyViewHolder) convertView.getTag();
 
-            tv_vin_no = mViewHolder.tv_vin_no;
-            tv_vin_make = mViewHolder.tv_vin_make;
-
+            tv_booking_id = mViewHolder.tv_booking_id;
+            tv_date = mViewHolder.tv_date;
+            tv_cost = mViewHolder.tv_cost;
         }
+
+        mv_datas = payment_list.get(position);
+
+        tv_booking_id.setText(mv_datas.getBooking_id());
+        tv_date.setText(mv_datas.getDate());
+        tv_cost.setText("₦ "+mv_datas.getJob_cost());
 
 
         return convertView;
@@ -84,12 +94,12 @@ public class Payment_Adapter extends BaseAdapter {
 
 
     private class MyViewHolder {
-        TextView tv_vin_no, tv_vin_make;
-        Spinner spin_start, spin_end;
+        TextView tv_booking_id,tv_date,tv_cost;
 
         public MyViewHolder(View item) {
-          //  tv_vin_no = (TextView) item.findViewById(R.id.textview_vin_no);
-           // tv_vin_make = (TextView) item.findViewById(R.id.textview_vin_make);
+            tv_booking_id = (TextView) item.findViewById(R.id.textview_booking_id);
+            tv_date = (TextView) item.findViewById(R.id.textview_date);
+            tv_cost = (TextView) item.findViewById(R.id.textview_cost);
 
         }
     }

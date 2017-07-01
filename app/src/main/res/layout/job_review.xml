@@ -48,20 +48,25 @@
             <include
                 layout="@layout/red_underline"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></include>
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </LinearLayout>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fadeScrollbars="false"
-        >
+        android:visibility="invisible"
+        android:id="@+id/scrlview"
+        android:fadeScrollbars="false">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_15sdp"
+
             android:layout_marginTop="@dimen/_10sdp"
             android:orientation="vertical">
 
@@ -341,8 +346,21 @@
             </LinearLayout>
 
         </LinearLayout>
+
+
     </ScrollView>
 
+
+    <ProgressBar
+        android:id="@+id/progress"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+
+        />
+
+    </FrameLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -356,6 +374,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/time_remaining"
+            android:visibility="gone"
             android:textColor="@color/textColor"
             android:textSize="@dimen/_14sdp" />
 
@@ -364,6 +383,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="45 min"
+            android:visibility="gone"
             android:textColor="@color/redColor"
             android:textSize="@dimen/_14sdp" />
 

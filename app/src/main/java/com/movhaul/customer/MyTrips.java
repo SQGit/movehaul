@@ -237,6 +237,7 @@ public class MyTrips extends AppCompatActivity {
 
             if (position == 0) {
 
+
                 lt_top = (android.widget.LinearLayout) view.findViewById(R.id.layout_top);
 
                 if (ar_job_upcoming.size() > 0) {
