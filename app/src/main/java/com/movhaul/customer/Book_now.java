@@ -111,6 +111,7 @@ public class Book_now extends Activity {
 
         Intent get_data = getIntent();
 
+        //customer chooses service whether truck,bus or roadside assistance.
         vec_type = get_data.getStringExtra("vec_type");
 
 
@@ -171,6 +172,7 @@ public class Book_now extends Activity {
         Log.e("tag", "pi_l: " + pick_lati + ":::" + pick_long);
         Log.e("tag", "dr_l: " + drop_lati + ":::" + drop_long);
 
+        //snack bar
         snackbar = Snackbar
                 .make(findViewById(com.movhaul.customer.R.id.top), com.movhaul.customer.R.string.no_internet, Snackbar.LENGTH_LONG);
         View sbView = snackbar.getView();
@@ -178,7 +180,7 @@ public class Book_now extends Activity {
         tv_snack.setTextColor(Color.WHITE);
         tv_snack.setTypeface(tf);
 
-
+        //progress dialog
         mProgressDialog = new ProgressDialog(Book_now.this, com.movhaul.customer.R.style.AppCompatAlertDialogStyle);
         mProgressDialog.setTitle(com.movhaul.customer.R.string.loading);
         mProgressDialog.setMessage(getString(com.movhaul.customer.R.string.wait));
@@ -189,6 +191,7 @@ public class Book_now extends Activity {
             snackbar.show();
             tv_snack.setText(com.movhaul.customer.R.string.please_try_again);
         } else {
+            //fetch goods and truck types from server.
             new fetch_goods().execute();
             new fetch_trucks().execute();
         }
@@ -372,6 +375,7 @@ public class Book_now extends Activity {
 
     }
 
+    //goods type dialog
     private void goods_type() {
         Dialog_GoodsType dialog_goodsType = new Dialog_GoodsType(Book_now.this, ar_goods_type);
         dialog_goodsType.getWindow().setBackgroundDrawable(getResources().getDrawable(com.movhaul.customer.R.drawable.choose));
@@ -388,6 +392,7 @@ public class Book_now extends Activity {
         });
     }
 
+    //truck type dialog
     private void truck_type(ArrayList<String> ar_truck_typea, HashMap<String, String> hash_subtypea, HashMap<String, String> hash_truck_imgsa, ArrayList<String> ar_truck_sstypea, ArrayList<String> ar_truck_imgsa) {
         Dialog_VehicleType dialog_vehicleType = new Dialog_VehicleType(Book_now.this, ar_truck_typea, hash_subtypea, hash_truck_imgsa, ar_truck_sstypea, ar_truck_imgsa);
         dialog_vehicleType.getWindow().setBackgroundDrawable(getResources().getDrawable(com.movhaul.customer.R.drawable.choose));
@@ -651,6 +656,11 @@ public class Book_now extends Activity {
         protected String doInBackground(String... strings) {
             String json = "", jsonStr = "";
 
+            /*
+            if for when shipment has images and
+            else for when customer not taken any photos only upload shipment details.
+             */
+
             if (goods_imgs.size() > 0) {
 
 
@@ -667,6 +677,8 @@ public class Book_now extends Activity {
                     httppost.setHeader("sessiontoken", token);
                     httppost.setHeader("pickup_location", pickup_location);
                     httppost.setHeader("drop_location", drop_location);
+                    //by default driver search radius will be 100 mile (in future we have to ask client to how to implement radius on screen
+                    //whether button or default 100 mile is enough
                     httppost.setHeader("radius", "100");
                     if(str_delivery_address != null)
                     httppost.setHeader("delivery_address", str_delivery_address);

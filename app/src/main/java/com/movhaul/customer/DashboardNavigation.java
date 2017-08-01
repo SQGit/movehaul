@@ -309,6 +309,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         editor = sharedPreferences.edit();
         mContext = this;
 
+        //marshmallow permisson check
         insertDummyContactWrapper();
 
         drawer = (DrawerLayout) findViewById(com.movhaul.customer.R.id.drawer_layout);
@@ -410,6 +411,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         iv_bus = (ImageView) findViewById(com.movhaul.customer.R.id.image_bus);
         iv_road_assit = (ImageView) findViewById(com.movhaul.customer.R.id.image_roadside_assistance);
 
+        //progress dialog
         mProgressDialog = new ProgressDialog(DashboardNavigation.this, com.movhaul.customer.R.style.AppCompatAlertDialogStyle);
         mProgressDialog.setTitle(com.movhaul.customer.R.string.loading);
         mProgressDialog.setMessage(getString(com.movhaul.customer.R.string.wait));
@@ -430,6 +432,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         final int height = getDeviceHeight(DashboardNavigation.this);
         final int width = getDeviceWidth(DashboardNavigation.this);
 
+        //customer choosing bus
         iv_bus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -448,6 +451,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         });
 
 
+        //customer choosing truck
         iv_truck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -473,6 +477,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         });
 
 
+        //customer choosing road side assistance
         iv_road_assit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -62,6 +62,8 @@ import java.util.HashSet;
 
 /**
  * Created by sqindia on 26-10-2016.
+ * book later used to customer book jobs for future
+ * customer has to choose starting date and time.
  */
 
 public class Book_later extends Activity {
@@ -109,6 +111,8 @@ public class Book_later extends Activity {
     String vec_type;
 
     private ViewGroup mSelectedImagesContainer;
+
+    //datepicker dialgo
     private DatePickerDialog.OnDateSetListener pickerListener1 = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int selectedYear,
@@ -225,7 +229,7 @@ public class Book_later extends Activity {
         tv_snack.setTextColor(Color.WHITE);
         tv_snack.setTypeface(tf);
 
-
+        //progress dialog
         mProgressDialog = new ProgressDialog(Book_later.this, com.movhaul.customer.R.style.AppCompatAlertDialogStyle);
         mProgressDialog.setTitle(getString(R.string.lodo));
         mProgressDialog.setMessage(getString(R.string.wai));
@@ -237,10 +241,13 @@ public class Book_later extends Activity {
             snackbar.show();
             tv_snack.setText(R.string.conn);
         } else {
+            //fetch goods,trucks from server
             new fetch_goods().execute();
             new fetch_trucks().execute();
         }
 
+
+        //customer chooses services whether it is truck or bus
         if (vec_type.equals("Bus")) {
             et_truckType.setCompoundDrawablesWithIntrinsicBounds(com.movhaul.customer.R.drawable.bus_type, 0, 0, 0);
             flt_truckType.setHint(getString(com.movhaul.customer.R.string.ad));
@@ -621,7 +628,10 @@ public class Book_later extends Activity {
     }
 
 
-    class fetch_goods extends AsyncTask<String, Void, String> {
+    /*
+    fetch goods from server where admin add goods
+     */
+    private class fetch_goods extends AsyncTask<String, Void, String> {
         protected void onPreExecute() {
             super.onPreExecute();
             mProgressDialog.show();
@@ -674,7 +684,12 @@ public class Book_later extends Activity {
         }
     }
 
-    class fetch_trucks extends AsyncTask<String, Void, String> {
+
+
+    /*
+ fetch trucks and sub types from server where admin add trucks and sub types
+  */
+    private class fetch_trucks extends AsyncTask<String, Void, String> {
         protected void onPreExecute() {
             super.onPreExecute();
             mProgressDialog.show();
@@ -749,7 +764,8 @@ public class Book_later extends Activity {
 
     }
 
-    public class book_later_task extends AsyncTask<String, Void, String> {
+    //book later asynchronous task
+    private class book_later_task extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
