@@ -1,6 +1,14 @@
 package com.movhaul.customer;
-
+/*
+* create by salman
+* Dashboard page
+* contains map fragment inside dashboard and navigation drawer on left side
+* truck,bus and roadside assistance icons showing
+* customer pickup and drop points
+*
+ */
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -55,7 +63,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -85,11 +92,8 @@ import com.gun0912.tedpicker.ImagePickerActivity;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.TextView;
 import com.sloop.fonts.FontsManager;
-import com.systemspecs.remita.remitapaymentgateway.RemitaMainActivity;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.HttpMultipartMode;
@@ -97,10 +101,8 @@ import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -108,7 +110,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -117,15 +118,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-
+@SuppressWarnings({"deprecation", "NullableProblems", "ConstantConditions", "UnusedAssignment", "UnusedParameters", "StringBufferMayBeStringBuilder"})
 public class DashboardNavigation extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, com.google.android.gms.location.LocationListener, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, MapWrapperLayout.OnDragListener {
-
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final int REQUEST_AC_PICKUP = 1;
     private static final int REQUEST_AC_DROP = 2;
     private static final int REQUEST_CODE_PAYMENT = 545;
-    private static final int REQUEST_PROFILE = 5;
     private static final int INTENT_REQUEST_GET_IMAGES = 13;
     public static boolean mMapIsTouched = false;
     public static String id;
@@ -138,7 +136,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     public String mDrop_long;
     public String vec_type;
     public double dl_pick_lati, dl_pick_longi, dl_drop_lati, dl_drop_longi;
-    public double dl_dr_lati, dl_dr_longi;
     public int frm_width, frm_hight;
     protected String mAddressOutput;
     protected String mAreaOutput;
@@ -170,7 +167,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     List<Address> addresses;
     LinearLayout lt_first, lt_last;
     FrameLayout lt_second, lt_frame;
-    // SupportMapFragment mapFragment;
     CustomMapFragment customMapFragment;
     ImageView btn_editProfile, btn_close, btn_editProfile_img;
     EditText et_username, et_email;
@@ -182,7 +178,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     ImageView iv_truck, iv_bus, iv_road_assit;
     LinearLayout lt_filter_dialog;
     Button btn_book_roadside;
-    LinearLayout lt_road_side;
     String str_time, str_pickup, str_drop, str_pickup_lati, str_pickup_longi, str_drop_lati, str_drop_longi;
     android.widget.RelativeLayout bottomSheetViewgroup;
     BottomSheetBehavior bottomSheetBehavior;
@@ -197,31 +192,23 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     private GoogleMap mMap;
     private LatLng mCenterLatLong;
     private AddressResultReceiver mResultReceiver;
-
     public static int getDeviceHeight(Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
-        int height = display.getHeight();
-        return height;
+        return display.getHeight();
     }
-
-    public static int getDeviceWidth(Context context) {
+   /* public static int getDeviceWidth(Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
-        int width = display.getWidth();
-        return width;
-    }
-
+        return display.getWidth();
+    }*/
     public static void geee() {
-
         //if(dl_pick_lati != 0.0)
         //new get_drivers().execute();
-
+        Log.e("tag","gee called");
     }
-
     private void insertDummyContactWrapper() {
-        List<String> permissionsNeeded = new ArrayList<String>();
-
+        List<String> permissionsNeeded = new ArrayList<>();
         final List<String> permissionsList = new ArrayList<>();
         if (addPermission(permissionsList, Manifest.permission.ACCESS_FINE_LOCATION))
             permissionsNeeded.add("GPS");
@@ -229,21 +216,16 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             permissionsNeeded.add("Read Contacts");
         if (addPermission(permissionsList, Manifest.permission.WRITE_EXTERNAL_STORAGE))
             permissionsNeeded.add("Write Contacts");
-
         if (permissionsList.size() > 0) {
             if (permissionsNeeded.size() > 0) {
                 // Need Rationale
                 String message = getString(com.movhaul.customer.R.string.ees) + permissionsNeeded.get(0);
                 for (int i = 1; i < permissionsNeeded.size(); i++)
                     message = message + ", " + permissionsNeeded.get(i);
-
-
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
                             REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
                 }
-
-
                 return;
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -251,9 +233,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                         REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
             }
         }
-
     }
-
     private boolean addPermission(List<String> permissionsList, String permission) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
@@ -264,28 +244,22 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         }
         return false;
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS: {
-                Map<String, Integer> perms = new HashMap<String, Integer>();
-
+                Map<String, Integer> perms = new HashMap<>();
                 perms.put(Manifest.permission.ACCESS_FINE_LOCATION, PackageManager.PERMISSION_GRANTED);
                 perms.put(Manifest.permission.CAMERA, PackageManager.PERMISSION_GRANTED);
                 perms.put(Manifest.permission.WRITE_EXTERNAL_STORAGE, PackageManager.PERMISSION_GRANTED);
-
                 for (int i = 0; i < permissions.length; i++)
                     perms.put(permissions[i], grantResults[i]);
                 if (perms.get(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                         && perms.get(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
                         && perms.get(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-
                     Intent intent = getIntent();
                     finish();
                     startActivity(intent);
-
-
                 } else {
                     insertDummyContactWrapper();
                     Toast.makeText(DashboardNavigation.this, com.movhaul.customer.R.string.permis_si, Toast.LENGTH_SHORT)
@@ -297,7 +271,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -308,10 +281,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DashboardNavigation.this);
         editor = sharedPreferences.edit();
         mContext = this;
-
-        //marshmallow permisson check
+        //marshmallow permission check
         insertDummyContactWrapper();
-
         drawer = (DrawerLayout) findViewById(com.movhaul.customer.R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(com.movhaul.customer.R.id.nav_view);
         btn_book_now = (Button) findViewById(com.movhaul.customer.R.id.btn_book_now);
@@ -339,13 +310,10 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         lt_frame = (FrameLayout) findViewById(com.movhaul.customer.R.id.frame);
         btn_editProfile = (ImageView) findViewById(com.movhaul.customer.R.id.imageView2);
         btn_editProfile_img = (ImageView) findViewById(com.movhaul.customer.R.id.imageView);
-
         iv_location = (ImageView) findViewById(com.movhaul.customer.R.id.imageview_location);
-
         fl_bottom_frame = (android.widget.RelativeLayout) findViewById(com.movhaul.customer.R.id.bottom_frame_layout);
         lt_top = (LinearLayout) findViewById(com.movhaul.customer.R.id.top_layout);
         iv_map_point = (ImageView) findViewById(com.movhaul.customer.R.id.map_point);
-
         Typeface type = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
         flt_pickup.setTypeface(type);
         flt_drop_location.setTypeface(type);
@@ -354,84 +322,57 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         customer_mobile = sharedPreferences.getString("customer_mobile", "");
         customer_email = sharedPreferences.getString("customer_email", "");
         customer_name = sharedPreferences.getString("customer_name", "");
-
         bottomSheetViewgroup
                 = (android.widget.RelativeLayout) findViewById(com.movhaul.customer.R.id.bottom_sheet);
-
         bottomSheetBehavior =
                 BottomSheetBehavior.from(bottomSheetViewgroup);
-
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-
         lt_bt_veh_type = (LinearLayout) findViewById(com.movhaul.customer.R.id.layout_vehicle_type);
         lt_bt_tow_type = (LinearLayout) findViewById(com.movhaul.customer.R.id.layout_tow_type);
-
         lt_bt_tow_type.setVisibility(View.GONE);
-
         lt_bt_veh_car = (LinearLayout) findViewById(com.movhaul.customer.R.id.layout_bt_car);
         lt_bt_veh_truck = (LinearLayout) findViewById(com.movhaul.customer.R.id.layout_bt_truck);
         lt_bt_veh_bus = (LinearLayout) findViewById(com.movhaul.customer.R.id.layout_bt_bus);
-
         lt_bt_veh_tow = (LinearLayout) findViewById(com.movhaul.customer.R.id.layout_bt_tow);
         lt_bt_veh_flatbed = (LinearLayout) findViewById(com.movhaul.customer.R.id.layout_bt_flatbed);
-
-
         Log.e("tag", "ss:" + bottomSheetBehavior.getState());
-
         btn_book_roadside = (Button) findViewById(com.movhaul.customer.R.id.btn_book_assistance);
-
         btn_book_roadside.setVisibility(View.GONE);
-
         id = sharedPreferences.getString("id", "");
         token = sharedPreferences.getString("token", "");
-
         // mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-
-
         // Google map init block
         customMapFragment = ((CustomMapFragment) getSupportFragmentManager().findFragmentById(com.movhaul.customer.R.id.map));
         customMapFragment.setOnDragListener(DashboardNavigation.this);
-
         customMapFragment.getMapAsync(this);
-
         frm_width = customMapFragment.getView().getMeasuredWidth() - 50;
         frm_hight = customMapFragment.getView().getMeasuredHeight() - 200;
-
         // GoogleMap map = customMapFragment.getMap();
-
         lt_filter_dialog = (LinearLayout) findViewById(com.movhaul.customer.R.id.filter_dialog);
         lt_filter_dialog.setVisibility(View.VISIBLE);
-
         btn_book_now.setEnabled(false);
         btn_book_later.setEnabled(false);
         lt_pickup.setEnabled(false);
         lt_drop.setEnabled(false);
-
         iv_truck = (ImageView) findViewById(com.movhaul.customer.R.id.image_truck);
         iv_bus = (ImageView) findViewById(com.movhaul.customer.R.id.image_bus);
         iv_road_assit = (ImageView) findViewById(com.movhaul.customer.R.id.image_roadside_assistance);
-
         //progress dialog
         mProgressDialog = new ProgressDialog(DashboardNavigation.this, com.movhaul.customer.R.style.AppCompatAlertDialogStyle);
         mProgressDialog.setTitle(com.movhaul.customer.R.string.loading);
         mProgressDialog.setMessage(getString(com.movhaul.customer.R.string.wait));
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.setCancelable(false);
-
         Calendar c = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         String formattedDate = df.format(c.getTime());
-
         String[] parts = formattedDate.split(" ");
         String part1 = parts[0];
         String part2 = parts[1];
-
         current_time = parts[1];
         str_time = part1 + " T " + part2;
-
         final int height = getDeviceHeight(DashboardNavigation.this);
-        final int width = getDeviceWidth(DashboardNavigation.this);
-
+        //final int width = getDeviceWidth(DashboardNavigation.this);
         //customer choosing bus
         iv_bus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -441,7 +382,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 vec_type = "Bus";
                 lt_filter_dialog.setAnimation(anim_btn_t2b);
                 lt_filter_dialog.setVisibility(View.GONE);
-
                 btn_book_roadside.setVisibility(View.GONE);
                 btn_book_now.setEnabled(true);
                 btn_book_later.setEnabled(true);
@@ -449,8 +389,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 lt_drop.setEnabled(true);
             }
         });
-
-
         //customer choosing truck
         iv_truck.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -460,23 +398,15 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 vec_type = "Truck";
                 lt_filter_dialog.setAnimation(anim_btn_t2b);
                 lt_filter_dialog.setVisibility(View.GONE);
-
                 btn_book_roadside.setVisibility(View.GONE);
                 btn_book_now.setEnabled(true);
                 btn_book_later.setEnabled(true);
                 lt_pickup.setEnabled(true);
                 lt_drop.setEnabled(true);
-
-
                 //  startService(new Intent(DashboardNavigation.this, DriverService.class));
-
                 //  new get_drivers().execute();
-
-
             }
         });
-
-
         //customer choosing road side assistance
         iv_road_assit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -486,7 +416,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 vec_type = "Road";
                 lt_filter_dialog.setAnimation(anim_btn_t2b);
                 lt_filter_dialog.setVisibility(View.GONE);
-
                 btn_book_roadside.setVisibility(View.VISIBLE);
                 btn_book_now.setEnabled(false);
                 btn_book_later.setEnabled(false);
@@ -494,45 +423,29 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 lt_drop.setEnabled(true);
             }
         });
-
-
         // mapFragment.getMapAsync(this);
-
         image_uris = new ArrayList<>();
-
-
         iv_zoomin = (ImageView) findViewById(com.movhaul.customer.R.id.zoomin);
         iv_zoomout = (ImageView) findViewById(com.movhaul.customer.R.id.zoomout);
-
-
         iv_zoomin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 mMap.animateCamera(CameraUpdateFactory.zoomIn());
             }
         });
-
         iv_zoomout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mMap.animateCamera(CameraUpdateFactory.zoomOut());
             }
         });
-
-
         snackbar = Snackbar
                 .make(findViewById(com.movhaul.customer.R.id.top), com.movhaul.customer.R.string.no_internet, Snackbar.LENGTH_SHORT);
-
-
         snackbar.setActionTextColor(Color.RED);
-
         View sbView = snackbar.getView();
         tv_snack = (android.widget.TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         tv_snack.setTextColor(Color.WHITE);
         tv_snack.setTypeface(tf);
-
-
         snackbar_loc = Snackbar
                 .make(findViewById(com.movhaul.customer.R.id.cd_layout), com.movhaul.customer.R.string.loc, Snackbar.LENGTH_INDEFINITE)
                 .setAction(com.movhaul.customer.R.string.open_settings, new View.OnClickListener() {
@@ -542,8 +455,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                         startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
                     }
                 });
-
-
         View sbView_loc = snackbar_loc.getView();
         tv_snack_loc = (android.widget.TextView) sbView_loc.findViewById(android.support.design.R.id.snackbar_text);
         tv_snack_loc_act = (android.widget.TextView) sbView_loc.findViewById(android.support.design.R.id.snackbar_action);
@@ -551,8 +462,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         tv_snack_loc.setTypeface(tf);
         tv_snack_loc_act.setTypeface(tf);
         tv_snack_loc_act.setTextColor(Color.RED);
-
-
         mResultReceiver = new AddressResultReceiver(new Handler());
         if (checkPlayServices()) {
             if (!AppUtils.isLocationEnabled(mContext)) {
@@ -563,11 +472,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             snackbar.show();
             tv_snack.setText(com.movhaul.customer.R.string.alocl);
         }
-
-
         final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, com.movhaul.customer.R.string.app_name, com.movhaul.customer.R.string.app_name)
-
         {
             @Override
             public void onDrawerStateChanged(int newState) {
@@ -586,17 +492,12 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 }
             }
         };
-
-
         drawer.setDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-
         if (!(sharedPreferences.getString("customer_image", "").equals(""))) {
             Glide.with(DashboardNavigation.this).load(Config.WEB_URL_IMG + "customer_details/" + sharedPreferences.getString("customer_image", "")).into(btn_editProfile_img);
         }
-
-
         dialog2 = new Dialog(DashboardNavigation.this);
         dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
@@ -610,14 +511,11 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         flt_email = (TextInputLayout) dialog2.findViewById(com.movhaul.customer.R.id.float_email);
         tv_name.setText(customer_name);
         tv_email.setText(customer_email);
-
         et_username.setTypeface(tf);
         et_email.setTypeface(tf);
         flt_uname.setTypeface(tf);
         flt_email.setTypeface(tf);
         btn_update.setTypeface(tf);
-
-
         btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -642,8 +540,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 
             }
         });
-
-
         dialog1 = new Dialog(DashboardNavigation.this);
         dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
@@ -651,17 +547,14 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         dialog1.setContentView(com.movhaul.customer.R.layout.dialog_yes_no);
         btn_yes = (Button) dialog1.findViewById(com.movhaul.customer.R.id.button_yes);
         btn_no = (Button) dialog1.findViewById(com.movhaul.customer.R.id.button_no);
-
         tv_txt1 = (android.widget.TextView) dialog1.findViewById(com.movhaul.customer.R.id.textView_1);
         tv_txt2 = (android.widget.TextView) dialog1.findViewById(com.movhaul.customer.R.id.textView_2);
         tv_txt3 = (android.widget.TextView) dialog1.findViewById(com.movhaul.customer.R.id.textView_3);
-
         tv_txt1.setTypeface(tf);
         tv_txt2.setTypeface(tf);
         tv_txt3.setTypeface(tf);
         btn_yes.setTypeface(tf);
         btn_no.setTypeface(tf);
-
         lt_pickup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -674,14 +567,12 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 openAutocompleteActivity1();
             }
         });
-
         btn_yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (exit_status == 0) {
                     editor.clear();
-                    editor.commit();
+                    editor.apply();
                     dialog1.dismiss();
                     Intent i = new Intent(DashboardNavigation.this, LoginActivity.class);
                     startActivity(i);
@@ -690,18 +581,16 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     finishAffinity();
                     dialog1.dismiss();
                 }
-
             }
         });
-
         btn_no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog1.dismiss();
             }
         });
-
         btn_editProfile.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("RtlHardcoded")
             @Override
             public void onClick(View view) {
                 dialog2.show();
@@ -718,33 +607,25 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 intent.setColumn(3);
                 intent.setShowCamera(true);
                 startActivityForResult(intent, REQUEST_PROFILE);*/
-
-
                 com.gun0912.tedpicker.Config config = new com.gun0912.tedpicker.Config();
                 config.setSelectionMin(1);
                 config.setSelectionLimit(1);
                 config.setCameraHeight(com.movhaul.customer.R.dimen.app_camera_height);
-
                 config.setCameraBtnBackground(com.movhaul.customer.R.drawable.round_dr_red);
-
                 config.setToolbarTitleRes(com.movhaul.customer.R.string.custom_title);
                 config.setSelectedBottomHeight(com.movhaul.customer.R.dimen.bottom_height);
-
                 ImagePickerActivity.setConfig(config);
                 Intent intent = new Intent(DashboardNavigation.this, com.gun0912.tedpicker.ImagePickerActivity.class);
                 startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
-
             }
         });
-
-
         btn_menu.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("RtlHardcoded")
             @Override
             public void onClick(View v) {
                 drawer.openDrawer(Gravity.LEFT);
             }
         });
-
         rightmenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -764,13 +645,10 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 }
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
-
                         switch (item.getItemId()) {
                             case com.movhaul.customer.R.id.support: {
-
                                 Intent i = new Intent(DashboardNavigation.this, WebViewAct.class);
                                 startActivity(i);
-
                                 return true;
                             }
                             case com.movhaul.customer.R.id.feedback: {
@@ -792,16 +670,12 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             }
 
         });
-
-
         tv_jobReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(DashboardNavigation.this, MyJobs.class);
                 startActivity(i);
                 drawer.closeDrawer(Gravity.LEFT);
-
-
             }
         });
         tv_myTrips.setOnClickListener(new View.OnClickListener() {
@@ -812,7 +686,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 drawer.closeDrawer(Gravity.LEFT);
             }
         });
-
         tv_tracking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -821,8 +694,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 drawer.closeDrawer(Gravity.LEFT);
             }
         });
-
-
         tv_payments.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -831,7 +702,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 drawer.closeDrawer(Gravity.LEFT);
             }
         });
-
         tv_emergencyContacts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -840,25 +710,16 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 drawer.closeDrawer(Gravity.LEFT);
             }
         });
-
         iv_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 getMyLocation();
-
-
             }
         });
-
-
         if (!(sharedPreferences.getString("book_time", "").equals(""))) {
-
-
             String dateStart = current_time;
             String dateStop = sharedPreferences.getString("book_time", "");
-            SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
             Date d1 = null;
             Date d2 = null;
             try {
@@ -868,27 +729,22 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 long diffHours = diff / (60 * 60 * 1000) % 24;
                 diff = diffHours;
                 Log.e("test", diffHours + " hours, " + diff);
-            } catch (Exception e) {// TODO: handle exception        }
-
+            } catch (Exception e) {
+                Log.e("tag","err:"+e.toString());
             }
         } else {
             diff = 7;
         }
-
-
         btn_book_now.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (diff >= 0) {
-
                     if (aet_drop.getText().toString().isEmpty()) {
                         // Toast.makeText(getApplicationContext(), "Choose Drop Location", Toast.LENGTH_LONG).show();
                         snackbar.show();
                         tv_snack.setText(com.movhaul.customer.R.string.adsfb);
                     } else {
                         if (mStreetOutput == null || mStreetOutput.equals("null")) {
-
                             snackbar.show();
                             tv_snack.setText("Choose PickupLocation Again");
                         }
@@ -909,12 +765,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     snackbar.show();
                     tv_snack.setText(com.movhaul.customer.R.string.asdf);
                 }
-
-
             }
         });
-        //
-
         btn_book_later.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -936,25 +788,19 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     i.putExtra("vec_type", vec_type);
                     startActivity(i);
                 }
-
             }
         });
-
-
         dg_road_confirm = new Dialog(DashboardNavigation.this);
         dg_road_confirm.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dg_road_confirm.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dg_road_confirm.setCancelable(false);
         dg_road_confirm.setContentView(com.movhaul.customer.R.layout.dialog_road_confirm);
-
         btn_yes = (Button) dg_road_confirm.findViewById(com.movhaul.customer.R.id.button_yes);
         tv_txt1 = (android.widget.TextView) dg_road_confirm.findViewById(com.movhaul.customer.R.id.textView_1);
         tv_txt2 = (android.widget.TextView) dg_road_confirm.findViewById(com.movhaul.customer.R.id.textView_2);
-
         tv_txt1.setTypeface(tf);
         tv_txt2.setTypeface(tf);
         btn_yes.setTypeface(tf);
-
         btn_yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -966,12 +812,9 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 aet_drop.setText("");
             }
         });
-
-
         btn_book_roadside.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 //intent.putExtra("apiKey", "U1lTUC4xNUhPMTIkMTIzLjR8U1lTUA==");
                 // intent.putExtra("txnToken", "d3hyVTMxSmxpUXNxNjh6MTBqRXF4Wms3Vll1OTN4S1c2dkMrL2VjWkFpQm9BUzRNb2VGWFpRPT0=");
 
@@ -981,28 +824,21 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 intent.putExtra("apiKey", "U1lTUC4xNUhPMTIkMTIzLjR8U1lTUA==");
                 intent.putExtra("txnToken", "55316C54554334784E5568504D54496B4D54497A4C6A523855316C5455413D3D7C3932333737633266613035313135306337363534386636376266623131303165383831366464343834666234363064653062343731663538643461323835303537333638653232313135363366383334666337613166333265333336653834626539656566393465396363356131363739353463646239333434363164313732");
                 startActivityForResult(intent, 102);*/
-
-
                 if (aet_drop.getText().toString().isEmpty()) {
                     snackbar.show();
                     tv_snack.setText(com.movhaul.customer.R.string.drpa);
                 } else {
-
                     str_pickup = mStreetOutput + ", " + mCityOutput;
                     str_drop = aet_drop.getText().toString();
                     str_pickup_lati = mPickup_lat;
                     str_pickup_longi = mPickup_long;
                     str_drop_lati = mDrop_lat;
                     str_drop_longi = mDrop_long;
-
                     // new book_roadside().execute();
-
                     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 }
             }
         });
-
-
         lt_bt_veh_car.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -1027,7 +863,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 cu_vec_type = "truck";
             }
         });
-
         lt_bt_veh_flatbed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -1036,12 +871,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 lt_bt_veh_type.setVisibility(View.VISIBLE);
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
                 new book_roadside().execute();
-
-                String amt = "322";
-                String amt1 = "arefadf";
-                String amt2 = "334aadf32";
                 //new payment_token(amt,amt1,amt2).execute();
-
             }
         });
         lt_bt_veh_tow.setOnClickListener(new View.OnClickListener() {
@@ -1052,69 +882,46 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 lt_bt_veh_type.setVisibility(View.VISIBLE);
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
                 new book_roadside().execute();
-
-                String amt = "322";
-                String amt1 = "arefadf";
-                String amt2 = "334aadf32";
                 //new payment_token(amt,amt1,amt2).execute();
-
             }
         });
-
-
     }
-
     private void getMyLocation() {
-
         if (mMap != null) {
             Location myLocation = mMap.getMyLocation();
-
             if (myLocation != null) {
                 LatLng myLatLng1 = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
-
                 //CameraPosition myPosition = new CameraPosition.Builder().target(myLatLng).zoom(17).bearing(90).tilt(30).build();
                 CameraPosition myPosition = new CameraPosition.Builder().target(myLatLng1).zoom(17).build();
                 mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
-
-
             }
         }
     }
-
     private void applyFontToMenuItem(MenuItem mi) {
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
         SpannableString mNewTitle = new SpannableString(mi.getTitle());
         mNewTitle.setSpan(new CustomTypefaceSpan("", font), 0, mNewTitle.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         mi.setTitle(mNewTitle);
     }
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         return false;
     }
-
     @Override
     public void onLocationChanged(Location location) {
         try {
             if (location != null)
-
-
                 mPickup_lat = String.valueOf(location.getLatitude());
             mPickup_long = String.valueOf(location.getLongitude());
-
             changeMap(location);
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-
     }
-
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -1123,24 +930,19 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 .addApi(ActivityRecognition.API)
                 .build();
     }
-
     @Override
     protected void onStart() {
         super.onStart();
         try {
             mGoogleApiClient.connect();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
     @Override
     protected void onRestart() {
         super.onRestart();
-
         insertDummyContactWrapper();
-
         if (checkPlayServices()) {
             if (!AppUtils.isLocationEnabled(mContext)) {
                 snackbar_loc.show();
@@ -1150,61 +952,40 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             snackbar.show();
             tv_snack.setText(com.movhaul.customer.R.string.asdloc);
         }
-
     }
-
     @Override
     protected void onStop() {
         super.onStop();
-        try {
-
-        } catch (RuntimeException e) {
-            e.printStackTrace();
-        }
         if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
         }
     }
-
-
-    /////////////////////////
-
     public void show_disable() {
-
         //Activity context = DashboardNavigation.this;
-//
-
         //lt_bottom = (LinearLayout) findViewById(R.id.bottom_layout);
-
         if (mMapIsTouched) {
             Log.e("tagmap", "istouched");
             // lt_top = (LinearLayout) findViewById(R.id.top_layout);
             ////  lt_bottom = (LinearLayout) findViewById(R.id.bottom_layout);
-
             //   lt_top.setVisibility(View.GONE);
             //   lt_bottom.setVisibility(View.GONE);
         } else {
             Log.e("tagmap", "nottouched");
             //  lt_top = (LinearLayout) findViewById(R.id.top_layout);
             // lt_bottom = (LinearLayout) findViewById(R.id.bottom_layout);
-
             //  lt_top.setVisibility(View.VISIBLE);
             //  lt_bottom.setVisibility(View.VISIBLE);
         }
-
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         // DashboardNavigation.this.unregisterReceiver(appendChatScreenMsgReceiver);
     }
-
     private void openAutocompleteActivity() {
         try {
             // The autocomplete activity requires Google Play Services to be available. The intent
             // builder checks this and throws an exception if it is not the case.
-
             AutocompleteFilter typeFilter = new AutocompleteFilter.Builder().setTypeFilter(Place.TYPE_COUNTRY).setCountry("NG").build();
             //   //.setBoundsBias(new LatLngBounds(new LatLng(23.63936, 68.14712), new LatLng(28.20453, 97.34466)))
             Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).setFilter(typeFilter).build(this);
@@ -1223,7 +1004,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
         }
     }
-
     private void openAutocompleteActivity1() {
         try {
             // The autocomplete activity requires Google Play Services to be available. The intent
@@ -1231,11 +1011,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
              AutocompleteFilter typeFilter = new AutocompleteFilter.Builder().setTypeFilter(Place.TYPE_COUNTRY).setCountry("NG").build();
             Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).setFilter(typeFilter).build(this);
             startActivityForResult(intent, REQUEST_AC_DROP);
-
             //  lt_pickup.setEnabled(false);
             p_loc_comp = true;
-
-
         } catch (GooglePlayServicesRepairableException e) {
             // Indicates that Google Play Services is either not installed or not up to date. Prompt
             // the user to correct the issue.
@@ -1246,34 +1023,26 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             // resolvable.
             String message = getString(com.movhaul.customer.R.string.goglso) +
                     GoogleApiAvailability.getInstance().getErrorString(e.errorCode);
-
             Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
         }
     }
-
     /**
      * Called after the autocomplete activity has finished to return its result.
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         // Check that the result was from the autocomplete widget.
         if (requestCode == REQUEST_AC_PICKUP) {
             Log.e("tag", "request");
             if (resultCode == RESULT_OK) {
                 // Get the user's selected place from the Intent.
                 Place place = PlaceAutocomplete.getPlace(mContext, data);
-                // TODO call location based filter
                 LatLng latLong;
-
                 aet_pickup.setText("");
                 aet_pickup.append(place.getAddress());
                 Log.e("tagplace", " place " + place.getAddress() + " attrib " + place.getAttributions() + " name " + place.getName() + " phone " + place.getPhoneNumber() + " latlon " + place.getLatLng().toString());
-
-
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
                     //    ActivityCompat#requestPermissions
                     // here to request the missing permissions, and then overriding
                     //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
@@ -1284,24 +1053,16 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 }
                 if (mMap != null) {
                     mMap.getUiSettings().setZoomControlsEnabled(false);
-
                     // mMap.clear();
-
-
                     latLong = place.getLatLng();
                     dl_pick_lati = latLong.latitude;
                     dl_pick_longi = latLong.longitude;
-
                     Log.e("tag", "d: :" + dl_drop_longi);
-
                     if (p_loc_comp)
                         draw_line(dl_pick_lati, dl_pick_longi, dl_drop_lati, dl_drop_longi);
-
                     //latLong = new LatLng(location.getLatitude(), location.getLongitude());
-
                    /* CameraPosition cameraPosition = new CameraPosition.Builder()
                             .target(latLong).zoom(15f).build();*/
-
                     //  mMap.setMyLocationEnabled(true);
                     mMap.getUiSettings().setMyLocationButtonEnabled(false);
                     mMap.getUiSettings().setZoomControlsEnabled(false);
@@ -1309,47 +1070,33 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                    /* mMap.animateCamera(CameraUpdateFactory
                             .newCameraPosition(cameraPosition));*/
                     //mMap.addMarker(new MarkerOptions().position(latLong));
-
                 }
-
-
             }
-
-
         } else if (requestCode == REQUEST_AC_DROP) {
             Log.e("tag", "request_drop");
-
             if (resultCode == RESULT_OK) {
                 // Get the user's selected place from the Intent.
                 Place place1 = PlaceAutocomplete.getPlace(mContext, data);
-                // TODO call location based filter
                 LatLng latLong;
                 latLong = place1.getLatLng();
                 aet_drop.setText("");
-
                 aet_drop.append(place1.getAddress());
                 Log.e("tag", "place111" + place1.getAddress());
                 Log.e("tag", "la00: " + place1.getLatLng());
                 mDrop_lat = String.valueOf(latLong.latitude);
                 mDrop_long = String.valueOf(latLong.longitude);
-
                 dl_drop_lati = latLong.latitude;
                 dl_drop_longi = latLong.longitude;
-
-
                 draw_line(dl_pick_lati, dl_pick_longi, dl_drop_lati, dl_drop_longi);
-
-
             }
-
-
         } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
             Status status = PlaceAutocomplete.getStatus(mContext, data);
+            Log.e("tag","result err"+status);
         } else if (resultCode == RESULT_CANCELED) {
+            Log.e("tag","result cancelled");
             // Indicates that the activity closed before a selection was made. For example if
             // the user pressed the back button.
         }
-
  /*       List<String> photos = null;
         if (resultCode == RESULT_OK && requestCode == REQUEST_PROFILE) {
             if (data != null) {
@@ -1365,9 +1112,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             new profile_update().execute();
             // Glide.with(DashboardNavigation.this).load(new File(str_profile_img)).into(btn_editProfile_img);
         }*/
-
         if (requestCode == INTENT_REQUEST_GET_IMAGES && resultCode == Activity.RESULT_OK) {
-
             image_uris = data.getParcelableArrayListExtra(com.gun0912.tedpicker.ImagePickerActivity.EXTRA_IMAGE_URIS);
             Log.e("tag", "12345" + image_uris);
             selectedPhotos.clear();
@@ -1377,66 +1122,40 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 new profile_update().execute();
             }
         }
-
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_PAYMENT) {
             Log.e("tag", "cd:" + resultCode);
             Log.e("tag", "rc:" + requestCode);
             Log.e("tag", "dt:" + data.toString());
-
             Bundle bundle = data.getExtras();
             String authorizid = bundle.getString("authoriztionId");
             payment_ref = bundle.getString("remitaTransRef");
             String responceCode = bundle.getString("responseCode");
-
             Log.e("tag", "ss: " + authorizid);
             Log.e("tag", "ss1: " + payment_ref);
             Log.e("tag", "ss2: " + responceCode);
-
-
             /*final int height = getDeviceHeight(DashboardNavigation.this);
             TranslateAnimation anim_btn_b2t = new TranslateAnimation(0, 0, height, 0);
             anim_btn_b2t.setDuration(500);
             lt_filter_dialog.setAnimation(anim_btn_b2t);
             lt_filter_dialog.setVisibility(View.VISIBLE);
             aet_drop.setText("");*/
-
-
-            //
-
             ///customer/emergencypayment
-
-
             new book_now_task().execute();
-
-
         }
-
-
     }
-
     private void draw_line(double dl_pick_lati, double dl_pick_longi, double dl_drop_lati, double dl_drop_longi) {
-
-
         mMap.clear();
-
         Marker pickup_marker, drop_marker;
-
         pickup_marker = mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
                 .position(new LatLng(dl_pick_lati, dl_pick_longi)));
-
         drop_marker = mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
                 .position(new LatLng(dl_drop_lati, dl_drop_longi)));
-
-
         iv_map_point.setVisibility(View.GONE);
         /*Polyline line = mMap.addPolyline(new PolylineOptions()
                 .add(new LatLng(dl_pick_lati, dl_pick_longi), new LatLng(dl_drop_lati, dl_drop_longi))
                 .width(5)
                 .color(Color.RED));*/
-
-
         // Getting URL to the Google Directions API
-
         String str_origin = "origin=" + dl_pick_lati + "," + dl_pick_longi;
         String str_dest = "destination=" + dl_drop_lati + "," + dl_drop_longi;
         String sensor = "sensor=false";
@@ -1445,38 +1164,24 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
         DownloadTask downloadTask = new DownloadTask();
         downloadTask.execute(url);
-
-
         midPoint(dl_pick_lati, dl_pick_longi, dl_drop_lati, dl_drop_longi, pickup_marker, drop_marker);
-
-
     }
-
-
     public void midPoint(double lat1, double lon1, double lat2, double lon2, Marker one, Marker two) {
-
-        double dLon = Math.toRadians(lon2 - lon1);
-
+       // double dLon = Math.toRadians(lon2 - lon1);
         //convert to radians
         lat1 = Math.toRadians(lat1);
         lat2 = Math.toRadians(lat2);
         lon1 = Math.toRadians(lon1);
-
-        double Bx = Math.cos(lat2) * Math.cos(dLon);
-        double By = Math.cos(lat2) * Math.sin(dLon);
-        double lat = Math.atan2(Math.sin(lat1) + Math.sin(lat2), Math.sqrt((Math.cos(lat1) + Bx) * (Math.cos(lat1) + Bx) + By * By));
-        double lon = lon1 + Math.atan2(By, Math.cos(lat1) + Bx);
-
+       // double Bx = Math.cos(lat2) * Math.cos(dLon);
+       // double By = Math.cos(lat2) * Math.sin(dLon);
+       // double lat = Math.atan2(Math.sin(lat1) + Math.sin(lat2), Math.sqrt((Math.cos(lat1) + Bx) * (Math.cos(lat1) + Bx) + By * By));
+       // double lon = lon1 + Math.atan2(By, Math.cos(lat1) + Bx);
         //print out in degrees
         //  System.out.println(Math.toDegrees(lat) + " " + Math.toDegrees(lon));
         //  Toast.makeText(getApplicationContext(), "mid POint" + lat + lon, Toast.LENGTH_LONG).show();
-        double mid_lati = Math.toDegrees(lat);
-        double mid_longi = Math.toDegrees(lon);
-
-
+        //double mid_lati = Math.toDegrees(lat);
+        //double mid_longi = Math.toDegrees(lon);
         // LatLngBounds.Builder builder = new LatLngBounds.Builder();
-
-
       /*  Marker[] markers = {one,two};
         for (Marker m : markers) {
             builder.include(m.getPosition());
@@ -1488,28 +1193,18 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         //   CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds,
         // 80);
         // mMap.animateCamera(cu);
-
-
-        double meters = 5000;
-        double meters1 = 15000;
-        double coef = meters * 0.0000089;
-        double coef1 = meters1 * 0.0000089;
-        double new_lat1 = lat1 + coef;
-        double new_long1 = lon1 + coef / Math.cos(lat1 * 0.018);
-
-        double new_lat2 = lat2 + coef;
-        double new_long2 = lon2 + coef / Math.cos(lat2 * 0.018);
-
+       // double meters = 5000;
+       // double meters1 = 15000;
+        //double coef = meters * 0.0000089;
+        //double coef1 = meters1 * 0.0000089;
+       // double new_lat1 = lat1 + coef;
+        //double new_long1 = lon1 + coef / Math.cos(lat1 * 0.018);
+        //double new_lat2 = lat2 + coef;
+        //double new_long2 = lon2 + coef / Math.cos(lat2 * 0.018);
         Marker pickup_marker1, drop_marker1;
-
         pickup_marker1 = mMap.addMarker(new MarkerOptions().position(new LatLng(dl_pick_lati, dl_pick_longi)).draggable(true).visible(false));
-
         drop_marker1 = mMap.addMarker(new MarkerOptions().position(new LatLng(dl_drop_lati, dl_drop_longi)).draggable(true).visible(false));
-
-
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
-
-
         Marker[] markers = {pickup_marker1, drop_marker1};
         for (Marker m : markers) {
             builder.include(m.getPosition());
@@ -1518,19 +1213,14 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         int padding = ((frm_hight * 10) / 100); // offset from edges of the map
         // in pixels
         Log.e("tag", "ss:" + padding);
-
         //final LatLngBounds bounds = new LatLngBounds.Builder().include(new LatLng(lat1, lon1)).include(new LatLng(lat2, lon2)).build();
         // mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 120));
-
         //  final LatLngBounds boundss = new LatLngBounds.Builder().include(new LatLng(new_lat1, new_long1)).include(new LatLng(new_lat2, new_long2)).build();
         CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds,
                 250);
         mMap.animateCamera(cu);
-
         //CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(mid_lati, mid_longi)).build();
         //mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-
-
        /* LatLng mapCenter = new LatLng(mid_lati, mid_longi);
         CameraPosition cameraPosition = CameraPosition.builder()
                 .target(mapCenter)
@@ -1539,43 +1229,33 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         // Animate the change in camera view over 2 seconds
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition),
                 2000, null);*/
-
         // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mid_lati, mid_longi), 10.5f));
         //  mMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(mid_lati,mid_longi)));
     }
-
     /**
      * A method to download json data from url
      */
+    @SuppressWarnings("TryFinallyCanBeTryWithResources")
     private String downloadUrl(String strUrl) throws IOException {
         String data = "";
         InputStream iStream = null;
         HttpURLConnection urlConnection = null;
         try {
             URL url = new URL(strUrl);
-
             // Creating an http connection to communicate with url
             urlConnection = (HttpURLConnection) url.openConnection();
-
             // Connecting to url
             urlConnection.connect();
-
             // Reading data from url
             iStream = urlConnection.getInputStream();
-
             BufferedReader br = new BufferedReader(new InputStreamReader(iStream));
-
             StringBuffer sb = new StringBuffer();
-
             String line = "";
             while ((line = br.readLine()) != null) {
                 sb.append(line);
             }
-
             data = sb.toString();
-
             br.close();
-
         } catch (Exception e) {
             Log.d("Exception sd sd url", e.toString());
         } finally {
@@ -1584,11 +1264,9 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         }
         return data;
     }
-
     @Override
     public void onConnected(Bundle bundle) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
             //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
@@ -1602,12 +1280,10 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         if (mLastLocation != null) {
             changeMap(mLastLocation);
             Log.d(TAG, "ON connected");
-
         } else
             try {
                 LocationServices.FusedLocationApi.removeLocationUpdates(
                         mGoogleApiClient, this);
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1618,21 +1294,16 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
             LocationServices.FusedLocationApi.requestLocationUpdates(
                     mGoogleApiClient, mLocationRequest, this);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
-
     @Override
     public void onConnectionSuspended(int i) {
         Log.i(TAG, "Connection suspended");
         mGoogleApiClient.connect();
     }
-
     protected void displayAddressOutput() {
-
         // Log.e("tag00", "output11111" + mAddressOutput);
         //aet_pickup.setText(mAddressOutput);
         try {
@@ -1640,34 +1311,26 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 // aet_pickup.setText(mAreaOutput+ "");
                 Log.e("tag11", "output" + mAddressOutput);
             aet_pickup.setText("");
-
             aet_pickup.setText(mAddressOutput);
             //aet_pickup.setText(mAreaOutput);
             //   Log.e("tag22", "output" + mAreaOutput);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
         Log.e("tagmap", "OnMapReady");
         mMap = googleMap;
-
-
         // mMap.getUiSettings().setMapToolbarEnabled(false);
-
-
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
             //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
+            Log.e("tag","map permission needs");
         } else {
             mMap.setMyLocationEnabled(true);
         }
@@ -1679,23 +1342,18 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
 //        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
-
     protected void startIntentService(Location mLocation) {
         // Create an intent for passing to the intent service responsible for fetching the address.
         Intent intent = new Intent(this, FetchAddressIntentService.class);
-
         // Pass the result receiver as an extra to the service.
         intent.putExtra(AppUtils.LocationConstants.RECEIVER, mResultReceiver);
-
         // Pass the location data as an extra to the service.
         intent.putExtra(AppUtils.LocationConstants.LOCATION_DATA_EXTRA, mLocation);
-
         // Start the service. If the service isn't already running, it is instantiated and started
         // (creating a process for it if needed); if it is running then it remains running. The
         // service kills itself automatically once all intents are processed.
         startService(intent);
     }
-
     private boolean checkPlayServices() {
         int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
         if (resultCode != ConnectionResult.SUCCESS) {
@@ -1711,16 +1369,10 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         }
         return true;
     }
-
     private void changeMap(Location location) {
-
         //  Log.e(TAG, "Reaching map" + mMap);
-
         Log.e("tagmap", "change_map_started");
-
-
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
             //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
@@ -1729,7 +1381,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-
         // check if map is created successfully or not
         if ((aet_pickup.getText().toString().isEmpty())) {
             if (mMap != null) {
@@ -1751,9 +1402,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                         .show();
             }
         }
-
     }
-
     @Override
     public void onBackPressed() {
         if (lt_filter_dialog.getVisibility() == View.VISIBLE) {
@@ -1771,26 +1420,17 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             mMap.clear();
             getMyLocation();
             //mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
-
-
             iv_map_point.setVisibility(View.VISIBLE);
             mResultReceiver = new AddressResultReceiver(new Handler());
-
             if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED)
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-
-
         }
     }
-
     @Override
     public void onDrag(MotionEvent motionEvent) {
-
         Log.e("tag", "motion:" + motionEvent);
-
         if (motionEvent.getAction() != MotionEvent.ACTION_UP) {
             Log.e("tag", "motion_events" + "  motion_changes");
-
             if (lt_filter_dialog.getVisibility() != View.VISIBLE) {
                 if (!p_loc_comp) {
                     fl_bottom_frame.setVisibility(View.GONE);
@@ -1798,18 +1438,15 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) lt_frame.getLayoutParams();
                     params.setMargins(0, 5, 0, 0);
                     lt_frame.setLayoutParams(params);
-
                     int valueInPixels = (int) getResources().getDimension(com.movhaul.customer.R.dimen._21sdp);
                     FrameLayout.LayoutParams params1 = (FrameLayout.LayoutParams) iv_map_point.getLayoutParams();
                     params1.setMargins(0, valueInPixels, 0, 0);
                     iv_map_point.setLayoutParams(params1);
-
                 }
             }
 
         } else {
             Log.e("tag", "motion_events" + "  not_changes");
-
             if (!p_loc_comp) {
                 fl_bottom_frame.setVisibility(View.VISIBLE);
                 lt_top.setVisibility(View.VISIBLE);
@@ -1817,12 +1454,10 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) lt_frame.getLayoutParams();
                 params.setMargins(0, valueInPixels, 0, 0);
                 lt_frame.setLayoutParams(params);
-
                 int valueInPixels2 = (int) getResources().getDimension(com.movhaul.customer.R.dimen._14sdp);
                 FrameLayout.LayoutParams params1 = (FrameLayout.LayoutParams) iv_map_point.getLayoutParams();
                 params1.setMargins(0, 0, 0, valueInPixels2);
                 iv_map_point.setLayoutParams(params1);
-
                 if (!p_loc_comp) {
                     Log.e("tag", "after_drop");
                     change_map_camera();
@@ -1831,15 +1466,9 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 }
             }
         }
-
-
     }
-
     public void change_map_camera() {
-
-
-        if(mMap != null) {
-
+        if (mMap != null) {
             mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
 
                 @Override
@@ -1848,12 +1477,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     mCenterLatLong = cameraPosition.target;
                     dl_pick_lati = mCenterLatLong.latitude;
                     dl_pick_longi = mCenterLatLong.longitude;
-
-
                     if (!p_loc_comp) {
-
                         try {
-
                             Location mLocation = new Location("");
                             mLocation.setLatitude(dl_pick_lati);
                             mLocation.setLongitude(dl_pick_longi);
@@ -1890,31 +1515,17 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     } else {
                         Log.e("tag", "mapnotworks:");
                     }
-
-
                 }
             });
-
-
         }
-
-
     }
-
-    public void getDrv() {
-
-    }
-
     // Fetches data from url passed
     private class DownloadTask extends AsyncTask<String, Void, String> {
-
         // Downloading data in non-ui thread
         @Override
         protected String doInBackground(String... url) {
-
             // For storing data from web service
             String data = "";
-
             try {
                 // Fetching the data from web service
                 data = downloadUrl(url[0]);
@@ -1923,34 +1534,25 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             }
             return data;
         }
-
         // Executes in UI thread, after the execution of
         // doInBackground()
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-
             ParserTask parserTask = new ParserTask();
-
             // Invokes the thread for parsing the JSON data
             parserTask.execute(result);
-
         }
     }
-
     private class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
-
         // Parsing the data in non-ui thread
         @Override
         protected List<List<HashMap<String, String>>> doInBackground(String... jsonData) {
-
             JSONObject jObject;
             List<List<HashMap<String, String>>> routes = null;
-
             try {
                 jObject = new JSONObject(jsonData[0]);
                 DirectionsJSONParser parser = new DirectionsJSONParser();
-
                 // Starts parsing data
                 routes = parser.parse(jObject);
             } catch (Exception e) {
@@ -1958,43 +1560,33 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             }
             return routes;
         }
-
         // Executes in UI thread, after the parsing process
         @Override
         protected void onPostExecute(List<List<HashMap<String, String>>> result) {
             ArrayList<LatLng> points = null;
             PolylineOptions lineOptions = null;
-            MarkerOptions markerOptions = new MarkerOptions();
-
             // Traversing through all the routes
             try
             {
                 if (!result.isEmpty()) {
                     for (int i = 0; i < result.size(); i++) {
-                        points = new ArrayList<LatLng>();
+                        points = new ArrayList<>();
                         lineOptions = new PolylineOptions();
-
                         // Fetching i-th route
                         List<HashMap<String, String>> path = result.get(i);
-
                         // Fetching all the points in i-th route
                         for (int j = 0; j < path.size(); j++) {
                             HashMap<String, String> point = path.get(j);
-
                             double lat = Double.parseDouble(point.get("lat"));
                             double lng = Double.parseDouble(point.get("lng"));
                             LatLng position = new LatLng(lat, lng);
-
                             points.add(position);
                         }
-
                         // Adding all the points in the route to LineOptions
                         lineOptions.addAll(points);
                         lineOptions.width(6);
                         lineOptions.color(getResources().getColor(com.movhaul.customer.R.color.redColor));
-
                     }
-
                     // Drawing polyline in the Google Map for the i-th route
                     mMap.addPolyline(lineOptions);
                 }
@@ -2002,20 +1594,17 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             catch (Exception e){
                 Log.e("tag","ex: "+e.toString());
             }
-
         }
     }
-
-    public class profile_update extends AsyncTask<String, Void, String> {
+    @SuppressWarnings("unused")
+    private class profile_update extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             Log.e("tag", "reg_preexe");
         }
-
         @Override
         protected String doInBackground(String... strings) {
-
             if (selectedPhotos.size() > 0) {
                 String json = "", jsonStr = "";
                 try {
@@ -2024,15 +1613,11 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     HttpClient httpclient = new DefaultHttpClient();
                     HttpPost httppost = new HttpPost(Config.WEB_URL + "customer/customerupdate");
                     //  HttpPost httppost = new HttpPost("http://104.197.80.225:3010/vagan/post");
-
                     httppost.setHeader("id", id);
                     httppost.setHeader("sessiontoken", token);
                     httppost.setHeader("customer_email", customer_email);
                     httppost.setHeader("customer_name", customer_name);
-
-
                     try {
-
                         MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
                         entity.addPart("customerimage", new FileBody(new File(str_profile_img), "image/jpeg"));
                         Log.e("tag", "img: if ");
@@ -2049,8 +1634,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                             responseString = "Error occurred! Http Status Code: "
                                     + statusCode;
                         }
-                    } catch (ClientProtocolException e) {
-                        responseString = e.toString();
                     } catch (IOException e) {
                         responseString = e.toString();
                     }
@@ -2060,7 +1643,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 }
                 return null;
             } else {
-
                 Log.e("tag", "no poto");
                 String s = "";
                 JSONObject jsonObject = new JSONObject();
@@ -2084,64 +1666,44 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             super.onPostExecute(s);
             Log.e("tag", "tag" + s);
             drawer.closeDrawer(Gravity.LEFT);
-
             if (s != null) {
                 try {
                     JSONObject jo = new JSONObject(s);
                     String status = jo.getString("status");
-
                     Log.d("tag", "<-----Status----->" + status);
-
                     if (status.equals("true")) {
-
-
                         String img = jo.getString("customer_image");
                         String name = jo.getString("customer_name");
                         String email = jo.getString("customer_email");
-
-
                         selectedPhotos.clear();
                         Glide.with(DashboardNavigation.this).load(Config.WEB_URL_IMG + "customer_details/" + img).into(btn_editProfile_img);
-
                         editor.putString("customer_image", img);
                         editor.putString("customer_name", name);
                         editor.putString("customer_email", email);
                         editor.commit();
-
                         Log.e("tag", "img: " + Config.WEB_URL_IMG + "customer_details/" + img);
                         Log.e("tag", "img: " + name);
                         Log.e("tag", "img: " + email);
-
                         tv_name.setText(name);
                         tv_email.setText(email);
-
                         //Glide.with(DashboardNavigation.this).load(new File(str_profile_img)).into(btn_editProfile_img);
-
                     } else {
                         Toast.makeText(getApplicationContext(), com.movhaul.customer.R.string.asder, Toast.LENGTH_LONG).show();
-
                     }
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("tag", "nt" + e.toString());
                     //Toast.makeText(getApplicationContext(), "Network Errror0", Toast.LENGTH_LONG).show();
-
                 }
             } else {
-                //Toast.makeText(getApplicationContext(), "Network Errror1", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), com.movhaul.customer.R.string.asder, Toast.LENGTH_LONG).show();
             }
-
         }
-
     }
-
-    class AddressResultReceiver extends ResultReceiver {
-        public AddressResultReceiver(Handler handler) {
+    private class AddressResultReceiver extends ResultReceiver {
+        AddressResultReceiver(Handler handler) {
             super(handler);
         }
-
         /**
          * Receives data sent from FetchAddressIntentService and updates the UI in MainActivity.
          */
@@ -2152,98 +1714,26 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             mAreaOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_AREA);
             mCityOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_CITY);
             mStreetOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_STREET);
-
             displayAddressOutput();
             // Show a toast message if an address was found.
-            if (resultCode == AppUtils.LocationConstants.SUCCESS_RESULT) {
-                //  showToast(getString(R.string.address_found));
-            }
         }
     }
-
-    public class payment_token extends AsyncTask<String, Void, String> {
-
-        String amount, txn_ref, narrat, status;
-
-        payment_token(String amt, String ref, String narration) {
-            this.amount = amt;
-            this.txn_ref = ref;
-            this.narrat = narration;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            mProgressDialog.show();
-        }
-
-        @Override
-        protected String doInBackground(String... strings) {
-            try {
-                String amt = URLEncoder.encode(amount, "UTF-8");
-                String ref = URLEncoder.encode(txn_ref, "UTF-8");
-                String narration = URLEncoder.encode(narrat, "UTF-8");
-                String URL = "http://104.197.80.225:8080/remitaserver/?amount=" + amt + "&transRef=" + ref + "&narration=" + narration;
-                return status = HttpUtils.makeRequest0(URL);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            Log.e("tag", "tag" + s);
-            mProgressDialog.dismiss();
-            if (s != null) {
-                try {
-                    JSONObject jo = new JSONObject(s);
-                    String Txn_Ref = jo.getString("txn_token");
-                    Log.e("tag", "ref:" + Txn_Ref);
-
-                    Intent intent = new Intent(DashboardNavigation.this, RemitaMainActivity.class);
-                    intent.putExtra("amount", "250");
-                    intent.putExtra("testMode", true);
-                    intent.putExtra("apiKey", "U1lTUC4xNUhPMTIkMTIzLjR8U1lTUA==");
-                    intent.putExtra("txnToken", "55316C54554334784E5568504D54496B4D54497A4C6A523855316C5455413D3D7C3932333737633266613035313135306337363534386636376266623131303165383831366464343834666234363064653062343731663538643461323835303537333638653232313135363366383334666337613166333265333336653834626539656566393465396363356131363739353463646239333434363164313732");
-                    startActivityForResult(intent, 102);
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Log.e("tag", "nt" + e.toString());
-                    Toast.makeText(getApplicationContext(), com.movhaul.customer.R.string.ase, Toast.LENGTH_LONG).show();
-                }
-            } else {
-                Toast.makeText(getApplicationContext(), com.movhaul.customer.R.string.aese, Toast.LENGTH_LONG).show();
-            }
-
-        }
-
-    }
-
-    public class book_roadside extends AsyncTask<String, Void, String> {
+    //book now task for road side assiatance
+    @SuppressWarnings("unused")
+    private class book_roadside extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             Log.e("tag", "booking_task");
             mProgressDialog.show();
-
-
         }
-
         @Override
         protected String doInBackground(String... strings) {
             String json = "", jsonStr = "";
-
             Log.e("tag", "no poto");
-
             String s = "";
             JSONObject jsonObject = new JSONObject();
             try {
-
-
                 jsonObject.put("pickup_location", str_pickup);
                 jsonObject.put("drop_location", str_drop);
                 jsonObject.put("goods_type", "road");
@@ -2254,31 +1744,23 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 jsonObject.put("pickup_longitude", str_pickup_longi);
                 jsonObject.put("drop_latitude", str_drop_lati);
                 jsonObject.put("drop_longitude", str_drop_longi);
-
-
                 json = jsonObject.toString();
-
                 return s = HttpUtils.makeRequest1(com.movhaul.customer.Config.WEB_URL + "customer/emergencybooking", json, id, token);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             return null;
-
-
         }
-
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.e("tag", "tag" + s);
             mProgressDialog.dismiss();
-
             if (s != null) {
                 try {
                     JSONObject jo = new JSONObject(s);
                     String status = jo.getString("status");
                     String msg = jo.getString("message");
-
                     Log.d("tag", "<-----Status----->" + status);
                     if (status.equals("true")) {
                         Log.e("tag", msg);
@@ -2288,24 +1770,18 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                         editor.putString("payment_amount", cost);
                         editor.putString("book_for", "roadside");
                         editor.commit();
-
                         Intent i = new Intent(DashboardNavigation.this, Payment_Details.class);
                         startActivity(i);
-
                         /*Intent intent = new Intent(DashboardNavigation.this, RemitaMainActivity.class);
                         intent.putExtra("amount", cost);
                         intent.putExtra("testMode", true);
                         intent.putExtra("apiKey", "U1lTUC4xNUhPMTIkMTIzLjR8U1lTUA==");
                         intent.putExtra("txnToken", "55316C54554334784E5568504D54496B4D54497A4C6A523855316C5455413D3D7C3932333737633266613035313135306337363534386636376266623131303165383831366464343834666234363064653062343731663538643461323835303537333638653232313135363366383334666337613166333265333336653834626539656566393465396363356131363739353463646239333434363164313732");
                         startActivityForResult(intent, REQUEST_CODE_PAYMENT);*/
-
-
                     } else if (status.equals("false")) {
-
                         Log.e("tag", "Location not updated");
                         //has to check internet and location...
                         Toast.makeText(getApplicationContext(), com.movhaul.customer.R.string.eer, Toast.LENGTH_LONG).show();
-
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -2313,68 +1789,51 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     Toast.makeText(getApplicationContext(), com.movhaul.customer.R.string.era, Toast.LENGTH_LONG).show();
                 }
             } else {
-                // Toast.makeText(getApplicationContext(),"Network Errror1",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), com.movhaul.customer.R.string.era,Toast.LENGTH_LONG).show();
             }
-
         }
-
     }
-
-    public class book_now_task extends AsyncTask<String, Void, String> {
+    //book now task
+    @SuppressWarnings("unused")
+    private class book_now_task extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             Log.e("tag", "reg_preexe");
             mProgressDialog.show();
         }
-
         @Override
         protected String doInBackground(String... strings) {
             String json = "", jsonStr = "";
-
-
             Log.e("tag", "no poto");
-
             String s = "";
             JSONObject jsonObject = new JSONObject();
             try {
-
-
                 jsonObject.put("transaction_id", "Rco32w3Viels3");
                 jsonObject.put("booking_id", sharedPreferences.getString("job_id", ""));
-
-
                 json = jsonObject.toString();
-
                 return s = HttpUtils.makeRequest1(com.movhaul.customer.Config.WEB_URL + "customer/emergencypayment", json, id, token);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             return null;
-
-
         }
-
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.e("tag", "tag" + s);
             mProgressDialog.dismiss();
-
             if (s != null) {
                 try {
                     JSONObject jo = new JSONObject(s);
                     String status = jo.getString("status");
                     Log.d("tag", "<-----Status----->" + status);
                     if (status.equals("true")) {
-
                         dg_road_confirm.show();
                     } else if (status.equals("false")) {
-
                         Log.e("tag", "Location not updated");
                         //has to check internet and location...
                         Toast.makeText(getApplicationContext(), com.movhaul.customer.R.string.eer, Toast.LENGTH_LONG).show();
-
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -2384,45 +1843,31 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             } else {
                 Toast.makeText(getApplicationContext(), com.movhaul.customer.R.string.eer, Toast.LENGTH_LONG).show();
             }
-
         }
-
     }
-
     public class FirstService extends Service {
-
         private String TAG = "tagss";
-
         @Override
         public IBinder onBind(Intent arg0) {
-            // TODO Auto-generated method stub
             return null;
         }
-
-
         @Override
         public void onStart(Intent intent, int startId) {
-            // TODO Auto-generated method stub
             super.onStart(intent, startId);
             Log.e(TAG, "FirstService started");
             //this.stopSelf();
         }
-
         @Override
         public void onDestroy() {
-            // TODO Auto-generated method stub
             super.onDestroy();
             Log.e(TAG, "FirstService destroyed");
         }
-
     }
-
-    public class get_drivers extends AsyncTask<String, Void, String> {
+    /*private class get_drivers extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
-
         @Override
         protected String doInBackground(String... strings) {
             String json = "", jsonStr = "";
@@ -2438,54 +1883,40 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 e.printStackTrace();
             }
             return null;
-
-
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             //   Log.e("tag", "tag" + s);
-
             if (s != null) {
                 try {
                     JSONObject jo = new JSONObject(s);
                     String status = jo.getString("status");
                     // Log.d("tag", "<-----Status----->" + status);
                     if (status.equals("true")) {
-
                         Log.d("tag", "<-----true----->" + s);
-
                         JSONArray jsoi = jo.getJSONArray("message");
-
                         JSONObject jos = jsoi.getJSONObject(0);
-
                         double latitude = Double.valueOf(jos.getString("driver_latitude"));
                         double longitude = Double.valueOf(jos.getString("driver_longitude"));
-
                         new get_drivers().execute();
-
                         if (dl_dr_lati != latitude) {
                             Log.e("tag", "0la:" + latitude);
                             Log.e("tag", "1la:" + dl_dr_lati);
                             dl_dr_lati = latitude;
                             dl_dr_longi = longitude;
-
-
                             mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.trk_img))
                                     .position(new LatLng(dl_dr_lati, dl_dr_longi)));
-
                         } else {
                             Log.e("tag", "qw_la0:" + latitude);
                             Log.e("tag", "qw_la1:" + dl_dr_lati);
                         }
-
                         //  new get_drivers().execute();10
                     } else if (status.equals("false")) {
 
                         Log.e("tag", "Location not updated");
                         //has to check internet and location...
-
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -2493,11 +1924,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 }
             } else {
             }
-
         }
-
-    }
-
+    }*/
 }
 
 

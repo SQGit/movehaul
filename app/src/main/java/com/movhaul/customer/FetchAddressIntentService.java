@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-
 /**
  * Asynchronously handles an intent using a worker thread. Receives a ResultReceiver object and a
  * location through an intent. Tries to fetch the address for the location using a Geocoder, and
@@ -23,12 +22,10 @@ import java.util.Locale;
  */
 public class FetchAddressIntentService extends IntentService {
     private static final String TAG = "FetchAddressIS";
-
     /**
      * The receiver where results are forwarded from this service.
      */
     protected ResultReceiver mReceiver;
-
     /**
      * This constructor is required, and calls the super IntentService(String)
      * constructor with the name for a worker thread.
@@ -37,7 +34,6 @@ public class FetchAddressIntentService extends IntentService {
         // Use the TAG to name the worker thread.
         super(TAG);
     }
-
     /**
      * Tries to get the location address using a Geocoder. If successful, sends an address to a
      * result receiver. If unsuccessful, sends an error message instead.
@@ -50,9 +46,7 @@ public class FetchAddressIntentService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         String errorMessage = "";
-
         mReceiver = intent.getParcelableExtra(AppUtils.LocationConstants.RECEIVER);
-
         // Check if receiver was properly registered.
         if (mReceiver == null) {
             Log.wtf(TAG, "No receiver received. There is nowhere to send the results.");
@@ -60,7 +54,6 @@ public class FetchAddressIntentService extends IntentService {
         }
         // Get the location passed to this service through an extra.
         Location location = intent.getParcelableExtra(AppUtils.LocationConstants.LOCATION_DATA_EXTRA);
-
         // Make sure that the location data was really sent over through an extra. If it wasn't,
         // send an error error message and return.
         if (location == null) {
@@ -69,7 +62,6 @@ public class FetchAddressIntentService extends IntentService {
             deliverResultToReceiver(AppUtils.LocationConstants.FAILURE_RESULT, errorMessage, null);
             return;
         }
-
         // Errors could still arise from using the Geocoder (for example, if there is no
         // connectivity, or if the Geocoder is given illegal location data). Or, the Geocoder may
         // simply not have an address for a location. In all these cases, we communicate with the
@@ -81,10 +73,8 @@ public class FetchAddressIntentService extends IntentService {
         // to alter the presentation of information such as numbers or dates to suit the conventions
         // in the region they describe.
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-
         // Address found using the Geocoder.
         List<Address> addresses = null;
-
         try {
             // Using getFromLocation() returns an array of Addresses for the area immediately
             // surrounding the given latitude and longitude. The results are a best guess and are
@@ -105,7 +95,6 @@ public class FetchAddressIntentService extends IntentService {
                     "Latitude = " + location.getLatitude() +
                     ", Longitude = " + location.getLongitude(), illegalArgumentException);
         }
-
         // Handle case where no address was found.
         if (addresses == null || addresses.size() == 0) {
             if (errorMessage.isEmpty()) {
@@ -115,19 +104,15 @@ public class FetchAddressIntentService extends IntentService {
             deliverResultToReceiver(AppUtils.LocationConstants.FAILURE_RESULT, errorMessage, null);
         } else {
             Address address = addresses.get(0);
-            ArrayList<String> addressFragments = new ArrayList<String>();
-
+            ArrayList<String> addressFragments = new ArrayList<>();
             for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
                 addressFragments.add(address.getAddressLine(i));
-
             }
             deliverResultToReceiver(AppUtils.LocationConstants.SUCCESS_RESULT,
                     TextUtils.join(System.getProperty("line.separator"), addressFragments), address);
             //TextUtils.split(TextUtils.join(System.getProperty("line.separator"), addressFragments), System.getProperty("line.separator"));
-
         }
     }
-
     /**
      * Sends a resultCode and message to the receiver.
      */
@@ -135,12 +120,9 @@ public class FetchAddressIntentService extends IntentService {
         try {
             Bundle bundle = new Bundle();
             bundle.putString(AppUtils.LocationConstants.RESULT_DATA_KEY, message);
-
             bundle.putString(AppUtils.LocationConstants.LOCATION_DATA_AREA, address.getSubLocality());
-
             bundle.putString(AppUtils.LocationConstants.LOCATION_DATA_CITY, address.getLocality());
             bundle.putString(AppUtils.LocationConstants.LOCATION_DATA_STREET, address.getAddressLine(0));
-
             mReceiver.send(resultCode, bundle);
         } catch (Exception e) {
             e.printStackTrace();

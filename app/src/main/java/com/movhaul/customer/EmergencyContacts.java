@@ -28,10 +28,11 @@ import org.json.JSONObject;
 
 /**
  * Created by SQINDIA on 11/1/2016.
+ * emergency contacts
+ * 2 emergency contacts will be added
  */
 
 public class EmergencyContacts extends Activity {
-
     TextView tv_emergency_name1, tv_emergency_name2, tv_emergency_no1, tv_emergency_no2, tv_emergency_relation1, tv_emergency_relation2;
     String id, token;
     SharedPreferences sharedPreferences;
@@ -46,8 +47,6 @@ public class EmergencyContacts extends Activity {
     ImageView iv_edit1, iv_edit2;
     boolean bl_edit_1, bl_edit_2;
     com.rey.material.widget.LinearLayout btn_back;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,14 +83,12 @@ public class EmergencyContacts extends Activity {
         btn_back = (com.rey.material.widget.LinearLayout) findViewById(com.movhaul.customer.R.id.layout_back);
         iv_edit1 = (ImageView) findViewById(R.id.button_editContact1);
         iv_edit2 = (ImageView) findViewById(R.id.button_editContact2);
-
        // tv_emergency_relation1.setInp
         tl_name.setTypeface(tf);
         tl_number.setTypeface(tf);
         tl_relation.setTypeface(tf);
         bl_edit_1 = false;
         bl_edit_2 = false;
-
        // new get_emg_contact().execute();
         /*///////////////////////////////////////////
         editor.putString("emergency_1", "");     ////
@@ -109,8 +106,6 @@ public class EmergencyContacts extends Activity {
         } else {
             check_from_db();
         }
-
-
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,9 +168,7 @@ public class EmergencyContacts extends Activity {
                                 editor.putString("emg2_number", number);
                                 editor.putString("emg2_relation", relation);
                                 editor.apply();
-
                                 new insert_emg_contact(name, number, relation, 3).execute();
-
                                 tv_emergency_name2.setText(name.toUpperCase());
                                 tv_emergency_no2.setText(number);
                                 tv_emergency_relation2.setText(relation);
@@ -286,7 +279,6 @@ public class EmergencyContacts extends Activity {
                 }
             }
         });
-
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -323,7 +315,6 @@ public class EmergencyContacts extends Activity {
             }
         });
     }
-
     private void check_from_db() {
         if (sharedPreferences.getString("emergency_1", "").equals("success")) {
             lt_edit.setVisibility(View.GONE);
@@ -349,7 +340,6 @@ public class EmergencyContacts extends Activity {
             btn_submit.setText("Submit");
         }
     }
-
     @Override
     public void onBackPressed() {
         if (bl_edit_1) {
@@ -371,7 +361,6 @@ public class EmergencyContacts extends Activity {
             finish();
         }
     }
-
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (getCurrentFocus() != null) {
@@ -380,18 +369,17 @@ public class EmergencyContacts extends Activity {
         }
         return super.dispatchTouchEvent(ev);
     }
-
-    public class insert_emg_contact extends AsyncTask<String, Void, String> {
+    @SuppressWarnings({"unused", "UnusedAssignment"})
+    private class insert_emg_contact extends AsyncTask<String, Void, String> {
         String name, number, relation, url;
         int emg_id;
 
-        public insert_emg_contact(String name, String number, String relation, int id) {
+        insert_emg_contact(String name, String number, String relation, int id) {
             this.name = name;
             this.number = number;
             this.relation = relation;
             this.emg_id = id;
         }
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -400,9 +388,7 @@ public class EmergencyContacts extends Activity {
             } else if (emg_id == 1 || emg_id == 3) {
                 url = "customer/updateemergency";
             }
-
         }
-
         @Override
         protected String doInBackground(String... strings) {
             String json = "", jsonStr = "";
@@ -424,15 +410,14 @@ public class EmergencyContacts extends Activity {
             }
             return null;
         }
-
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.e("tag", "tag" + s);
         }
     }
-
-    public class get_emg_contact extends AsyncTask<String, Void, String> {
+    @SuppressWarnings({"unused", "UnusedAssignment"})
+    private class get_emg_contact extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... strings) {
             String json = "", jsonStr = "";
@@ -445,7 +430,6 @@ public class EmergencyContacts extends Activity {
             }
             return null;
         }
-
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
@@ -461,7 +445,6 @@ public class EmergencyContacts extends Activity {
                             String number = jos.getString("emergency_mobile");
                             String relation = jos.getString("emergency_relation");
                             String emg_id = jos.getString("emergency_id");
-
                             if (i == 0) {
                                 editor.putString("emergency_1", "success");
                                 editor.putString("emg1_name", name);
@@ -482,14 +465,10 @@ public class EmergencyContacts extends Activity {
                                 check_from_db();
                                 Log.e("tag", "working" + i);
                             }
-
-
                         }
                     } else {
-
                         Log.e("tag", "no data found");
                         check_from_db();
-
                     }
                 } else {
                     Log.e("tag", "false");

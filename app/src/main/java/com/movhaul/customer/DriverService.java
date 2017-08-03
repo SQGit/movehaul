@@ -10,17 +10,12 @@ import android.util.Log;
  */
 
 public class DriverService extends Service {
-
     private  String TAG = "tagss";
-
     @Override
     public IBinder onBind(Intent arg0) {
         // TODO Auto-generated method stub
         return null;
     }
-
-
-
     @Override
     public void onStart(Intent intent, int startId) {
         // TODO Auto-generated method stub
@@ -29,14 +24,10 @@ public class DriverService extends Service {
         DashboardNavigation.geee();
         //this.stopSelf();
     }
-
-
-
     @Override
     public void onDestroy() {
         // TODO Auto-generated method stub
         super.onDestroy();
         Log.e(TAG, "FirstService destroyed");
     }
-
 }

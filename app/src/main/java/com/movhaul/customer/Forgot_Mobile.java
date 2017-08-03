@@ -22,11 +22,11 @@ import com.sloop.fonts.FontsManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
 /**
  * Created by sqindia on 22-10-2016.
+ * forgot mobile
+ * when user dont know mobile number he can use email instead of mobile
  */
-
 public class Forgot_Mobile extends Activity {
     LinearLayout btn_back;
     EditText edtxt_email;
@@ -37,56 +37,41 @@ public class Forgot_Mobile extends Activity {
     Snackbar snackbar;
     Config config;
     TextView tv_snack;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(com.movhaul.customer.R.layout.forgot_phone);
         FontsManager.initFormAssets(this, "fonts/lato.ttf");       //initialization
         FontsManager.changeFonts(this);
-
         flt_email = (TextInputLayout) findViewById(com.movhaul.customer.R.id.float_email);
         btn_back = (LinearLayout) findViewById(com.movhaul.customer.R.id.layout_back);
         edtxt_email = (EditText) findViewById(com.movhaul.customer.R.id.editTextEmail);
         btn_submit = (Button) findViewById(com.movhaul.customer.R.id.btn_submit);
-
-         tf = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
+        tf = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
         flt_email.setTypeface(tf);
-
-
         snackbar = Snackbar
                 .make(findViewById(com.movhaul.customer.R.id.top), R.string.ase, Snackbar.LENGTH_LONG);
         View sbView = snackbar.getView();
         tv_snack = (android.widget.TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         tv_snack.setTextColor(Color.WHITE);
         tv_snack.setTypeface(tf);
-
-        if (!config.isConnected(Forgot_Mobile.this)) {
+        if (!Config.isConnected(Forgot_Mobile.this)) {
             snackbar.show();
             tv_snack.setText(R.string.conn);
         }
-
-
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 str_email = edtxt_email.getText().toString().trim();
-
                 if (!(str_email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(str_email).matches())) {
-
-
                     str_email = edtxt_email.getText().toString().trim();
-
                     new forgot_mobile().execute();
-
-
                    /* Intent i = new Intent(Forgot_Mobile.this, LoginOtpActivity.class);
                     startActivity(i);
                     finish();*/
                 } else {
                     edtxt_email.setError("Enter a valid email address!");
                     edtxt_email.requestFocus();
-
                     InputMethodManager inputMethodManager =
                             (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                     inputMethodManager.toggleSoftInputFromWindow(
@@ -111,7 +96,6 @@ public class Forgot_Mobile extends Activity {
         startActivity(i);
         finish();
     }
-
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (getCurrentFocus() != null) {
@@ -120,41 +104,30 @@ public class Forgot_Mobile extends Activity {
         }
         return super.dispatchTouchEvent(ev);
     }
-
-
-    public class forgot_mobile extends AsyncTask<String, Void, String> {
-
-
+    @SuppressWarnings({"unused", "UnusedAssignment"})
+    private class forgot_mobile extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             Log.e("tag","reg_preexe");
         }
-
         @Override
         protected String doInBackground(String... strings) {
-
             String json = "", jsonStr = "";
-
             try {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.accumulate("customer_email", str_email);
                 json = jsonObject.toString();
                 return jsonStr = HttpUtils.makeRequest(Config.WEB_URL + "customeremailotp", json);
-
             } catch (Exception e) {
                 Log.e("InputStream", e.getLocalizedMessage());
             }
-
             return null;
         }
-
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.e("tag","tag"+s);
-
-
             if (s != null) {
                 try {
                     JSONObject jo = new JSONObject(s);
@@ -162,47 +135,31 @@ public class Forgot_Mobile extends Activity {
                     String msg = jo.getString("message");
                     Log.d("tag", "<-----Status----->" + status);
                     if (status.equals("true")) {
-
-
                         // String sus_txt = "Thank you for Signing Up MoveHaul.";
-
                         //Toast.makeText(getApplicationContext(),sus_txt,Toast.LENGTH_LONG).show();
-
                         Intent i = new Intent(Forgot_Mobile.this, LoginOtpActivity.class);
                         i.putExtra("for","email");
                         i.putExtra("data",str_email);
                         startActivity(i);
                         finish();
-
-
                     } else if (status.equals("false")) {
-
-
                         if (msg.contains("Register with Movehaul first to Generate OTP")) {
-
                            // Toast.makeText(getApplicationContext(),"Mobile Number Not Registered",Toast.LENGTH_LONG).show();
-
                             tv_snack.setText(R.string.nonmas);
                             snackbar.show();
-
                         }
                         else if (msg.contains("Error Occured[object Object]")) {
-
                             Intent i = new Intent(Forgot_Mobile.this, LoginOtpActivity.class);
                             i.putExtra("for","email");
                             i.putExtra("data",str_email);
                             startActivity(i);
                             finish();
-
                         }
                         else  {
-
                             //Toast.makeText(getApplicationContext(),"Please Try Again Later",Toast.LENGTH_LONG).show();
                             tv_snack.setText(R.string.ase);
                             snackbar.show();
                         }
-
-
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -216,11 +173,6 @@ public class Forgot_Mobile extends Activity {
                 tv_snack.setText(R.string.ase);
                 snackbar.show();
             }
-
         }
-
     }
-
-
-
 }
