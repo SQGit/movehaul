@@ -3,21 +3,17 @@ package com.movhaul.customer;
 /**
  * Created by SQINDIA on 1/30/2017.
  */
-
-
+//document start
 public class IntValueStore {
-
     /**
      * The current value.
      */
     String mValue;
-
     /**
      * The listener (you might want turn this into an array to support many
      * listeners)
      */
     private IntValueStoreListener mListener;
-
     /**
      * Construct a the int store.
      *
@@ -26,7 +22,6 @@ public class IntValueStore {
     public IntValueStore(String initialValue) {
         mValue = initialValue;
     }
-
     /**
      * Sets a listener on the store. The listener will be modified when the
      * value changes.
@@ -36,7 +31,6 @@ public class IntValueStore {
     public void setListener(IntValueStoreListener listener) {
         mListener = listener;
     }
-
     /**
      * Set a new int value.
      *
@@ -48,7 +42,6 @@ public class IntValueStore {
             mListener.onValueChanged(mValue);
         }
     }
-
     /**
      * Get the current value.
      *
@@ -57,7 +50,6 @@ public class IntValueStore {
     public String getValue() {
         return mValue;
     }
-
     /**
      * Callbacks by {@link }.
      */

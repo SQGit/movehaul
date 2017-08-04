@@ -1,5 +1,4 @@
 package com.movhaul.customer;
-
 import android.Manifest;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
@@ -50,10 +49,12 @@ import org.jsoup.Jsoup;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
 /**
  * Created by sqindia on 21-10-2016.
+ * splash activtity contains login ,register buttons
+ * and truckview animations
  */
+@SuppressWarnings({"unused", "deprecation", "ConstantConditions"})
 public class SplashActivity extends Activity {
     final private int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124;
     Button btn_register, btn_login, btn_call;
@@ -73,77 +74,57 @@ public class SplashActivity extends Activity {
     Dialog dg_show_update;
     TextView tv_dg_txt, tv_dg_txt2;
     Button btn_dg_download;
-    private FirebaseAnalytics mFirebaseAnalytics;
-
     public static int getDeviceWidth(Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
-        int width = display.getWidth();
-        return width;
+        return display.getWidth();
     }
-
     public static int getDeviceHeight(Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
-        int height = display.getHeight();
-        return height;
+        return display.getHeight();
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(com.movhaul.customer.R.layout.splash_screen);
-
-
         FirebaseCrash.report(new Exception("Successfully Installed Customer..."));
-
         Log.e("tag", "In the onCreate() event");
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-
+        FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         FontsManager.initFormAssets(this, "fonts/lato.ttf");
         FontsManager.changeFonts(this);
         tf = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(SplashActivity.this);
         editor = sharedPreferences.edit();
         config = new Config();
-
-
         dg_show_update = new Dialog(SplashActivity.this);
         dg_show_update.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dg_show_update.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dg_show_update.setCancelable(false);
         dg_show_update.setContentView(com.movhaul.customer.R.layout.dialog_road_confirm);
-
         btn_dg_download = (Button) dg_show_update.findViewById(com.movhaul.customer.R.id.button_yes);
         tv_dg_txt = (android.widget.TextView) dg_show_update.findViewById(com.movhaul.customer.R.id.textView_1);
         tv_dg_txt2 = (android.widget.TextView) dg_show_update.findViewById(com.movhaul.customer.R.id.textView_2);
-
         tv_dg_txt.setText("Hooray...!!!");
         tv_dg_txt2.setText("New Update available on PlayStore");
         btn_dg_download.setText("Download");
-
         tv_dg_txt.setTypeface(tf);
         tv_dg_txt2.setTypeface(tf);
         btn_dg_download.setTypeface(tf);
-
         btn_dg_download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dg_show_update.dismiss();
-
                 final String appPackageName = SplashActivity.this.getPackageName(); // getPackageName() from Context or Activity object
                 try {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
                 } catch (android.content.ActivityNotFoundException anfe) {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
                 }
-
             }
         });
-
-
         try {
             currentVersion = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
             Log.e("Tag", "version:" + currentVersion);
@@ -151,38 +132,23 @@ public class SplashActivity extends Activity {
             e.printStackTrace();
             Log.e("Tag", "err:" + e.toString());
         }
-
-
-
-
-
-
         // String locale = getResources().getConfiguration().locale.getDisplayCountry();
-//
         // String locale1 = getResources().getConfiguration().locale.getISO3Country();
         //String locale2 = getResources().getConfiguration().locale.getDisplayName();
-
-
         // Log.e("tag","resourc: "+locale + locale2 +locale1);
         Locale loc = Locale.getDefault();
-
         Log.e("tag", "resourc: " + Locale.getDefault().getCountry());
         Log.e("tag", "resourc: " + Locale.getDefault().getDisplayCountry());
         Log.e("tag", "resourc: " + Locale.getDefault().getDisplayLanguage());
         Log.e("tag", "resourc: " + Locale.getDefault().getDisplayName());
-
         Log.e("tag", "lang:" + Locale.getDefault().getDisplayLanguage());
         Log.e("tag", "lang_code:" + Locale.getDefault().getLanguage());
-
         final float width = getDeviceWidth(this);
         final float height = getDeviceHeight(this);
-
-
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, FirebaseInstanceId.getInstance().getToken());
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, android.os.Build.MODEL);
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
         lt_top = (LinearLayout) findViewById(com.movhaul.customer.R.id.top);
         btn_register = (Button) findViewById(com.movhaul.customer.R.id.btn_register);
         btn_login = (Button) findViewById(com.movhaul.customer.R.id.btn_login);
@@ -190,10 +156,8 @@ public class SplashActivity extends Activity {
         bg_icon = (ImageView) findViewById(com.movhaul.customer.R.id.bg_icon);
         logo_icon = (ImageView) findViewById(com.movhaul.customer.R.id.logo_ico);
         lt_bottom = (LinearLayout) findViewById(com.movhaul.customer.R.id.layout_bottom);
-
         btn_call = (Button) findViewById(com.movhaul.customer.R.id.button_call);
         btn_call.setVisibility(View.GONE);
-
         snackbar = Snackbar.make(lt_top, com.movhaul.customer.R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
                 .setAction(com.movhaul.customer.R.string.open_settings, new View.OnClickListener() {
                     @Override
@@ -201,23 +165,18 @@ public class SplashActivity extends Activity {
                         startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
                     }
                 });
-
         snackbar.setActionTextColor(Color.RED);
         View sbView = snackbar.getView();
         android.widget.TextView textView = (android.widget.TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-
         android.widget.TextView textView1 = (android.widget.TextView) sbView.findViewById(android.support.design.R.id.snackbar_action);
         textView.setTextColor(Color.WHITE);
         textView.setTypeface(tf);
         textView1.setTypeface(tf);
-
         if (!com.movhaul.customer.Config.isConnected(SplashActivity.this)) {
             snackbar.show();
         } else {
             new GetVersionCode().execute();
         }
-
-
         final ObjectAnimator backgroundColorAnimator = ObjectAnimator.ofObject(sbView,
                 "backgroundColor",
                 new ArgbEvaluator(),
@@ -227,11 +186,9 @@ public class SplashActivity extends Activity {
         backgroundColorAnimator.setRepeatCount(ValueAnimator.INFINITE);
         backgroundColorAnimator.setRepeatMode(ValueAnimator.REVERSE);
         backgroundColorAnimator.start();
-
         if (sharedPreferences.getString("login", "").equals("success")) {
             lt_bottom.setVisibility(View.GONE);
         }
-
         truck_icon.animate().translationX(width / (float) 1.65).setDuration(1700).withLayer();
         fadeIn = new AlphaAnimation(0, 1);
         fadeIn.setDuration(1500);
@@ -244,11 +201,9 @@ public class SplashActivity extends Activity {
         bg_icon.setAnimation(fadeIn);
         logo_icon.setAnimation(fadeIn);
 
-
         anim_btn_b2t = new TranslateAnimation(0, 0, height + lt_bottom.getHeight(), lt_bottom.getHeight());
         anim_btn_b2t.setDuration(1400);
         lt_bottom.setAnimation(anim_btn_b2t);
-
 
         anim_btn_t2b = new TranslateAnimation(0, 0, lt_bottom.getHeight(), height + lt_bottom.getHeight());
         anim_btn_t2b.setDuration(1700);
@@ -265,40 +220,27 @@ public class SplashActivity extends Activity {
         btn_call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
                 callIntent.setData(Uri.parse("tel:121"));
                 if (ActivityCompat.checkSelfPermission(SplashActivity.this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
                     //    ActivityCompat#requestPermissions
                     // here to request the missing permissions, and then overriding
                     //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
                     //                                          int[] grantResults)
                     // to handle the case where the user grants the permission. See the documentation
                     // for ActivityCompat#requestPermissions for more details.
-
-
                     final List<String> permissionsList = new ArrayList<>();
                     permissionsList.add(Manifest.permission.CALL_PHONE);
-
-
                     String message = "You need to grant access to Call Phones";
-
-
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
                         requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
                                 REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
                     }
-
                     return;
                 }
                 startActivity(callIntent);
-
             }
         });
-
-
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -306,18 +248,12 @@ public class SplashActivity extends Activity {
                 new check_internet().execute();
             }
         }, 1300);
-
-
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 lt_bottom.startAnimation(anim_btn_t2b);
                 truck_icon.startAnimation(anim_truck_c2r);
                 bg_icon.setAnimation(fadeOut);
-
-
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -326,7 +262,6 @@ public class SplashActivity extends Activity {
                         Bundle bndlanimation =
                                 ActivityOptions.makeCustomAnimation(getApplicationContext(), com.movhaul.customer.R.anim.anim1, com.movhaul.customer.R.anim.anim2).toBundle();
                         startActivity(isd, bndlanimation);
-
                     }
                 }, 1000);
 
@@ -335,29 +270,22 @@ public class SplashActivity extends Activity {
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 lt_bottom.startAnimation(anim_btn_t2b);
                 truck_icon.startAnimation(anim_truck_c2r);
                 bg_icon.setAnimation(fadeOut);
-
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-
                         Intent isd = new Intent(SplashActivity.this, RegisterActivity.class);
                         Bundle bndlanimation =
                                 ActivityOptions.makeCustomAnimation(getApplicationContext(), com.movhaul.customer.R.anim.anim1, com.movhaul.customer.R.anim.anim2).toBundle();
                         startActivity(isd, bndlanimation);
-
                     }
                 }, 1000);
-
             }
         });
     }
-
-
     @Override
     protected void onRestart() {
         super.onRestart();
@@ -368,26 +296,19 @@ public class SplashActivity extends Activity {
         } else {
             snackbar.dismiss();
             btn_call.setVisibility(View.GONE);
-
             if (Float.valueOf(currentVersion) < Float.valueOf(playstoreVersion)) {
-
                 //show dialog
                 dg_show_update.show();
-
             }
             else {
-
                 if (sharedPreferences.getString("login", "").equals("success")) {
-
                     lt_bottom.startAnimation(anim_btn_t2b);
                     truck_icon.startAnimation(anim_truck_c2r);
                     bg_icon.setAnimation(fadeOut);
-
                     final Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-
                             Intent isd = new Intent(SplashActivity.this, DashboardNavigation.class);
                             Bundle bndlanimation =
                                     ActivityOptions.makeCustomAnimation(getApplicationContext(), com.movhaul.customer.R.anim.anim1, com.movhaul.customer.R.anim.anim2).toBundle();
@@ -396,68 +317,49 @@ public class SplashActivity extends Activity {
                     }, 1200);
                 }
             }
-
-
         }
-
         Log.e("tag", "ds+" + is);
     }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         finishAffinity();
     }
-
-    public class check_internet extends AsyncTask<String, Void, String> {
-
-
+    private class check_internet extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             Log.e("tag", "reg_preexe");
             // av_loader.setVisibility(View.VISIBLE);
         }
-
         @Override
         protected String doInBackground(String... strings) {
-
             try {
-
                 boolean isconnected = Config.isConnected(SplashActivity.this);
-
                 if (isconnected) {
                     return "true";
                 } else {
                     return "false";
                 }
-
             } catch (Exception e) {
                 Log.e("InputStream", e.getLocalizedMessage());
             }
-
             return null;
         }
-
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.e("tag", "net:" + s);
-
             if (s.equals("true")) {
                 // av_loader.setVisibility(View.GONE);
-
                 if (sharedPreferences.getString("login", "").equals("success")) {
-
                     lt_bottom.startAnimation(anim_btn_t2b);
                     truck_icon.startAnimation(anim_truck_c2r);
                     bg_icon.setAnimation(fadeOut);
-
                     final Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-
                             try {
                                 Intent isd = new Intent(SplashActivity.this, DashboardNavigation.class);
                                 Bundle bndlanimation =
@@ -467,14 +369,9 @@ public class SplashActivity extends Activity {
                             catch (Exception e){
                                 Log.e("tag","err"+e.toString());
                             }
-
-
                         }
                     }, 1200);
-
                 }
-
-
             } else if (s.equals("false")) {
                 // av_loader.setVisibility(View.GONE);
                 snackbar.show();
@@ -482,9 +379,7 @@ public class SplashActivity extends Activity {
                 lt_bottom.setVisibility(View.VISIBLE);
             }
         }
-
     }
-
     private class PhoneCallListener extends PhoneStateListener {
 
         String LOG_TAG = "tag_LOGGING 123";
@@ -522,8 +417,6 @@ public class SplashActivity extends Activity {
             }
         }
     }
-
-
     private class GetVersionCode extends AsyncTask<Void, String, String> {
 
         @Override
@@ -584,6 +477,5 @@ public class SplashActivity extends Activity {
 
         }
     }
-
 
 }

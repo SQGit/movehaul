@@ -30,11 +30,12 @@ import org.json.JSONObject;
 
 /**
  * Created by sqindia on 21-10-2016.
+ * register activity user name, phone, email
+ * no verfication and validation for customer emails
  */
 
+@SuppressWarnings("ALL")
 public class RegisterActivity extends Activity {
-
-
     LinearLayout btn_back;
     Button btn_submit;
     TextView tv_register, tv_snack;
@@ -46,13 +47,11 @@ public class RegisterActivity extends Activity {
     Typeface tf;
     ProgressDialog mProgressDialog;
     CountryCodePicker ccp;
-
     @Override
     public void onBackPressed() {
         //super.onBackPressed();
         finish();
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,19 +60,13 @@ public class RegisterActivity extends Activity {
         FontsManager.changeFonts(this);
         tf = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
         config = new Config();
-
-
         mProgressDialog = new ProgressDialog(RegisterActivity.this);
         mProgressDialog.setTitle(getString(com.movhaul.customer.R.string.loading));
         mProgressDialog.setMessage(getString(com.movhaul.customer.R.string.wait));
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.setCancelable(false);
-
         ccp = (CountryCodePicker) findViewById(R.id.ccp);
-
         // ccp.setDefaultCountryUsingNameCode("in");
-
-
         try {
             TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
             String countryCodeValue = tm.getNetworkCountryIso();
@@ -84,8 +77,6 @@ public class RegisterActivity extends Activity {
             Log.e("tag", "flg" + ccp.getSelectedCountryCodeWithPlus());
             str_mobile_prefix = ccp.getSelectedCountryCodeWithPlus();
         }
-
-
         btn_back = (LinearLayout) findViewById(com.movhaul.customer.R.id.layout_back);
         btn_submit = (Button) findViewById(com.movhaul.customer.R.id.btn_submit);
         tv_register = (TextView) findViewById(com.movhaul.customer.R.id.text_register);
@@ -95,27 +86,20 @@ public class RegisterActivity extends Activity {
         til_email = (TextInputLayout) findViewById(com.movhaul.customer.R.id.float_email);
         til_mobile = (TextInputLayout) findViewById(com.movhaul.customer.R.id.float_mobile);
         til_name = (TextInputLayout) findViewById(com.movhaul.customer.R.id.float_name);
-
         til_email.setTypeface(tf);
         til_mobile.setTypeface(tf);
         til_name.setTypeface(tf);
         ccp.setTypeFace(tf);
-
-
         snackbar = Snackbar
                 .make(findViewById(com.movhaul.customer.R.id.top), com.movhaul.customer.R.string.no_internet, Snackbar.LENGTH_LONG);
         View sbView = snackbar.getView();
         tv_snack = (android.widget.TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         tv_snack.setTextColor(Color.WHITE);
         tv_snack.setTypeface(tf);
-
-
         if (!config.isConnected(RegisterActivity.this)) {
             snackbar.show();
             tv_snack.setText(com.movhaul.customer.R.string.please_try_again);
         }
-
-
         ccp.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
             @Override
             public void onCountrySelected() {
@@ -123,37 +107,27 @@ public class RegisterActivity extends Activity {
                 Log.e("tag", "flg_ccp" + ccp.getSelectedCountryCodeWithPlus());
             }
         });
-
-
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 str_email = et_email.getText().toString().trim();
                 str_mobile = et_mobile.getText().toString().trim();
                 str_name = et_name.getText().toString().trim();
-
                 if (!(str_name.isEmpty())) {
                     if (!(str_email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(str_email).matches())) {
                         if (!(str_mobile.isEmpty() || str_mobile.length() < 10)) {
-
                             /*Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
                             startActivity(i);
                             finish();*/
-
                             if (config.isConnected(RegisterActivity.this)) {
-
                                 str_email = et_email.getText().toString().trim();
                                 str_mobile = et_mobile.getText().toString().trim();
                                 str_name = et_name.getText().toString().trim();
-
                                 new register_customer().execute();
-
                             } else {
                                 snackbar.show();
                                 tv_snack.setText(com.movhaul.customer.R.string.please_try_again);
                             }
-
-
                         } else {
                             //et_mobile.setError("Enter valid phone number");
                             snackbar.show();
@@ -172,17 +146,12 @@ public class RegisterActivity extends Activity {
                     tv_snack.setText(com.movhaul.customer.R.string.uies);
                     et_name.requestFocus();
                 }
-
-
-
                /* *//*Creating for testing screen*//*
                 Intent i = new Intent(RegisterActivity.this,DashboardNavigation.class);
                 startActivity(i);
                 finish();*/
-
             }
         });
-
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -194,7 +163,6 @@ public class RegisterActivity extends Activity {
             }
         });
     }
-
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (getCurrentFocus() != null) {
@@ -203,47 +171,34 @@ public class RegisterActivity extends Activity {
         }
         return super.dispatchTouchEvent(ev);
     }
-
     public class register_customer extends AsyncTask<String, Void, String> {
-
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             Log.e("tag", "reg_preexe");
             mProgressDialog.show();
             Log.e("tag","m:"+str_mobile_prefix+str_mobile);
-
         }
-
         @Override
         protected String doInBackground(String... strings) {
-
             String json = "", jsonStr = "";
-
             try {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.accumulate("customer_name", str_name);
                 jsonObject.accumulate("customer_mobile", str_mobile_prefix + str_mobile);
                 jsonObject.accumulate("customer_email", str_email);
-
                 json = jsonObject.toString();
                 return jsonStr = HttpUtils.makeRequest(Config.WEB_URL + "customersignup", json);
-
             } catch (Exception e) {
                 Log.e("InputStream", e.getLocalizedMessage());
             }
-
             return null;
         }
-
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.e("tag", "tag" + s);
             mProgressDialog.dismiss();
-
-
             if (s != null) {
                 try {
                     JSONObject jo = new JSONObject(s);
@@ -251,31 +206,20 @@ public class RegisterActivity extends Activity {
                     String msg = jo.getString("message");
                     Log.d("tag", "<-----Status----->" + status);
                     if (status.equals("true")) {
-
-
                         String sus_txt = getString(com.movhaul.customer.R.string.s);
-
                         Toast.makeText(getApplicationContext(), sus_txt, Toast.LENGTH_LONG).show();
-
                         Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
                         startActivity(i);
                         finish();
-
-
                     } else if (status.equals("false")) {
-
                         if (msg.contains("customer_mobile_UNIQUE")) {
-
                             et_mobile.requestFocus();
                             //  Toast.makeText(getApplicationContext(), "Mobile Number Already Registered", Toast.LENGTH_LONG).show();
-
                             snackbar.show();
                             tv_snack.setText(com.movhaul.customer.R.string.asd);
-
                         } else if (msg.contains("customer_email_UNIQUE")) {
                             et_email.requestFocus();
                             // Toast.makeText(getApplicationContext(), "Email Already Registered", Toast.LENGTH_LONG).show();
-
                             snackbar.show();
                             tv_snack.setText(com.movhaul.customer.R.string.aew);
                         }
@@ -292,10 +236,6 @@ public class RegisterActivity extends Activity {
                 snackbar.show();
                 tv_snack.setText(com.movhaul.customer.R.string.no_internet);
             }
-
         }
-
     }
-
-
 }

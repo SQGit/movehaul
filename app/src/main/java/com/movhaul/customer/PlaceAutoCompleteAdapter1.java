@@ -2,8 +2,8 @@ package com.movhaul.customer;
 
 /**
  * Created by Joel on 28/06/2015.
+ * google address autocompleted...
  */
-
 /*
  * Copyright (C) 2015 Google Inc. All Rights Reserved.
  *
@@ -19,7 +19,6 @@ package com.movhaul.customer;
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 import android.content.Context;
 import android.text.style.CharacterStyle;
 import android.util.Log;
@@ -43,7 +42,6 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
-
 /**
  * Adapter that handles Autocomplete requests from the Places Geo Data API.
  * <p/>
@@ -56,7 +54,6 @@ import java.util.concurrent.TimeUnit;
  */
 public class PlaceAutoCompleteAdapter1
         extends ArrayAdapter<PlaceAutoCompleteAdapter1.PlaceAutocomplete> implements Filterable {
-
     private static final String TAG = "PlaceAutocomplete";
     /**
      * Current results returned by this adapter.

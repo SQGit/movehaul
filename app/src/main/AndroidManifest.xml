@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.movhaul.customer">
-
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature
         android:name="android.hardware.camera.autofocus"
         android:required="false" />
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -16,12 +14,9 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
-
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS"/>
     <uses-permission android:name="android.permission.VIBRATE" />
-
     <application
         android:name="android.support.multidex.MultiDexApplication"
         android:allowBackup="true"
@@ -32,14 +27,11 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCylUHF_EPwHEJPtcCAx5C3lokC6DgZrIs" />
-
-
         <activity
             android:name="com.movhaul.customer.SplashActivity"
             android:screenOrientation="sensorPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -104,20 +96,17 @@
             android:name="com.movhaul.customer.Payment_Card_Details"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-
         <activity
             android:name="com.movhaul.customer.WebViewAct"
             android:screenOrientation="sensorPortrait"
             android:theme="@style/actionb"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-
         <activity
             android:name="com.movhaul.customer.MyJobs"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-
-
-        <receiver android:name="com.movhaul.customer.ReceiveSmsBroadcastReceiver">
+        <receiver android:name="com.movhaul.customer.ReceiveSmsBroadcastReceiver"
+                  android:permission="android.permission.BROADCAST_SMS">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
@@ -125,17 +114,11 @@
         <service
             android:name="com.movhaul.customer.FetchAddressIntentService"
             android:exported="false" />
-
         <activity
             android:name="com.gun0912.tedpicker.ImagePickerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ted_pick_theme" />
-
-
-
         <service android:name="com.movhaul.customer.DriverService" />
-
-
         <service android:name="com.movhaul.customer.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -146,13 +129,9 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-
         <meta-data
             android:name="co.paystack.android.PublicKey"
             android:value="pk_test_7a2b290173743af455823f46d4d1f63f4377cce4"/>
-
-
-
     </application>
 
 </manifest>

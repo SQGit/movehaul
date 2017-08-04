@@ -24,6 +24,7 @@ import org.json.JSONObject;
 
 /**
  * Created by sqindia on 02-11-2016.
+ * not used
  */
 
 public class Payment_Details1 extends Activity {

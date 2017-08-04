@@ -40,13 +40,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-
 /**
  * Created by SQINDIA on 10/26/2016.
+ * my trips show current ,upcoming and finished jobs
+ * in history of jobs cancelled and finished jobs will show.
+ *
  */
-
+@SuppressWarnings("ConstantConditions")
 public class MyTrips extends AppCompatActivity {
-
     ListView ht_lview;
     LinearLayout btn_back;
     ArrayList<String> ht_arlist;
@@ -70,138 +71,99 @@ public class MyTrips extends AppCompatActivity {
     Button btn_dg_cancel;
     android.widget.LinearLayout lt_top;
     ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
-
         @Override
         public void onPageSelected(int position) {
-
-
             if (position == 0) {
-
                 FontsManager.initFormAssets(MyTrips.this, "fonts/lato.ttf");       //initialization
                 FontsManager.changeFonts(MyTrips.this);
-
                 //tl_indicator.setupWithViewPager(viewPager);
                // tl_indicator.getTabAt(1).select();
-
-
             } else if (position == 1) {
                 FontsManager.initFormAssets(MyTrips.this, "fonts/lato.ttf");       //initialization
                 FontsManager.changeFonts(MyTrips.this);
-
             } else {
                 FontsManager.initFormAssets(MyTrips.this, "fonts/lato.ttf");       //initialization
                 FontsManager.changeFonts(MyTrips.this);
-
             }
         }
-
         @Override
         public void onPageScrolled(int arg0, float arg1, int arg2) {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         }
-
         @Override
         public void onPageScrollStateChanged(int arg0) {
-
         }
-
-
     };
     private ViewPager viewPager;
     private int[] layouts;
     private MyViewPagerAdapter myViewPagerAdapter;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(com.movhaul.customer.R.layout.mytrips);
-
         FontsManager.initFormAssets(this, "fonts/lato.ttf");
         FontsManager.changeFonts(this);
-
         tf = Typeface.createFromAsset(getAssets(), "fonts/lato.ttf");
-
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MyTrips.this);
         editor = sharedPreferences.edit();
-
         btn_back = (LinearLayout) findViewById(com.movhaul.customer.R.id.layout_back);
         viewPager = (ViewPager) findViewById(com.movhaul.customer.R.id.view_pager);
         tl_indicator = (TabLayout) findViewById(R.id.tabs);
-
         layouts = new int[]{
                 com.movhaul.customer.R.layout.current_trips1,
                 com.movhaul.customer.R.layout.history_trips,
                 com.movhaul.customer.R.layout.upcoming_trips,};
-
         mProgressDialog = new ProgressDialog(MyTrips.this);
         mProgressDialog.setTitle(com.movhaul.customer.R.string.loading);
         mProgressDialog.setMessage(getString(com.movhaul.customer.R.string.wait));
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.setCancelable(false);
-
         snackbar = Snackbar
                 .make(findViewById(com.movhaul.customer.R.id.top), com.movhaul.customer.R.string.no_internet, Snackbar.LENGTH_SHORT);
         View sbView = snackbar.getView();
         tv_snack = (android.widget.TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         tv_snack.setTextColor(Color.WHITE);
         tv_snack.setTypeface(tf);
-
         id = sharedPreferences.getString("id", "");
         token = sharedPreferences.getString("token", "");
-
         ar_job_upcoming = new ArrayList<>();
         ar_job_history = new ArrayList<>();
         myViewPagerAdapter = new MyViewPagerAdapter();
-
         Log.e("tag_id", id);
         Log.e("tag_token", token);
-
         if (!com.movhaul.customer.Config.isConnected(MyTrips.this)) {
             snackbar.show();
             tv_snack.setText(com.movhaul.customer.R.string.please_try_again);
         } else {
             new get_history().execute();
-
         }
-
-
         dg_show_cancel = new Dialog(MyTrips.this);
         dg_show_cancel.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dg_show_cancel.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dg_show_cancel.setCancelable(true);
         dg_show_cancel.setContentView(com.movhaul.customer.R.layout.dialog_road_confirm);
-
         btn_dg_cancel = (Button) dg_show_cancel.findViewById(com.movhaul.customer.R.id.button_yes);
         tv_dg_txt = (android.widget.TextView) dg_show_cancel.findViewById(com.movhaul.customer.R.id.textView_1);
         tv_dg_txt2 = (android.widget.TextView) dg_show_cancel.findViewById(com.movhaul.customer.R.id.textView_2);
-
         tv_dg_txt.setText(R.string.ca);
         tv_dg_txt2.setText(R.string.axcanc);
         btn_dg_cancel.setText("OK");
-
         tv_dg_txt.setTypeface(tf);
         tv_dg_txt2.setTypeface(tf);
         btn_dg_cancel.setTypeface(tf);
-
         tl_indicator.setupWithViewPager(viewPager);
-
-
         btn_dg_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dg_show_cancel.dismiss();
-
                 if (!com.movhaul.customer.Config.isConnected(MyTrips.this)) {
                     snackbar.show();
                     tv_snack.setText(com.movhaul.customer.R.string.please_try_again);
                 } else {
                     new cancel_job(mv_datas.getBooking_id(), mv_datas.getDriver_id()).execute();
                 }
-
             }
         });
-
-
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -211,7 +173,6 @@ public class MyTrips extends AppCompatActivity {
             }
         });
     }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -219,27 +180,19 @@ public class MyTrips extends AppCompatActivity {
         startActivity(i);
         finish();
     }
-
-    public class MyViewPagerAdapter extends PagerAdapter {
+    private class MyViewPagerAdapter extends PagerAdapter {
         private LayoutInflater layoutInflater;
-
-        public MyViewPagerAdapter() {
+        MyViewPagerAdapter() {
         }
-
         @Override
         public Object instantiateItem(ViewGroup container, final int position) {
             layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
             View view = layoutInflater.inflate(layouts[position], container, false);
             container.addView(view);
            /*FontsManager.initFormAssets(getApplicationContext(), "fonts/lato.ttf");       //initialization
             FontsManager.changeFonts((Activity) getApplicationContext());*/
-
             if (position == 0) {
-
-
                 lt_top = (android.widget.LinearLayout) view.findViewById(R.id.layout_top);
-
                 if (ar_job_upcoming.size() > 0) {
                     lt_top.setVisibility(View.VISIBLE);
                     mv_datas = ar_job_upcoming.get(0);
@@ -257,8 +210,6 @@ public class MyTrips extends AppCompatActivity {
                     iv_content_prof = (ImageView) view.findViewById(com.movhaul.customer.R.id.imageview_content_profile);
                     iv_type = (ImageView) view.findViewById(com.movhaul.customer.R.id.imageView5);
                     btn_cancel_job = (Button) view.findViewById(R.id.btn_canceljob);
-
-
                     tv_cr_date.setText(mv_datas.getDate());
                     tv_cr_time.setText(mv_datas.getTime());
                     tv_cr_pickup.setText(mv_datas.getPickup());
@@ -268,9 +219,7 @@ public class MyTrips extends AppCompatActivity {
                     tv_cr_dr_phone.setText(mv_datas.getDriver_number());
                     tv_cr_job_cost.setText(mv_datas.getJob_cost());
                     tv_cr_job_id.setText(mv_datas.getBooking_id());
-
                     Glide.with(MyTrips.this).load(Config.WEB_URL_IMG + "driver_details/" + mv_datas.getDriver_image()).into(iv_content_prof);
-
                     if (mv_datas.getVec_type().equals("Bus")) {
                         iv_type.setImageResource(com.movhaul.customer.R.drawable.bus_type);
                     } else {
@@ -291,9 +240,7 @@ public class MyTrips extends AppCompatActivity {
                     tv_snack.setText("You don't have any jobs to show.");
                     viewPager.setCurrentItem(1);*/
                     lt_top.setVisibility(View.GONE);
-
                 }
-
             } else if (position == 1) {
                 ht_lview = (ListView) view.findViewById(com.movhaul.customer.R.id.lview);
                 ht_arlist = new ArrayList<>();
@@ -302,8 +249,6 @@ public class MyTrips extends AppCompatActivity {
             } else {
                 android.widget.ListView up_lview;
                 up_lview = (android.widget.ListView) view.findViewById(com.movhaul.customer.R.id.lview);
-
-
                 final UpcomingAdapter up_adapter = new UpcomingAdapter(MyTrips.this, MyTrips.this, ar_job_upcoming);
                 up_lview.setAdapter(up_adapter);
                 up_lview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
@@ -315,38 +260,27 @@ public class MyTrips extends AppCompatActivity {
                         // register in adapter that state for selected cell is toggled
                         up_adapter.registerToggle(pos);
                         Log.e("tag", "clicked" + pos);
-
                     }
                 });
-
             }
-
-
             return view;
         }
-
         @Override
         public int getCount() {
             return layouts.length;
         }
-
         @Override
         public boolean isViewFromObject(View view, Object obj) {
             return view == obj;
         }
-
-
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
             View view = (View) object;
             container.removeView(view);
         }
-
-
         @Override
         public CharSequence getPageTitle(int position) {
             String title;
-
             if (position == 0) {
                 title = getString(com.movhaul.customer.R.string.curr);
             } else if (position == 1) {
@@ -354,14 +288,11 @@ public class MyTrips extends AppCompatActivity {
             } else {
                 title = getString(com.movhaul.customer.R.string.upco);
             }
-
             return title;
         }
-
-
     }
-
-    public class get_history extends AsyncTask<String, Void, String> {
+    @SuppressWarnings({"unused", "UnusedAssignment"})
+    private class get_history extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -458,29 +389,23 @@ public class MyTrips extends AppCompatActivity {
                     Log.e("tag", "nt" + e.toString());
                     // Toast.makeText(getApplicationContext(),"Network Errror0",Toast.LENGTH_LONG).show();
                 }
-            } else {
-                // Toast.makeText(getApplicationContext(),"Network Errror1",Toast.LENGTH_LONG).show();
             }
 
         }
 
     }
-
-
-    public class cancel_job extends AsyncTask<String, Void, String> {
+    @SuppressWarnings({"unused", "UnusedAssignment"})
+    private class cancel_job extends AsyncTask<String, Void, String> {
         String booking_id, driver_id;
-
-        public cancel_job(String booking, String driver) {
+        cancel_job(String booking, String driver) {
             booking_id = booking;
             driver_id = driver;
         }
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             mProgressDialog.show();
         }
-
         @Override
         protected String doInBackground(String... strings) {
             String json = "", jsonStr = "";
@@ -495,13 +420,11 @@ public class MyTrips extends AppCompatActivity {
             }
             return null;
         }
-
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.e("tag", "tag" + s);
             mProgressDialog.dismiss();
-
             if (s != null) {
                 try {
                     JSONObject jo = new JSONObject(s);
@@ -509,32 +432,20 @@ public class MyTrips extends AppCompatActivity {
                     // String msg = jo.getString("message");
                     Log.e("tag", "<-----Status----->" + status);
                     if (status.equals("true")) {
-
                         Log.e("tag", "<-----true----->" + status);
                         // adapter.notifyDataSetChanged();
-
                         Intent insd = getIntent();
                         startActivity(insd);
-
                     } else if (status.equals("false")) {
-
                         Log.e("tag", "Location not updated");
                         //has to check internet and location...
-
-
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("tag", "nt" + e.toString());
                     // Toast.makeText(getApplicationContext(),"Network Errror0",Toast.LENGTH_LONG).show();
                 }
-            } else {
-                // Toast.makeText(getApplicationContext(),"Network Errror1",Toast.LENGTH_LONG).show();
             }
-
         }
-
     }
-
-
 }

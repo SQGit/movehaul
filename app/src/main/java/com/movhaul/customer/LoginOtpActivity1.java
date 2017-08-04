@@ -35,6 +35,7 @@ import org.json.JSONObject;
 
 /**
  * Modified by Salman on 24-10-2016.
+ * not used.....
  */
 
 public class LoginOtpActivity1 extends Activity implements View.OnFocusChangeListener, View.OnKeyListener, TextWatcher {
