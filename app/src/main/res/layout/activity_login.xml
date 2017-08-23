@@ -66,13 +66,12 @@
             android:id="@+id/ccp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:countryPreference="US,IN,NG"
             app:textSize="@dimen/_10sdp"
             app:arrowSize="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_5sdp"
             app:keyboardAutoPopOnSearch="false"
             app:defaultNameCode="NG"
-            app:customMasterCountries="US,IN,NZ,NG,BD,PL,RO,ZW,JP"
+            app:customMasterCountries="NG,US,IN"
             android:layout_gravity="center" />
 
 

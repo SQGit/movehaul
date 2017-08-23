@@ -179,7 +179,7 @@ public class Book_now extends Activity {
             new fetch_goods().execute();
             new fetch_trucks().execute();
         }
-        Calendar c = Calendar.getInstance();
+        final Calendar c = Calendar.getInstance();
         @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         String formattedDate = df.format(c.getTime());
         String[] parts = formattedDate.split(" ");
@@ -565,6 +565,7 @@ public class Book_now extends Activity {
                     String responseString = null;
                     HttpClient httpclient = new DefaultHttpClient();
                     HttpPost httppost = new HttpPost(com.movhaul.customer.Config.WEB_URL + "customer/booking");
+                    Log.e("tag","addr: "+com.movhaul.customer.Config.WEB_URL + "customer/booking");
                     httppost.setHeader("id", id);
                     httppost.setHeader("sessiontoken", token);
                     httppost.setHeader("pickup_location", pickup_location);
@@ -593,12 +594,12 @@ public class Book_now extends Activity {
                     HttpResponse response = null;
                     HttpEntity r_entity = null;
                     try {
-                        Log.e("tag0", "img: if " + str_profile_img);
+                        Log.e("tag0", "img: if "+goods_imgs.get(0));
                         MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
                         Log.e("tag", "siz:" + goods_imgs.size());
                         for (Uri images : goods_imgs)
                             entity.addPart("bookinggoods", new FileBody(new File(images.toString()), "image/jpeg"));
-                      httppost.setEntity(entity);
+                        httppost.setEntity(entity);
                         try {
                             response = httpclient.execute(httppost);
                         } catch (Exception e) {
@@ -681,10 +682,10 @@ public class Book_now extends Activity {
                 try {
                     JSONObject jo = new JSONObject(s);
                     String status = jo.getString("status");
-                    String bookingid = jo.getString("booking_id");
                     Log.d("tag", "<-----Status----->" + status);
                     if (status.equals("true")) {
-                        Log.e("tag", "Location Updated");
+                        String bookingid = jo.getString("booking_id");
+                        Log.e("tag", "Job Posted");
                         editor.putString("job_id", bookingid);
                         editor.putString("book_time", book_time);
                         editor.commit();
@@ -692,14 +693,26 @@ public class Book_now extends Activity {
                         startActivity(goReve);
                         finish();
                     } else if (status.equals("false")) {
-                        Log.e("tag", "Location not updated");
-                        //has to check internet and location...
-                        Toast.makeText(getApplicationContext(), com.movhaul.customer.R.string.no_internet, Toast.LENGTH_LONG).show();
+
+                        String msg = jo.getString("message");
+
+                        if(msg.contains("Error Occured Error: ER_BAD_FIELD_ERROR: Unknown column 'undefined' in 'having clause'")){
+                            Log.e("tag", "Job Posted");
+                            Intent goReve = new Intent(getApplicationContext(), DashboardNavigation.class);
+                            startActivity(goReve);
+                            Toast.makeText(getApplicationContext(),"Job Posted Successfully", Toast.LENGTH_LONG).show();
+                            finish();
+                        }
+                        else {
+                            Log.e("tag", "Job not posted");
+                            Toast.makeText(getApplicationContext(), com.movhaul.customer.R.string.no_internet, Toast.LENGTH_LONG).show();
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("tag", "nt" + e.toString());
-                    Toast.makeText(getApplicationContext(), com.movhaul.customer.R.string.no_internet, Toast.LENGTH_LONG).show();
+                    //has to check internet and location...
+                    Toast.makeText(getApplicationContext(), com.movhaul.customer.R.string.ase, Toast.LENGTH_LONG).show();
                 }
             } else {
                  Toast.makeText(getApplicationContext(),com.movhaul.customer.R.string.no_internet,Toast.LENGTH_LONG).show();

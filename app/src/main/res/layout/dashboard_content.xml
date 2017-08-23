@@ -21,6 +21,7 @@
             class="com.movhaul.customer.CustomMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_15sdp"
             map:cameraZoom="15"
             tools:context=".DasboardNavigation" />
 

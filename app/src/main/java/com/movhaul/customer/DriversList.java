@@ -273,7 +273,7 @@ public class DriversList extends AppCompatActivity {
             anim_btn_b2t.setDuration(500);
             lt_filter_dialog.setAnimation(anim_btn_b2t);
             lt_filter_dialog.setVisibility(View.VISIBLE);
-            aet_drop.setText("");*/         //
+            aet_Drop.setText("");*/         //
             ///customer/emergencypayment
             booking_id = sharedPreferences.getString("booking_id", "");
             driver_id = sharedPreferences.getString("driver_id", "");

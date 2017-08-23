@@ -149,7 +149,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     NavigationView navigationView;
     Button btn_book_now, btn_book_later;
     TextView tv_name, tv_email, tv_myTrips, tv_jobReview, tv_payments, tv_tracking, tv_offers, tv_emergencyContacts;
-    AutoCompleteTextView aet_pickup, aet_drop;
+    AutoCompleteTextView aet_Pickup, aet_Drop;
     TextInputLayout flt_pickup, flt_drop_location;
     ImageView btn_menu, rightmenu;
     android.widget.LinearLayout lt_drop, lt_pickup;
@@ -295,8 +295,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         tv_tracking = (TextView) findViewById(com.movhaul.customer.R.id.textView_tracking);
         tv_offers = (TextView) findViewById(com.movhaul.customer.R.id.textView_offers);
         tv_emergencyContacts = (TextView) findViewById(com.movhaul.customer.R.id.textView_emergencycontacts);
-        aet_pickup = (AutoCompleteTextView) findViewById(com.movhaul.customer.R.id.editText_pickUp);
-        aet_drop = (AutoCompleteTextView) findViewById(com.movhaul.customer.R.id.editText_dropLocation);
+        aet_Pickup = (AutoCompleteTextView) findViewById(com.movhaul.customer.R.id.editText_pickUp);
+        aet_Drop = (AutoCompleteTextView) findViewById(com.movhaul.customer.R.id.editText_dropLocation);
         flt_pickup = (TextInputLayout) findViewById(com.movhaul.customer.R.id.float_pickup);
         flt_drop_location = (TextInputLayout) findViewById(com.movhaul.customer.R.id.float_drop);
         lt_drop = (android.widget.LinearLayout) findViewById(com.movhaul.customer.R.id.layout_drop);
@@ -372,6 +372,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         current_time = parts[1];
         str_time = part1 + " T " + part2;
         final int height = getDeviceHeight(DashboardNavigation.this);
+        iv_location.setVisibility(View.VISIBLE);
         //final int width = getDeviceWidth(DashboardNavigation.this);
         //customer choosing bus
         iv_bus.setOnClickListener(new View.OnClickListener() {
@@ -739,7 +740,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             @Override
             public void onClick(View view) {
                 if (diff >= 0) {
-                    if (aet_drop.getText().toString().isEmpty()) {
+                    if (aet_Drop.getText().toString().isEmpty()) {
                         // Toast.makeText(getApplicationContext(), "Choose Drop Location", Toast.LENGTH_LONG).show();
                         snackbar.show();
                         tv_snack.setText(com.movhaul.customer.R.string.adsfb);
@@ -749,8 +750,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                             tv_snack.setText("Choose PickupLocation Again");
                         }
                         else {
-                            editor.putString("pickup", mStreetOutput + ", " + mCityOutput);
-                            editor.putString("drop", aet_drop.getText().toString());
+                            editor.putString("pickup", aet_Pickup.getText().toString());
+                            editor.putString("drop", aet_Drop.getText().toString());
                             editor.putString("pickup_lati", mPickup_lat);
                             editor.putString("pickup_long", mPickup_long);
                             editor.putString("drop_lati", mDrop_lat);
@@ -772,13 +773,13 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             public void onClick(View view) {
              /*   Intent i = new Intent(DashboardNavigation.this, Book_later.class);
                 startActivity(i);*/
-                if (aet_drop.getText().toString().isEmpty()) {
+                if (aet_Drop.getText().toString().isEmpty()) {
                     // Toast.makeText(getApplicationContext(), "Choose Drop Location", Toast.LENGTH_LONG).show();
                     snackbar.show();
                     tv_snack.setText(com.movhaul.customer.R.string.aewas);
                 } else {
-                    editor.putString("pickup", mStreetOutput + ", " + mCityOutput);
-                    editor.putString("drop", aet_drop.getText().toString());
+                    editor.putString("pickup", aet_Pickup.getText().toString());
+                    editor.putString("drop", aet_Drop.getText().toString());
                     editor.putString("pickup_lati", mPickup_lat);
                     editor.putString("pickup_long", mPickup_long);
                     editor.putString("drop_lati", mDrop_lat);
@@ -809,7 +810,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 anim_btn_b2t.setDuration(500);
                 lt_filter_dialog.setAnimation(anim_btn_b2t);
                 lt_filter_dialog.setVisibility(View.VISIBLE);
-                aet_drop.setText("");
+                aet_Drop.setText("");
             }
         });
         btn_book_roadside.setOnClickListener(new View.OnClickListener() {
@@ -824,12 +825,12 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 intent.putExtra("apiKey", "U1lTUC4xNUhPMTIkMTIzLjR8U1lTUA==");
                 intent.putExtra("txnToken", "55316C54554334784E5568504D54496B4D54497A4C6A523855316C5455413D3D7C3932333737633266613035313135306337363534386636376266623131303165383831366464343834666234363064653062343731663538643461323835303537333638653232313135363366383334666337613166333265333336653834626539656566393465396363356131363739353463646239333434363164313732");
                 startActivityForResult(intent, 102);*/
-                if (aet_drop.getText().toString().isEmpty()) {
+                if (aet_Drop.getText().toString().isEmpty()) {
                     snackbar.show();
                     tv_snack.setText(com.movhaul.customer.R.string.drpa);
                 } else {
-                    str_pickup = mStreetOutput + ", " + mCityOutput;
-                    str_drop = aet_drop.getText().toString();
+                    str_pickup = aet_Pickup.getText().toString();
+                    str_drop = aet_Drop.getText().toString();
                     str_pickup_lati = mPickup_lat;
                     str_pickup_longi = mPickup_long;
                     str_drop_lati = mDrop_lat;
@@ -889,11 +890,43 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     private void getMyLocation() {
         if (mMap != null) {
             Location myLocation = mMap.getMyLocation();
+            Log.e("tag","loca "+ myLocation);
             if (myLocation != null) {
                 LatLng myLatLng1 = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
+                Log.e("tag","latlng "+ myLatLng1);
                 //CameraPosition myPosition = new CameraPosition.Builder().target(myLatLng).zoom(17).bearing(90).tilt(30).build();
                 CameraPosition myPosition = new CameraPosition.Builder().target(myLatLng1).zoom(17).build();
                 mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+
+                try {
+                    str_lati = String.valueOf(mCenterLatLong.latitude);
+                    str_longi = String.valueOf(mCenterLatLong.longitude);
+                    startIntentService(myLocation);
+                    geocoder = new Geocoder(DashboardNavigation.this, Locale.getDefault());
+                    try {
+                        addresses = geocoder.getFromLocation(myLocation.getLatitude(), myLocation.getLongitude(), 1);
+                        str_locality = addresses.get(0).getLocality();
+                        str_address = addresses.get(0).getAddressLine(0);
+                        Log.e("tagplace0_currentloca", "lati: " + str_lati + "longi: " + str_longi + "\nlocality: " + str_locality + "\taddr0: " + str_address +
+                                "\naddr1: " + addresses.get(0).getAddressLine(1) + "\n addr2: " + addresses.get(0).getAddressLine(2) + "\n adminarea: "
+                                + addresses.get(0).getAdminArea() + "\n feature name: " + addresses.get(0).getFeatureName() + "\n Sub loca: "
+                                + addresses.get(0).getSubLocality() + "\n subadmin: " + addresses.get(0).getSubAdminArea()
+                                + "\n premisis: " + addresses.get(0).getPremises() + "\n postal " + addresses.get(0).getPostalCode());
+                        mStreetOutput = str_address;
+                        mCityOutput = str_locality;
+                        mPickup_lat = str_lati;
+                        mPickup_long = str_longi;
+                    } catch (Exception e) {
+                        Log.e("tag", "er_geocoder: " + e.toString());
+                    }
+                    // new updateLocation().execute();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e("tag", "eroo:" + e.toString());
+                }
+
+
+
             }
         }
     }
@@ -986,6 +1019,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         try {
             // The autocomplete activity requires Google Play Services to be available. The intent
             // builder checks this and throws an exception if it is not the case.
+            // "NG" stands for address search limited to Nigeria country.
             AutocompleteFilter typeFilter = new AutocompleteFilter.Builder().setTypeFilter(Place.TYPE_COUNTRY).setCountry("NG").build();
             //   //.setBoundsBias(new LatLngBounds(new LatLng(23.63936, 68.14712), new LatLng(28.20453, 97.34466)))
             Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).setFilter(typeFilter).build(this);
@@ -1039,8 +1073,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 // Get the user's selected place from the Intent.
                 Place place = PlaceAutocomplete.getPlace(mContext, data);
                 LatLng latLong;
-                aet_pickup.setText("");
-                aet_pickup.append(place.getAddress());
+                aet_Pickup.setText("");
+                aet_Pickup.append(place.getAddress());
                 Log.e("tagplace", " place " + place.getAddress() + " attrib " + place.getAttributions() + " name " + place.getName() + " phone " + place.getPhoneNumber() + " latlon " + place.getLatLng().toString());
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     //    ActivityCompat#requestPermissions
@@ -1057,7 +1091,20 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     latLong = place.getLatLng();
                     dl_pick_lati = latLong.latitude;
                     dl_pick_longi = latLong.longitude;
-                    Log.e("tag", "d: :" + dl_drop_longi);
+                    mPickup_lat = String.valueOf(latLong.latitude);
+                    mPickup_long = String.valueOf(latLong.longitude);
+                    Log.e("tag", dl_pick_longi+" :d: " + dl_pick_lati);
+
+
+
+                    latLong = new LatLng(dl_pick_lati, dl_pick_longi);
+                    CameraPosition cameraPosition = new CameraPosition.Builder()
+                            .target(latLong).zoom(15f).build();
+                    mMap.animateCamera(CameraUpdateFactory
+                            .newCameraPosition(cameraPosition));
+
+
+
                     if (p_loc_comp)
                         draw_line(dl_pick_lati, dl_pick_longi, dl_drop_lati, dl_drop_longi);
                     //latLong = new LatLng(location.getLatitude(), location.getLongitude());
@@ -1067,9 +1114,13 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                     mMap.getUiSettings().setMyLocationButtonEnabled(false);
                     mMap.getUiSettings().setZoomControlsEnabled(false);
                     mMap.getUiSettings().setZoomGesturesEnabled(true);
+
+                    Log.e("tag", "after drop selected");
+
+
                    /* mMap.animateCamera(CameraUpdateFactory
                             .newCameraPosition(cameraPosition));*/
-                    //mMap.addMarker(new MarkerOptions().position(latLong));
+
                 }
             }
         } else if (requestCode == REQUEST_AC_DROP) {
@@ -1079,8 +1130,8 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 Place place1 = PlaceAutocomplete.getPlace(mContext, data);
                 LatLng latLong;
                 latLong = place1.getLatLng();
-                aet_drop.setText("");
-                aet_drop.append(place1.getAddress());
+                aet_Drop.setText("");
+                aet_Drop.append(place1.getAddress());
                 Log.e("tag", "place111" + place1.getAddress());
                 Log.e("tag", "la00: " + place1.getLatLng());
                 mDrop_lat = String.valueOf(latLong.latitude);
@@ -1138,7 +1189,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             anim_btn_b2t.setDuration(500);
             lt_filter_dialog.setAnimation(anim_btn_b2t);
             lt_filter_dialog.setVisibility(View.VISIBLE);
-            aet_drop.setText("");*/
+            aet_Drop.setText("");*/
             ///customer/emergencypayment
             new book_now_task().execute();
         }
@@ -1151,6 +1202,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         drop_marker = mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
                 .position(new LatLng(dl_drop_lati, dl_drop_longi)));
         iv_map_point.setVisibility(View.GONE);
+        iv_location.setVisibility(View.GONE);
         /*Polyline line = mMap.addPolyline(new PolylineOptions()
                 .add(new LatLng(dl_pick_lati, dl_pick_longi), new LatLng(dl_drop_lati, dl_drop_longi))
                 .width(5)
@@ -1305,14 +1357,14 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
     }
     protected void displayAddressOutput() {
         // Log.e("tag00", "output11111" + mAddressOutput);
-        //aet_pickup.setText(mAddressOutput);
+        //aet_Pickup.setText(mAddressOutput);
         try {
             if (mAreaOutput != null)
-                // aet_pickup.setText(mAreaOutput+ "");
+                // aet_Pickup.setText(mAreaOutput+ "");
                 Log.e("tag11", "output" + mAddressOutput);
-            aet_pickup.setText("");
-            aet_pickup.setText(mAddressOutput);
-            //aet_pickup.setText(mAreaOutput);
+            aet_Pickup.setText("");
+            aet_Pickup.setText(mAddressOutput);
+            //aet_Pickup.setText(mAreaOutput);
             //   Log.e("tag22", "output" + mAreaOutput);
         } catch (Exception e) {
             e.printStackTrace();
@@ -1382,7 +1434,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             return;
         }
         // check if map is created successfully or not
-        if ((aet_pickup.getText().toString().isEmpty())) {
+        if ((aet_Pickup.getText().toString().isEmpty())) {
             if (mMap != null) {
                 LatLng latLong;
                 Log.e("tagmap", "change_map_map_not_null");
@@ -1415,7 +1467,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
             anim_btn_b2t.setDuration(250);
             lt_filter_dialog.setAnimation(anim_btn_b2t);
             lt_filter_dialog.setVisibility(View.VISIBLE);
-            aet_drop.setText("");
+            aet_Drop.setText("");
             p_loc_comp = false;
             mMap.clear();
             getMyLocation();
@@ -1660,7 +1712,6 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 return null;
             }
         }
-
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
