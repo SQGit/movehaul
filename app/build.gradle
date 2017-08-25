@@ -53,16 +53,9 @@ repositories {
 }
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-
     compile project(':remita_21_03')
-
     compile 'co.paystack.android:paystack:3.0.1'
-
     //compile 'ng.simplepay.gateway:gateway:2.+'
-
-    
-
-
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'co.paystack.android:paystack:3.0.1'
     compile 'com.android.support:design:25.3.1'
@@ -94,6 +87,8 @@ dependencies {
     compile 'com.firebase:firebase-client-android:2.5.2'
     compile 'com.google.firebase:firebase-database:10.0.1'
 
+    // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpmime
+    compile group: 'org.apache.httpcomponents', name: 'httpmime', version: '4.2'
 }
 
 apply plugin: 'com.google.gms.google-services'

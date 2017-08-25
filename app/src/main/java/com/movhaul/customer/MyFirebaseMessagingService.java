@@ -43,18 +43,21 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
             Log.e(TAG, "Message data payload: " + remoteMessage.getData());
+
+            Log.e(TAG, "Message  " + remoteMessage.getData().get("body"));
+
         }
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
             Log.e(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
         }
         //Log.e("tag","body::"+remoteMessage.getNotification().getBody());
-        Log.e("tag","title::"+remoteMessage.getNotification().getTitle());
-        Log.e("tag","string::"+remoteMessage.getNotification().toString());
+        //Log.e("tag","title::"+remoteMessage.getNotification().getTitle());
+//        Log.e("tag","string::"+remoteMessage.getNotification().toString());
         Log.e(TAG, "Data:str " + remoteMessage.toString());
-        Log.e(TAG, "Data:typ " + remoteMessage.getMessageType());
+       // Log.e(TAG, "Data:typ " + remoteMessage.getMessageType());
         Log.e(TAG, "Data:gda " + remoteMessage.getData().toString());
-        Log.e(TAG, "Data:collky " + remoteMessage.getCollapseKey());
+       // Log.e(TAG, "Data:collky " + remoteMessage.getCollapseKey());
         /*if (remoteMessage.getData().size() > 0) {
             Log.e(TAG, "Data Payload: " + remoteMessage.getData().toString());
             try {
@@ -66,12 +69,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             }
         }*/
        // sendNotification(remoteMessage.getNotification().getBody());
-        Log.e("tag","asdf: "+ remoteMessage.getNotification().getBody());
-        if(remoteMessage.getNotification().getBody().toString().contains("Job Started")){
+//        Log.e("tag","asdf: "+ remoteMessage.getNotification().getBody());
+
+        if(remoteMessage.getData().get("body").contains("Job Started")){
             send_notification1(remoteMessage.getNotification().getBody());
         }
         else {
-            send_notification(remoteMessage.getNotification().getBody());
+            send_notification(remoteMessage.getData().get("body"));
         }
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
