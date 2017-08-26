@@ -497,7 +497,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
         if (!(sharedPreferences.getString("customer_image", "").equals(""))) {
-            Glide.with(DashboardNavigation.this).load(Config.WEB_URL_IMG + "customer_details/" + sharedPreferences.getString("customer_image", "")).into(btn_editProfile_img);
+            Glide.with(DashboardNavigation.this).load(Config.WEB_URL + "customerdetails/" + sharedPreferences.getString("customer_image", "")).into(btn_editProfile_img);
         }
         dialog2 = new Dialog(DashboardNavigation.this);
         dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -1270,7 +1270,12 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
         //  final LatLngBounds boundss = new LatLngBounds.Builder().include(new LatLng(new_lat1, new_long1)).include(new LatLng(new_lat2, new_long2)).build();
         CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds,
                 250);
-        mMap.animateCamera(cu);
+        try {
+            mMap.animateCamera(cu);
+        }
+        catch (Exception e){
+            Log.e("tag","das: "+e.toString());
+        }
         //CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(mid_lati, mid_longi)).build();
         //mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
        /* LatLng mapCenter = new LatLng(mid_lati, mid_longi);
@@ -1727,12 +1732,12 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                         String name = jo.getString("customer_name");
                         String email = jo.getString("customer_email");
                         selectedPhotos.clear();
-                        Glide.with(DashboardNavigation.this).load(Config.WEB_URL_IMG + "customer_details/" + img).into(btn_editProfile_img);
+                        Glide.with(DashboardNavigation.this).load(Config.WEB_URL + "customerdetails/" + img).into(btn_editProfile_img);
                         editor.putString("customer_image", img);
                         editor.putString("customer_name", name);
                         editor.putString("customer_email", email);
                         editor.commit();
-                        Log.e("tag", "img: " + Config.WEB_URL_IMG + "customer_details/" + img);
+                        Log.e("tag", "img: " + Config.WEB_URL + "customerdetails/" + img);
                         Log.e("tag", "img: " + name);
                         Log.e("tag", "img: " + email);
                         tv_name.setText(name);

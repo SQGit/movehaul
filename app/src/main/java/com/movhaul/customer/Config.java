@@ -16,6 +16,7 @@ import android.widget.TextView;
 public class Config {
     public static final String WEB_URL = "http://104.197.80.225:3030/";
     public static final String WEB_URL_IMG ="http://104.197.80.225:8080/movehaul/assets/img/";
+    public static final String WEB_URL_IMG_NEW ="http://104.197.80.225:3030/customerdetails/";
     public static boolean isStringNullOrWhiteSpace(String value) {
         if (value == null) {
             return true;

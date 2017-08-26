@@ -46,6 +46,9 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.rey.material.widget.ImageView;
 import com.rey.material.widget.LinearLayout;
 import com.sloop.fonts.FontsManager;
@@ -102,6 +105,10 @@ public class Tracking extends FragmentActivity implements OnMapReadyCallback,
     Location currentLocation, dropLocation;
     private GoogleMap mMap;
     public int frm_width;
+
+    private DatabaseReference mDatabase;
+    private DatabaseReference mPostReference;
+
     GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
         @Override
         public void onMyLocationChange(Location location) {
@@ -121,6 +128,7 @@ public class Tracking extends FragmentActivity implements OnMapReadyCallback,
         setContentView(com.movhaul.customer.R.layout.tracking);
         FontsManager.initFormAssets(this, "fonts/lato.ttf");
         FontsManager.changeFonts(this);
+       // FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Tracking.this);
         editor = sharedPreferences.edit();
         btn_search = (ImageView) findViewById(com.movhaul.customer.R.id.btn_search);
@@ -159,7 +167,9 @@ public class Tracking extends FragmentActivity implements OnMapReadyCallback,
         } else {
             new get_jobs().execute();
         }
-        Firebase.setAndroidContext(this);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        //Firebase.setAndroidContext(this);
         //reference2 = new Firebase("https://movehaul-147509.firebaseio.com/driver_track" + "customer" + "_" + "driver");
         tv_hint.setVisibility(View.VISIBLE);
         sv_tracking.setVisibility(View.GONE);
@@ -218,7 +228,7 @@ public class Tracking extends FragmentActivity implements OnMapReadyCallback,
     }
     public void getData() {
         driver_name = mv_datas.getName();
-        reference1 = new Firebase("https://movehaul-147509.firebaseio.com/driver_track/" + driver_name);
+       // reference1 = new Firebase("https://movehaul-147509.firebaseio.com/driver_track/" + driver_name);
         btn_search.setVisibility(View.GONE);
         tv_hint.setVisibility(View.GONE);
         sv_tracking.setVisibility(View.VISIBLE);
@@ -255,7 +265,152 @@ public class Tracking extends FragmentActivity implements OnMapReadyCallback,
                 .position(new LatLng(driver_latitude, driver_longitude))
                 .flat(true)
                 .rotation(-50));
-        reference1.addChildEventListener(new ChildEventListener() {
+
+        mPostReference = FirebaseDatabase.getInstance().getReference()
+                .child("driver_track");
+
+        mPostReference.addChildEventListener(new com.google.firebase.database.ChildEventListener() {
+            @Override
+            public void onChildAdded(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
+                Log.e("tag","sna;"+dataSnapshot+" s "+s);
+            }
+
+            @Override
+            public void onChildChanged(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
+                Log.e("tag","snae;"+dataSnapshot+" s "+s);
+            }
+
+            @Override
+            public void onChildRemoved(com.google.firebase.database.DataSnapshot dataSnapshot) {
+                Log.e("tag","snas;"+dataSnapshot+" s ");
+            }
+
+            @Override
+            public void onChildMoved(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
+                Log.e("tag","snaa;"+dataSnapshot+" s "+s);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        Log.e("tag","madda"+mDatabase);
+        Log.e("tag","madda"+mPostReference.getRef().child(driver_name));
+
+        mPostReference.child(driver_name).addChildEventListener(new com.google.firebase.database.ChildEventListener() {
+            @Override
+            public void onChildAdded(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
+                Log.e("tag","daaasdfa ;"+dataSnapshot+" s "+s);
+            }
+
+            @Override
+            public void onChildChanged(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
+                Log.e("tag","fewf ;"+dataSnapshot+" s "+s);
+            }
+
+            @Override
+            public void onChildRemoved(com.google.firebase.database.DataSnapshot dataSnapshot) {
+                Log.e("tag","sdfxc ;"+dataSnapshot+" s ");
+            }
+
+            @Override
+            public void onChildMoved(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
+                Log.e("tag","werew ;"+dataSnapshot+" s "+s);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        mPostReference.child("salman").addChildEventListener(new com.google.firebase.database.ChildEventListener() {
+            @Override
+            public void onChildAdded(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
+                Log.e("tag","asdfasdf:"+dataSnapshot);
+                Log.e("tag","werwe:"+dataSnapshot.getChildren());
+                Log.e("tag","asdfzcx:"+dataSnapshot.getValue());
+               // Map map = dataSnapshot.getValue(Map.class);
+                Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
+                double latitude = Double.valueOf(map.get("latitude").toString());
+                double longitude = Double.valueOf(map.get("longitude").toString());
+                if (sv_tracking.getVisibility() == View.VISIBLE) {
+                    Log.e("tag", "fir_Vl" + latitude + longitude);
+                    dropLocation = new Location(LocationManager.GPS_PROVIDER);
+                    currentLocation = new Location(LocationManager.GPS_PROVIDER);
+                    dropLocation.setLatitude(drop_lati);
+                    dropLocation.setLongitude(drop_longi);
+                    currentLocation.setLatitude(latitude);
+                    currentLocation.setLongitude(longitude);
+                    dist_Between = currentLocation.distanceTo(dropLocation);
+                    mMap.clear();
+                    Log.e("tag", "distance is: " + dist_Between / 1000 + " km");
+                    String str_origin = "origin=" + latitude + "," + longitude;
+                    String str_dest = "destination=" + drop_lati + "," + drop_longi;
+                    String sensor = "sensor=false";
+                    String parameters = str_origin + "&" + str_dest + "&" + sensor;
+                    String output = "json";
+                    String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
+                    DownloadTask downloadTask = new DownloadTask();
+                    downloadTask.execute(url);
+                    Marker pickup_marker, drop_marker;
+                    pickup_marker =  mMap.addMarker(new MarkerOptions().position(new LatLng(drop_lati, drop_longi)).icon(BitmapDescriptorFactory.fromResource(R.drawable.delivery_addr_tracking)));
+                    LatLng mapCenter = new LatLng(latitude, longitude);
+                    // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mapCenter, 10.5f));
+                    drop_marker =  mMap.addMarker(new MarkerOptions()
+                            .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_truck))
+                            .position(mapCenter)
+                            .flat(true)
+                            .rotation(-50));
+                    LatLng mapCenter11 = new LatLng(mid_lati, mid_longi);
+                    CameraPosition cameraPosition1 = CameraPosition.builder()
+                            .target(mapCenter11)
+                            .build();
+                    // Animate the change in camera view over 2 seconds
+                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition1),
+                            2000, null);
+                    midPoint(latitude, longitude, drop_lati, drop_longi);
+                    LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                    Marker[] markers = {pickup_marker, drop_marker};
+                    for (Marker m : markers) {
+                        builder.include(m.getPosition());
+                    }
+                    LatLngBounds bounds = builder.build();
+                    int padding = ((frm_width * 10) / 100); // offset from edges of the map
+                    // in pixels
+                    Log.e("tag", "ss:" + padding);
+                    //final LatLngBounds bounds = new LatLngBounds.Builder().include(new LatLng(lat1, lon1)).include(new LatLng(lat2, lon2)).build();
+                    // mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 120));
+                    //  final LatLngBounds boundss = new LatLngBounds.Builder().include(new LatLng(new_lat1, new_long1)).include(new LatLng(new_lat2, new_long2)).build();
+                    CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds,
+                            padding+100);
+                    mMap.animateCamera(cu);
+                }
+                //Toast.makeText(getApplicationContext(), "values updating", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onChildChanged(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(com.google.firebase.database.DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+      /*  reference1.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Map map = dataSnapshot.getValue(Map.class);
@@ -327,7 +482,7 @@ public class Tracking extends FragmentActivity implements OnMapReadyCallback,
             @Override
             public void onCancelled(FirebaseError firebaseError) {
             }
-        });
+        });*/
     }
    /* public static double[] midd (double lat1, double long1, double lat2, double long2){
     }*/
@@ -519,7 +674,7 @@ public class Tracking extends FragmentActivity implements OnMapReadyCallback,
                                 mv_datas.setDrop_longitude(drop_longitude);
                                 mv_datas.setDriver_latitude(driver_latitude);
                                 mv_datas.setDriver_longitude(driver_longitude);
-                                if (job_status.equals("confirmed")) {
+                                if (job_status.equals("confirmed") || job_status.equals("started")) {
                                     ar_job_upcoming.add(mv_datas);
                                     ar_ids.add(booking_id);
                                     hs_datas.put(booking_id, mv_datas);

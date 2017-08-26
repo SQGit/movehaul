@@ -16,8 +16,8 @@ android {
         applicationId "com.movhaul.customer"
         minSdkVersion 17
         targetSdkVersion 25
-        versionCode 11
-        versionName "1.78"
+        versionCode 12
+        versionName "1.80"
         renderscriptTargetApi 18
         renderscriptSupportModeEnabled true
         multiDexEnabled true
@@ -44,6 +44,19 @@ android {
         exclude 'META-INF/LICENSE-FIREBASE.txt'
         exclude 'META-INF/NOTICE'
     }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+    }
+
 }
 
 repositories {
@@ -52,7 +65,6 @@ repositories {
     maven { url "https://s3.amazonaws.com/repo.commonsware.com" }
 }
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':remita_21_03')
     compile 'co.paystack.android:paystack:3.0.1'
     //compile 'ng.simplepay.gateway:gateway:2.+'
@@ -60,8 +72,8 @@ dependencies {
     compile 'co.paystack.android:paystack:3.0.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support:cardview-v7:25.3.1'
-    compile 'com.google.android.gms:play-services:10.2.0'
-    compile 'com.google.firebase:firebase-messaging:10.2.0'
+    compile 'com.google.android.gms:play-services:10.2.6'
+    compile 'com.google.firebase:firebase-messaging:10.2.6'
     compile 'com.google.maps.android:android-maps-utils:0.4'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.android.support:multidex:1.0.1'
@@ -85,10 +97,13 @@ dependencies {
     compile 'org.jsoup:jsoup:1.8.3'
     compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'com.firebase:firebase-client-android:2.5.2'
-    compile 'com.google.firebase:firebase-database:10.0.1'
+    compile 'com.google.firebase:firebase-database:10.2.6'
+    compile('org.apache.httpcomponents:httpmime:4.2') {
+    exclude module: 'httpclient'
+    }
+    compile 'org.apache.httpcomponents:httpclient-android:4.3.5'
 
-    // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpmime
-    compile group: 'org.apache.httpcomponents', name: 'httpmime', version: '4.2'
+
 }
 
 apply plugin: 'com.google.gms.google-services'
