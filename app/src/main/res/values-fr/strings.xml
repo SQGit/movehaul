@@ -193,7 +193,7 @@
     <string name="drop">"abandonner"</string>
     <string name="delete_driver">"Supprimer l'offre d'emploi"</string>
 
-    <string name="ver">"VER %@"</string>
+    <string name="ver">"VER 1.81"</string>
     <string name="lodo">"Loading .."</string>
     <string name="wai">"Veuillez attendre"</string>
     <string name="conn">"Connectez-vous sur Internet et réessayez"</string>

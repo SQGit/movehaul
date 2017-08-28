@@ -241,13 +241,13 @@ public class SplashActivity extends Activity {
                 startActivity(callIntent);
             }
         });
-        final Handler handler = new Handler();
+        /*final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 new check_internet().execute();
             }
-        }, 1300);
+        }, 1300);*/
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -470,7 +470,28 @@ public class SplashActivity extends Activity {
                     dg_show_update.show();
 
                 }
-
+            }
+            else{
+                if (sharedPreferences.getString("login", "").equals("success")) {
+                    lt_bottom.startAnimation(anim_btn_t2b);
+                    truck_icon.startAnimation(anim_truck_c2r);
+                    bg_icon.setAnimation(fadeOut);
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Intent isd = new Intent(SplashActivity.this, DashboardNavigation.class);
+                                Bundle bndlanimation =
+                                        ActivityOptions.makeCustomAnimation(getApplicationContext(), com.movhaul.customer.R.anim.anim1, com.movhaul.customer.R.anim.anim2).toBundle();
+                                startActivity(isd, bndlanimation);
+                            }
+                            catch (Exception e){
+                                Log.e("tag","err"+e.toString());
+                            }
+                        }
+                    }, 1200);
+                }
             }
 
             Log.e("update", "Current version " + currentVersion + "playstore version " + playstoreVersion);
