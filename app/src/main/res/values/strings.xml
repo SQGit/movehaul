@@ -8,6 +8,7 @@
     <string name="service_not_available">Sorry, the service is not available</string>
     <string name="invalid_lat_long_used">Invalid latitude or longitude used</string>
     <string name="custom_title">Select atleast 2 Images</string>
+    <string name="custom_title2">Upload Profile Image</string>
     <string name="pin_label_text">entry pin</string>
     <string name="pin_content_desc">pin entry</string>
 

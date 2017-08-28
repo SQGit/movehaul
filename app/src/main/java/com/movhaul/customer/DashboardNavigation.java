@@ -613,7 +613,7 @@ public class DashboardNavigation extends FragmentActivity implements NavigationV
                 config.setSelectionLimit(1);
                 config.setCameraHeight(com.movhaul.customer.R.dimen.app_camera_height);
                 config.setCameraBtnBackground(com.movhaul.customer.R.drawable.round_dr_red);
-                config.setToolbarTitleRes(com.movhaul.customer.R.string.custom_title);
+                config.setToolbarTitleRes(com.movhaul.customer.R.string.custom_title2);
                 config.setSelectedBottomHeight(com.movhaul.customer.R.dimen.bottom_height);
                 ImagePickerActivity.setConfig(config);
                 Intent intent = new Intent(DashboardNavigation.this, com.gun0912.tedpicker.ImagePickerActivity.class);

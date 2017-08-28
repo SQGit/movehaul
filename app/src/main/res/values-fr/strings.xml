@@ -10,7 +10,7 @@
     <string name="custom_title">"Cliquez sur l'envoi"</string>
     <string name="pin_label_text">"Poteau d'entrée"</string>
     <string name="pin_content_desc">"Entrée d'entrée"</string>
-
+    <string name="custom_title2">Upload Profile Image</string>
     <string name="app_name">"MovHaul"</string>
     <string name="customer_booking">"Appuyez pour appeler le service à la clientèle pour la réservation"</string>
     <string name="login">"S'identifier"</string>

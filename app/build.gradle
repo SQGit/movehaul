@@ -39,11 +39,8 @@ android {
     productFlavors {
     }
 
-    packagingOptions {
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/LICENSE-FIREBASE.txt'
-        exclude 'META-INF/NOTICE'
-    }
+
+
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES.txt'
         exclude 'META-INF/LICENSE.txt'
@@ -51,10 +48,13 @@ android {
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE-FIREBASE.txt'
         exclude 'META-INF/notice.txt'
         exclude 'META-INF/license.txt'
         exclude 'META-INF/dependencies.txt'
         exclude 'META-INF/LGPL2.1'
+
+
     }
 
 }
@@ -101,7 +101,7 @@ dependencies {
     compile('org.apache.httpcomponents:httpmime:4.2') {
     exclude module: 'httpclient'
     }
-    compile 'org.apache.httpcomponents:httpclient-android:4.3.5'
+    //compile 'org.apache.httpcomponents:httpclient-android:4.3.5'
 
 
 }
